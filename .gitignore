@@ -1,0 +1,18 @@
+# --- Editor / harness ---
+.idea/
+.opencode/
+opencode.exe
+
+# --- Generated build output ---
+dist/
+
+# --- Secrets: MUST NEVER be committed ---
+key.properties
+*.jks
+*.keystore
+google-services.json
+service-account*.json
+
+# --- OS junk ---
+Thumbs.db
+.DS_Store
