@@ -1,0 +1,19 @@
+{
+  "@@locale": "en",
+  "appTitle": "Kumpleto",
+  "unofficialBadge": "Unofficial",
+  "navHome": "Home",
+  "navDocuments": "Documents",
+  "navSettings": "Settings",
+  "onboardingTitle": "Welcome to Kumpleto",
+  "onboardingDisclaimer": "Kumpleto is NOT a government app. It is an unofficial, community-maintained checklist. Requirements and fees change — always confirm with the official agency website before you apply.",
+  "onboardingLanguageLabel": "Choose your language",
+  "onboardingAcknowledge": "I understand",
+  "homeSearchHint": "Search documents",
+  "documentsTitle": "Documents",
+  "settingsTitle": "Settings",
+  "documentDetailTitle": "Document",
+  "bundleDetailTitle": "Bundle",
+  "errorNotFound": "Not found",
+  "back": "Back"
+}

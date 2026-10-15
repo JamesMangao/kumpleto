@@ -1,0 +1,36 @@
+name: Bug report
+description: Report a crash, layout problem, or unexpected behavior in the app.
+title: "Bug: "
+labels: ["bug"]
+body:
+  - type: input
+    id: app_version
+    attributes:
+      label: App version
+      description: From Settings > About (e.g. 0.1.0).
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device and Android version
+      placeholder: e.g. Samsung A54, Android 15
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Include error messages if any. Kumpleto collects no data, so no logs are sent from the app.
+    validations:
+      required: true

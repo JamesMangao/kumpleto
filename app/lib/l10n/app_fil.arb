@@ -1,0 +1,19 @@
+{
+  "@@locale": "fil",
+  "appTitle": "Kumpleto",
+  "unofficialBadge": "Di-opisyal",
+  "navHome": "Home",
+  "navDocuments": "Mga Dokumento",
+  "navSettings": "Mga Setting",
+  "onboardingTitle": "Maligayang pagdating sa Kumpleto",
+  "onboardingDisclaimer": "ANG KUMPLETO AY HINDI GOVERNMENT APP. Ito ay di-opisyal na checklist na pinananatili ng komunidad. Maaaring magbago ang mga requirements at bayaran — laging kumpirmahin sa opisyal na website ng ahensya bago mag-apply.",
+  "onboardingLanguageLabel": "Pumili ng wika",
+  "onboardingAcknowledge": "Naiintindihan ko",
+  "homeSearchHint": "Maghanap ng dokumento",
+  "documentsTitle": "Mga Dokumento",
+  "settingsTitle": "Mga Setting",
+  "documentDetailTitle": "Dokumento",
+  "bundleDetailTitle": "Bundle",
+  "errorNotFound": "Hindi mahanap",
+  "back": "Bumalik"
+}

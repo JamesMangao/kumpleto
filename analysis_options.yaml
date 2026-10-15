@@ -1,0 +1,24 @@
+# Tooling analysis config (repo root package).
+# The Flutter app in app/ has its OWN analysis_options.yaml; it is excluded
+# here so `dart analyze` at the root never touches the Flutter package.
+include: package:lints/recommended.yaml
+
+analyzer:
+  exclude:
+    - app/**
+    - data/**
+    - dist/**
+    - build/**
+    - '**/*.g.dart'
+  language:
+    strict-casts: true
+    strict-inference: true
+    strict-raw-types: true
+  errors:
+    todo: ignore
+
+linter:
+  rules:
+    - always_declare_return_types
+    - prefer_final_locals
+    - unnecessary_lambdas

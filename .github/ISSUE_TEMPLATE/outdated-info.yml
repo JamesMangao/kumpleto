@@ -1,0 +1,56 @@
+name: Outdated information
+description: Report a requirement, fee, or step that has changed or looks wrong.
+title: "Outdated: "
+labels: ["outdated-info"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for keeping Kumpleto accurate! This issue is **pre-filled** when
+        sent from the app's "Report outdated info" button.
+  - type: input
+    id: document_id
+    attributes:
+      label: Document ID
+      description: The kebab-case id of the entry (e.g. nbi-clearance).
+      placeholder: nbi-clearance
+    validations:
+      required: true
+  - type: input
+    id: document_name
+    attributes:
+      label: Document name
+      placeholder: NBI Clearance
+  - type: input
+    id: app_version
+    attributes:
+      label: App version
+      placeholder: "0.1.0"
+  - type: input
+    id: data_version
+    attributes:
+      label: Data version
+      description: Shown in Settings (data_version from the app).
+      placeholder: "2026-10-15T00:00:00Z"
+  - type: textarea
+    id: what_changed
+    attributes:
+      label: What is outdated?
+      description: Which requirement/fee/step is wrong, and what should it say?
+    validations:
+      required: true
+  - type: input
+    id: official_source
+    attributes:
+      label: Official source URL
+      description: Link to the official page showing the correct information (required before this can be verified).
+      placeholder: https://www.example.gov.ph/...
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmations
+      options:
+        - label: This information comes from an official source (agency website or official announcement).
+          required: true

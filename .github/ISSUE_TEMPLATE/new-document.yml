@@ -1,0 +1,39 @@
+name: New document request
+description: Request a document or bundle that Kumpleto does not cover yet.
+title: "New document: "
+labels: ["new-document"]
+body:
+  - type: input
+    id: document_name
+    attributes:
+      label: Document name
+      placeholder: e.g. Postal ID
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Type
+      options:
+        - Single document
+        - Life-event bundle
+    validations:
+      required: true
+  - type: input
+    id: agency
+    attributes:
+      label: Issuing agency
+      placeholder: e.g. PHLPost
+  - type: input
+    id: official_source
+    attributes:
+      label: Official source URL
+      description: Link to the agency's official page for this document.
+      placeholder: https://www.example.gov.ph/...
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Anything the maintainer should know (requirements you know of, etc.). Please do not paste unverified fee amounts without a source.

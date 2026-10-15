@@ -1,0 +1,41 @@
+name: kumpleto
+description: "Unofficial offline-first checklist of Philippine government document requirements. Not affiliated with any government agency."
+publish_to: 'none'
+
+# versionName = 0.1.0, versionCode = 1 (Android), file version (Windows)
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.13.5
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  flutter_riverpod: ^3.4.3
+  go_router: ^18.1.0
+  shared_preferences: ^2.5.6
+  url_launcher: ^6.3.3
+  http: ^1.6.0
+  package_info_plus: ^10.2.2
+  flutter_localizations:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+
+  # Directory asset: always contains the release-safe data.json.
+  # The dev-only data_drafts.json is generated here by
+  # `dart run tools/build_data.dart --include-drafts` (gitignored, never
+  # present in release/CI builds — see docs/DECISIONS.md P3).
+  assets:
+    - assets/data/
+
+  generate: true
