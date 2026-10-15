@@ -1,0 +1,8 @@
+# FAKE DATA — test fixture only. INTENTIONALLY INVALID: duplicate id "twin".
+schema_version: 1
+id: twin
+name:
+  en: Twin Two
+  fil: Twin Two (Filipino)
+agency: fake-agency
+status: draft

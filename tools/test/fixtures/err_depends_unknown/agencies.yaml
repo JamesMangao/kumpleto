@@ -1,0 +1,6 @@
+# FAKE DATA — test fixture only.
+- id: fake-agency
+  name:
+    en: Fake Agency
+    fil: Fake Agency
+  website: https://fake-agency.gov.ph/

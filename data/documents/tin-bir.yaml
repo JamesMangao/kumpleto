@@ -1,0 +1,10 @@
+# Seed entry — status: draft until verified by the human maintainer.
+schema_version: 1
+id: tin-bir
+name:
+  en: TIN (BIR)
+  fil: TIN (BIR)
+agency: bir
+status: draft
+source_url: https://www.bir.gov.ph/
+tags: [employment, tax, first-time]

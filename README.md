@@ -62,7 +62,7 @@ flutter build appbundle --flavor prod --release
 Tests:
 
 ```powershell
-dart test              # tool tests (repo root)
+dart test tools/test  # tool tests (repo root)
 cd app && flutter test # app tests
 ```
 

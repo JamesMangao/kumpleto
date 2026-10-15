@@ -11,6 +11,10 @@ app/lib/l10n/app_localizations*.dart
 
 # --- Generated build output ---
 dist/
+# Generated app data assets (produced by tools/build_data.dart before any
+# flutter build; data_drafts.json additionally requires --include-drafts)
+app/assets/data/data.json
+app/assets/data/data_drafts.json
 
 # --- Secrets: MUST NEVER be committed ---
 key.properties

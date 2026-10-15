@@ -1,0 +1,10 @@
+# FAKE DATA — test fixture only. INTENTIONALLY INVALID: depends_on a
+# document that does not exist.
+schema_version: 1
+id: needy-doc
+name:
+  en: Needy Document
+  fil: Needy Document (Filipino)
+agency: fake-agency
+status: draft
+depends_on: [ghost-doc]

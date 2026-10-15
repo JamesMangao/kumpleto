@@ -1,0 +1,15 @@
+# FAKE DATA — test fixture only. INTENTIONALLY INVALID: references unknown
+# document "ghost-doc".
+schema_version: 1
+id: haunted-bundle
+name:
+  en: Haunted Bundle
+  fil: Haunted Bundle (Filipino)
+description:
+  en: References a document that does not exist.
+  fil: Tumutukoy sa dokumentong hindi umiiral.
+status: draft
+documents:
+  - lonely-doc
+  - ghost-doc
+icon: work

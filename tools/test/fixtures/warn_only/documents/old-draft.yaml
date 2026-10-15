@@ -1,0 +1,9 @@
+# FAKE DATA — test fixture only. WARNING-ONLY: draft whose file mtime is
+# injected as >90 days old by the test.
+schema_version: 1
+id: old-draft
+name:
+  en: Old Draft Document
+  fil: Old Draft Document (Filipino)
+agency: fake-agency
+status: draft

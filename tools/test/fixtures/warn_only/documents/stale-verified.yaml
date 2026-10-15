@@ -1,0 +1,22 @@
+# FAKE DATA — test fixture only. WARNING-ONLY: verified entry with non-.gov.ph
+# source, stale last_verified (validator "now" injected as 2026-10-15), and
+# null fee_note.
+schema_version: 1
+id: stale-verified
+name:
+  en: Stale Verified Document
+  fil: Stale Verified Document (Filipino)
+agency: fake-agency
+status: verified
+source_url: https://example.com/some-page
+last_verified: '2026-01-01'
+verified_by: fixture-maintainer
+requirements:
+  - id: req-one
+    text:
+      en: Something.
+      fil: Bagay.
+steps:
+  - en: Do the thing.
+    fil: Gawin ang bagay.
+fee_note: null

@@ -1,0 +1,10 @@
+# Seed entry — status: draft until verified by the human maintainer.
+schema_version: 1
+id: philhealth
+name:
+  en: PhilHealth Number
+  fil: PhilHealth Number
+agency: philhealth
+status: draft
+source_url: https://www.philhealth.gov.ph/
+tags: [job-hunt, employment, health, first-time]

@@ -1,0 +1,22 @@
+# FAKE DATA — test fixture only. INTENTIONALLY INVALID: duplicate requirement
+# ids within one document.
+schema_version: 1
+id: dup-req-doc
+name:
+  en: Duplicate Requirement Document
+  fil: Duplicate Requirement Document (Filipino)
+agency: fake-agency
+status: draft
+requirements:
+  - id: same-id
+    text:
+      en: First requirement.
+      fil: Unang requirement.
+    original: true
+    photocopies: 0
+  - id: same-id
+    text:
+      en: Second requirement with the same id.
+      fil: Pangalawang requirement na may parehong id.
+    original: false
+    photocopies: 1

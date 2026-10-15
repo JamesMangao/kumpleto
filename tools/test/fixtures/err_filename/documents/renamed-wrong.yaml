@@ -1,0 +1,9 @@
+# FAKE DATA — test fixture only. INTENTIONALLY INVALID: id does not equal
+# the filename.
+schema_version: 1
+id: right-id
+name:
+  en: Filename Mismatch
+  fil: Filename Mismatch (Filipino)
+agency: fake-agency
+status: draft

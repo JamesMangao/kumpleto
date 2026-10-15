@@ -1,0 +1,12 @@
+# Seed entry — status: draft until verified by the human maintainer.
+# NOTE for verifier: psa.gov.ph blocks automated requests (403); confirm the
+# exact deep-link for birth certificates during verification (TODO.md).
+schema_version: 1
+id: psa-birth-certificate
+name:
+  en: PSA Birth Certificate
+  fil: PSA na Sertipiko ng Kapanganakan
+agency: psa
+status: draft
+source_url: https://psa.gov.ph/
+tags: [job-hunt, civil-registry, birth]

@@ -1,0 +1,12 @@
+# Seed entry — status: draft until verified by the human maintainer.
+# NOTE for verifier: dfa.gov.ph blocks automated requests (403); confirm the
+# exact passport page during verification (TODO.md).
+schema_version: 1
+id: passport-dfa
+name:
+  en: Philippine Passport
+  fil: Pasaporteng Pilipino
+agency: dfa
+status: draft
+source_url: https://www.dfa.gov.ph/
+tags: [passport, travel, first-time, renewal]

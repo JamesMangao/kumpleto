@@ -1,0 +1,83 @@
+# Kumpleto agencies registry.
+# Schema (validated by tools/validate.dart):
+#   - id: kebab-case, unique, matches list position conventions
+#   - name: {en, fil} — official agency name is the same in both languages
+#   - website: official https URL, or null when no single national site exists
+#
+# All URLs verified reachable at authoring time (2026-10-15); several agency
+# sites block automated requests (403) but are the canonical official domains.
+# See TODO.md — the human maintainer confirms each URL during verification.
+
+- id: nbi
+  name:
+    en: National Bureau of Investigation
+    fil: National Bureau of Investigation
+  website: https://www.nbi.gov.ph/
+
+- id: psa
+  name:
+    en: Philippine Statistics Authority
+    fil: Philippine Statistics Authority
+  website: https://psa.gov.ph/
+
+- id: dfa
+  name:
+    en: Department of Foreign Affairs
+    fil: Department of Foreign Affairs
+  website: https://www.dfa.gov.ph/
+
+- id: sss
+  name:
+    en: Social Security System
+    fil: Social Security System
+  website: https://www.sss.gov.ph/
+
+- id: philhealth
+  name:
+    en: PhilHealth
+    fil: PhilHealth
+  website: https://www.philhealth.gov.ph/
+
+- id: pagibig
+  name:
+    en: Pag-IBIG Fund (Home Development Mutual Fund)
+    fil: Pag-IBIG Fund (Home Development Mutual Fund)
+  website: https://www.pagibigfund.com/
+  # Note: official site is .com, not .gov.ph — validator warning is expected.
+
+- id: bir
+  name:
+    en: Bureau of Internal Revenue
+    fil: Bureau of Internal Revenue
+  website: https://www.bir.gov.ph/
+
+- id: pnp
+  name:
+    en: Philippine National Police
+    fil: Philippine National Police
+  website: https://pnp.gov.ph/
+
+- id: lto
+  name:
+    en: Land Transportation Office
+    fil: Land Transportation Office
+  website: https://lto.gov.ph/
+
+- id: comelec
+  name:
+    en: Commission on Elections
+    fil: Commission on Elections
+  website: https://comelec.gov.ph/
+
+- id: philsys
+  name:
+    en: Philippine Identification System Authority (PhilSys)
+    fil: Philippine Identification System Authority (PhilSys)
+  website: https://philsys.gov.ph/
+
+- id: barangay
+  name:
+    en: Barangay (local government unit)
+    fil: Barangay (lokal na yunit ng pamahalaan)
+  website: null
+  # No single national website: each barangay issues its own clearance.

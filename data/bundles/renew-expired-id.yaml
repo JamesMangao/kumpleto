@@ -1,0 +1,23 @@
+# Bundle — status: draft until verified by the human maintainer.
+schema_version: 1
+id: renew-expired-id
+name:
+  en: Renew Expired ID
+  fil: Mag-renew ng Expired na ID
+description:
+  en: >-
+    A pack for renewing commonly held IDs and memberships after they expire.
+    Community-curated — confirm renewal requirements with each issuing
+    agency.
+  fil: >-
+    Pack para sa pag-renew ng karaniwang mga ID at membership pagkatapos
+    mag-expire. Kurado ng komunidad — kumpirmahin ang mga requirement sa
+    bawat ahensya.
+status: draft
+documents:
+  - nbi-clearance
+  - philsys-national-id
+  - sss
+  - philhealth
+tags: [renewal, id]
+icon: autorenew

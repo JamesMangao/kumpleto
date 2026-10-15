@@ -1,0 +1,12 @@
+# FAKE-FREE SEED: real entry, but status: draft until the human maintainer
+# verifies it against the official source. Never edited to "verified" here.
+# Fields not yet researched are omitted (= null); see TODO.md.
+schema_version: 1
+id: nbi-clearance
+name:
+  en: NBI Clearance
+  fil: NBI Clearance
+agency: nbi
+status: draft
+source_url: https://www.nbi.gov.ph/
+tags: [job-hunt, clearance, renewal]

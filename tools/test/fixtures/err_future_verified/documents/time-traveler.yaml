@@ -1,0 +1,10 @@
+# FAKE DATA — test fixture only. INTENTIONALLY INVALID: last_verified in the
+# future (validator "now" is injected as 2026-10-15 in tests).
+schema_version: 1
+id: time-traveler
+name:
+  en: Time Traveler Document
+  fil: Time Traveler Document (Filipino)
+agency: fake-agency
+status: draft
+last_verified: '2099-01-01'

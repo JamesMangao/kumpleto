@@ -108,6 +108,27 @@ connected desktop/web devices, network).
   `last_verified`. Everything authored by the agent is `status: draft`
   and cites an official source URL or leaves fields null.
 
+### P2 follow-up decisions (same day)
+
+- **D-P2a — `kotlin.incremental=false`** in `app/android/gradle.properties`:
+  the Kotlin 2.4.0 incremental compiler reproducibly failed with "Could not
+  close incremental caches" on this Windows machine (2/2 builds), a known
+  file-locking interaction. Non-incremental compilation is slower but
+  reliable; first green dev build: 330 s.
+- **D-P2b — Bundle `notes`**: the bundle schema was extended with an
+  optional `notes: [{en, fil}]` list so the job-hunt-pack RA 11261 pointer
+  (required by the spec) can live in the bundle draft itself.
+- **D-P2c — `--strict` vs pagibig**: `--strict` intentionally fails on the
+  two permanent `.gov.ph` warnings for pagibigfund.com; CI and the P2 gate
+  use errors-only mode (`--strict-on=errors`, the documented default).
+- **D-P2d — tool tests run as `dart test tools/test`**: the Dart CLI's
+  pre-check ignores `dart_test.yaml` paths when no default `test/` dir
+  exists at the root, so the explicit path is the canonical command
+  (README/CONTRIBUTING/CI all use it).
+- **D-P2e — extra packages approved by maintainer**: `crypto` (sha256; already
+  a transitive dep of `http`), plus dev-only `drift_dev` + `build_runner`
+  for P3 drift codegen.
+
 ### Risks
 
 | # | Risk | Mitigation |

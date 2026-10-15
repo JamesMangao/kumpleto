@@ -1,0 +1,12 @@
+# Seed entry — status: draft until verified by the human maintainer.
+# NOTE: official website is pagibigfund.com (.com, not .gov.ph) — expected
+# validator warning.
+schema_version: 1
+id: pag-ibig
+name:
+  en: Pag-IBIG MID Number
+  fil: Pag-IBIG MID Number
+agency: pagibig
+status: draft
+source_url: https://www.pagibigfund.com/
+tags: [employment, housing, first-time]

@@ -1,0 +1,10 @@
+# Seed entry — status: draft until verified by the human maintainer.
+schema_version: 1
+id: comelec-voters-certification
+name:
+  en: Voter's Certification
+  fil: Sertipiko ng Botante
+agency: comelec
+status: draft
+source_url: https://comelec.gov.ph/
+tags: [id, election, certification]

@@ -1,0 +1,12 @@
+# Seed entry — status: draft until verified by the human maintainer.
+# NOTE for verifier: pnp.gov.ph blocks automated requests (403); confirm the
+# exact clearance page during verification (TODO.md).
+schema_version: 1
+id: police-clearance
+name:
+  en: Police Clearance
+  fil: Police Clearance
+agency: pnp
+status: draft
+source_url: https://pnp.gov.ph/
+tags: [job-hunt, clearance]

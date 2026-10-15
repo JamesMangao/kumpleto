@@ -1,0 +1,18 @@
+# Bundle — status: draft until verified by the human maintainer.
+schema_version: 1
+id: new-driver
+name:
+  en: New Driver
+  fil: Bagong Driver
+description:
+  en: >-
+    Start here if you are applying for a driver's license for the first time.
+    Community-curated — confirm with the Land Transportation Office.
+  fil: >-
+    Simulan dito kung unang beses kang nag-aapply ng lisensya sa pagmamaneho.
+    Kurado ng komunidad — kumpirmahin sa Land Transportation Office.
+status: draft
+documents:
+  - lto-drivers-license
+tags: [driving, first-time]
+icon: directions_car

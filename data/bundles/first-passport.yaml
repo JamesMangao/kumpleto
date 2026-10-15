@@ -1,0 +1,20 @@
+# Bundle — status: draft until verified by the human maintainer.
+schema_version: 1
+id: first-passport
+name:
+  en: First Passport
+  fil: Unang Pasaporte
+description:
+  en: >-
+    Documents to prepare before applying for your first Philippine passport.
+    Community-curated — confirm with the Department of Foreign Affairs.
+  fil: >-
+    Mga dokumentong ihanda bago mag-apply ng iyong unang pasaporteng
+    Pilipino. Kurado ng komunidad — kumpirmahin sa Department of Foreign
+    Affairs.
+status: draft
+documents:
+  - psa-birth-certificate
+  - passport-dfa
+tags: [passport, first-time]
+icon: flight_takeoff

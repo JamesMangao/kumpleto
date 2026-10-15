@@ -1,0 +1,9 @@
+# FAKE DATA — test fixture only. INTENTIONALLY INVALID: agency key does not
+# exist in agencies.yaml.
+schema_version: 1
+id: orphan-doc
+name:
+  en: Orphan Document
+  fil: Orphan Document (Filipino)
+agency: ghost-agency
+status: draft

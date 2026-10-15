@@ -1,0 +1,10 @@
+# Seed entry — status: draft until verified by the human maintainer.
+schema_version: 1
+id: philsys-national-id
+name:
+  en: PhilSys National ID
+  fil: PhilSys National ID
+agency: philsys
+status: draft
+source_url: https://philsys.gov.ph/
+tags: [job-hunt, id, first-time]

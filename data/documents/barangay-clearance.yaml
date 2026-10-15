@@ -1,0 +1,13 @@
+# Seed entry — status: draft until verified by the human maintainer.
+# NOTE: no single national official source exists (each barangay issues its
+# own clearance); source_url intentionally null — validator accepts null for
+# draft status.
+schema_version: 1
+id: barangay-clearance
+name:
+  en: Barangay Clearance
+  fil: Barangay Clearance
+agency: barangay
+status: draft
+source_url: null
+tags: [job-hunt, clearance, residency]

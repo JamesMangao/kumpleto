@@ -1,0 +1,9 @@
+# FAKE DATA — test fixture only. INTENTIONALLY INVALID: depends_on cycle b->a.
+schema_version: 1
+id: cycle-b
+name:
+  en: Cycle B
+  fil: Cycle B (Filipino)
+agency: fake-agency
+status: draft
+depends_on: [cycle-a]

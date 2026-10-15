@@ -1,0 +1,14 @@
+# FAKE DATA — test fixture only. INTENTIONALLY INVALID: name missing "fil";
+# photocopies is a string.
+schema_version: 1
+id: bad-schema
+name:
+  en: Bad Schema Document
+agency: fake-agency
+status: draft
+requirements:
+  - id: req-one
+    text:
+      en: Something.
+      fil: Bagay.
+    photocopies: two

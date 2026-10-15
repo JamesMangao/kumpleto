@@ -1,0 +1,42 @@
+# FAKE DATA — test fixture only.
+schema_version: 1
+id: good-verified
+name:
+  en: Good Verified Document
+  fil: Good Verified Document (Filipino)
+agency: fake-agency
+status: verified
+source_url: https://fake-agency.gov.ph/good-verified
+last_verified: '2026-10-05'
+verified_by: fixture-maintainer
+validity_months: 6
+apply_online: false
+where_to_apply:
+  en: Any Fake Agency office.
+  fil: Kahit saang tanggapan ng Fake Agency.
+requirements:
+  - id: valid-id
+    text:
+      en: Any government-issued ID.
+      fil: Kahit anong ID mula sa gobyerno.
+    original: true
+    photocopies: 1
+    optional: false
+    note: null
+  - id: application-form
+    text:
+      en: Accomplished application form.
+      fil: Napunan na application form.
+    original: false
+    photocopies: 2
+    optional: true
+steps:
+  - en: Go to the office.
+    fil: Pumunta sa tanggapan.
+  - en: Submit the requirements.
+    fil: Isumite ang mga requirement.
+fee_note:
+  en: See official site.
+  fil: Tingnan ang opisyal na site.
+processing_note: null
+notes: []

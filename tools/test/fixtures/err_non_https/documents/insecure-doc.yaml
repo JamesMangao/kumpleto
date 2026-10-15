@@ -1,0 +1,9 @@
+# FAKE DATA — test fixture only. INTENTIONALLY INVALID: non-https source_url.
+schema_version: 1
+id: insecure-doc
+name:
+  en: Insecure Document
+  fil: Insecure Document (Filipino)
+agency: fake-agency
+status: draft
+source_url: http://insecure.example.com/page

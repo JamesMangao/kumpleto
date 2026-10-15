@@ -1,0 +1,15 @@
+# FAKE DATA — test fixture only.
+schema_version: 1
+id: good-bundle
+name:
+  en: Good Bundle
+  fil: Good Bundle (Filipino)
+description:
+  en: A valid fixture bundle.
+  fil: Isang wastong fixture bundle.
+status: draft
+documents:
+  - good-draft
+  - good-verified
+tags: [fixture]
+icon: work

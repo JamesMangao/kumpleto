@@ -1,0 +1,12 @@
+# Seed entry — status: draft until verified by the human maintainer.
+# NOTE for verifier: lto.gov.ph blocks automated requests (403); confirm the
+# exact driver's-license page during verification (TODO.md).
+schema_version: 1
+id: lto-drivers-license
+name:
+  en: LTO Driver's License
+  fil: LTO na Lisensya sa Pagmamaneho
+agency: lto
+status: draft
+source_url: https://lto.gov.ph/
+tags: [driving, first-time, renewal]

@@ -13,7 +13,7 @@ JDK 17+.
 dart pub get                          # repo root (tooling)
 dart run tools/validate.dart          # validate data
 dart run tools/build_data.dart        # compile data -> dist/ + app asset
-dart test                             # tool tests
+dart test tools/test                 # tool tests
 cd app; flutter pub get; flutter test # app tests
 ```
 

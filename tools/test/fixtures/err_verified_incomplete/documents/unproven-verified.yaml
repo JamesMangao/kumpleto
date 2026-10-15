@@ -1,0 +1,12 @@
+# FAKE DATA — test fixture only. INTENTIONALLY INVALID: verified without
+# source_url, last_verified, requirements, or steps.
+schema_version: 1
+id: unproven-verified
+name:
+  en: Unproven Verified Document
+  fil: Unproven Verified Document (Filipino)
+agency: fake-agency
+status: verified
+source_url: null
+last_verified: null
+fee_note: null

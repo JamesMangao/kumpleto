@@ -1,0 +1,38 @@
+# Bundle — status: draft until verified by the human maintainer.
+schema_version: 1
+id: job-hunt-pack
+name:
+  en: Job Hunt Pack
+  fil: Job Hunt Pack
+description:
+  en: >-
+    A starter set of documents commonly asked for when applying for jobs in
+    the Philippines. Community-curated — confirm each requirement with the
+    employer or issuing agency.
+  fil: >-
+    Set ng mga dokumentong karaniwang hinihingi kapag nag-aaplay ng trabaho
+    sa Pilipinas. Kurado ng komunidad — kumpirmahin ang bawat requirement sa
+    employer o ahensya.
+status: draft
+documents:
+  - psa-birth-certificate
+  - nbi-clearance
+  - police-clearance
+  - barangay-clearance
+  - philsys-national-id
+  - sss
+  - philhealth
+tags: [job-hunt, first-time]
+icon: work
+notes:
+  - en: >-
+      TODO (unverified): The First Time Jobseekers Assistance Act (RA 11261)
+      may waive some government fees for first-time jobseekers. Details and an
+      official source must be verified by the maintainer before this becomes
+      verified content.
+    fil: >-
+      TODO (hindi pa nakumpirma): Maaaring magpawalis ng ilang bayad sa
+      gobyerno ang First Time Jobseekers Assistance Act (RA 11261) para sa
+      mga unang beses na naghahanap ng trabaho. Kailangang beripikahin ng
+      maintainer ang mga detalye at opisyal na source bago ito maging
+      verified na content.

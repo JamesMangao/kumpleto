@@ -1,0 +1,10 @@
+# FAKE DATA — test fixture only.
+schema_version: 1
+id: good-draft
+name:
+  en: Good Draft Document
+  fil: Good Draft Document (Filipino)
+agency: fake-agency
+status: draft
+source_url: https://fake-agency.gov.ph/good-draft
+tags: [fixture]

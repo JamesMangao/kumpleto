@@ -1,0 +1,10 @@
+# Seed entry — status: draft until verified by the human maintainer.
+schema_version: 1
+id: sss
+name:
+  en: SSS Number
+  fil: SSS Number
+agency: sss
+status: draft
+source_url: https://www.sss.gov.ph/
+tags: [job-hunt, employment, first-time]

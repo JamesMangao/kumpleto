@@ -1,0 +1,8 @@
+# FAKE DATA — test fixture only.
+schema_version: 1
+id: lonely-doc
+name:
+  en: Lonely Document
+  fil: Lonely Document (Filipino)
+agency: fake-agency
+status: draft
