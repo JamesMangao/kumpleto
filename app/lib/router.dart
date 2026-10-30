@@ -45,7 +45,7 @@ GoRouter buildRouter(AppSettings settings) {
           StatefulShellBranch(routes: [
             GoRoute(
               path: '/settings',
-              builder: (context, state) => const SettingsScreen(),
+              builder: (context, state) => SettingsScreen(settings: settings),
             ),
           ]),
         ],

@@ -1,4 +1,7 @@
 # Seed entry — status: draft until verified by the human maintainer.
+# The PMRF requirement and the steps below were read from the official
+# PhilHealth registration page for formal-economy (employed) members. The
+# maintainer confirms and sets status: verified + last_verified (TODO.md).
 schema_version: 1
 id: philhealth
 name:
@@ -6,5 +9,57 @@ name:
   fil: PhilHealth Number
 agency: philhealth
 status: draft
-source_url: https://www.philhealth.gov.ph/
+source_url: https://www.philhealth.gov.ph/members/formal/registration.php
+summary:
+  en: >-
+    PhilHealth membership for employees in the government and private sector —
+    the employer files the registration and remits the premium.
+  fil: >-
+    Pagiging miyembro ng PhilHealth para sa mga empleyado ng gobyerno at
+    pribadong sektor — ang employer ang nagpaparehistro at nagre-remit ng
+    premium.
 tags: [job-hunt, employment, health, first-time]
+requirements:
+  - id: pmrf
+    text:
+      en: Two (2) copies of the PhilHealth Member Registration Form (PMRF)
+      fil: Dalawang (2) kopya ng PhilHealth Member Registration Form (PMRF)
+    photocopies: 2
+steps:
+  - en: >-
+      Fill out two (2) copies of the PhilHealth Member Registration Form (PMRF).
+    fil: >-
+      Sagutan ang dalawang (2) kopya ng PhilHealth Member Registration Form
+      (PMRF).
+  - en: Submit the PMRF to the HR Department of your employer.
+    fil: Isumite ang PMRF sa HR Department ng iyong employer.
+  - en: >-
+      Wait for your Member Data Record and PhilHealth ID card from your
+      employer.
+    fil: >-
+      Hintayin ang Member Data Record at PhilHealth ID card mula sa iyong
+      employer.
+  - en: >-
+      If you already have a PhilHealth Identification Number (PIN), report it to
+      your employer so they can indicate it in their ER2.
+    fil: >-
+      Kung may PhilHealth Identification Number (PIN) ka na, i-report ito sa
+      employer mo para maisama nila sa kanilang ER2.
+fee_note:
+  en: >-
+    Premium contributions are shared by the employee and the employer; your
+    employer remits the total after deducting the employee share from your
+    salary.
+  fil: >-
+    Hinahati ng empleyado at ng employer ang premium; ang employer ang
+    nagre-remit ng kabuuan pagkatapos ibawas ang bahagi ng empleyado sa suweldo
+    mo.
+notes:
+  - en: >-
+      These steps cover formal-economy members. Self-earning individuals,
+      kasambahay, OFWs, senior citizens and sponsored members register under
+      the other PhilHealth member categories.
+    fil: >-
+      Para sa formal-economy members ang mga hakbang na ito. Ang mga
+      self-earning individual, kasambahay, OFW, senior citizen at sponsored
+      member ay sa ibang kategorya ng PhilHealth nagpaparehistro.

@@ -272,7 +272,8 @@ void _checkUrl(
   final host = uri.host.toLowerCase();
   if (host != 'gov.ph' && !host.endsWith('.gov.ph')) {
     warn('$path: host "$host" is not a .gov.ph domain '
-        '(fine for pagibigfund.com; confirm it is an official site)');
+        '(some official services use a non-.gov.ph domain; confirm it is '
+        'an official site)');
   }
 }
 

@@ -1,0 +1,54 @@
+# Weekly staleness report for verified documents (tools/stale_report.dart).
+#
+# Staleness is a report, never a build failure: the tool always exits 0, and
+# this workflow only opens or refreshes a tracking issue while stale entries
+# exist. See TODO.md for the maintainer's verification checklist.
+name: Stale data
+
+on:
+  schedule:
+    # Mondays 02:17 UTC — quiet slot, avoids the top-of-hour queue.
+    - cron: "17 2 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  report:
+    name: Report stale entries
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
+        with:
+          flutter-version-file: .fvmrc
+          cache: true
+
+      - name: Tooling dependencies
+        run: dart pub get
+
+      - name: Generate report
+        run: dart run tools/stale_report.dart > stale-report.md
+
+      - name: Open or refresh the tracking issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if grep -q 'No verified documents are older' stale-report.md; then
+            echo 'Nothing is stale.'
+            exit 0
+          fi
+          title='Stale verified data (>180 days)'
+          existing="$(gh issue list --state open --search "$title in:title" \
+            --json number --jq '.[0].number // empty')"
+          if [ -n "$existing" ]; then
+            gh issue edit "$existing" --body-file stale-report.md
+          else
+            gh issue create --title "$title" --body-file stale-report.md
+          fi

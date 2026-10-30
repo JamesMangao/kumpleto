@@ -1,7 +1,9 @@
 # Seed entry — status: draft until verified by the human maintainer.
-# NOTE: no single national official source exists (each barangay issues its
-# own clearance); source_url intentionally null — validator accepts null for
-# draft status.
+# NOTE: no national official source exists (each barangay issues its own
+# clearance), so source_url points to a SAMPLE official barangay Citizen's
+# Charter on an LGU domain. The sample fee and processing time below were read
+# from that charter's indexed text — confirm them in the PDF, and confirm your
+# own barangay's requirements and fee before this entry leaves draft (TODO.md).
 schema_version: 1
 id: barangay-clearance
 name:
@@ -9,5 +11,38 @@ name:
   fil: Barangay Clearance
 agency: barangay
 status: draft
-source_url: null
+source_url: https://salaymisor.gov.ph/wp-content/uploads/2025/06/SALAGSAG.pdf
+summary:
+  en: >-
+    Clearance issued by the barangay where you live. Requirements, fees and
+    validity are set locally, so confirm them at your own barangay hall.
+  fil: >-
+    Clearance na inilalabas ng barangay kung saan ka nakatira. Lokal na
+    itinatakda ang mga requirement, bayad at validity, kaya kumpirmahin sa
+    barangay hall ninyo.
 tags: [job-hunt, clearance, residency]
+fee_note:
+  en: >-
+    Varies per barangay. Sample (Barangay Salagsag, Salay, Misamis Oriental):
+    ₱100 per Ordinance No. 1, s. 2022 — Citizen's Charter 2025.
+  fil: >-
+    Nagkakaiba-iba sa bawat barangay. Halimbawa (Barangay Salagsag, Salay,
+    Misamis Oriental): ₱100 ayon sa Ordinance No. 1, s. 2022 — Citizen's
+    Charter 2025.
+processing_note:
+  en: >-
+    Sample: about 15 minutes at the barangay office (Barangay Salagsag
+    Citizen's Charter 2025).
+  fil: >-
+    Halimbawa: mga 15 minuto sa barangay office (Barangay Salagsag Citizen's
+    Charter 2025).
+notes:
+  - en: >-
+      Barangays also issue a separate "First Time Job Seeker" certification —
+      that certification, not the clearance, is the proof of eligibility that
+      RA 11261 requires for waived government fees.
+    fil: >-
+      Naglalabas din ang mga barangay ng hiwalay na "First Time Job Seeker"
+      certification — ang certification na iyon, hindi ang clearance, ang
+      patunay ng eligibility na kailangan ng RA 11261 para sa waived na bayarin
+      sa gobyerno.

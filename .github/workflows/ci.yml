@@ -1,0 +1,80 @@
+# Data validation, tool tests, app analyze/test and a debug app bundle.
+#
+# Decision refs: docs/DECISIONS.md C1 (per-directory commands), C2
+# (ubuntu-latest, pinned action SHAs, Flutter read from .fvmrc), D-P2c
+# (validator runs errors-only, not --strict).
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    name: Validate, test, build
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      # Single source of truth for the SDK version: .fvmrc (decisions T1).
+      - name: Set up Flutter
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
+        with:
+          flutter-version-file: .fvmrc
+          cache: true
+
+      - name: Tooling dependencies
+        run: dart pub get
+
+      - name: Validate data
+        run: dart run tools/validate.dart --strict-on=errors
+
+      - name: Tool tests
+        run: dart test tools/test
+
+      # CI must exercise the real release pipeline: the app bundle only
+      # contains assets/data/data.json once the compiler has produced it.
+      - name: Compile data
+        run: dart run tools/build_data.dart
+
+      - name: App dependencies
+        working-directory: app
+        run: flutter pub get
+
+      - name: Analyze
+        working-directory: app
+        run: flutter analyze
+
+      - name: App tests
+        working-directory: app
+        run: flutter test
+
+      - name: Set up Java
+        uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # v4.9.1
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      # Debug-signed bundle: fast, and CI has no upload keystore (that file is
+      # gitignored by design). The release artifact is built locally for Play.
+      - name: Build app bundle (debug)
+        working-directory: app
+        run: flutter build appbundle --flavor prod --debug
+
+      - name: Upload app bundle
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: appbundle-prod-debug
+          path: app/build/app/outputs/bundle/prodDebug/*.aab
+          if-no-files-found: error

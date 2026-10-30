@@ -1,6 +1,9 @@
 # Seed entry — status: draft until verified by the human maintainer.
-# NOTE for verifier: lto.gov.ph blocks automated requests (403); confirm the
-# exact driver's-license page during verification (TODO.md).
+# NOTE for verifier: lto.gov.ph blocks automated requests (403). The LTMS portal
+# at portal.lto.gov.ph was reached directly and is the official online portal,
+# so it is set as apply_online_url. Confirm the exact student-permit →
+# driver's-license page and its requirements in a browser, then fill in
+# requirements/steps/fees (TODO.md).
 schema_version: 1
 id: lto-drivers-license
 name:
@@ -9,4 +12,6 @@ name:
 agency: lto
 status: draft
 source_url: https://lto.gov.ph/
+apply_online: true
+apply_online_url: https://portal.lto.gov.ph
 tags: [driving, first-time, renewal]

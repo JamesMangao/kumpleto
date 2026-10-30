@@ -42,8 +42,10 @@
   name:
     en: Pag-IBIG Fund (Home Development Mutual Fund)
     fil: Pag-IBIG Fund (Home Development Mutual Fund)
-  website: https://www.pagibigfund.com/
-  # Note: official site is .com, not .gov.ph — validator warning is expected.
+  website: https://www.pagibigfund.gov.ph/
+  # Note: pagibigfund.com was used here before, but it answers 204 No Content
+  # (empty body) — it is not the Fund's site. The Fund's online services portal
+  # is pagibigfundservices.com (not .gov.ph → validator warning expected there).
 
 - id: bir
   name:

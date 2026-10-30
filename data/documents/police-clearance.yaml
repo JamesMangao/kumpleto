@@ -1,6 +1,10 @@
 # Seed entry — status: draft until verified by the human maintainer.
-# NOTE for verifier: pnp.gov.ph blocks automated requests (403); confirm the
-# exact clearance page during verification (TODO.md).
+# NOTE for verifier: pnp.gov.ph blocks automated requests (403), so source_url
+# and validity_months come from the official page's indexed text and must be
+# confirmed in a browser (TODO.md). The steps in the note below were read from
+# the National Police Clearance System (pnpclearance.ph, verified reachable).
+# apply_online_url is that same official system on a non-.gov.ph host — an
+# expected validator warning (see TODO.md step 4).
 schema_version: 1
 id: police-clearance
 name:
@@ -8,5 +12,38 @@ name:
   fil: Police Clearance
 agency: pnp
 status: draft
-source_url: https://pnp.gov.ph/
+source_url: https://pnp.gov.ph/national-police-clearance
+apply_online: true
+apply_online_url: https://pnpclearance.ph
+validity_months: 6
+summary:
+  en: >-
+    National Police Clearance issued by the PNP. Apply through the National
+    Police Clearance System, then appear in person for biometrics.
+  fil: >-
+    National Police Clearance na inilalabas ng PNP. Mag-apply sa National Police
+    Clearance System, pagkatapos pumunta nang personal para sa biometrics.
 tags: [job-hunt, clearance]
+requirements:
+  - id: valid-id
+    text:
+      en: >-
+        Valid government-issued ID — presented when you apply, and used for the
+        required selfie holding the ID
+      fil: >-
+        Valid na ID mula sa gobyerno — ipapakita sa pag-apply, at gagamitin sa
+        kailangang selfie na hawak ang ID
+    original: true
+notes:
+  - en: >-
+      Applications with appearance are open to all applicants; biometrics
+      (photograph, signature, fingerprints) are collected in person at the
+      appointment location. Applicants who completed an in-person clearance
+      within the last three years may use the non-appearance process with the
+      same account.
+    fil: >-
+      Bukas sa lahat ng aplikante ang clearance application na may personal na
+      pagpunta; kinukuha nang personal sa appointment location ang biometrics
+      (litrato, pirma, fingerprints). Ang mga nakumpleto ang clearance nang
+      personal sa nakalipas na tatlong taon ay maaaring gumamit ng
+      non-appearance process gamit ang parehong account.

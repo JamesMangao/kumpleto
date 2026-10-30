@@ -1,6 +1,11 @@
 # Seed entry — status: draft until verified by the human maintainer.
-# NOTE: official website is pagibigfund.com (.com, not .gov.ph) — expected
-# validator warning.
+# NOTE for verifier: pagibigfund.com answers 204 No Content (empty body), so it
+# is NOT the Fund's site — source_url now points at the official .gov.ph domain.
+# That host serves a browser check to automated requests, so requirements and
+# steps are deliberately still empty. apply_online_url is the Fund's own
+# Virtual Pag-IBIG portal, read directly ("Be a Member" → Register);
+# pagibigfundservices.com is not a .gov.ph host — expected validator warning.
+# Confirm MID registration in a browser (TODO.md).
 schema_version: 1
 id: pag-ibig
 name:
@@ -8,5 +13,7 @@ name:
   fil: Pag-IBIG MID Number
 agency: pagibig
 status: draft
-source_url: https://www.pagibigfund.com/
+source_url: https://www.pagibigfund.gov.ph/
+apply_online: true
+apply_online_url: https://www.pagibigfundservices.com/virtualpagibig/Membership.aspx
 tags: [employment, housing, first-time]

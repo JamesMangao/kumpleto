@@ -107,6 +107,10 @@ connected desktop/web devices, network).
 - **G2 — Only the human maintainer** may set `status: verified` /
   `last_verified`. Everything authored by the agent is `status: draft`
   and cites an official source URL or leaves fields null.
+- **G3 — No `CHANGELOG.md`.** Releases are described by the Play release
+  notes drafted at release time (docs/PLAY_RELEASE.md §7) and by git history;
+  a hand-maintained changelog would duplicate both and drift. Revisit if a
+  GitHub Releases page is ever published.
 
 ### P2 follow-up decisions (same day)
 
@@ -119,8 +123,10 @@ connected desktop/web devices, network).
   optional `notes: [{en, fil}]` list so the job-hunt-pack RA 11261 pointer
   (required by the spec) can live in the bundle draft itself.
 - **D-P2c — `--strict` vs pagibig**: `--strict` intentionally fails on the
-  two permanent `.gov.ph` warnings for pagibigfund.com; CI and the P2 gate
-  use errors-only mode (`--strict-on=errors`, the documented default).
+  two permanent non-`.gov.ph` warnings — `pagibigfundservices.com` (pag-ibig
+  `apply_online_url`) and `pnpclearance.ph` (police-clearance
+  `apply_online_url`), both official service domains; CI and the P2 gate use
+  errors-only mode (`--strict-on=errors`, the documented default).
 - **D-P2d — tool tests run as `dart test tools/test`**: the Dart CLI's
   pre-check ignores `dart_test.yaml` paths when no default `test/` dir
   exists at the root, so the explicit path is the canonical command

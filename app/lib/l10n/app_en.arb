@@ -9,11 +9,124 @@
   "onboardingDisclaimer": "Kumpleto is NOT a government app. It is an unofficial, community-maintained checklist. Requirements and fees change — always confirm with the official agency website before you apply.",
   "onboardingLanguageLabel": "Choose your language",
   "onboardingAcknowledge": "I understand",
+  "languageSystem": "System default",
+  "languageEnglish": "English",
+  "languageFilipino": "Filipino",
   "homeSearchHint": "Search documents",
+  "homeContinue": "Continue",
+  "homeBundles": "Life-event bundles",
+  "homeTags": "Browse by tag",
+  "homeAllDocuments": "All documents",
+  "homeEmptyTitle": "Loading your checklist…",
+  "homeEmptyBody": "Requirements, steps and official sources for every document appear here.",
   "documentsTitle": "Documents",
-  "settingsTitle": "Settings",
+  "documentsFilterAll": "All",
+  "documentsFilterAgency": "Agency",
+  "documentsFilterTag": "Tag",
+  "documentsNoResults": "No documents match your search.",
+  "documentsRequirementsCount": "{count} requirements",
+  "@documentsRequirementsCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "statusDraft": "Unverified",
+  "statusVerified": "Verified",
+  "statusDeprecated": "No longer valid",
+  "deprecatedBanner": "This document is no longer issued. It is kept for reference — check the official source for the replacement.",
+  "progressOf": "{checked} of {total} requirements",
+  "@progressOf": {
+    "placeholders": {
+      "checked": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
   "documentDetailTitle": "Document",
   "bundleDetailTitle": "Bundle",
+  "docRequirements": "What to bring",
+  "docSteps": "How to apply",
+  "docFees": "Fees",
+  "docProcessing": "Processing time",
+  "docWhere": "Where to apply",
+  "docValidity": "Validity",
+  "docValidMonths": "Valid for {months} months",
+  "@docValidMonths": {
+    "placeholders": {
+      "months": { "type": "int" }
+    }
+  },
+  "docValidForever": "No fixed expiry",
+  "docApplyOnline": "Apply online",
+  "docOfficialSource": "Official source",
+  "docReportOutdated": "Report outdated info",
+  "docReset": "Reset this checklist",
+  "docResetTitle": "Reset this checklist?",
+  "docResetMessage": "Every tick on this document is cleared. This cannot be undone.",
+  "docEmptyNotice": "Requirements and steps are not filled in yet. Confirm with the official source before you apply.",
+  "docDependsOn": "You will need these first",
+  "docNotes": "Notes",
+  "docOriginal": "Original",
+  "docOptional": "Optional",
+  "docPhotocopies": "{count} photocopies",
+  "@docPhotocopies": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "docVerifiedDays": "Verified {days} days ago",
+  "@docVerifiedDays": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+  "docNeverVerified": "Not yet verified by a maintainer",
+  "bundleNotes": "About this bundle",
+  "bundleDocuments": "Documents in this bundle",
+  "settingsTitle": "Settings",
+  "settingsLanguage": "Language",
+  "settingsAppearance": "Appearance",
+  "settingsThemeSystem": "Follow system",
+  "settingsThemeLight": "Light",
+  "settingsThemeDark": "Dark",
+  "settingsData": "Data",
+  "settingsDataVersion": "Data version",
+  "settingsDataSource": "Source",
+  "settingsCheckForUpdates": "Check for updates",
+  "settingsChecking": "Checking…",
+  "settingsUpdateDone": "Data updated",
+  "settingsUpToDate": "Already up to date",
+  "settingsUpdateFailed": "Update failed: {reason}",
+  "@settingsUpdateFailed": {
+    "placeholders": {
+      "reason": { "type": "String" }
+    }
+  },
+  "settingsLastChecked": "Last checked {when}",
+  "@settingsLastChecked": {
+    "placeholders": {
+      "when": { "type": "String" }
+    }
+  },
+  "settingsNeverChecked": "Never checked",
+  "settingsResetProgress": "Reset all progress",
+  "settingsResetTitle": "Reset all progress?",
+  "settingsResetMessage": "Every tick on every document is cleared. This cannot be undone.",
+  "settingsProgressReset": "All progress cleared",
+  "settingsAbout": "About",
+  "settingsAppVersion": "App version {version}",
+  "@settingsAppVersion": {
+    "placeholders": {
+      "version": { "type": "String" }
+    }
+  },
+  "settingsDisclaimer": "Disclaimer",
+  "settingsPrivacy": "Privacy",
+  "settingsLicenses": "Open-source licenses",
+  "settingsSourceCode": "Source code on GitHub",
   "errorNotFound": "Not found",
-  "back": "Back"
+  "back": "Back",
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "loading": "Loading…",
+  "retry": "Retry"
 }

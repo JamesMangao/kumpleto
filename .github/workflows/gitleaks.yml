@@ -1,0 +1,33 @@
+# Secret scanning on every push and pull request (decision C3).
+#
+# Local equivalent: `winget install Gitleaks.Gitleaks` then
+# `gitleaks detect --redact` from the repo root. Keystores, key.properties
+# and google-services.json are gitignored (.gitignore) — this workflow is the
+# second pair of eyes that they never slip in.
+name: Gitleaks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    name: Scan for secrets
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          # Full history: gitleaks scans commits, not just the snapshot.
+          fetch-depth: 0
+
+      - name: Gitleaks
+        uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2.3.9
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

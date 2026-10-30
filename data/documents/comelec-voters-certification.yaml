@@ -1,4 +1,9 @@
 # Seed entry — status: draft until verified by the human maintainer.
+# NOTE for verifier: comelec.gov.ph returns only navigation chrome to automated
+# requests, so no official fee or requirement text could be read and NO field is
+# filled. Figures seen elsewhere (e.g. a ₱75 certification fee, free for senior
+# citizens / PWDs / IPs) come from secondary sources only — confirm at the Office
+# of the Election Officer before writing anything (TODO.md).
 schema_version: 1
 id: comelec-voters-certification
 name:

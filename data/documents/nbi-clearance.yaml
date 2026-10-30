@@ -1,6 +1,8 @@
-# FAKE-FREE SEED: real entry, but status: draft until the human maintainer
-# verifies it against the official source. Never edited to "verified" here.
-# Fields not yet researched are omitted (= null); see TODO.md.
+# Seed entry — status: draft until verified by the human maintainer.
+# Requirements, steps and fee/processing notes below were read from the official
+# NBI pages: /how-to-apply-nbi-clearance and the Citizen's Charter page for
+# first-time jobseekers. Nothing here is guessed; the maintainer still confirms
+# and sets status: verified + last_verified (see TODO.md).
 schema_version: 1
 id: nbi-clearance
 name:
@@ -8,5 +10,126 @@ name:
   fil: NBI Clearance
 agency: nbi
 status: draft
-source_url: https://www.nbi.gov.ph/
+source_url: https://nbi.gov.ph/how-to-apply-nbi-clearance
+apply_online: true
+apply_online_url: https://clearance.nbi.gov.ph
+summary:
+  en: >-
+    Clearance issued by the National Bureau of Investigation, commonly required
+    by employers. Apply online, then go to the chosen branch for biometrics.
+  fil: >-
+    Clearance mula sa National Bureau of Investigation, karaniwang hinihingi ng
+    mga employer. Mag-apply online, pagkatapos pumunta sa napiling branch para
+    sa biometrics.
 tags: [job-hunt, clearance, renewal]
+requirements:
+  - id: reference-number
+    text:
+      en: >-
+        Printed or digital Reference Number (or QR code) from your online
+        application
+      fil: >-
+        Nakaprinta o digital na Reference Number (o QR code) mula sa iyong
+        online application
+  - id: payment-receipt
+    text:
+      en: Proof of payment / receipt
+      fil: Patunay ng bayad / resibo
+  - id: valid-ids
+    text:
+      en: >-
+        Two (2) valid government-issued IDs, original and not expired —
+        passport, driver's license, national ID, UMID, postal ID or PSA birth
+        certificate
+      fil: >-
+        Dalawang (2) valid na ID mula sa gobyerno, orihinal at hindi expired —
+        pasaporte, driver's license, national ID, UMID, postal ID o PSA birth
+        certificate
+    original: true
+  - id: barangay-certification
+    text:
+      en: >-
+        First-time jobseekers (RA 11261) — Barangay Certification on the
+        barangay's official letterhead, dry-sealed and signed by the Punong
+        Barangay or an authorized barangay officer
+      fil: >-
+        First-time jobseekers (RA 11261) — Barangay Certification sa official
+        letterhead ng barangay, may dry seal at pinirmahan ng Punong Barangay o
+        awtorisadong barangay officer
+    original: true
+    optional: true
+  - id: oath-of-undertaking
+    text:
+      en: First-time jobseekers (RA 11261) — signed Oath of Undertaking
+      fil: First-time jobseekers (RA 11261) — pinirmahang Oath of Undertaking
+    original: true
+    optional: true
+steps:
+  - en: >-
+      Register or log in at the NBI Clearance Application Portal
+      (clearance.nbi.gov.ph); verify your account with the OTP sent to your
+      mobile number and email.
+    fil: >-
+      Mag-register o mag-log in sa NBI Clearance Application Portal
+      (clearance.nbi.gov.ph); i-verify ang account gamit ang OTP na ipinadala sa
+      mobile number at email mo.
+  - en: >-
+      Complete the Applicant Information Form (personal details, family
+      background, education and employment) and save it.
+    fil: >-
+      Sagutan ang Applicant Information Form (personal na detalye, background ng
+      pamilya, edukasyon at trabaho) at i-save ito.
+  - en: >-
+      Click Apply for Clearance and select the valid government ID you will
+      bring to the branch.
+    fil: >-
+      I-click ang Apply for Clearance at piliin ang valid na ID na dadalhin mo
+      sa branch.
+  - en: Choose the NBI branch and an available date and time slot (AM or PM).
+    fil: Piliin ang branch ng NBI at ang available na petsa at oras (AM o PM).
+  - en: >-
+      Pay the fee and keep the generated Reference Number — it is your gate pass
+      at the branch.
+    fil: >-
+      Bayaran ang fee at itago ang Reference Number na ibibigay — ito ang gate
+      pass mo sa branch.
+  - en: >-
+      Go to the branch with your reference number, proof of payment and two
+      valid IDs for the capture of your photograph, fingerprints and signature.
+    fil: >-
+      Pumunta sa branch dala ang reference number, patunay ng bayad at dalawang
+      valid na ID para sa pagkuha ng litrato, fingerprints at pirma.
+  - en: >-
+      Receive the printed clearance. If the system flags a "HIT", return on the
+      scheduled date; quality-control verification may apply.
+    fil: >-
+      Kunin ang nakaprintang clearance. Kung may "HIT", bumalik sa nakatakdang
+      petsa; maaaring may quality-control verification.
+  - en: >-
+      First-time jobseekers (RA 11261) apply through the dedicated portal
+      firsttimejobseekers.nbi.gov.ph — the clearance is free of charge.
+    fil: >-
+      Ang mga first-time jobseeker (RA 11261) ay sa dedicated na portal
+      firsttimejobseekers.nbi.gov.ph mag-apply — libre ang clearance.
+fee_note:
+  en: >-
+    ₱130 basic clearance fee plus an e-payment service charge of about
+    ₱25–₱30. Free of charge for first-time jobseekers under RA 11261.
+  fil: >-
+    ₱130 na basic fee para sa clearance at dagdag na e-payment service charge
+    na mga ₱25–₱30. Libre para sa mga first-time jobseeker sa ilalim ng
+    RA 11261.
+processing_note:
+  en: >-
+    About 2 minutes 15 seconds at the branch in the first-time jobseeker lane
+    (NBI Citizen's Charter). A "HIT" means a return visit on the scheduled date.
+  fil: >-
+    Mga 2 minuto at 15 segundo sa branch sa first-time jobseeker lane (NBI
+    Citizen's Charter). Kapag may "HIT", babalik ka sa nakatakdang petsa.
+notes:
+  - en: >-
+      Once your transaction is marked "PAID", recent system updates allow a
+      15-day grace period to visit your chosen branch.
+    fil: >-
+      Kapag na-mark na "PAID" ang transaksyon, may 15-araw na grace period ayon
+      sa mga bagong update ng system para puntahan ang napiling branch.

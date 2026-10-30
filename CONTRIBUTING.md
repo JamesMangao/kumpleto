@@ -27,7 +27,8 @@ cd app; flutter pub get; flutter test # app tests
   `source_url`, a `last_verified` date, and non-empty `requirements` and
   `steps`.
 - Prefer official `.gov.ph` domains (the validator warns otherwise;
-  Pag-IBIG's official site is pagibigfund.com).
+  some official services use a non-`.gov.ph` domain, e.g. Pag-IBIG's own
+  Virtual Pag-IBIG portal at `pagibigfundservices.com`).
 - Prefer "see official site" over hard-copied fee numbers; include a number
   only with a `source_url` on the same entry.
 

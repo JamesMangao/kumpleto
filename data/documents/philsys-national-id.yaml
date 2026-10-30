@@ -1,4 +1,9 @@
 # Seed entry — status: draft until verified by the human maintainer.
+# NOTE for verifier: philsys.gov.ph itself is reachable, but the Step 1 and
+# Step 2 registration pages answer HTTP 200 with an ~172-byte empty body to
+# automated requests, and register.philsys.gov.ph did not resolve from the
+# agent's host at all. NO factual field is filled — confirm the pages and the
+# exact online-registration portal in a browser (TODO.md).
 schema_version: 1
 id: philsys-national-id
 name:

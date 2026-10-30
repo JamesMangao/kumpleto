@@ -1,4 +1,11 @@
 # Seed entry — status: draft until verified by the human maintainer.
+# NOTE for verifier: source_url is the official BIR eServices page, which names
+# ORUS (Online Registration and Update System) as the end-to-end online service
+# for taxpayer registration. orus.bir.gov.ph itself answers 403 to automated
+# requests, so that link came from the official page's indexed text — marked
+# here, not treated as verified. Which form applies (1901 for self-employed,
+# 1902 for employees) and the RDO process still need browser confirmation, so
+# requirements and steps are left empty (TODO.md).
 schema_version: 1
 id: tin-bir
 name:
@@ -6,5 +13,7 @@ name:
   fil: TIN (BIR)
 agency: bir
 status: draft
-source_url: https://www.bir.gov.ph/
+source_url: https://www.bir.gov.ph/eServices
+apply_online: true
+apply_online_url: https://orus.bir.gov.ph/
 tags: [employment, tax, first-time]

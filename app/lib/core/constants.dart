@@ -26,6 +26,10 @@ const String appDisplayName = 'Kumpleto';
 
 /// Network limits for the data update flow (see docs/DECISIONS.md, P2).
 const Duration dataFetchTimeout = Duration(seconds: 10);
+
+/// Minimum spacing between *automatic* feed checks (Settings can check
+/// manually at any time).
+const Duration dataCheckInterval = Duration(hours: 24);
 const int dataFetchMaxBytes = 2 * 1024 * 1024; // 2 MB
 const int dataFetchMaxRedirects = 3;
 

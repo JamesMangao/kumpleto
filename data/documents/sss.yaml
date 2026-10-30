@@ -1,4 +1,7 @@
 # Seed entry — status: draft until verified by the human maintainer.
+# The two application routes below were read from the official SSS page
+# "Become an SSS Member"; no other field could be confirmed from it, so none
+# were added. The maintainer confirms and sets status: verified (TODO.md).
 schema_version: 1
 id: sss
 name:
@@ -6,5 +9,21 @@ name:
   fil: SSS Number
 agency: sss
 status: draft
-source_url: https://www.sss.gov.ph/
+source_url: https://www.sss.gov.ph/become-an-sss-member/
+apply_online: true
+apply_online_url: https://member.sss.gov.ph
+summary:
+  en: >-
+    Social Security (SS) number for a first-time SSS member — usually asked for
+    by employers in the private sector.
+  fil: >-
+    Social Security (SS) number para sa unang beses na miyembro ng SSS —
+    karaniwang hinihingi ng mga employer sa pribadong sektor.
 tags: [job-hunt, employment, first-time]
+steps:
+  - en: >-
+      Apply for an SS number through the SSS website (My.SSS member portal).
+    fil: >-
+      Mag-apply ng SS number sa website ng SSS (My.SSS member portal).
+  - en: Or apply for an SS number at the E-Center of an SSS branch.
+    fil: O kaya'y mag-apply ng SS number sa E-Center ng isang sangay ng SSS.

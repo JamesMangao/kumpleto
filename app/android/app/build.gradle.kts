@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
@@ -40,14 +42,36 @@ android {
         }
     }
 
+    // Play App Signing: the upload keystore is created by the human
+    // maintainer and configured via android/key.properties (gitignored, see
+    // docs/PLAY_RELEASE.md §2). While that file is absent the release build
+    // keeps the debug key, so `flutter build appbundle --flavor prod` and CI
+    // produce the same debug-signed artifact for installability testing only.
+    val keystorePropertiesFile = rootProject.file("key.properties")
+    val keystoreProperties = Properties().apply {
+        if (keystorePropertiesFile.exists()) {
+            keystorePropertiesFile.inputStream().use { load(it) }
+        }
+    }
+
+    if (keystorePropertiesFile.exists()) {
+        signingConfigs {
+            create("release") {
+                storeFile = file(keystoreProperties.getProperty("storeFile"))
+                storePassword = keystoreProperties.getProperty("storePassword")
+                keyAlias = keystoreProperties.getProperty("keyAlias")
+                keyPassword = keystoreProperties.getProperty("keyPassword")
+            }
+        }
+    }
+
     buildTypes {
         release {
-            // Play App Signing: the upload keystore is created by the human
-            // maintainer and configured via android/key.properties (gitignored).
-            // Debug signing keeps `flutter build appbundle --flavor prod`
-            // working before that file exists; CI produces the same
-            // debug-signed artifact for testing only. See docs/PLAY_RELEASE.md.
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = if (keystorePropertiesFile.exists()) {
+                signingConfigs.getByName("release")
+            } else {
+                signingConfigs.getByName("debug")
+            }
         }
     }
 }

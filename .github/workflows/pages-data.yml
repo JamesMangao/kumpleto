@@ -1,0 +1,80 @@
+# Compiles data/ and publishes dist/data.json to GitHub Pages.
+#
+# The app fetches https://jamesmangao.github.io/kumpleto/data.json
+# (app/lib/core/constants.dart), so the deployed artifact is exactly one file
+# at the site root. Pages must be configured with source "GitHub Actions"
+# (human TODO in TODO.md) before the first deploy succeeds.
+name: Publish data feed
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "data/**"
+      - "schema/**"
+      - "tools/**"
+      - "pubspec.yaml"
+      - "pubspec.lock"
+      - ".github/workflows/pages-data.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never publish from two runs at once; do not cancel a publish in flight.
+concurrency:
+  group: pages-data
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build data feed
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
+        with:
+          flutter-version-file: .fvmrc
+          cache: true
+
+      - name: Tooling dependencies
+        run: dart pub get
+
+      - name: Validate data
+        run: dart run tools/validate.dart --strict-on=errors
+
+      # Release bundle only: drafts never reach the published feed.
+      - name: Compile data
+        run: dart run tools/build_data.dart
+
+      - name: Stage the site
+        run: |
+          mkdir -p _site
+          cp dist/data.json _site/data.json
+
+      - name: Configure Pages
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5.0.0
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
+        with:
+          path: _site
+
+  deploy:
+    name: Deploy to Pages
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5

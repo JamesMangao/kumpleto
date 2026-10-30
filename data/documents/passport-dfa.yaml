@@ -1,6 +1,9 @@
 # Seed entry — status: draft until verified by the human maintainer.
-# NOTE for verifier: dfa.gov.ph blocks automated requests (403); confirm the
-# exact passport page during verification (TODO.md).
+# NOTE for verifier: dfa.gov.ph blocks automated requests (403). The official
+# appointment system is passport.gov.ph (its own indexed text states that
+# appointments are free and are made only through that site), so it is set as
+# apply_online_url. Confirm the exact passport page and the new-applicant
+# requirements in a browser, then fill in requirements/steps/fees (TODO.md).
 schema_version: 1
 id: passport-dfa
 name:
@@ -9,4 +12,6 @@ name:
 agency: dfa
 status: draft
 source_url: https://www.dfa.gov.ph/
+apply_online: true
+apply_online_url: https://www.passport.gov.ph
 tags: [passport, travel, first-time, renewal]

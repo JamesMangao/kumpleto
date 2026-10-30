@@ -21,12 +21,19 @@ dependencies:
   package_info_plus: ^10.2.2
   flutter_localizations:
     sdk: flutter
+  drift: ^2.35.2
+  sqlite3_flutter_libs: ^0.6.0+eol
+  crypto: ^3.0.7
+  path_provider: ^2.1.6
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^6.0.0
+  drift_dev: ^2.35.1
+  build_runner: ^2.16.2
+  flutter_launcher_icons: ^0.14.3
 
 flutter:
   uses-material-design: true
@@ -39,3 +46,18 @@ flutter:
     - assets/data/
 
   generate: true
+
+# Launcher icon generation (source artwork lives in app/icons/ — see
+# docs/PLAY_RELEASE.md). Regenerate the Android mipmaps with:
+#   dart run flutter_launcher_icons
+flutter_launcher_icons:
+  android: true
+  # No iOS target in this repo (Android-only release).
+  ios: false
+  image_path: "icons/icon-1024.png"
+  adaptive_icon_background: "#0E6B58"
+  adaptive_icon_foreground: "icons/icon-foreground-1024.png"
+  # Artwork already has margin baked in; no extra inset padding.
+  adaptive_icon_foreground_inset: 0
+  # Android 13+ themed icon (same silhouette, system-tinted).
+  adaptive_icon_monochrome: "icons/icon-foreground-1024.png"
