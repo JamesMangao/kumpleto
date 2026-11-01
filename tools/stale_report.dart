@@ -10,7 +10,8 @@ import 'dart:io';
 
 import 'package:kumpleto_tools/kumpleto_data.dart';
 
-const int staleDays = 180;
+/// Same threshold the validator and the app use (shared data contract).
+const int staleDays = staleVerifiedDays;
 
 Future<void> main() async {
   final root = repoRoot();

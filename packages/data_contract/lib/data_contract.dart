@@ -222,3 +222,35 @@ String? assertPublishable(Map<String, Object?> data) => verifyDataJson(
       maxSchemaVersion: kSchemaVersion,
       minDocuments: kMinPublishableDocuments,
     );
+
+/// Verification-age thresholds (docs/DECISIONS.md), shared by the validator,
+/// the weekly staleness report and the app's document header so a "stale"
+/// badge means the same thing everywhere.
+const int freshVerifiedDays = 90;
+const int staleVerifiedDays = 180;
+
+/// How old a document's `last_verified` is relative to [now].
+enum VerificationTier {
+  /// Within [freshVerifiedDays] of [now].
+  fresh,
+
+  /// Between [freshVerifiedDays] and [staleVerifiedDays] — re-check soon.
+  stale,
+
+  /// Older than [staleVerifiedDays] — the validator warns, the app shows red.
+  overdue,
+
+  /// Never verified (or the date could not be parsed).
+  unknown,
+}
+
+VerificationTier verificationTier({
+  required DateTime? lastVerified,
+  required DateTime now,
+}) {
+  if (lastVerified == null) return VerificationTier.unknown;
+  final age = now.difference(lastVerified).inDays;
+  if (age <= freshVerifiedDays) return VerificationTier.fresh;
+  if (age <= staleVerifiedDays) return VerificationTier.stale;
+  return VerificationTier.overdue;
+}

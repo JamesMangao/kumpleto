@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kumpleto_data_contract/data_contract.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../l10n/app_localizations.dart';
@@ -131,11 +132,14 @@ class VerificationAge extends StatelessWidget {
         ),
       );
     }
-    final age = DateTime.now().difference(lastVerified).inDays;
-    final color = switch (age) {
-      <= 90 => const Color(0xFF2E7D32), // green
-      <= 180 => const Color(0xFFB26A00), // amber
-      _ => const Color(0xFFC62828), // red
+    final now = DateTime.now();
+    final age = now.difference(lastVerified).inDays;
+    final tier = verificationTier(lastVerified: lastVerified, now: now);
+    final color = switch (tier) {
+      VerificationTier.fresh => const Color(0xFF2E7D32), // green
+      VerificationTier.stale => const Color(0xFFB26A00), // amber
+      VerificationTier.overdue => const Color(0xFFC62828), // red
+      VerificationTier.unknown => Theme.of(context).colorScheme.onSurfaceVariant,
     };
     return Semantics(
       container: true,

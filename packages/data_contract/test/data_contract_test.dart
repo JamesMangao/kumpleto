@@ -206,4 +206,33 @@ void main() {
       expect(mapsOf('not a list'), isEmpty);
     });
   });
+
+  group('verification-age tiers (validator + report + app agree)', () {
+    final now = DateTime.utc(2026, 11, 1);
+
+    VerificationTier tierOf(int daysAgo) => verificationTier(
+          lastVerified: now.subtract(Duration(days: daysAgo)),
+          now: now,
+        );
+
+    test('the thresholds are the documented 90 / 180 days', () {
+      expect(freshVerifiedDays, 90);
+      expect(staleVerifiedDays, 180);
+    });
+
+    test('boundaries map to the documented tiers', () {
+      expect(tierOf(0), VerificationTier.fresh);
+      expect(tierOf(freshVerifiedDays), VerificationTier.fresh);
+      expect(tierOf(freshVerifiedDays + 1), VerificationTier.stale);
+      expect(tierOf(staleVerifiedDays), VerificationTier.stale);
+      expect(tierOf(staleVerifiedDays + 1), VerificationTier.overdue);
+    });
+
+    test('never verified is unknown, not stale', () {
+      expect(
+        verificationTier(lastVerified: null, now: now),
+        VerificationTier.unknown,
+      );
+    });
+  });
 }

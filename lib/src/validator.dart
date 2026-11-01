@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:json_schema/json_schema.dart';
+import 'package:kumpleto_data_contract/data_contract.dart'
+    show VerificationTier, staleVerifiedDays, verificationTier;
 
 import 'data_set.dart';
 
@@ -33,8 +35,9 @@ class ValidationReport {
       errors.isEmpty && (!strict || warnings.isEmpty);
 }
 
-/// Thresholds (see docs/DECISIONS.md).
-const int staleVerifiedDays = 180;
+/// Draft-age threshold (see docs/DECISIONS.md). The verification-age
+/// thresholds (90 / 180 days) live in the shared data contract, so the app,
+/// the validator and the staleness report cannot drift apart.
 const int oldDraftDays = 90;
 
 /// Validates [ds] against the JSON schemas in [schemaDir] plus the semantic
@@ -116,7 +119,8 @@ ValidationReport validateDataSet(
       } else if (date.isAfter(now)) {
         error('document "$id": last_verified $lastVerified is in the future');
       } else if (status == 'verified' &&
-          now.difference(date).inDays > staleVerifiedDays) {
+          verificationTier(lastVerified: date, now: now) ==
+              VerificationTier.overdue) {
         warn('document "$id": verified ${now.difference(date).inDays} days ago '
             '(> $staleVerifiedDays) — stale');
       }
