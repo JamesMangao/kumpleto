@@ -25,6 +25,10 @@ dependencies:
   sqlite3_flutter_libs: ^0.6.0+eol
   crypto: ^3.0.7
   path_provider: ^2.1.6
+  # Shared hash/schema/release contract - same package the repo tooling uses,
+  # so the app's verify gate can never drift from what the compiler published.
+  kumpleto_data_contract:
+    path: ../packages/data_contract
 
 dev_dependencies:
   flutter_test:

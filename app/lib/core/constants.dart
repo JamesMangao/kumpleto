@@ -4,6 +4,8 @@
 /// (and the matching GitHub Pages configuration).
 library;
 
+import 'package:kumpleto_data_contract/data_contract.dart';
+
 /// GitHub repository owner (case as shown on GitHub).
 const String repoOwner = 'JamesMangao';
 
@@ -16,7 +18,10 @@ const String dataUrl = 'https://jamesmangao.github.io/kumpleto/data.json';
 
 /// Highest `schema_version` this app knows how to read.
 /// Data with a greater schema_version is ignored (kept: current data).
-const int supportedSchemaVersion = 1;
+///
+/// Single-sourced from the shared contract (also what the compiler stamps
+/// into every payload) - bump it there, never here.
+const int supportedSchemaVersion = kSchemaVersion;
 
 /// Android applicationId (also the basis of the Play listing identity).
 const String applicationId = 'io.github.jamesmangao.kumpleto';

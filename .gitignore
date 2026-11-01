@@ -27,3 +27,5 @@ service-account*.json
 Thumbs.db
 .DS_Store
 .oxcode-memory/
+.tmp-jdk/
+.cloud-attachments/

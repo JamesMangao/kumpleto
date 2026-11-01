@@ -43,6 +43,14 @@ jobs:
       - name: Tool tests
         run: dart test tools/test
 
+      # The shared data contract has its own tests: the tripwire for hash or
+      # schema regressions in both the tooling and the app.
+      - name: Data contract tests
+        working-directory: packages/data_contract
+        run: |
+          dart pub get
+          dart test
+
       # CI must exercise the real release pipeline: the app bundle only
       # contains assets/data/data.json once the compiler has produced it.
       - name: Compile data

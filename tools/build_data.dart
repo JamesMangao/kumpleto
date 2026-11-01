@@ -19,6 +19,12 @@ import 'package:kumpleto_tools/kumpleto_data.dart';
 Future<void> main(List<String> args) async {
   final includeDraftsFlag = args.contains('--include-drafts');
 
+  /// Refuse to publish a feed that verifies but carries no documents (the
+  /// default state while every entry is still `status: draft`). Local runs
+  /// stay non-fatal so drafts development keeps flowing; CI passes this flag
+  /// so a valid-but-empty feed can never reach GitHub Pages.
+  final strictRelease = args.contains('--strict-release');
+
   final root = repoRoot();
   final dataDir = Directory('${root.path}/data');
   final schemaDir = Directory('${root.path}/schema');
@@ -67,6 +73,28 @@ Future<void> main(List<String> args) async {
   final releaseDocuments = release.documents;
   final releaseBundles = release.bundles;
 
+  final publishProblem = assertPublishable(buildDataJson(
+    agencies: agencies,
+    documents: releaseDocuments,
+    bundles: releaseBundles,
+    dataVersion: iso,
+    generatedAt: iso,
+  ));
+  if (publishProblem != null) {
+    final message = 'release feed is not publishable: $publishProblem';
+    if (strictRelease) {
+      stderr.writeln(
+        'FATAL: $message\n'
+        '       Promote at least one document to `status: verified` in '
+        'data/documents/ (see TODO.md), or run without --strict-release '
+        'for a local drafts build.',
+      );
+      exitCode = 1;
+      return;
+    }
+    stderr.writeln('WARNING: $message');
+  }
+
   final releaseJson = buildDataJson(
     agencies: agencies,
     documents: releaseDocuments,
@@ -104,7 +132,7 @@ Future<void> main(List<String> args) async {
   }
 
   stdout.writeln(
-    'Built data.json (schema v1, data_version $iso)\n'
+    'Built data.json (schema v$kSchemaVersion, data_version $iso)\n'
     '  sha256:        ${releaseJson['sha256']}\n'
     '  release:       ${releaseDocuments.length} documents, '
     '${releaseBundles.length} bundles, ${agencies.length} agencies\n'
@@ -112,4 +140,10 @@ Future<void> main(List<String> args) async {
     '${allBundles.length} bundles'
     '${includeDraftsFlag ? '\n  dev asset:     ${draftsAsset.path}' : ''}',
   );
+  if (release.droppedBundleIds.isNotEmpty) {
+    stdout.writeln(
+      '  excluded:      ${release.droppedBundleIds.length} bundle(s) still '
+      'referencing drafts: ${release.droppedBundleIds.join(', ')}',
+    );
+  }
 }

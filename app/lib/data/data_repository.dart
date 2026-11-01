@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart' show AssetBundle, rootBundle;
+import 'package:flutter/services.dart'
+    show AssetBundle, appFlavor, rootBundle;
 
 import '../core/canonical.dart';
 import '../core/constants.dart';
@@ -81,11 +82,19 @@ class DataRepository {
     }
   }
 
-  /// The bundled asset. In debug builds the drafts asset is preferred when it
-  /// was generated (`dart run tools/build_data.dart --include-drafts`); it is
-  /// never present in a release build (see docs/DECISIONS.md, P3).
+  /// The bundled asset. The `dev` flavor prefers the drafts asset when it was
+  /// generated (`dart run tools/build_data.dart --include-drafts`), and so does
+  /// `flutter test` (no flavor), so tests keep exercising the drafts path.
+  ///
+  /// Gated on the flavor rather than `kDebugMode` alone so a
+  /// `--flavor dev --release` build - the one that actually gets sideloaded -
+  /// reads drafts instead of falling back to the empty release feed. The
+  /// drafts file is gitignored and deleted by a plain compiler run, and
+  /// `--flavor prod` never reads it (docs/DECISIONS.md, P3).
   Future<_Candidate?> _readBundled(List<String> skipped) async {
-    if (kDebugMode) {
+    const allowDrafts =
+        appFlavor == 'dev' || (appFlavor == null && kDebugMode);
+    if (allowDrafts) {
       final drafts = await _readAsset(draftsAsset);
       if (drafts != null) {
         final candidate = _verify(drafts, DataSource.bundledDrafts, skipped);

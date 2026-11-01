@@ -1,0 +1,18 @@
+name: kumpleto_data_contract
+description: >-
+  The single implementation of everything the compiled data.json feed and the
+  app agree on: canonical JSON, sha256, the payload shape, the schema
+  version, the drafts→release selection, and the publishability gate.
+  Pure Dart (no Flutter) so both the repo tooling and the app consume one copy.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.13.5
+
+dependencies:
+  crypto: ^3.0.6
+
+dev_dependencies:
+  lints: ^6.0.0
+  test: ^1.26.3

@@ -13,6 +13,7 @@ on:
       - "data/**"
       - "schema/**"
       - "tools/**"
+      - "packages/**"
       - "pubspec.yaml"
       - "pubspec.lock"
       - ".github/workflows/pages-data.yml"
@@ -50,8 +51,11 @@ jobs:
         run: dart run tools/validate.dart --strict-on=errors
 
       # Release bundle only: drafts never reach the published feed.
+      # --strict-release refuses to publish a valid-but-empty feed: a payload
+      # where every document is still `status: draft` verifies but carries no
+      # documents, which would blank out the app for every user.
       - name: Compile data
-        run: dart run tools/build_data.dart
+        run: dart run tools/build_data.dart --strict-release
 
       - name: Stage the site
         run: |
