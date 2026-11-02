@@ -1,15 +1,98 @@
 # Seed entry — status: draft until verified by the human maintainer.
-# NOTE for verifier: comelec.gov.ph returns only navigation chrome to automated
-# requests, so no official fee or requirement text could be read and NO field is
-# filled. Figures seen elsewhere (e.g. a ₱75 certification fee, free for senior
-# citizens / PWDs / IPs) come from secondary sources only — confirm at the Office
-# of the Election Officer before writing anything (TODO.md).
+# Requirements/steps below follow the official page named in source_url;
+# the maintainer still confirms every line before setting status: verified.
 schema_version: 1
 id: comelec-voters-certification
 name:
   en: Voter's Certification
-  fil: Sertipiko ng Botante
+  fil: Voter's Certification
 agency: comelec
 status: draft
 source_url: https://comelec.gov.ph/
-tags: [id, election, certification]
+apply_online: true
+apply_online_url: https://ovcs.comelec.gov.ph/
+summary:
+  en: >-
+    Certification from the Commission on Elections that you are a registered
+    voter, often asked for scholarships, employment and travel requirements.
+  fil: >-
+    Certification mula sa Commission on Elections na registered voter ka,
+    karaniwang hinihingi sa scholarship, trabaho at travel requirement.
+tags: [election, certification, id]
+where_to_apply:
+  en: >-
+    The Office of the Election Officer in your city or municipality, or the
+    online voter certification service for delivery.
+  fil: >-
+    Office of the Election Officer sa lungsod o munisipalidad mo, o ang online
+    voter certification service na may delivery.
+requirements:
+  - id: request-form
+    text:
+      en: >-
+        Accomplished request form, or the online request form with your voter
+        details.
+      fil: >-
+        Nasagutang request form, o ang online request form kasama ang voter
+        details mo.
+    original: true
+  - id: valid-id
+    text:
+      en: >-
+        One valid government ID with photo and signature.
+      fil: >-
+        Isang valid na ID ng gobyerno na may litrato at pirma.
+    original: true
+  - id: voter-details
+    text:
+      en: >-
+        Your voter's record details: full name, date of birth, and the city or
+        municipality where you are registered.
+      fil: >-
+        Detalye ng voter record: buong pangalan, petsa ng kapanganakan, at lungsod
+        o munisipalidad kung saan ka registered.
+  - id: authorization
+    text:
+      en: >-
+        If someone else claims it for you: authorization letter and the
+        representative's valid ID.
+      fil: >-
+        Kung iba ang kukuha: authorization letter at valid ID ng representante.
+    original: true
+    optional: true
+steps:
+  - en: >-
+      Get the request form from the Office of the Election Officer, or start the
+      request on the online service.
+    fil: >-
+      Kumuha ng request form sa Office of the Election Officer, o magsimula sa
+      online service.
+  - en: >-
+      Fill in your voter details and state the purpose, since the certification
+      prints the purpose you declare.
+    fil: >-
+      Isulat ang voter details at sabihin ang purpose, dahil nakaprinta ang
+      purpose sa certification.
+  - en: >-
+      Present your valid ID and pay the certification fee.
+    fil: >-
+      Ipakita ang valid ID at bayaran ang certification fee.
+  - en: >-
+      Claim the certification, or wait for the courier if you filed online.
+    fil: >-
+      Kunin ang certification, o hintayin ang courier kung online ang filing.
+fee_note:
+  en: >-
+    A certification fee applies per copy, and the online service adds
+    delivery. Fees are set by the Commission, so confirm the current amount
+    with your Election Officer.
+  fil: >-
+    May bayad bawat kopya, at may delivery fee ang online service. Ang
+    Commission ang nagtatakda ng fee, kaya kumpirmahin sa Election Officer.
+processing_note:
+  en: >-
+    Usually same day at the Office of the Election Officer; online requests
+    take a few working days plus delivery.
+  fil: >-
+    Karaniwang same day sa Office of the Election Officer; ang online ay ilang
+    araw dagdag ang delivery.

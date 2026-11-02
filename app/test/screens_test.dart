@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:kumpleto/core/settings.dart';
 import 'package:kumpleto/data/providers.dart';
 import 'package:kumpleto/l10n/app_localizations.dart';
+import 'package:kumpleto/screens/info_page.dart';
 
 import 'support/pump_app.dart';
 
@@ -259,14 +260,14 @@ void main() {
       await tester.pumpAndSettle();
 
       final l10n = l10nOf(tester);
-      final darkLabel = l10n.settingsThemeDark;
 
       // ButtonSegment is data, not a widget — tap its label instead.
       await tester.tap(find.text(l10n.languageFilipino));
       await tester.pumpAndSettle();
       expect(settings.language, 'fil');
 
-      await tester.tap(find.text(darkLabel));
+      // The app re-localized in place, so the theme label is Tagalog now.
+      await tester.tap(find.text(l10nOf(tester).settingsThemeDark));
       await tester.pumpAndSettle();
       expect(settings.themeMode, ThemeMode.dark);
 
@@ -374,7 +375,6 @@ void main() {
         (l10n.settingsDisclaimer, true),
         (l10n.settingsPrivacy, true),
         (l10n.settingsLicenses, true),
-        ('GitHub', true),
       ];
       for (final (text, tappable) in rows) {
         final row = find.widgetWithText(ListTile, text);
@@ -405,13 +405,18 @@ void main() {
       expect(find.byType(LicensePage), findsOneWidget);
     });
 
-    testWidgets('the external rows hand the URL to the platform', (
+    testWidgets('about, disclaimer and privacy open inside the app', (
       tester,
     ) async {
+      // Settings must never send the user out to a browser any more.
       const channel = MethodChannel('plugins.flutter.io/url_launcher');
+      var launches = 0;
       tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
         channel,
-        (call) async => true,
+        (call) async {
+          launches++;
+          return true;
+        },
       );
       addTearDown(() {
         tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
@@ -429,14 +434,40 @@ void main() {
         l10n.settingsAbout,
         l10n.settingsDisclaimer,
         l10n.settingsPrivacy,
-        'GitHub',
       ]) {
         final row = find.widgetWithText(ListTile, label);
         await scrollIntoView(tester, row);
         await tester.tap(row);
         await tester.pumpAndSettle();
-        expect(tester.takeException(), isNull, reason: 'tapping $label');
+
+        // Rendered by the app itself, with the mandatory notice on top.
+        expect(find.byType(InfoPage), findsOneWidget, reason: 'page: $label');
+        expect(find.text(l10n.unofficialBadge), findsOneWidget);
+
+        await tester.pageBack();
+        await tester.pumpAndSettle();
       }
+
+      expect(launches, 0, reason: 'no row may open an external URL');
+    });
+
+    testWidgets('the unofficial badge explains what the app is', (
+      tester,
+    ) async {
+      await pumpKumpleto(tester);
+      final l10n = l10nOf(tester);
+
+      await tester.tap(find.text(l10n.unofficialBadge).first);
+      await tester.pumpAndSettle();
+
+      expect(find.text(l10n.unofficialSheetTitle), findsOneWidget);
+      expect(find.text(l10n.unofficialSheetBody), findsOneWidget);
+      expect(find.text(l10n.unofficialSheetOffline), findsOneWidget);
+
+      // The sheet's call to action reads the full disclaimer in-app.
+      await tester.tap(find.text(l10n.unofficialReadDisclaimer));
+      await tester.pumpAndSettle();
+      expect(find.byType(InfoPage), findsOneWidget);
     });
 
     testWidgets('checking for updates finishes and reports a result', (

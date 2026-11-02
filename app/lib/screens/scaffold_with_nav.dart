@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../core/theme.dart';
 import '../l10n/app_localizations.dart';
 import '../widgets/shared.dart';
+import '../widgets/unofficial_sheet.dart';
 
 /// Bottom-navigation shell: Home / Documents / Settings with modern design.
 class ScaffoldWithNav extends StatelessWidget {
@@ -94,19 +95,29 @@ AppBar unofficialAppBar(
         const SizedBox(width: 8),
         Semantics(
           container: true,
+          button: true,
           label: l10n.unofficialBadge,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-            decoration: BoxDecoration(
-              color: isDark ? const Color(0xFF23352C) : const Color(0xFFE2EFE9),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Text(
-              l10n.unofficialBadge,
-              style: TextStyle(
-                fontSize: 11,
-                fontWeight: FontWeight.w600,
-                color: isDark ? const Color(0xFF8CE0C4) : AppTheme.primaryTeal,
+          hint: l10n.unofficialSheetTitle,
+          child: InkWell(
+            onTap: () => showUnofficialSheet(context),
+            borderRadius: BorderRadius.circular(12),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+              decoration: BoxDecoration(
+                color: isDark
+                    ? const Color(0xFF23352C)
+                    : const Color(0xFFE2EFE9),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                l10n.unofficialBadge,
+                style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                  color: isDark
+                      ? const Color(0xFF8CE0C4)
+                      : AppTheme.primaryTeal,
+                ),
               ),
             ),
           ),

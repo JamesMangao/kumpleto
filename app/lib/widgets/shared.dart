@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kumpleto_data_contract/data_contract.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../core/motion.dart';
 import '../core/theme.dart';
 import '../l10n/app_localizations.dart';
 import '../models/localized_text.dart';
@@ -206,13 +207,21 @@ class ProgressLine extends StatelessWidget {
               borderRadius: BorderRadius.circular(6),
               child: SizedBox(
                 height: 6,
-                child: LinearProgressIndicator(
-                  value: fraction,
-                  backgroundColor: Theme.of(context).brightness == Brightness.dark
-                      ? const Color(0xFF24362E)
-                      : const Color(0xFFE2ECE7),
-                  color: AppTheme.primaryTeal,
-                  semanticsLabel: semanticLabel ?? text,
+                child: TweenAnimationBuilder<double>(
+                  tween: Tween<double>(begin: 0, end: fraction),
+                  duration: Motion.reduced(context)
+                      ? Duration.zero
+                      : const Duration(milliseconds: 320),
+                  curve: Curves.easeOutCubic,
+                  builder: (context, value, _) => LinearProgressIndicator(
+                    value: value,
+                    backgroundColor:
+                        Theme.of(context).brightness == Brightness.dark
+                        ? const Color(0xFF24362E)
+                        : const Color(0xFFE2ECE7),
+                    color: AppTheme.primaryTeal,
+                    semanticsLabel: semanticLabel ?? text,
+                  ),
                 ),
               ),
             ),

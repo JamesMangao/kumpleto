@@ -29,3 +29,6 @@ Thumbs.db
 .oxcode-memory/
 .tmp-jdk/
 .cloud-attachments/
+
+# PSGC dump used by tools/build_psgc.py (assets are committed instead)
+.psgc/

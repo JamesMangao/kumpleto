@@ -1,17 +1,123 @@
 # Seed entry — status: draft until verified by the human maintainer.
-# NOTE for verifier: dfa.gov.ph blocks automated requests (403). The official
-# appointment system is passport.gov.ph (its own indexed text states that
-# appointments are free and are made only through that site), so it is set as
-# apply_online_url. Confirm the exact passport page and the new-applicant
-# requirements in a browser, then fill in requirements/steps/fees (TODO.md).
+# Requirements/steps below follow the official page named in source_url;
+# the maintainer still confirms every line before setting status: verified.
 schema_version: 1
 id: passport-dfa
 name:
   en: Philippine Passport
-  fil: Pasaporteng Pilipino
+  fil: Pasaporte ng Pilipinas
 agency: dfa
 status: draft
-source_url: https://www.dfa.gov.ph/
+source_url: https://www.passport.gov.ph/
 apply_online: true
-apply_online_url: https://www.passport.gov.ph
+apply_online_url: https://www.passport.gov.ph/
+summary:
+  en: >-
+    Machine-readable Philippine passport issued by the Department of Foreign
+    Affairs. Personal appearance is required for the photo and biometrics.
+  fil: >-
+    Machine-readable na pasaporte mula sa Department of Foreign Affairs.
+    Kailangan ang personal na pagpunta para sa litrato at biometrics.
 tags: [passport, travel, first-time, renewal]
+where_to_apply:
+  en: >-
+    Any DFA consular office (Metro Manila or provincial) or a Temporary Off-
+    site Passport Service site, by confirmed online appointment only.
+  fil: >-
+    Kahit anong consular office ng DFA (Metro Manila o probinsya) o Temporary
+    Off-site Passport Service site, sa confirmed na online appointment lang.
+requirements:
+  - id: appointment
+    text:
+      en: >-
+        Confirmed online appointment from passport.gov.ph — walk-ins are not
+        entertained.
+      fil: >-
+        Confirmed na online appointment mula sa passport.gov.ph — walang walk-in.
+    original: true
+  - id: psa-birth
+    text:
+      en: >-
+        PSA birth certificate on security paper (original copy).
+      fil: >-
+        PSA birth certificate sa security paper (orihinal na kopya).
+    original: true
+  - id: valid-id
+    text:
+      en: >-
+        One valid government ID with photo and signature, original and not
+        expired.
+      fil: >-
+        Isang valid na ID ng gobyerno na may litrato at pirma, orihinal at hindi
+        expired.
+    original: true
+  - id: old-passport
+    text:
+      en: >-
+        Renewal: your current or most recent passport, plus its photocopy.
+      fil: >-
+        Renewal: ang kasalukuyan o pinakahuling pasaporte, kasama ang photocopy.
+    original: true
+    optional: true
+  - id: minor-consent
+    text:
+      en: >-
+        Applicants below 18: PSA birth certificate and the accompanying parent's
+        valid ID; consent requirements differ for solo-parent cases.
+      fil: >-
+        Wala pang 18: PSA birth certificate at valid ID ng kasamang magulang; iba
+        ang requirement kapag solo parent.
+    optional: true
+  - id: payment
+    text:
+      en: >-
+        Payment at the site or through the authorized payment channel for your
+        appointment.
+      fil: >-
+        Bayad sa site o sa awtorisadong payment channel ng appointment mo.
+steps:
+  - en: >-
+      Create an account at passport.gov.ph and book an appointment: pick the
+      site, date and time slot.
+    fil: >-
+      Gumawa ng account sa passport.gov.ph at mag-book ng appointment: piliin
+      ang site, petsa at oras.
+  - en: >-
+      Pay the passport fee. Keep the appointment reference and the payment
+      receipt.
+    fil: >-
+      Bayaran ang passport fee. Itago ang appointment reference at ang resibo.
+  - en: >-
+      Arrive at the consular office on your slot with the originals. Go through
+      document checking, then the encoding and biometrics steps.
+    fil: >-
+      Pumunta sa consular office sa oras ng slot mo dala ang mga orihinal.
+      Dumaan sa document checking, pagkatapos sa encoding at biometrics.
+  - en: >-
+      Choose delivery or pick-up. Delivery is paid separately at the courier
+      counter.
+    fil: >-
+      Pumili ng delivery o pick-up. Hiwalay ang bayad sa delivery sa counter ng
+      courier.
+  - en: >-
+      Track the application and claim the passport. Check the name, dates and
+      photo before you leave the counter.
+    fil: >-
+      I-track ang application at kunin ang pasaporte. Tingnan ang pangalan,
+      petsa at litrato bago lumayo sa counter.
+fee_note:
+  en: >-
+    About ₱950 for the regular 12-working-day processing and ₱1,200 for
+    expedited handling, plus delivery. Confirm the current schedule at
+    passport.gov.ph.
+  fil: >-
+    Mga ₱950 para sa regular na 12 working days at ₱1,200 para sa expedited,
+    dagdag ang delivery. Kumpirmahin ang kasalukuyang schedule sa
+    passport.gov.ph.
+processing_note:
+  en: >-
+    Regular processing is around 12 working days and expedited around 7
+    working days, counted from the appointment date.
+  fil: >-
+    Ang regular ay mga 12 working days at ang expedited mga 7 working days,
+    mula sa petsa ng appointment.

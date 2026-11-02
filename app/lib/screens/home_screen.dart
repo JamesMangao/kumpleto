@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../core/theme.dart';
+import '../data/location.dart';
 import '../data/providers.dart';
 import '../l10n/app_localizations.dart';
 import '../models/models.dart';
@@ -76,6 +77,9 @@ class _HomeBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final savedLocation = SavedLocation.read(
+      ref.watch(sharedPreferencesProvider),
+    );
     final documents = ref.watch(documentsProvider);
     final bundles = ref.watch(bundlesProvider);
     final isDark = theme.brightness == Brightness.dark;
@@ -146,6 +150,56 @@ class _HomeBody extends ConsumerWidget {
             ),
             onSubmitted: (query) =>
                 context.go('/documents?q=${Uri.encodeComponent(query)}'),
+          ),
+        ),
+
+        // Where the user lives — drives the barangay hints. Optional, and
+        // only rendered once a place has been picked.
+        if (savedLocation != null && !savedLocation.isEmpty)
+          Padding(
+          padding: const EdgeInsets.fromLTRB(16, 10, 16, 0),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(14),
+            onTap: () => context.push('/location'),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+              decoration: BoxDecoration(
+                color: isDark
+                    ? const Color(0xFF192721)
+                    : const Color(0xFFEBF5F1),
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(
+                  color: isDark
+                      ? const Color(0xFF293F34)
+                      : const Color(0xFFD4E8E0),
+                ),
+              ),
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.location_on_outlined,
+                    size: 18,
+                    color: AppTheme.primaryTeal,
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      savedLocation.label,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.w600,
+                        color: isDark
+                            ? const Color(0xFFB9E8D8)
+                            : AppTheme.primaryDarkTeal,
+                      ),
+                    ),
+                  ),
+                  const Icon(Icons.chevron_right, size: 18),
+                ],
+              ),
+            ),
           ),
         ),
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../core/motion.dart';
 import '../core/theme.dart';
 import '../data/providers.dart';
 import '../l10n/app_localizations.dart';
@@ -271,8 +272,10 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                       itemCount: filtered.length,
                       separatorBuilder: (_, _) => const SizedBox(height: 12),
-                      itemBuilder: (context, index) =>
-                          _DocumentModernCard(document: filtered[index]),
+                      itemBuilder: (context, index) => StaggeredEntrance(
+                        index: index,
+                        child: _DocumentModernCard(document: filtered[index]),
+                      ),
                     ),
             ),
           ],

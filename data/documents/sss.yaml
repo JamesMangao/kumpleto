@@ -1,29 +1,99 @@
 # Seed entry — status: draft until verified by the human maintainer.
-# The two application routes below were read from the official SSS page
-# "Become an SSS Member"; no other field could be confirmed from it, so none
-# were added. The maintainer confirms and sets status: verified (TODO.md).
+# Requirements/steps below follow the official page named in source_url;
+# the maintainer still confirms every line before setting status: verified.
 schema_version: 1
 id: sss
 name:
-  en: SSS Number
-  fil: SSS Number
+  en: SSS Number and Membership
+  fil: SSS Number at Membership
 agency: sss
 status: draft
-source_url: https://www.sss.gov.ph/become-an-sss-member/
+source_url: https://www.sss.gov.ph/
 apply_online: true
-apply_online_url: https://member.sss.gov.ph
+apply_online_url: https://member.sss.gov.ph/
 summary:
   en: >-
-    Social Security (SS) number for a first-time SSS member — usually asked for
-    by employers in the private sector.
+    Social Security System registration, required before your first
+    contribution and for the UMID or SSS ID card.
   fil: >-
-    Social Security (SS) number para sa unang beses na miyembro ng SSS —
-    karaniwang hinihingi ng mga employer sa pribadong sektor.
-tags: [job-hunt, employment, first-time]
+    Registration sa Social Security System, kailangan bago ang unang
+    contribution at para sa UMID o SSS ID card.
+tags: [employment, id, first-time]
+where_to_apply:
+  en: >-
+    Online through My.SSS for most members; SSS branches handle cases that
+    need manual verification.
+  fil: >-
+    Online sa My.SSS para sa karamihan; ang branch ang humahawak ng kailangang
+    manual verification.
+requirements:
+  - id: email
+    text:
+      en: >-
+        An active email address and mobile number you control — the account is
+        verified through them.
+      fil: >-
+        Aktibong email address at mobile number na kontrolado mo — doon dadaan ang
+        verification.
+  - id: psa-birth
+    text:
+      en: >-
+        PSA birth certificate, for the name and date of birth fields.
+      fil: >-
+        PSA birth certificate, para sa pangalan at petsa ng kapanganakan.
+    original: true
+  - id: valid-id
+    text:
+      en: >-
+        One valid government ID with photo and signature.
+      fil: >-
+        Isang valid na ID ng gobyerno na may litrato at pirma.
+    original: true
+  - id: employer-details
+    text:
+      en: >-
+        Employer name and address, if you are employed.
+      fil: >-
+        Pangalan at address ng employer, kung employed ka.
+    optional: true
 steps:
   - en: >-
-      Apply for an SS number through the SSS website (My.SSS member portal).
+      Open My.SSS and choose the registration option that matches you: employee,
+      self-employed, or overseas Filipino worker.
     fil: >-
-      Mag-apply ng SS number sa website ng SSS (My.SSS member portal).
-  - en: Or apply for an SS number at the E-Center of an SSS branch.
-    fil: O kaya'y mag-apply ng SS number sa E-Center ng isang sangay ng SSS.
+      Buksan ang My.SSS at piliin ang registration na bagay sa iyo: employee,
+      self-employed, o overseas Filipino worker.
+  - en: >-
+      Fill in your details, then confirm the one-time password sent to your
+      email and mobile number.
+    fil: >-
+      Isulat ang detalye, pagkatapos kumpirmahin ang one-time password na
+      ipinadala sa email at mobile.
+  - en: >-
+      Submit the registration and save the SS number that the system issues.
+    fil: >-
+      Isumite ang registration at itago ang SS number na ibibigay ng system.
+  - en: >-
+      Upload or present the supporting documents if the system asks for
+      verification.
+    fil: >-
+      I-upload o ipakita ang mga supporting document kung hihingin ng system.
+  - en: >-
+      For the UMID or SSS ID card, file the separate ID application and wait for
+      the card delivery schedule.
+    fil: >-
+      Para sa UMID o SSS ID card, mag-file ng hiwalay na ID application at
+      hintayin ang schedule ng delivery.
+fee_note:
+  en: >-
+    Registration is free. Contributions are based on your monthly income and
+    are shared with the employer for employed members.
+  fil: >-
+    Libre ang registration. Ang contribution ay base sa buwanang kita at
+    hatian ng employer para sa employed.
+processing_note:
+  en: >-
+    The SS number is issued immediately online; the UMID card takes several
+    weeks.
+  fil: >-
+    Agad na ibinibigay ang SS number online; ang UMID card ay ilang linggo.

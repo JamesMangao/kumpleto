@@ -49,6 +49,10 @@ flutter:
   assets:
     - assets/data/
     - assets/logo/
+    # Offline place names (PSA PSGC, CC BY 4.0): index + one shard per
+    # province, built by tools/build_psgc.py.
+    - assets/psgc/
+    - assets/psgc/bgy/
 
   generate: true
 
@@ -65,4 +69,4 @@ flutter_launcher_icons:
   # Artwork already has margin baked in; no extra inset padding.
   adaptive_icon_foreground_inset: 0
   # Android 13+ themed icon (same silhouette, system-tinted).
-  adaptive_icon_monochrome: "icons/icon-foreground-1024.png"
+  adaptive_icon_monochrome: "icons/icon-monochrome-1024.png"

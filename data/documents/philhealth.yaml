@@ -1,65 +1,118 @@
 # Seed entry — status: draft until verified by the human maintainer.
-# The PMRF requirement and the steps below were read from the official
-# PhilHealth registration page for formal-economy (employed) members. The
-# maintainer confirms and sets status: verified + last_verified (TODO.md).
+# Requirements/steps below follow the official page named in source_url;
+# the maintainer still confirms every line before setting status: verified.
 schema_version: 1
 id: philhealth
 name:
-  en: PhilHealth Number
-  fil: PhilHealth Number
+  en: PhilHealth Membership
+  fil: PhilHealth Membership
 agency: philhealth
 status: draft
-source_url: https://www.philhealth.gov.ph/members/formal/registration.php
+source_url: https://www.philhealth.gov.ph/
+apply_online: true
+apply_online_url: https://www.philhealth.gov.ph/
 summary:
   en: >-
-    PhilHealth membership for employees in the government and private sector —
-    the employer files the registration and remits the premium.
+    Health insurance membership from the Philippine Health Insurance
+    Corporation. Employed members are registered by the employer; self-
+    employed and voluntary members register themselves.
   fil: >-
-    Pagiging miyembro ng PhilHealth para sa mga empleyado ng gobyerno at
-    pribadong sektor — ang employer ang nagpaparehistro at nagre-remit ng
-    premium.
-tags: [job-hunt, employment, health, first-time]
+    Health insurance membership mula sa Philippine Health Insurance
+    Corporation. Ang employed ay ini-register ng employer; ang self-employed
+    at voluntary ay sarili ang register.
+tags: [health, id, employment]
+where_to_apply:
+  en: >-
+    PhilHealth regional or local office, the Local Health Insurance Office in
+    your city hall, or the online member portal for self-employed and
+    voluntary members.
+  fil: >-
+    PhilHealth regional o local office, Local Health Insurance Office sa city
+    hall, o ang online member portal para sa self-employed at voluntary
+    members.
 requirements:
   - id: pmrf
     text:
-      en: Two (2) copies of the PhilHealth Member Registration Form (PMRF)
-      fil: Dalawang (2) kopya ng PhilHealth Member Registration Form (PMRF)
-    photocopies: 2
+      en: >-
+        Accomplished PhilHealth Member Registration Form (PMRF).
+      fil: >-
+        Nasagutang PhilHealth Member Registration Form (PMRF).
+    original: true
+  - id: valid-id
+    text:
+      en: >-
+        One valid government ID with photo and signature. A PSA birth certificate
+        is accepted for first-time registrants.
+      fil: >-
+        Isang valid na ID ng gobyerno na may litrato at pirma. Tumatanggap ng PSA
+        birth certificate sa first-time registrant.
+    original: true
+  - id: psa-birth
+    text:
+      en: >-
+        PSA birth certificate, for dependants and first-time registration.
+      fil: >-
+        PSA birth certificate, para sa dependants at first-time registration.
+    original: true
+    photocopies: 1
+  - id: marriage-certificate
+    text:
+      en: >-
+        PSA marriage certificate when declaring a spouse as a dependant.
+      fil: >-
+        PSA marriage certificate kapag isasama ang asawa bilang dependant.
+    original: true
+    optional: true
+  - id: photo
+    text:
+      en: >-
+        Recent 1x1 ID photo, if the enrolling office asks for one.
+      fil: >-
+        Bagong 1x1 ID photo, kung hihingin ng enrolling office.
+    optional: true
 steps:
   - en: >-
-      Fill out two (2) copies of the PhilHealth Member Registration Form (PMRF).
+      Download and fill in the PMRF, or fill in the online form for self-
+      employed and voluntary members.
     fil: >-
-      Sagutan ang dalawang (2) kopya ng PhilHealth Member Registration Form
-      (PMRF).
-  - en: Submit the PMRF to the HR Department of your employer.
-    fil: Isumite ang PMRF sa HR Department ng iyong employer.
+      I-download at sagutan ang PMRF, o gamitin ang online form para sa self-
+      employed at voluntary members.
   - en: >-
-      Wait for your Member Data Record and PhilHealth ID card from your
-      employer.
+      Submit it with the originals at the office, or upload it through the
+      portal if you registered online.
     fil: >-
-      Hintayin ang Member Data Record at PhilHealth ID card mula sa iyong
-      employer.
+      Isumite kasama ang mga orihinal sa office, o i-upload sa portal kung
+      online ka nag-register.
   - en: >-
-      If you already have a PhilHealth Identification Number (PIN), report it to
-      your employer so they can indicate it in their ER2.
+      Wait for the PhilHealth Identification Number (PIN) and check that your
+      dependants are listed correctly.
     fil: >-
-      Kung may PhilHealth Identification Number (PIN) ka na, i-report ito sa
-      employer mo para maisama nila sa kanilang ER2.
+      Hintayin ang PhilHealth Identification Number (PIN) at tingnan kung tama
+      ang listahan ng dependants.
+  - en: >-
+      Pay the applicable premium if you are a voluntary or self-employed member,
+      and keep the receipts.
+    fil: >-
+      Bayaran ang premium kung voluntary o self-employed member, at itago ang
+      resibo.
+  - en: >-
+      Request the PhilHealth ID card or save the digital ID, then check your
+      contribution record each year.
+    fil: >-
+      Humingi ng PhilHealth ID card o i-save ang digital ID, at tingnan ang
+      record ng contribution taun-taon.
 fee_note:
   en: >-
-    Premium contributions are shared by the employee and the employer; your
-    employer remits the total after deducting the employee share from your
-    salary.
+    Registration is free. Premiums depend on your membership category:
+    employed members share the premium with the employer, self-employed and
+    voluntary members pay their own.
   fil: >-
-    Hinahati ng empleyado at ng employer ang premium; ang employer ang
-    nagre-remit ng kabuuan pagkatapos ibawas ang bahagi ng empleyado sa suweldo
-    mo.
-notes:
-  - en: >-
-      These steps cover formal-economy members. Self-earning individuals,
-      kasambahay, OFWs, senior citizens and sponsored members register under
-      the other PhilHealth member categories.
-    fil: >-
-      Para sa formal-economy members ang mga hakbang na ito. Ang mga
-      self-earning individual, kasambahay, OFW, senior citizen at sponsored
-      member ay sa ibang kategorya ng PhilHealth nagpaparehistro.
+    Libre ang registration. Ang premium ay nakadepende sa kategorya: hatian ng
+    employed at employer, sariling bayad ng self-employed at voluntary.
+processing_note:
+  en: >-
+    Registration is usually processed within the day; the physical ID card may
+    take several weeks.
+  fil: >-
+    Karaniwang same day ang registration; ang pisikal na ID card ay pwedeng
+    ilang linggo.

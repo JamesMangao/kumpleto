@@ -167,6 +167,7 @@ Future<AppSettings> pumpKumpleto(
   bool firstRunDone = true,
   Map<String, Object?>? data,
   bool settle = true,
+  bool showWelcome = false,
 }) async {
   SharedPreferences.setMockInitialValues({'first_run_done': firstRunDone});
   PackageInfo.setMockInitialValues(
@@ -223,7 +224,7 @@ Future<AppSettings> pumpKumpleto(
           ),
         ),
       ],
-      child: KumpletoApp(settings: settings),
+      child: KumpletoApp(settings: settings, showWelcome: showWelcome),
     ),
   );
 

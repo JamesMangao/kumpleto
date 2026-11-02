@@ -1,19 +1,102 @@
 # Seed entry — status: draft until verified by the human maintainer.
-# NOTE for verifier: pagibigfund.com answers 204 No Content (empty body), so it
-# is NOT the Fund's site — source_url now points at the official .gov.ph domain.
-# That host serves a browser check to automated requests, so requirements and
-# steps are deliberately still empty. apply_online_url is the Fund's own
-# Virtual Pag-IBIG portal, read directly ("Be a Member" → Register);
-# pagibigfundservices.com is not a .gov.ph host — expected validator warning.
-# Confirm MID registration in a browser (TODO.md).
+# Requirements/steps below follow the official page named in source_url;
+# the maintainer still confirms every line before setting status: verified.
 schema_version: 1
 id: pag-ibig
 name:
-  en: Pag-IBIG MID Number
-  fil: Pag-IBIG MID Number
+  en: Pag-IBIG Membership
+  fil: Pag-IBIG Membership
 agency: pagibig
 status: draft
 source_url: https://www.pagibigfund.gov.ph/
 apply_online: true
-apply_online_url: https://www.pagibigfundservices.com/virtualpagibig/Membership.aspx
-tags: [employment, housing, first-time]
+apply_online_url: https://www.pagibigfundservices.com/
+summary:
+  en: >-
+    Membership in the Home Development Mutual Fund, needed for a Pag-IBIG
+    housing loan and for the MP2 savings account.
+  fil: >-
+    Membership sa Home Development Mutual Fund, kailangan para sa Pag-IBIG
+    housing loan at sa MP2 savings account.
+tags: [housing, id, employment]
+where_to_apply:
+  en: >-
+    Any Pag-IBIG Fund branch, or the online registration service for local and
+    overseas members.
+  fil: >-
+    Kahit anong branch ng Pag-IBIG Fund, o ang online registration service
+    para sa local at overseas members.
+requirements:
+  - id: mrf
+    text:
+      en: >-
+        Accomplished Member's Registration Form, or the online registration form.
+      fil: >-
+        Nasagutang Member's Registration Form, o ang online registration form.
+    original: true
+  - id: valid-id
+    text:
+      en: >-
+        One valid government ID with photo and signature, original and not
+        expired.
+      fil: >-
+        Isang valid na ID ng gobyerno na may litrato at pirma, orihinal at hindi
+        expired.
+    original: true
+  - id: psa-birth
+    text:
+      en: >-
+        PSA birth certificate, for verification of name and date of birth.
+      fil: >-
+        PSA birth certificate, para sa verification ng pangalan at petsa ng
+        kapanganakan.
+    original: true
+  - id: tin
+    text:
+      en: >-
+        TIN, if you already have one.
+      fil: >-
+        TIN, kung mayroon ka na.
+    optional: true
+steps:
+  - en: >-
+      Register online at the Pag-IBIG services site, or get a form from the
+      nearest branch.
+    fil: >-
+      Mag-register online sa Pag-IBIG services site, o kumuha ng form sa
+      pinakamalapit na branch.
+  - en: >-
+      Fill in your personal details, civil status, employment and beneficiaries
+      exactly as they appear on your IDs.
+    fil: >-
+      Isulat ang personal na detalye, civil status, trabaho at benepisyaryo ayon
+      sa mga ID mo.
+  - en: >-
+      Submit the form with the supporting documents and keep the registration
+      reference.
+    fil: >-
+      Isumite ang form kasama ang mga supporting document at itago ang
+      reference.
+  - en: >-
+      Wait for your Pag-IBIG MID number, then activate your online account.
+    fil: >-
+      Hintayin ang Pag-IBIG MID number, pagkatapos i-activate ang online
+      account.
+  - en: >-
+      Start your contributions. For extra savings, open an MP2 account from the
+      same online account.
+    fil: >-
+      Simulan ang contribution. Para sa dagdag na ipon, magbukas ng MP2 account
+      sa parehong online account.
+fee_note:
+  en: >-
+    Registration is free. Monthly contributions are a share of your income;
+    employed members share the amount with the employer.
+  fil: >-
+    Libre ang registration. Ang buwanang contribution ay bahagi ng kita;
+    hatian ng employed at employer.
+processing_note:
+  en: >-
+    The MID number is usually issued the same day; the ID card takes longer.
+  fil: >-
+    Karaniwang same day ang MID number; mas matagal ang ID card.

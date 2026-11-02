@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../core/constants.dart';
 import '../core/settings.dart';
 import '../core/theme.dart';
 import '../data/data_repository.dart';
+import '../data/location.dart';
 import '../data/providers.dart';
 import '../data/update_service.dart';
 import '../l10n/app_localizations.dart';
@@ -30,7 +32,20 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   @override
   void initState() {
     super.initState();
+    widget.settings.addListener(_onSettingsChanged);
     _loadVersion();
+  }
+
+  /// Language and theme apply instantly now; this keeps the selected chips on
+  /// this screen in step with the change.
+  void _onSettingsChanged() {
+    if (mounted) setState(() {});
+  }
+
+  @override
+  void dispose() {
+    widget.settings.removeListener(_onSettingsChanged);
+    super.dispose();
   }
 
   Future<void> _loadVersion() async {
@@ -95,6 +110,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
     final prefs = ref.watch(sharedPreferencesProvider);
     final lastCheck = prefs.getInt(PrefsKeys.lastDataCheck);
+    final savedLocation = SavedLocation.read(prefs);
 
     return Scaffold(
       appBar: unofficialAppBar(context, l10n.appTitle),
@@ -441,6 +457,34 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
                     const Divider(height: 1),
 
+                    // My location — feeds the barangay / LGU hints.
+                    ListTile(
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 2,
+                      ),
+                      leading: const SquircleIcon(
+                        icon: Icons.location_on_outlined,
+                        size: 36,
+                        iconSize: 20,
+                      ),
+                      title: Text(
+                        l10n.settingsMyLocation,
+                        style: const TextStyle(fontWeight: FontWeight.w700),
+                      ),
+                      subtitle: Text(
+                        savedLocation == null || savedLocation.isEmpty
+                            ? l10n.settingsMyLocationUnset
+                            : savedLocation.label,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      trailing: const Icon(Icons.chevron_right, size: 18),
+                      onTap: () => context.push('/location'),
+                    ),
+
+                    const Divider(height: 1),
+
                     // App Version Item
                     ListTile(
                       contentPadding: const EdgeInsets.symmetric(
@@ -480,7 +524,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       ),
                       subtitle: const Text('Learn more about Kumpleto.'),
                       trailing: const Icon(Icons.chevron_right, size: 18),
-                      onTap: () => openExternal(context, repositoryUri()),
+                      onTap: () => context.push('/about'),
                     ),
 
                     const Divider(height: 1),
@@ -502,13 +546,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       ),
                       subtitle: const Text('Important information and limitations.'),
                       trailing: const Icon(Icons.chevron_right, size: 18),
-                      onTap: () => openExternal(
-                        context,
-                        Uri.https(
-                          'github.com',
-                          '/$repoOwner/$repoName/blob/main/DISCLAIMER.md',
-                        ),
-                      ),
+                      onTap: () => context.push('/disclaimer'),
                     ),
 
                     const Divider(height: 1),
@@ -530,13 +568,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       ),
                       subtitle: const Text('How we handle your data.'),
                       trailing: const Icon(Icons.chevron_right, size: 18),
-                      onTap: () => openExternal(
-                        context,
-                        Uri.https(
-                          'github.com',
-                          '/$repoOwner/$repoName/blob/main/PRIVACY.md',
-                        ),
-                      ),
+                      onTap: () => context.push('/privacy'),
                     ),
 
                     const Divider(height: 1),
@@ -565,27 +597,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       ),
                     ),
 
-                    const Divider(height: 1),
-
-                    // GitHub Source Code Item
-                    ListTile(
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 14,
-                        vertical: 2,
-                      ),
-                      leading: const SquircleIcon(
-                        icon: Icons.terminal_rounded,
-                        size: 36,
-                        iconSize: 20,
-                      ),
-                      title: const Text(
-                        'GitHub',
-                        style: TextStyle(fontWeight: FontWeight.w700),
-                      ),
-                      subtitle: Text(l10n.settingsSourceCode),
-                      trailing: const Icon(Icons.chevron_right, size: 18),
-                      onTap: () => openExternal(context, repositoryUri()),
-                    ),
+                    // About, disclaimer and privacy are rendered inside the
+                    // app now — Settings never opens a browser.
                   ],
                 ),
               ),

@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart'
-    show AssetBundle, appFlavor, rootBundle;
+    show AssetBundle, rootBundle;
 
 import '../core/canonical.dart';
 import '../core/constants.dart';
@@ -82,24 +82,20 @@ class DataRepository {
     }
   }
 
-  /// The bundled asset. The `dev` flavor prefers the drafts asset when it was
-  /// generated (`dart run tools/build_data.dart --include-drafts`), and so does
-  /// `flutter test` (no flavor), so tests keep exercising the drafts path.
+  /// The bundled asset. When the compiler shipped a drafts asset
+  /// (`dart run tools/build_data.dart --include-drafts`), it is used in every
+  /// flavor: the sideloaded APK is expected to carry the whole library, with
+  /// each entry badged by its verification state.
   ///
-  /// Gated on the flavor rather than `kDebugMode` alone so a
-  /// `--flavor dev --release` build - the one that actually gets sideloaded -
-  /// reads drafts instead of falling back to the empty release feed. The
-  /// drafts file is gitignored and deleted by a plain compiler run, and
-  /// `--flavor prod` never reads it (docs/DECISIONS.md, P3).
+  /// The drafts file is gitignored and is deleted by a plain compiler run, so a
+  /// clean or CI build has no such asset and falls back to the verified-only
+  /// release feed. The published feed (`dist/data.json`) is unaffected and still
+  /// contains verified entries only (docs/DECISIONS.md, P3).
   Future<_Candidate?> _readBundled(List<String> skipped) async {
-    const allowDrafts =
-        appFlavor == 'dev' || (appFlavor == null && kDebugMode);
-    if (allowDrafts) {
-      final drafts = await _readAsset(draftsAsset);
-      if (drafts != null) {
-        final candidate = _verify(drafts, DataSource.bundledDrafts, skipped);
-        if (candidate != null) return candidate;
-      }
+    final drafts = await _readAsset(draftsAsset);
+    if (drafts != null) {
+      final candidate = _verify(drafts, DataSource.bundledDrafts, skipped);
+      if (candidate != null) return candidate;
     }
     final release = await _readAsset(releaseAsset);
     if (release == null) {

@@ -27,7 +27,9 @@
   "documentsRequirementsCount": "{count} requirements",
   "@documentsRequirementsCount": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "statusDraft": "Unverified",
@@ -37,8 +39,12 @@
   "progressOf": "{checked} of {total} requirements",
   "@progressOf": {
     "placeholders": {
-      "checked": { "type": "int" },
-      "total": { "type": "int" }
+      "checked": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
     }
   },
   "documentDetailTitle": "Document",
@@ -52,7 +58,9 @@
   "docValidMonths": "Valid for {months} months",
   "@docValidMonths": {
     "placeholders": {
-      "months": { "type": "int" }
+      "months": {
+        "type": "int"
+      }
     }
   },
   "docValidForever": "No fixed expiry",
@@ -70,13 +78,17 @@
   "docPhotocopies": "{count} photocopies",
   "@docPhotocopies": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "docVerifiedDays": "Verified {days} days ago",
   "@docVerifiedDays": {
     "placeholders": {
-      "days": { "type": "int" }
+      "days": {
+        "type": "int"
+      }
     }
   },
   "docNeverVerified": "Not yet verified by a maintainer",
@@ -98,13 +110,17 @@
   "settingsUpdateFailed": "Update failed: {reason}",
   "@settingsUpdateFailed": {
     "placeholders": {
-      "reason": { "type": "String" }
+      "reason": {
+        "type": "String"
+      }
     }
   },
   "settingsLastChecked": "Last checked {when}",
   "@settingsLastChecked": {
     "placeholders": {
-      "when": { "type": "String" }
+      "when": {
+        "type": "String"
+      }
     }
   },
   "settingsNeverChecked": "Never checked",
@@ -116,7 +132,9 @@
   "settingsAppVersion": "App version {version}",
   "@settingsAppVersion": {
     "placeholders": {
-      "version": { "type": "String" }
+      "version": {
+        "type": "String"
+      }
     }
   },
   "settingsDisclaimer": "Disclaimer",
@@ -128,5 +146,29 @@
   "cancel": "Cancel",
   "confirm": "Confirm",
   "loading": "Loading…",
-  "retry": "Retry"
+  "retry": "Retry",
+  "close": "Close",
+  "unofficialSheetTitle": "This is an unofficial app",
+  "unofficialSheetBody": "Kumpleto is not a government app. It is not affiliated with, endorsed by, or connected to any Philippine government agency, and it does not speak for any of them. Requirements, fees and processing times change, so always confirm with the agency or your barangay hall before you apply.",
+  "unofficialSheetOffline": "Works fully offline. Your checklist never leaves this phone.",
+  "unofficialSheetNoAccount": "No account, no sign-in and no tracking.",
+  "unofficialSheetVerify": "Every document shows whether a maintainer has verified it against an official source.",
+  "unofficialReadDisclaimer": "Read the full disclaimer",
+  "welcomeTagline": "Requirements, steps and official sources, all offline.",
+  "welcomeSkip": "Tap to continue",
+  "settingsMyLocation": "My location",
+  "settingsMyLocationUnset": "Not set — add your barangay",
+  "locationTitle": "My location",
+  "locationSubtitle": "Used to show barangay and local requirements. Kept on this phone only.",
+  "locationRegion": "Region",
+  "locationProvince": "Province",
+  "locationCity": "City or municipality",
+  "locationBarangay": "Barangay",
+  "locationZip": "Postal code",
+  "locationZipHint": "Postal codes are set per city or municipality (San Pedro is 4023). Type yours if you know it.",
+  "locationSave": "Save location",
+  "locationSaved": "Location saved",
+  "locationClear": "Remove my location",
+  "locationSetPrompt": "Set your barangay for local requirements",
+  "locationAttribution": "Place names from the PSA Philippine Standard Geographic Code, used under CC BY 4.0."
 }

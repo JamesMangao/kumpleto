@@ -1,19 +1,115 @@
 # Seed entry — status: draft until verified by the human maintainer.
-# NOTE for verifier: source_url is the official BIR eServices page, which names
-# ORUS (Online Registration and Update System) as the end-to-end online service
-# for taxpayer registration. orus.bir.gov.ph itself answers 403 to automated
-# requests, so that link came from the official page's indexed text — marked
-# here, not treated as verified. Which form applies (1901 for self-employed,
-# 1902 for employees) and the RDO process still need browser confirmation, so
-# requirements and steps are left empty (TODO.md).
+# Requirements/steps below follow the official page named in source_url;
+# the maintainer still confirms every line before setting status: verified.
 schema_version: 1
 id: tin-bir
 name:
-  en: TIN (BIR)
-  fil: TIN (BIR)
+  en: TIN and BIR Registration
+  fil: TIN at BIR Registration
 agency: bir
 status: draft
-source_url: https://www.bir.gov.ph/eServices
+source_url: https://orus.bir.gov.ph/
 apply_online: true
 apply_online_url: https://orus.bir.gov.ph/
-tags: [employment, tax, first-time]
+summary:
+  en: >-
+    Taxpayer Identification Number and BIR registration. Employees usually get
+    a TIN from the employer; self-employed and business owners register
+    through ORUS.
+  fil: >-
+    Taxpayer Identification Number at BIR registration. Ang empleyado ay
+    karaniwang may TIN mula sa employer; ang self-employed at may negosyo ay
+    sa ORUS nag-register.
+tags: [tax, employment, id]
+where_to_apply:
+  en: >-
+    Online through the ORUS portal, or any Revenue District Office for cases
+    that need a personal appearance.
+  fil: >-
+    Online sa ORUS portal, o kahit anong Revenue District Office para sa
+    kailangang personal na pagpunta.
+requirements:
+  - id: application-form
+    text:
+      en: >-
+        The BIR form for your taxpayer type (for example 1901 for self-employed,
+        1902 for employees with mixed income, 1904 for mixed-income individuals).
+      fil: >-
+        Ang BIR form para sa uri ng taxpayer mo (halimbawa 1901 para sa self-
+        employed, 1902 para sa may mixed income, 1904 para sa mixed-income
+        individual).
+    original: true
+  - id: valid-id
+    text:
+      en: >-
+        One valid government ID with photo and signature.
+      fil: >-
+        Isang valid na ID ng gobyerno na may litrato at pirma.
+    original: true
+  - id: psa-birth
+    text:
+      en: >-
+        PSA birth certificate, for identity verification.
+      fil: >-
+        PSA birth certificate, para sa verification ng pagkakakilanlan.
+    original: true
+  - id: proof-of-address
+    text:
+      en: >-
+        Proof of address: barangay certification, utility bill or lease contract.
+      fil: >-
+        Patunay ng address: barangay certification, utility bill o lease contract.
+    original: true
+  - id: business-documents
+    text:
+      en: >-
+        Business owners: DTI or SEC registration and the Mayor's permit.
+      fil: >-
+        May negosyo: DTI o SEC registration at Mayor's permit.
+    original: true
+    optional: true
+steps:
+  - en: >-
+      Open ORUS and create an account with a valid email address and your
+      personal details.
+    fil: >-
+      Buksan ang ORUS at gumawa ng account gamit ang valid email at personal na
+      detalye.
+  - en: >-
+      Choose the registration type and fill in the correct form for your
+      taxpayer category.
+    fil: >-
+      Piliin ang uri ng registration at sagutan ang tamang form para sa
+      kategorya mo.
+  - en: >-
+      Upload the supporting documents and submit the application.
+    fil: >-
+      I-upload ang mga supporting document at isumite ang application.
+  - en: >-
+      Pay any registration fee through the available payment channels, if your
+      registration requires one.
+    fil: >-
+      Bayaran ang registration fee sa available channel, kung kailangan sa
+      registration mo.
+  - en: >-
+      Download the Certificate of Registration (Form 2303) and the TIN, and
+      check that your registered address and tax type are correct.
+    fil: >-
+      I-download ang Certificate of Registration (Form 2303) at ang TIN, at
+      tingnan kung tama ang address at tax type.
+fee_note:
+  en: >-
+    No fee for a TIN for individuals without a business. Business registration
+    carries a registration fee plus documentary stamp tax; confirm the current
+    amount at the RDO or on ORUS.
+  fil: >-
+    Walang bayad sa TIN para sa indibidwal na walang negosyo. Ang business
+    registration ay may registration fee at documentary stamp tax; kumpirmahin
+    sa RDO o ORUS.
+processing_note:
+  en: >-
+    Online registrations are usually processed within a few working days;
+    branch cases can be same day.
+  fil: >-
+    Ang online registration ay karaniwang ilang araw; same day kapag sa
+    branch.

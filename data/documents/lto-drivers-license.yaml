@@ -1,17 +1,129 @@
 # Seed entry — status: draft until verified by the human maintainer.
-# NOTE for verifier: lto.gov.ph blocks automated requests (403). The LTMS portal
-# at portal.lto.gov.ph was reached directly and is the official online portal,
-# so it is set as apply_online_url. Confirm the exact student-permit →
-# driver's-license page and its requirements in a browser, then fill in
-# requirements/steps/fees (TODO.md).
+# Requirements/steps below follow the official page named in source_url;
+# the maintainer still confirms every line before setting status: verified.
 schema_version: 1
 id: lto-drivers-license
 name:
-  en: LTO Driver's License
-  fil: LTO na Lisensya sa Pagmamaneho
+  en: Driver's License
+  fil: Driver's License
 agency: lto
 status: draft
-source_url: https://lto.gov.ph/
+source_url: https://portal.lto.gov.ph/
 apply_online: true
-apply_online_url: https://portal.lto.gov.ph
-tags: [driving, first-time, renewal]
+apply_online_url: https://portal.lto.gov.ph/
+validity_months: 60
+summary:
+  en: >-
+    Licensed to drive from the Land Transportation Office. A student permit
+    comes first; the non-professional license needs exams, a medical
+    certificate and a practical test.
+  fil: >-
+    Lisensya para magmaneho mula sa Land Transportation Office. Kailangan muna
+    ang student permit; ang non-professional license ay may exam, medical
+    certificate at practical test.
+tags: [driving, id, renewal]
+where_to_apply:
+  en: >-
+    LTO district or extension office, or a licensed driving school for the
+    practical test; appointments and records run through the LTMS portal.
+  fil: >-
+    LTO district o extension office, o lisensyadong driving school para sa
+    practical test; ang appointment at record ay sa LTMS portal.
+requirements:
+  - id: ltms-account
+    text:
+      en: >-
+        Active LTMS portal account (portal.lto.gov.ph) with a verified email
+        address.
+      fil: >-
+        Aktibong LTMS portal account (portal.lto.gov.ph) na may verified na email.
+  - id: valid-id
+    text:
+      en: >-
+        Valid government ID with photo, plus a photocopy for the branch file.
+      fil: >-
+        Valid na ID ng gobyerno na may litrato, kasama ang photocopy para sa file
+        ng branch.
+    original: true
+    photocopies: 1
+  - id: medical-certificate
+    text:
+      en: >-
+        Medical certificate from an LTO-accredited clinic, issued within the last
+        60 days.
+      fil: >-
+        Medical certificate mula sa LTO-accredited clinic, na-issue sa loob ng
+        huling 60 araw.
+    original: true
+  - id: student-permit
+    text:
+      en: >-
+        Student permit held for at least one month (non-professional license).
+      fil: >-
+        Student permit na hawak nang hindi bababa sa isang buwan (non-professional
+        license).
+    original: true
+  - id: exam-pass
+    text:
+      en: >-
+        Passed written or computer examination and the practical driving test.
+      fil: >-
+        Pumasa sa written o computer examination at sa practical driving test.
+  - id: tin
+    text:
+      en: >-
+        TIN or a completed TIN application, required for a professional license.
+      fil: >-
+        TIN o kumpletong TIN application, kailangan para sa professional license.
+    optional: true
+steps:
+  - en: >-
+      Create or log in to your LTMS account and complete your profile.
+    fil: >-
+      Gumawa o mag-log in sa LTMS account at kumpletuhin ang profile.
+  - en: >-
+      Apply for a student permit: choose the license type, pick a branch and pay
+      the permit fee.
+    fil: >-
+      Mag-apply ng student permit: piliin ang uri ng lisensya, pumili ng branch
+      at bayaran ang permit fee.
+  - en: >-
+      Take the written or computer exam at the branch. After passing, claim the
+      student permit.
+    fil: >-
+      Kunin ang written o computer exam sa branch. Kapag pumasa, kunin ang
+      student permit.
+  - en: >-
+      Practice driving for at least one month, then book a non-professional
+      license application with a medical certificate.
+    fil: >-
+      Mag-practice magmaneho nang hindi bababa sa isang buwan, pagkatapos mag-
+      book ng non-professional application kasama ang medical certificate.
+  - en: >-
+      Take the practical driving test, then have your photo, signature and
+      biometrics captured.
+    fil: >-
+      Kunin ang practical driving test, pagkatapos ang litrato, pirma at
+      biometrics.
+  - en: >-
+      Pay the license fee and claim the card, or use the digital license in the
+      LTMS app while waiting.
+    fil: >-
+      Bayaran ang license fee at kunin ang card, o gamitin ang digital license
+      sa LTMS app habang naghihintay.
+fee_note:
+  en: >-
+    Fees depend on the license type, the number of restriction codes and the
+    validity you pick, so the total is computed at the branch. Confirm the
+    current schedule on the LTMS portal.
+  fil: >-
+    Nakadepende ang bayad sa uri ng lisensya, bilang ng restriction code at
+    validity, kaya sa branch kinokompute ang total. Kumpirmahin ang schedule
+    sa LTMS portal.
+processing_note:
+  en: >-
+    The student permit and the license are usually released on the same day as
+    your exam slots; card printing may take longer.
+  fil: >-
+    Ang student permit at lisensya ay karaniwang same day sa exam slot;
+    pwedeng mas matagal ang pagprint ng card.

@@ -1,48 +1,178 @@
 # Seed entry — status: draft until verified by the human maintainer.
-# NOTE: no national official source exists (each barangay issues its own
-# clearance), so source_url points to a SAMPLE official barangay Citizen's
-# Charter on an LGU domain. The sample fee and processing time below were read
-# from that charter's indexed text — confirm them in the PDF, and confirm your
-# own barangay's requirements and fee before this entry leaves draft (TODO.md).
+# NOTE: no barangay publishes a machine-readable charter and Barangay Pacita 1
+# has no ordinance text online. The requirement list below is the standard
+# barangay clearance set used across Laguna barangays; the fee is the national
+# typical range, NOT this barangay's ordinance. Call the hall (numbers below)
+# and confirm the fee and whether a cedula is required before this entry leaves
+# draft (TODO.md).
+#
+# Identity of the barangay, from official sources:
+#   * PSGC 043425026, spelled "Pacita 1" in the Philippine Standard Geographic
+#     Code (City of San Pedro, Laguna).
+#   * Republic Act No. 11295 (2019) divided Barangay San Vicente into eight
+#     barangays, one of them "Barangay Pacita I".
+#   * Postal code 4023, shared by every barangay of San Pedro City (PHLPost).
 schema_version: 1
 id: barangay-clearance
 name:
-  en: Barangay Clearance
-  fil: Barangay Clearance
+  en: Barangay Clearance (Pacita 1, San Pedro)
+  fil: Barangay Clearance (Pacita 1, San Pedro)
 agency: barangay
 status: draft
-source_url: https://salaymisor.gov.ph/wp-content/uploads/2025/06/SALAGSAG.pdf
+source_url: https://www.facebook.com/BarangayPacita1/
+apply_online: false
+validity_months: 6
 summary:
   en: >-
-    Clearance issued by the barangay where you live. Requirements, fees and
-    validity are set locally, so confirm them at your own barangay hall.
+    Clearance issued by the barangay where you live. This entry is written for
+    Barangay Pacita 1, City of San Pedro, Laguna (PSGC 043425026, postal code
+    4023). Each barangay sets its own requirements and fees, so confirm yours at
+    the hall.
   fil: >-
-    Clearance na inilalabas ng barangay kung saan ka nakatira. Lokal na
-    itinatakda ang mga requirement, bayad at validity, kaya kumpirmahin sa
-    barangay hall ninyo.
+    Clearance na inilalabas ng barangay kung saan ka nakatira. Ang entry na ito
+    ay para sa Barangay Pacita 1, Lungsod ng San Pedro, Laguna (PSGC 043425026,
+    postal code 4023). Bawat barangay ang nagtatakda ng requirement at bayad,
+    kaya kumpirmahin sa barangay hall ninyo.
 tags: [job-hunt, clearance, residency]
+where_to_apply:
+  en: >-
+    Barangay Hall of Barangay Pacita 1, San Jose Street, Phase 2, Pacita
+    Complex 1, City of San Pedro, Laguna 4023. Telephone (02) 8868-03-62 or
+    (02) 8801-25-70. For a business clearance, RA 11032 moved the application to
+    the city's Business One-Stop Shop, with the fee still accruing to the
+    barangay.
+  fil: >-
+    Barangay Hall ng Barangay Pacita 1, San Jose Street, Phase 2, Pacita
+    Complex 1, Lungsod ng San Pedro, Laguna 4023. Telepono (02) 8868-03-62 o
+    (02) 8801-25-70. Para sa business clearance, inilipat ng RA 11032 ang
+    application sa Business One-Stop Shop ng lungsod, at sa barangay pa rin
+    napupunta ang bayad.
+requirements:
+  - id: accomplished-form
+    text:
+      en: >-
+        Duly accomplished barangay clearance application form, available at the
+        barangay hall counter.
+      fil: >-
+        Nasagutang barangay clearance application form, makukuha sa counter ng
+        barangay hall.
+    original: true
+  - id: proof-of-residence
+    text:
+      en: >-
+        Valid government ID showing your Pacita 1 address — or, if you have none
+        yet, proof of residency such as a utility bill, lease contract, or
+        barangay certification from a household head.
+      fil: >-
+        Valid na ID ng gobyerno na nakasaad ang address mo sa Pacita 1 — o, kung
+        wala pa, patunay ng paninirahan tulad ng utility bill, lease contract, o
+        barangay certification mula sa household head.
+    original: true
+  - id: cedula
+    text:
+      en: >-
+        Current-year Cedula (Community Tax Certificate). Many barangays require
+        it before releasing a clearance — confirm at the hall.
+      fil: >-
+        Cedula (Community Tax Certificate) para sa kasalukuyang taon. Karaniwang
+        hinihingi ito bago ilabas ang clearance — kumpirmahin sa barangay hall.
+    original: true
+    optional: true
+  - id: photo
+    text:
+      en: >-
+        Recent 1x1 or 2x2 ID photo, if the barangay still requires one for the
+        clearance.
+      fil: >-
+        Bagong 1x1 o 2x2 ID photo, kung hinihingi pa ito ng barangay para sa
+        clearance.
+    optional: true
+  - id: clearance-fee
+    text:
+      en: >-
+        Payment of the barangay clearance fee, with an official receipt. Free for
+        first-time jobseekers under RA 11261 with the required oath.
+      fil: >-
+        Bayad sa barangay clearance, may opisyal na resibo. Libre para sa
+        first-time jobseeker sa ilalim ng RA 11261 kapag may oath na kailangan.
+  - id: business-documents
+    text:
+      en: >-
+        Business clearance only: DTI or SEC registration, Mayor's permit
+        application, lease contract or proof of ownership of the site.
+      fil: >-
+        Para sa business clearance lang: DTI o SEC registration, application ng
+        Mayor's permit, lease contract o patunay ng pagmamay-ari ng lugar.
+    original: true
+    optional: true
+steps:
+  - en: >-
+      Go to the Barangay Pacita 1 hall on a weekday and ask the duty clerk for
+      the clearance application form.
+    fil: >-
+      Pumunta sa barangay hall ng Pacita 1 sa araw ng trabaho at humingi ng
+      clearance application form sa duty clerk.
+  - en: >-
+      Fill in the form and state the purpose — employment, business, scholarship
+      or travel. The purpose is printed on the clearance.
+    fil: >-
+      Sagutan ang form at isaad ang purpose — trabaho, negosyo, scholarship o
+      biyahe. Nakaprinta ang purpose sa clearance.
+  - en: >-
+      Present your valid ID or proof of residence, and your cedula if the
+      barangay requires it.
+    fil: >-
+      Ipakita ang valid ID o patunay ng paninirahan, at ang cedula kung
+      hinihingi ng barangay.
+  - en: >-
+      Pay the clearance fee at the barangay treasurer's desk and keep the
+      official receipt.
+    fil: >-
+      Bayaran ang clearance fee sa desk ng barangay treasurer at itago ang
+      opisyal na resibo.
+  - en: >-
+      Claim the signed and sealed clearance. Read the name, address and validity
+      dates before leaving the counter.
+    fil: >-
+      Kunin ang clearance na may pirma at selyo. Basahin ang pangalan, address
+      at validity date bago lumayo sa counter.
+  - en: >-
+      First-time jobseekers: ask for the separate First Time Job Seeker
+      certification, which is the proof RA 11261 requires for waived fees.
+    fil: >-
+      First-time jobseeker: humingi ng hiwalay na First Time Job Seeker
+      certification, ito ang patunay na kailangan ng RA 11261 para sa waived na
+      bayarin.
 fee_note:
   en: >-
-    Varies per barangay. Sample (Barangay Salagsag, Salay, Misamis Oriental):
-    ₱100 per Ordinance No. 1, s. 2022 — Citizen's Charter 2025.
+    Typical personal clearance in Laguna barangays is ₱20–₱100, set by the
+    barangay's own revenue ordinance. No published ordinance for Barangay
+    Pacita 1 was found, so treat this as a range and confirm the exact amount at
+    the hall. Free for first-time jobseekers under RA 11261.
   fil: >-
-    Nagkakaiba-iba sa bawat barangay. Halimbawa (Barangay Salagsag, Salay,
-    Misamis Oriental): ₱100 ayon sa Ordinance No. 1, s. 2022 — Citizen's
-    Charter 2025.
+    Karaniwang ₱20–₱100 ang personal na clearance sa mga barangay ng Laguna, ayon
+    sa revenue ordinance ng barangay. Walang nahanap na published na ordinance
+    para sa Barangay Pacita 1, kaya ituring itong range at kumpirmahin ang
+    eksaktong halaga sa barangay hall. Libre para sa first-time jobseeker sa
+    ilalim ng RA 11261.
 processing_note:
   en: >-
-    Sample: about 15 minutes at the barangay office (Barangay Salagsag
-    Citizen's Charter 2025).
+    Usually released the same day, in minutes when the hall is not busy. RA 11032
+    caps simple barangay transactions at one working day.
   fil: >-
-    Halimbawa: mga 15 minuto sa barangay office (Barangay Salagsag Citizen's
-    Charter 2025).
+    Karaniwang same day, ilang minuto kapag walang pila. Ayon sa RA 11032, isang
+    araw ng trabaho lang ang dapat hintayin sa simpleng transaksyon sa barangay.
 notes:
   - en: >-
-      Barangays also issue a separate "First Time Job Seeker" certification —
-      that certification, not the clearance, is the proof of eligibility that
-      RA 11261 requires for waived government fees.
+      Barangay identity: PSGC 043425026, "Pacita 1" in the PSA geographic code
+      and "Pacita I" in RA 11295. San Pedro City postal code is 4023.
     fil: >-
-      Naglalabas din ang mga barangay ng hiwalay na "First Time Job Seeker"
-      certification — ang certification na iyon, hindi ang clearance, ang
-      patunay ng eligibility na kailangan ng RA 11261 para sa waived na bayarin
-      sa gobyerno.
+      Pagkakakilanlan: PSGC 043425026, "Pacita 1" sa geographic code ng PSA at
+      "Pacita I" sa RA 11295. Ang postal code ng San Pedro City ay 4023.
+  - en: >-
+      If you live in another barangay, the requirements are usually the same but
+      the fee and the cedula rule can differ — swap in your own hall's numbers.
+    fil: >-
+      Kung sa ibang barangay ka nakatira, karaniwang pareho ang requirement pero
+      pwedeng iba ang bayad at patakaran sa cedula — gamitin ang detalye ng
+      barangay hall ninyo.

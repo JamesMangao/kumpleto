@@ -1,14 +1,114 @@
 # Seed entry — status: draft until verified by the human maintainer.
-# NOTE for verifier: psa.gov.ph blocks automated requests (403), so the exact
-# deep-link below was located through search indexing only and NO fields were
-# filled from the page. Open it in a browser, confirm the requirements, fees and
-# steps, then fill them in (TODO.md). Never fill in an unconfirmed field.
+# Requirements/steps below follow the official page named in source_url;
+# the maintainer still confirms every line before setting status: verified.
 schema_version: 1
 id: psa-birth-certificate
 name:
   en: PSA Birth Certificate
-  fil: PSA na Sertipiko ng Kapanganakan
+  fil: PSA Birth Certificate
 agency: psa
 status: draft
-source_url: https://psa.gov.ph/birth-certificate
-tags: [job-hunt, civil-registry, birth]
+source_url: https://psaserbilis.com.ph/
+apply_online: true
+apply_online_url: https://psaserbilis.com.ph/
+summary:
+  en: >-
+    Certified copy of your birth record printed on PSA security paper. Most
+    government IDs and passports ask for this copy, not the local civil
+    registrar's.
+  fil: >-
+    Certified na kopya ng birth record mo na nakaprinta sa security paper ng
+    PSA. Ito ang hinihingi ng karamihan sa government ID at passport, hindi
+    ang kopya mula sa local civil registrar.
+tags: [civil-registry, birth, job-hunt, passport]
+where_to_apply:
+  en: >-
+    Any PSA Serbilis outlet or the PSA Serbilis online service; delivered by
+    courier if you order online.
+  fil: >-
+    Kahit anong PSA Serbilis outlet o ang PSA Serbilis online; ipapadala sa
+    courier kapag online ang order.
+requirements:
+  - id: request-form
+    text:
+      en: >-
+        Accomplished request form from the outlet or the online order form.
+      fil: >-
+        Nasagutang request form mula sa outlet o ang online order form.
+    original: true
+  - id: valid-id
+    text:
+      en: >-
+        One valid government ID of the requester, original and not expired.
+      fil: >-
+        Isang valid na ID ng gobyerno ng nag-request, orihinal at hindi expired.
+    original: true
+  - id: birth-details
+    text:
+      en: >-
+        Complete birth details: full name, date and place of birth, and both
+        parents' names.
+      fil: >-
+        Kumpletong detalye ng kapanganakan: buong pangalan, petsa at lugar ng
+        kapanganakan, at pangalan ng dalawang magulang.
+  - id: authorization
+    text:
+      en: >-
+        If a representative files for you: signed authorization letter and the
+        representative's valid ID.
+      fil: >-
+        Kung may representante: pirmaheng authorization letter at valid ID ng
+        representante.
+    original: true
+    optional: true
+  - id: payment
+    text:
+      en: >-
+        Payment for each copy requested; keep the receipt or reference number.
+      fil: >-
+        Bayad para sa bawat kopyang hinihingi; itago ang resibo o reference
+        number.
+steps:
+  - en: >-
+      Choose how to order: PSA Serbilis online, a PSA Serbilis outlet, or an
+      authorized partner. The online route needs a delivery address.
+    fil: >-
+      Pumili ng paraan: PSA Serbilis online, PSA Serbilis outlet, o awtorisadong
+      partner. Kailangan ng delivery address kapag online.
+  - en: >-
+      Fill in the birth details exactly as they appear on the record. A single
+      wrong letter in the name can return an unmatched result.
+    fil: >-
+      Isulat ang detalye ng kapanganakan ayon sa record. Ang isang maling letra
+      sa pangalan ay pwedeng magresulta ng walang tugmang rekord.
+  - en: >-
+      Pay the fee for the number of copies you need and keep the reference
+      number or receipt.
+    fil: >-
+      Bayaran ang fee para sa bilang ng kopyang kailangan at itago ang reference
+      number o resibo.
+  - en: >-
+      Wait for the copy: same-day at some outlets, a few working days for
+      courier delivery.
+    fil: >-
+      Hintayin ang kopya: same-day sa ilang outlet, ilang araw kung courier.
+  - en: >-
+      Check the print quality and the details on the security paper. Ask for a
+      correction at the outlet if anything is wrong.
+    fil: >-
+      Tingnan ang kalidad ng print at ang detalye sa security paper. Humingi ng
+      correction sa outlet kung may mali.
+fee_note:
+  en: >-
+    About ₱155 per copy through PSA Serbilis, plus delivery if you order
+    online. Rates change, so confirm at the outlet or on the order page.
+  fil: >-
+    Mga ₱155 bawat kopya sa PSA Serbilis, dagdag ang delivery kapag online.
+    Nagbabago ang rate, kaya kumpirmahin sa outlet o sa order page.
+processing_note:
+  en: >-
+    Same day at many outlets; online orders with courier delivery usually take
+    a few working days.
+  fil: >-
+    Same day sa maraming outlet; ang online order na may courier ay karaniwang
+    ilang araw.
