@@ -80,7 +80,7 @@ documents before the rest.
 - [ ] Play Console account; recruit 12+ testers for 14 continuous days closed testing
 - [ ] Take 2+ phone screenshots (physical device, USB debugging)
 - [x] 512×512 store icon + 1024×500 feature graphic — generated in
-      `app/icons/` (upload still manual in the Play Console)
+      `app/assets/logo/` (upload still manual in the Play Console)
 - [ ] Confirm "Kumpleto" name availability on Play
 - [ ] Enable GitHub Pages (source: GitHub Actions)
 - [ ] Promote entries from draft one at a time, setting `last_verified` only via human review

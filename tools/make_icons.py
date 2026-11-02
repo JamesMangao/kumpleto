@@ -1,92 +1,75 @@
-"""Draw the Kumpleto mark (folder + check) crisply at every size we ship.
+"""Derive every icon asset from `app/assets/logo/app-icon.png`.
 
-One geometry, one palette, four outputs:
-  * icons/icon-1024.png            full-bleed launcher (teal square, white mark)
-  * icons/icon-foreground-1024.png adaptive foreground (transparent, safe zone)
-  * icons/icon-monochrome-1024.png themed icon silhouette
-  * assets/logo/app-icon.png       in-app logo (rounded teal card)
+The master artwork is maintained by hand (it is the only file to edit). This
+script produces the deliverables that must stay in sync with it:
+
+    assets/logo/app-icon-adaptive.png      adaptive foreground, white margin
+                                           flood-filled to transparent
+    assets/logo/app-icon-512.png           Play store icon
+    assets/logo/feature-graphic-1024x500.png
+    android/.../drawable/splash_logo.png   launch-window logo
+
+Afterwards regenerate the Android mipmaps:
+
+    cd app && dart run flutter_launcher_icons
 """
-import io
 import os
 
 from PIL import Image, ImageDraw
 
-TEAL = (14, 107, 88, 255)  # #0E6B58
-WHITE = (255, 255, 255, 255)
-SS = 4  # supersample factor for smooth edges
+LOGO = "app/assets/logo"
+MASTER = f"{LOGO}/app-icon.png"
 
 
-def draw_mark(size, box):
-    """Return an RGBA image with the white folder+check drawn inside `box`."""
-    canvas = Image.new("RGBA", (size * SS, size * SS), (0, 0, 0, 0))
-    draw = ImageDraw.Draw(canvas)
-    x, y, w, h = [v * SS for v in box]
-
-    # Folder tab and body, proportioned from the 1024 master.
-    tab_h = h * 0.42
-    draw.rounded_rectangle(
-        [x + w * 0.02, y, x + w * 0.50, y + tab_h],
-        radius=w * 0.09,
-        fill=WHITE,
-    )
-    draw.rounded_rectangle(
-        [x, y + h * 0.24, x + w, y + h],
-        radius=w * 0.13,
-        fill=WHITE,
-    )
-
-    # Check: three points, round caps and joins.
-    stroke = w * 0.115
-    p1 = (x + w * 0.27, y + h * 0.68)
-    p2 = (x + w * 0.43, y + h * 0.86)
-    p3 = (x + w * 0.75, y + h * 0.42)
-    for a, b in ((p1, p2), (p2, p3)):
-        draw.line([a, b], fill=TEAL, width=int(stroke))
-    for point in (p1, p2, p3):
-        r = stroke / 2
-        draw.ellipse(
-            [point[0] - r, point[1] - r, point[0] + r, point[1] + r],
-            fill=TEAL,
-        )
-    return canvas.resize((size, size), Image.LANCZOS)
+def tile():
+    """The artwork with its outer white page removed."""
+    source = Image.open(MASTER).convert("RGBA")
+    filled = source.copy()
+    width, height = filled.size
+    for corner in [
+        (0, 0),
+        (width - 1, 0),
+        (0, height - 1),
+        (width - 1, height - 1),
+    ]:
+        ImageDraw.floodfill(filled, corner, (255, 255, 255, 0), thresh=60)
+    box = filled.getbbox()
+    if box is None:
+        raise SystemExit("no artwork found inside the white margin")
+    return filled, filled.crop(box)
 
 
 def save(image, path):
-    os.makedirs(os.path.dirname(path), exist_ok=True)
+    directory = os.path.dirname(path)
+    if directory:
+        os.makedirs(directory, exist_ok=True)
     image.save(path, "PNG", optimize=True)
     print(f"wrote {path} ({os.path.getsize(path) // 1024} KB)")
 
 
-# --- launcher: full-bleed square (Android masks it) -------------------------
-launcher = Image.new("RGBA", (1024, 1024), TEAL)
-mark = draw_mark(1024, (1024 * 0.235, 1024 * 0.315, 1024 * 0.53, 1024 * 0.33))
-launcher = Image.alpha_composite(launcher, mark)
-save(launcher, "app/icons/icon-1024.png")
+def main():
+    source, cropped = tile()
+    save(cropped, f"{LOGO}/app-icon-adaptive.png")
+    save(cropped.resize((512, 512), Image.LANCZOS), f"{LOGO}/app-icon-512.png")
 
-# --- adaptive foreground: mark inside the 66% safe zone --------------------
-foreground = Image.new("RGBA", (1024, 1024), (0, 0, 0, 0))
-mark = draw_mark(1024, (1024 * 0.30, 1024 * 0.36, 1024 * 0.40, 1024 * 0.25))
-foreground = Image.alpha_composite(foreground, mark)
-save(foreground, "app/icons/icon-foreground-1024.png")
-save(foreground, "app/icons/icon-monochrome-1024.png")
+    # Launch window: the tile on the app's background colour.
+    splash = Image.new("RGBA", (768, 768), (0, 0, 0, 0))
+    tile_size = 380
+    resized = cropped.resize((tile_size, tile_size), Image.LANCZOS)
+    splash.paste(
+        resized, ((768 - tile_size) // 2, (768 - tile_size) // 2), resized
+    )
+    save(splash, "app/android/app/src/main/res/drawable/splash_logo.png")
 
-# --- in-app logo: rounded teal card ---------------------------------------
-card = Image.new("RGBA", (1024, 1024), (0, 0, 0, 0))
-ImageDraw.Draw(card).rounded_rectangle(
-    [0, 0, 1023, 1023], radius=240, fill=TEAL
-)
-mark = draw_mark(1024, (1024 * 0.235, 1024 * 0.315, 1024 * 0.53, 1024 * 0.33))
-card = Image.alpha_composite(card, mark)
-save(card.resize((512, 512), Image.LANCZOS), "app/assets/logo/app-icon.png")
+    # Play feature graphic: 1024x500, teal field, tile on the left.
+    graphic = Image.new("RGB", (1024, 500), (14, 107, 88))
+    mark = cropped.resize((260, 260), Image.LANCZOS)
+    graphic.paste(mark, (150, 120), mark)
+    save(graphic, f"{LOGO}/feature-graphic-1024x500.png")
 
-# --- native splash logo (pre-Android 12 window background) -----------------
-splash = Image.new("RGBA", (768, 768), (0, 0, 0, 0))
-mark = draw_mark(768, (768 * 0.27, 768 * 0.34, 768 * 0.46, 768 * 0.28))
-splash = Image.alpha_composite(splash, mark)
-save(splash, "app/android/app/src/main/res/drawable/splash_logo.png")
+    preview = source.resize((320, 320), Image.LANCZOS)
+    save(preview, ".icon-preview.png")
 
-# --- feature graphic keeps its aspect ratio but uses the new mark ----------
-graphic = Image.new("RGBA", (1024, 500), TEAL)
-mark = draw_mark(500, (120, 110, 260, 280))
-graphic = Image.alpha_composite(graphic, mark)
-save(graphic, "app/icons/feature-graphic-1024x500.png")
+
+if __name__ == "__main__":
+    main()

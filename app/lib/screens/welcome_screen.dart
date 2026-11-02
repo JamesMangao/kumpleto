@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../core/motion.dart';
 import '../core/theme.dart';
 import '../l10n/app_localizations.dart';
+import '../widgets/shared.dart';
 
 /// Shows the animated welcome scene on top of the app on every launch.
 ///
@@ -104,7 +105,6 @@ class _WelcomeScene extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final fadeOut = _segment(0.86, 1.0);
     final markIn = _segment(0.05, 0.45);
-    final check = _segment(0.30, 0.68);
     final tagline = _segment(0.62, 0.82);
 
     final scale = 0.72 + 0.28 * Motion.overshoot.transform(markIn);
@@ -151,13 +151,7 @@ class _WelcomeScene extends StatelessWidget {
                       angle: rotation,
                       child: Transform.scale(
                         scale: scale,
-                        child: SizedBox(
-                          width: 148,
-                          height: 148,
-                          child: CustomPaint(
-                            painter: _BrandMarkPainter(checkProgress: check),
-                          ),
-                        ),
+                        child: const KumpletoLogo(size: 132, radius: 32),
                       ),
                     ),
                   ],
@@ -259,48 +253,4 @@ class _Letter extends StatelessWidget {
       ),
     );
   }
-}
-
-/// Vector Kumpleto mark: a white folder with a check that draws itself.
-class _BrandMarkPainter extends CustomPainter {
-  const _BrandMarkPainter({required this.checkProgress});
-
-  final double checkProgress;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final s = size.width / 148.0;
-    final white = Paint()..color = Colors.white;
-    final body = RRect.fromRectAndRadius(
-      Rect.fromLTWH(26 * s, 48 * s, 106 * s, 72 * s),
-      Radius.circular(14 * s),
-    );
-    final tab = RRect.fromRectAndRadius(
-      Rect.fromLTWH(26 * s, 34 * s, 52 * s, 26 * s),
-      Radius.circular(9 * s),
-    );
-    canvas.drawRRect(tab, white);
-    canvas.drawRRect(body, white);
-
-    if (checkProgress <= 0) return;
-    final path = Path()
-      ..moveTo(56 * s, 86 * s)
-      ..lineTo(71 * s, 101 * s)
-      ..lineTo(103 * s, 66 * s);
-    final metric = path.computeMetrics().first;
-    final drawn = metric.extractPath(0, metric.length * checkProgress);
-    canvas.drawPath(
-      drawn,
-      Paint()
-        ..color = AppTheme.primaryTeal
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 12 * s
-        ..strokeCap = StrokeCap.round
-        ..strokeJoin = StrokeJoin.round,
-    );
-  }
-
-  @override
-  bool shouldRepaint(_BrandMarkPainter oldDelegate) =>
-      oldDelegate.checkProgress != checkProgress;
 }

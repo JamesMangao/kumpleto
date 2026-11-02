@@ -166,14 +166,14 @@ Artwork rules (decision U1): **checkmark + folder motif**; explicitly no flags,
 seals, sun/stars, eagles or agency branding. The launcher icon is generated
 with `flutter_launcher_icons` from the same source artwork.
 
-All artwork lives in `app/icons/` and is ready to upload as-is:
+All artwork lives in `app/assets/logo/` and is ready to upload as-is:
 
 | File | Use |
 | --- | --- |
-| `app/icons/icon-512.png` | 512 × 512 Play store icon |
-| `app/icons/feature-graphic-1024x500.png` | 1024 × 500 feature graphic |
-| `app/icons/icon-1024.png` | source artwork (legacy launcher mipmap) |
-| `app/icons/icon-foreground-1024.png` | adaptive/monochrome foreground layer |
+| `app/assets/logo/app-icon-512.png` | 512 × 512 Play store icon |
+| `app/assets/logo/feature-graphic-1024x500.png` | 1024 × 500 feature graphic |
+| `app/assets/logo/app-icon.png` | source artwork (legacy launcher mipmap) |
+| `app/assets/logo/app-icon.png` | adaptive/monochrome foreground layer |
 
 To regenerate the Android mipmaps and adaptive layers after changing the
 source artwork:

@@ -138,7 +138,7 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done
 - [x] Launcher icon via `flutter_launcher_icons` (approved): **checkmark +
       folder motif**, no flag/seal/sun-stars, no agency branding;
       same artwork → 512×512 Play store icon + 1024×500 feature graphic
-      (source art in `app/icons/`; adaptive + monochrome layers generated)
+      (source art in `app/assets/logo/`; adaptive + monochrome layers generated)
 - [x] `docs/PLAY_RELEASE.md` — keystore + `key.properties` (gitignored)
       setup, Play App Signing, versionName/versionCode policy, store
       listing copy (unofficial disclaimer in first lines)

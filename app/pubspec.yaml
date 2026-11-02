@@ -56,17 +56,17 @@ flutter:
 
   generate: true
 
-# Launcher icon generation (source artwork lives in app/icons/ — see
-# docs/PLAY_RELEASE.md). Regenerate the Android mipmaps with:
+# Launcher icon generation. The single source of truth for the brand mark is
+# app/assets/logo/app-icon.png — the same file the app shows in-app and the
+# splash uses. Replace that one file, then run:
 #   dart run flutter_launcher_icons
 flutter_launcher_icons:
   android: true
   # No iOS target in this repo (Android-only release).
   ios: false
-  image_path: "icons/icon-1024.png"
-  adaptive_icon_background: "#0E6B58"
-  adaptive_icon_foreground: "icons/icon-foreground-1024.png"
-  # Artwork already has margin baked in; no extra inset padding.
+  image_path: "assets/logo/app-icon.png"
+  adaptive_icon_background: "#0068FD"
+  # The master is a full-bleed square, so the adaptive layer reuses it and
+  # insets it into the 66% safe zone rather than a separate cut-out layer.
+  adaptive_icon_foreground: "assets/logo/app-icon-adaptive.png"
   adaptive_icon_foreground_inset: 0
-  # Android 13+ themed icon (same silhouette, system-tinted).
-  adaptive_icon_monochrome: "icons/icon-monochrome-1024.png"
