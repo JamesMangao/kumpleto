@@ -26,9 +26,10 @@ connected desktop/web devices, network).
 
 - **T1 — Flutter pinned to 3.47.7** via `.fvmrc` (single source of truth; CI reads
   the same file). Rationale: reproducible CI and local builds; FVM optional later.
-- **T2 — Permanent user env vars**: `JAVA_HOME` → Android Studio JBR 21;
-  `ANDROID_HOME`/`ANDROID_SDK_ROOT` → SDK path; user `Path` += `D:\flutter\bin`
-  and JBR `bin`. Rationale: every future shell/CI-parity build finds them.
+- **T2 — Permanent user env vars**: `ANDROID_HOME`/`ANDROID_SDK_ROOT` → SDK path;
+  user `Path` += `D:\flutter\bin`. Rationale: every future shell/CI-parity build finds them.
+  **Note**: `JAVA_HOME` should point to a full JDK 17+ for IDE Java language server support,
+  not Android Studio's JBR. Remove or update `JAVA_HOME` if the "no usable Java executable" error appears.
 - **T3 — SDK installed up front** (maintainer-approved change #2): cmdline-tools,
   `platforms;android-36`, licenses — before any Gradle build. No reactive installs.
 

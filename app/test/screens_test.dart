@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kumpleto/core/settings.dart';
@@ -135,6 +136,24 @@ void main() {
 
       await scrollToTop(tester);
       expect(find.text(l10n.progressOf(1, 3)), findsOneWidget);
+    });
+
+    testWidgets('an unverified document says so on its detail screen', (
+      tester,
+    ) async {
+      await pumpKumpleto(tester);
+      final l10n = l10nOf(tester);
+
+      // Home no longer lists documents directly — reach one through search.
+      await tester.enterText(find.byType(TextField).first, 'nbi');
+      await tester.testTextInput.receiveAction(TextInputAction.search);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('NBI Clearance'));
+      await tester.pumpAndSettle();
+
+      // Draft documents state that no maintainer has verified them yet.
+      expect(find.text(l10n.docNeverVerified), findsOneWidget);
+      expect(find.text(l10n.statusDraft), findsWidgets);
     });
 
     testWidgets('shows original / photocopy / optional badges', (
@@ -332,6 +351,132 @@ void main() {
       await tester.tap(find.text(l10n.navHome));
       await tester.pumpAndSettle();
       expect(container.read(progressProvider).value, isEmpty);
+    });
+
+    testWidgets('every settings row is rendered and wired up', (tester) async {
+      await pumpKumpleto(tester);
+      await tester.tap(find.text(l10nOf(tester).navSettings));
+      await tester.pumpAndSettle();
+      final l10n = l10nOf(tester);
+
+      expect(
+        find.widgetWithText(OutlinedButton, l10n.settingsCheckForUpdates),
+        findsOneWidget,
+      );
+
+      // The rows below the fold only exist once they are scrolled to, so each
+      // one is asserted immediately after it is brought into view. Every row
+      // but the (informational) app version opens something.
+      final rows = <(String, bool)>[
+        (l10n.settingsResetProgress, true),
+        (l10n.settingsAppVersion('1.2.3'), false),
+        (l10n.settingsAbout, true),
+        (l10n.settingsDisclaimer, true),
+        (l10n.settingsPrivacy, true),
+        (l10n.settingsLicenses, true),
+        ('GitHub', true),
+      ];
+      for (final (text, tappable) in rows) {
+        final row = find.widgetWithText(ListTile, text);
+        await scrollIntoView(tester, row);
+        expect(row, findsOneWidget, reason: 'missing row: $text');
+        if (!tappable) continue;
+        expect(
+          tester.widget<ListTile>(row).onTap,
+          isNotNull,
+          reason: 'row is not wired up: $text',
+        );
+      }
+    });
+
+    testWidgets('open-source licenses opens the license page', (
+      tester,
+    ) async {
+      await pumpKumpleto(tester);
+      await tester.tap(find.text(l10nOf(tester).navSettings));
+      await tester.pumpAndSettle();
+      final l10n = l10nOf(tester);
+
+      final row = find.widgetWithText(ListTile, l10n.settingsLicenses);
+      await scrollIntoView(tester, row);
+      await tester.tap(row);
+      await tester.pumpAndSettle();
+
+      expect(find.byType(LicensePage), findsOneWidget);
+    });
+
+    testWidgets('the external rows hand the URL to the platform', (
+      tester,
+    ) async {
+      const channel = MethodChannel('plugins.flutter.io/url_launcher');
+      tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+        channel,
+        (call) async => true,
+      );
+      addTearDown(() {
+        tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+          channel,
+          null,
+        );
+      });
+
+      await pumpKumpleto(tester);
+      await tester.tap(find.text(l10nOf(tester).navSettings));
+      await tester.pumpAndSettle();
+      final l10n = l10nOf(tester);
+
+      for (final label in <String>[
+        l10n.settingsAbout,
+        l10n.settingsDisclaimer,
+        l10n.settingsPrivacy,
+        'GitHub',
+      ]) {
+        final row = find.widgetWithText(ListTile, label);
+        await scrollIntoView(tester, row);
+        await tester.tap(row);
+        await tester.pumpAndSettle();
+        expect(tester.takeException(), isNull, reason: 'tapping $label');
+      }
+    });
+
+    testWidgets('checking for updates finishes and reports a result', (
+      tester,
+    ) async {
+      await pumpKumpleto(tester);
+      await tester.tap(find.text(l10nOf(tester).navSettings));
+      await tester.pumpAndSettle();
+      final l10n = l10nOf(tester);
+
+      final button = find.widgetWithText(
+        OutlinedButton,
+        l10n.settingsCheckForUpdates,
+      );
+      await scrollIntoView(tester, button);
+      await tester.tap(button);
+      // The mocked http client answers inside the first pump, so the
+      // "Checking…" label is already gone — assert the outcome instead.
+      await tester.pumpAndSettle();
+      expect(
+        find.widgetWithText(OutlinedButton, l10n.settingsCheckForUpdates),
+        findsOneWidget,
+        reason: 'the button never came back from the check',
+      );
+
+      final messages = tester
+          .widgetList<Text>(find.byType(Text))
+          .map((text) => text.data ?? '')
+          .toList();
+      final failurePrefix = l10n.settingsUpdateFailed('');
+      expect(
+        messages.any(
+          (message) =>
+              message == l10n.settingsUpdateDone ||
+              message == l10n.settingsUpToDate ||
+              message.startsWith(failurePrefix),
+        ),
+        isTrue,
+        reason: 'no update result message in: $messages',
+      );
     });
   });
 }

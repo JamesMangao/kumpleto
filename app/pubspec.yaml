@@ -48,6 +48,7 @@ flutter:
   # present in release/CI builds — see docs/DECISIONS.md P3).
   assets:
     - assets/data/
+    - assets/logo/
 
   generate: true
 
