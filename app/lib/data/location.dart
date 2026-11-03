@@ -188,12 +188,25 @@ class BarangaySource {
   final Map<String, Map<String, List<Place>>> _cache = {};
 
   /// Barangays of [cityCode] inside [shard], alphabetical.
+  ///
+  /// Manila is divided into sub-municipalities (`1380601`…`1380614`), and its
+  /// barangays hang off those, not off the city code itself. A city with no
+  /// rows of its own therefore collects the rows of its sub-municipalities
+  /// instead of showing an empty picker.
   Future<List<Place>> barangaysFor({
     required String shard,
     required String cityCode,
   }) async {
     final groups = _cache[shard] ?? await _loadShard(shard);
-    return groups[cityCode] ?? const [];
+    final direct = groups[cityCode];
+    if (direct != null && direct.isNotEmpty) return direct;
+    if (!cityCode.endsWith('00')) return const [];
+    final parent = cityCode.substring(0, cityCode.length - 2);
+    final merged = [
+      for (final entry in groups.entries)
+        if (entry.key != cityCode && entry.key.startsWith(parent)) ...entry.value,
+    ]..sort((a, b) => a.name.compareTo(b.name));
+    return merged;
   }
 
   Future<Map<String, List<Place>>> _loadShard(String shard) async {

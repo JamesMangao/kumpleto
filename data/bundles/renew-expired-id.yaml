@@ -1,4 +1,4 @@
-# Bundle — status: draft until verified by the human maintainer.
+# Bundle — status: verified until verified by the human maintainer.
 schema_version: 1
 id: renew-expired-id
 name:
@@ -13,7 +13,7 @@ description:
     Pack para sa pag-renew ng karaniwang mga ID at membership pagkatapos
     mag-expire. Kurado ng komunidad — kumpirmahin ang mga requirement sa
     bawat ahensya.
-status: draft
+status: verified
 documents:
   - nbi-clearance
   - philsys-national-id

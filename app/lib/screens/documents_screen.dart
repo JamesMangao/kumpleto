@@ -255,7 +255,31 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
 
             // Document List
             Expanded(
-              child: filtered.isEmpty
+              child: documents.isEmpty
+                  ? Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(24),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              l10n.homeEmptyTitle,
+                              textAlign: TextAlign.center,
+                              style: theme.textTheme.titleLarge,
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              l10n.homeEmptyBody,
+                              textAlign: TextAlign.center,
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                color: theme.colorScheme.onSurfaceVariant,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  : filtered.isEmpty
                   ? Center(
                       child: Padding(
                         padding: const EdgeInsets.all(24),
@@ -299,7 +323,8 @@ class _DocumentModernCard extends ConsumerWidget {
     final checked = checkedFor(ref, document.id);
     final done = checkedCount(document, checked);
     final total = document.requirements.length;
-    final fraction = total == 0 ? 0.0 : (done / total).clamp(0.0, 1.0);
+    final acquired = isDocumentAcquired(document, checked);
+    final fraction = total == 0 ? (acquired ? 1.0 : 0.0) : (done / total).clamp(0.0, 1.0);
 
     return Card(
       elevation: 0,
@@ -370,7 +395,39 @@ class _DocumentModernCard extends ConsumerWidget {
                   ),
                 ],
               ),
-              if (document.requirements.isNotEmpty) ...[
+              if (acquired) ...[
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      decoration: BoxDecoration(
+                        color: AppTheme.primaryTeal.withValues(alpha: 0.15),
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            Icons.check_circle_rounded,
+                            size: 13,
+                            color: AppTheme.primaryTeal,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            l10n.docAcquiredBadge,
+                            style: const TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w700,
+                              color: AppTheme.primaryTeal,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ] else if (document.requirements.isNotEmpty) ...[
                 const SizedBox(height: 14),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

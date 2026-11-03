@@ -100,4 +100,15 @@ void main() {
       'doc': {'req'},
     });
   });
+
+  test('markDocumentAcquired sets all requirements plus acquired marker', () async {
+    await repository.markDocumentAcquired('psa-birth-cert', ['orig', 'photocopy']);
+
+    final progress = await repository.watchAll().first;
+    expect(progress['psa-birth-cert'], {'orig', 'photocopy', '__acquired__'});
+
+    await repository.unmarkDocumentAcquired('psa-birth-cert');
+    final afterReset = await repository.watchAll().first;
+    expect(afterReset['psa-birth-cert'], isNull);
+  });
 }

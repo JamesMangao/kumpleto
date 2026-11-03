@@ -23,6 +23,28 @@ class LocalizedText {
   /// English).
   String pick(String languageCode) => languageCode == 'fil' ? fil : en;
 
+  static final RegExp _token = RegExp(r'\{\{(\w+)\}\}');
+
+  /// Replaces every `{{name}}` with the matching entry of [values].
+  ///
+  /// Text without tokens (almost every document) is returned untouched, and a
+  /// token whose value is missing is left as written rather than dropped, so an
+  /// authoring mistake shows up instead of silently reading as a blank.
+  LocalizedText filled(Map<String, LocalizedText> values) {
+    if (values.isEmpty || !(en.contains('{{') || fil.contains('{{'))) {
+      return this;
+    }
+    String apply(String text, String Function(LocalizedText) pick) =>
+        text.replaceAllMapped(
+          _token,
+          (match) => switch (values[match[1]]) {
+            final value? => pick(value),
+            null => match[0]!,
+          },
+        );
+    return LocalizedText(en: apply(en, (value) => value.en), fil: apply(fil, (value) => value.fil));
+  }
+
   @override
   String toString() => en;
 }

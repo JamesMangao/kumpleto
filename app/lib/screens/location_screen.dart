@@ -35,6 +35,8 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
   Place? _barangay;
   Future<List<Place>>? _barangayFuture;
   bool _hydrated = false;
+  /// A barangay saved before the shard was read; resolved once the list loads.
+  Place? _restoreBarangay;
 
   @override
   void dispose() {
@@ -42,15 +44,37 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
     super.dispose();
   }
 
+  /// The place a saved value refers to in this dataset: by code, or — when a
+  /// PSGC update changed the codes, as the 3Q 2026 one did for NIR — by name.
+  /// Returns null when the name is gone too, so nothing is asserted on.
+  Place? _match(List<Place> items, Place? saved) {
+    if (saved == null) return null;
+    for (final place in items) {
+      if (place == saved) return place;
+    }
+    final name = saved.name.toLowerCase();
+    for (final place in items) {
+      if (place.name.toLowerCase() == name) return place;
+    }
+    return null;
+  }
+
   void _hydrate(PlaceIndex index) {
     if (_hydrated) return;
     _hydrated = true;
-    final saved = SavedLocation.read(ref.read(sharedPreferencesProvider));
+    final saved = ref.read(savedLocationProvider);
     if (saved == null) return;
-    _region = saved.region;
-    _province = saved.province;
-    _city = saved.city;
-    _barangay = saved.barangay;
+    _region = _match(index.regions, saved.region) ?? saved.region;
+    _province =
+        _match(index.provincesOf(_region?.code), saved.province) ??
+        saved.province;
+    _city =
+        _match(
+          index.citiesOf(regionCode: _region?.code, province: _province),
+          saved.city,
+        ) ??
+        saved.city;
+    _restoreBarangay = saved.barangay;
     _zip.text = saved.zip;
     if (_city != null) _loadBarangays(index);
   }
@@ -61,10 +85,23 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
       _barangayFuture = null;
       return;
     }
-    _barangayFuture = _barangays.barangaysFor(
-      shard: index.shardFor(regionCode: _region?.code, province: _province),
-      cityCode: city.code,
-    );
+    // A saved barangay is restored once, after its shard is readable.
+    final restore = _restoreBarangay;
+    _restoreBarangay = null;
+    _barangayFuture = _barangays
+        .barangaysFor(
+          shard: index.shardFor(regionCode: _region?.code, province: _province),
+          cityCode: city.code,
+        )
+        .then((items) {
+          final match = _match(items, restore);
+          if (match != null && mounted) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (mounted) setState(() => _barangay = match);
+            });
+          }
+          return items;
+        });
   }
 
   Future<void> _save() async {
@@ -77,6 +114,7 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
       zip: _zip.text.trim(),
     );
     await location.save(ref.read(sharedPreferencesProvider));
+    ref.read(savedLocationProvider.notifier).set(location);
     if (!mounted) return;
     ScaffoldMessenger.of(
       context,
@@ -87,6 +125,7 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
   Future<void> _clear() async {
     final prefs = ref.read(sharedPreferencesProvider);
     await prefs.remove(SavedLocation.prefsKey);
+    ref.read(savedLocationProvider.notifier).set(null);
     if (!mounted) return;
     setState(() {
       _region = null;

@@ -230,6 +230,7 @@ class _HomeBody extends ConsumerWidget {
                           document: doc,
                           checked: checkedCount(doc, progress[doc.id] ?? const {}),
                           total: doc.requirements.length,
+                          isAcquired: isDocumentAcquired(doc, progress[doc.id] ?? const {}),
                         ),
                       ),
                   ],
@@ -383,17 +384,20 @@ class _ContinueDocCard extends StatelessWidget {
     required this.document,
     required this.checked,
     required this.total,
+    this.isAcquired = false,
   });
 
   final Document document;
   final int checked;
   final int total;
+  final bool isAcquired;
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    final fraction = total == 0 ? 0.0 : (checked / total).clamp(0.0, 1.0);
+    final fraction = total == 0 ? (isAcquired ? 1.0 : 0.0) : (checked / total).clamp(0.0, 1.0);
 
     return Card(
       elevation: 0,
@@ -433,21 +437,42 @@ class _ContinueDocCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-              Text(
-                '$checked/$total done',
-                style: TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w600,
-                  color: theme.colorScheme.onSurfaceVariant,
+              if (isAcquired)
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      Icons.check_circle_rounded,
+                      size: 13,
+                      color: AppTheme.primaryTeal,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      l10n.docAcquiredBadge,
+                      style: const TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w700,
+                        color: AppTheme.primaryTeal,
+                      ),
+                    ),
+                  ],
+                )
+              else
+                Text(
+                  '$checked/$total done',
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
                 ),
-              ),
               const SizedBox(height: 6),
               ClipRRect(
                 borderRadius: BorderRadius.circular(4),
                 child: SizedBox(
                   height: 4,
                   child: LinearProgressIndicator(
-                    value: fraction,
+                    value: isAcquired ? 1.0 : fraction,
                     backgroundColor: isDark
                         ? const Color(0xFF24362E)
                         : const Color(0xFFE2ECE7),

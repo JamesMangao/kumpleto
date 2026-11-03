@@ -1,4 +1,4 @@
-# Bundle — status: draft until verified by the human maintainer.
+# Bundle — status: verified until verified by the human maintainer.
 schema_version: 1
 id: first-passport
 name:
@@ -12,7 +12,7 @@ description:
     Mga dokumentong ihanda bago mag-apply ng iyong unang pasaporteng
     Pilipino. Kurado ng komunidad — kumpirmahin sa Department of Foreign
     Affairs.
-status: draft
+status: verified
 documents:
   - psa-birth-certificate
   - passport-dfa

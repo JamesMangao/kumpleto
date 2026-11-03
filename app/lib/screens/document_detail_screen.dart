@@ -5,6 +5,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 import '../core/constants.dart';
 import '../core/theme.dart';
+import '../data/place_tokens.dart';
 import '../data/providers.dart';
 import '../l10n/app_localizations.dart';
 import '../models/models.dart';
@@ -42,6 +43,15 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
     final isDark = theme.brightness == Brightness.dark;
     final data = ref.watch(currentDataProvider);
     final document = data?.document(widget.documentId);
+    // The authored copy, before the saved location was filled in.
+    final awaitingPlace =
+        ref
+            .watch(loadedDataProvider)
+            .value
+            ?.data
+            .document(widget.documentId)
+            ?.awaitsPlace ??
+        false;
 
     if (document == null) {
       return Scaffold(
@@ -54,6 +64,7 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
     final checked = checkedFor(ref, document.id);
     final done = checkedCount(document, checked);
     final total = document.requirements.length;
+    final acquired = isDocumentAcquired(document, checked);
 
     return Scaffold(
       appBar: AppBar(
@@ -165,6 +176,14 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
                     ],
                   ),
 
+                  // Documents written for a place the user picks (the barangay
+                  // clearance) show which place they were filled for, and how
+                  // to change it.
+                  if (awaitingPlace) ...[
+                    const SizedBox(height: 14),
+                    const _PlaceStrip(),
+                  ],
+
                   const SizedBox(height: 16),
 
                   // Progress Bar & Label
@@ -191,6 +210,14 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
                   ],
                 ],
               ),
+            ),
+
+            const SizedBox(height: 12),
+
+            // Already Acquired interactive card
+            _AcquiredCard(
+              document: document,
+              isAcquired: acquired,
             ),
 
             if (document.status == DocStatus.deprecated) ...[
@@ -661,6 +688,263 @@ class _MetaPill extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _AcquiredCard extends ConsumerWidget {
+  const _AcquiredCard({
+    required this.document,
+    required this.isAcquired,
+  });
+
+  final Document document;
+  final bool isAcquired;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
+    if (isAcquired) {
+      return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        decoration: BoxDecoration(
+          color: isDark ? const Color(0xFF132D24) : const Color(0xFFE6F5EE),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: isDark ? const Color(0xFF1F5C48) : const Color(0xFFA2DEC7),
+          ),
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: AppTheme.primaryTeal.withValues(alpha: 0.15),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.verified_rounded,
+                color: AppTheme.primaryTeal,
+                size: 22,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    l10n.docAcquiredNotice,
+                    style: theme.textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 13,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    l10n.docAcquiredBadge,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: AppTheme.primaryTeal,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                ref
+                    .read(progressRepositoryProvider)
+                    .unmarkDocumentAcquired(document.id);
+              },
+              child: Text(
+                l10n.docUnmarkAcquired,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: isDark ? const Color(0xFF162420) : const Color(0xFFEFF7F3),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: isDark ? const Color(0xFF23443B) : const Color(0xFFC8E6DA),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(
+                Icons.inventory_2_outlined,
+                size: 18,
+                color: AppTheme.primaryTeal,
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  l10n.docAlreadyHaveTitle,
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 13,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          Text(
+            l10n.docAlreadyHaveSubtitle,
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+              fontSize: 12,
+            ),
+          ),
+          const SizedBox(height: 10),
+          SizedBox(
+            width: double.infinity,
+            child: FilledButton.tonalIcon(
+              icon: const Icon(Icons.check_circle_outline_rounded, size: 18),
+              label: Text(
+                l10n.docMarkAcquired,
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
+              style: FilledButton.styleFrom(
+                backgroundColor: AppTheme.primaryTeal,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                minimumSize: const Size.fromHeight(42),
+              ),
+              onPressed: () {
+                ref.read(progressRepositoryProvider).markDocumentAcquired(
+                      document.id,
+                      document.requirements.map((r) => r.id),
+                    );
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      '${document.name.localized(context)}: ${l10n.docAcquiredBadge}',
+                    ),
+                    duration: const Duration(seconds: 2),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Which place the entry was filled in for, with the PSGC code the barangay
+/// hall recognises, and a shortcut to change it.
+///
+/// Only shown for documents authored with `{{placeholders}}`: for those the
+/// text follows Settings → My location, so the reader needs to see — and be
+/// able to correct — the place it followed.
+class _PlaceStrip extends ConsumerWidget {
+  const _PlaceStrip();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final saved = ref.watch(savedLocationProvider);
+    final hasPlace = saved != null && !saved.isEmpty;
+    final address = PlaceTokens.of(saved).values['address']!;
+    // Only the current 10-digit PSGC is published; a place saved by an older
+    // build keeps its name but shows no code rather than a stale format.
+    final code = saved?.barangay?.code ?? '';
+    final psgc = code.length == 10 ? code : '';
+
+    return Container(
+      padding: const EdgeInsets.fromLTRB(12, 10, 6, 10),
+      decoration: BoxDecoration(
+        color: isDark ? const Color(0xFF1D2E27) : AppTheme.mintContainerLight,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: isDark ? const Color(0xFF2C4439) : const Color(0xFFD4E8E0),
+        ),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(top: 3),
+            child: Icon(
+              Icons.place_outlined,
+              size: 18,
+              color: AppTheme.primaryTeal,
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  hasPlace
+                      ? l10n.docPlaceFor(address.localized(context))
+                      : l10n.docPlaceMissingTitle,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    height: 1.3,
+                  ),
+                ),
+                if (hasPlace && psgc.isNotEmpty) ...[
+                  const SizedBox(height: 3),
+                  Text(
+                    l10n.docPlacePsgc(psgc),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ] else if (!hasPlace) ...[
+                  const SizedBox(height: 3),
+                  Text(
+                    l10n.docPlaceMissingBody,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                      height: 1.35,
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+          TextButton(
+            onPressed: () => context.push('/location'),
+            style: TextButton.styleFrom(
+              minimumSize: const Size(0, 36),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+            ),
+            child: Text(
+              hasPlace ? l10n.docPlaceChange : l10n.docPlaceSet,
+              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
+            ),
+          ),
+        ],
       ),
     );
   }

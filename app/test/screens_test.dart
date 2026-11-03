@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -508,6 +510,79 @@ void main() {
         isTrue,
         reason: 'no update result message in: $messages',
       );
+    });
+  });
+
+  group('Barangay clearance', () {
+    // A document whose text waits for the saved location, as the real
+    // barangay-clearance entry does.
+    Map<String, Object?> withClearance() {
+      final data = widgetTestData();
+      (data['documents']! as List<Object?>).add(<String, Object?>{
+        'id': 'barangay-clearance',
+        'name': <String, Object?>{
+          'en': 'Barangay Clearance',
+          'fil': 'Barangay Clearance',
+        },
+        'agency': 'nbi',
+        'status': 'verified',
+        'summary': <String, Object?>{
+          'en': 'Filled in for {{address}}.',
+          'fil': 'Nakasagot para sa {{address}}.',
+        },
+        'steps': <Object?>[],
+        'requirements': <Object?>[],
+      });
+      return data;
+    }
+
+    const savedLocation = {
+      'region': {'c': '04', 'n': 'Region IV-A (CALABARZON)'},
+      'province': {'c': '04034', 'n': 'Laguna'},
+      'city': {'c': '0403425', 'n': 'City of San Pedro'},
+      'barangay': {'c': '0403425026', 'n': 'Pacita 1'},
+      'zip': '4023',
+    };
+
+    testWidgets('fills the text from the saved location and shows its PSGC',
+        (tester) async {
+      await pumpKumpleto(
+        tester,
+        data: withClearance(),
+        prefs: {'saved_location': jsonEncode(savedLocation)},
+      );
+      await tester.tap(find.text(l10nOf(tester).navDocuments));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Barangay Clearance'));
+      await tester.pumpAndSettle();
+      final l10n = l10nOf(tester);
+
+      expect(
+        find.textContaining('Barangay Pacita 1, City of San Pedro, Laguna 4023'),
+        findsWidgets,
+      );
+      expect(
+        find.text(
+          l10n.docPlaceFor('Barangay Pacita 1, City of San Pedro, Laguna 4023'),
+        ),
+        findsOneWidget,
+      );
+      expect(find.text(l10n.docPlacePsgc('0403425026')), findsOneWidget);
+    });
+
+    testWidgets('prompts for a location when none is saved', (tester) async {
+      await pumpKumpleto(tester, data: withClearance());
+      await tester.tap(find.text(l10nOf(tester).navDocuments));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Barangay Clearance'));
+      await tester.pumpAndSettle();
+      final l10n = l10nOf(tester);
+
+      expect(find.text(l10n.docPlaceMissingTitle), findsOneWidget);
+      expect(find.text(l10n.docPlaceMissingBody), findsOneWidget);
+      // The text is filled with the neutral phrase, never left as a token.
+      expect(find.textContaining('{{'), findsNothing);
+      expect(find.textContaining('your barangay'), findsWidgets);
     });
   });
 }

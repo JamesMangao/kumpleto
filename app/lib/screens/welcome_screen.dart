@@ -1,15 +1,16 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../core/motion.dart';
 import '../core/theme.dart';
 import '../l10n/app_localizations.dart';
-import '../widgets/shared.dart';
 
 /// Shows the animated welcome scene on top of the app on every launch.
 ///
-/// The scene lives above the router, so the destination screen is already
-/// built and warm underneath while the brand animation plays. When the scene
-/// finishes (or the user taps) it is removed and the app is simply there.
+/// Designed to feel like an authentic, dignified Philippine civil document
+/// companion — clean paper textures, official stamp seal, deep forest teal ink,
+/// and grounded citizen-first typography (no futuristic cyber neon orbs).
 class WelcomeGate extends StatefulWidget {
   const WelcomeGate({super.key, required this.show, required this.child});
 
@@ -39,8 +40,8 @@ class _WelcomeGateState extends State<WelcomeGate>
     }
     // Reduce-motion keeps a short cross-fade instead of the full sequence.
     _controller.duration = Motion.reduced(context)
-        ? const Duration(milliseconds: 400)
-        : const Duration(milliseconds: 2400);
+        ? const Duration(milliseconds: 300)
+        : const Duration(milliseconds: 2200);
     _controller.forward().whenComplete(() {
       if (mounted) setState(() => _finished = true);
     });
@@ -50,7 +51,7 @@ class _WelcomeGateState extends State<WelcomeGate>
     if (_finished) return;
     _controller.animateTo(
       1,
-      duration: const Duration(milliseconds: 220),
+      duration: const Duration(milliseconds: 200),
       curve: Curves.easeOut,
     );
   }
@@ -86,142 +87,205 @@ class _WelcomeGateState extends State<WelcomeGate>
   }
 }
 
-/// The animation itself. [t] runs 0 → 1 over ~2.4 s:
+/// Dignified, civil document-inspired welcome scene.
 ///
-/// 0.00 backdrop · 0.05 mark pops in · 0.30 check is drawn · 0.42 wordmark
-/// letters land · 0.62 tagline · 0.70 sheen sweep · 0.86 fade out.
+/// Sequence:
+/// 1. Warm dark paper surface emerges
+/// 2. Clean official document sheet slides in
+/// 3. Official checklist seal stamps onto the sheet with deep teal ink
+/// 4. "Kumpleto" wordmark appears cleanly
+/// 5. Tagline & unofficial badge settle
+/// 6. Smooth fade out into the main screen
 class _WelcomeScene extends StatelessWidget {
   const _WelcomeScene({required this.t});
 
   final double t;
 
   static const _word = 'Kumpleto';
+  static const _bgDark = Color(0xFF101715);
+  static const _paperSurface = Color(0xFF192522);
+  static const _cardBorder = Color(0xFF2C3E38);
+  static const _tealPrimary = AppTheme.primaryTeal; // #0E6B58
+  static const _tealLight = Color(0xFF389B84);
 
   double _segment(double start, double end) =>
       ((t - start) / (end - start)).clamp(0.0, 1.0);
 
+  double _ease(double start, double end) =>
+      Curves.easeOutCubic.transform(_segment(start, end));
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final fadeOut = _segment(0.86, 1.0);
-    final markIn = _segment(0.05, 0.45);
-    final tagline = _segment(0.62, 0.82);
+    final fadeOut = _segment(0.88, 1.0);
+    final paper = Curves.easeOutBack.transform(_segment(0.06, 0.32));
+    final seal = _ease(0.20, 0.50);
+    final check = Curves.easeInOutCubic.transform(_segment(0.36, 0.62));
+    final wordmark = _ease(0.48, 0.70);
+    final tagline = _ease(0.58, 0.78);
+    final chip = _ease(0.66, 0.84);
+    final skip = _ease(0.72, 0.88);
 
-    final scale = 0.72 + 0.28 * Motion.overshoot.transform(markIn);
-    final rotation = (1 - markIn) * -0.22;
+    final paperY = 40.0 * (1 - paper);
 
     return Opacity(
       opacity: 1 - fadeOut,
-      child: DecoratedBox(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [AppTheme.primaryTeal, AppTheme.primaryDarkTeal],
-          ),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Glow behind the mark.
-              SizedBox(
-                width: 220,
-                height: 220,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Opacity(
-                      opacity: 0.35 * markIn,
+      child: ColoredBox(
+        color: _bgDark,
+        child: SafeArea(
+          child: Center(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Document sheet with official seal stamp
+                  Transform.translate(
+                    offset: Offset(0, paperY),
+                    child: Opacity(
+                      opacity: paper.clamp(0.0, 1.0),
                       child: Container(
-                        width: 200,
+                        width: 170,
                         height: 200,
                         decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          gradient: RadialGradient(
-                            colors: [
-                              Colors.white.withValues(alpha: 0.35),
-                              Colors.white.withValues(alpha: 0),
-                            ],
+                          color: _paperSurface,
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(color: _cardBorder, width: 1.5),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.4),
+                              blurRadius: 20,
+                              offset: const Offset(0, 10),
+                            ),
+                          ],
+                        ),
+                        child: CustomPaint(
+                          painter: _CivilDocumentPainter(
+                            seal: seal,
+                            check: check,
                           ),
                         ),
                       ),
                     ),
-                    Transform.rotate(
-                      angle: rotation,
-                      child: Transform.scale(
-                        scale: scale,
-                        child: const KumpletoLogo(size: 132, radius: 32),
+                  ),
+
+                  const SizedBox(height: 24),
+
+                  // Brand Wordmark
+                  Opacity(
+                    opacity: wordmark,
+                    child: Transform.translate(
+                      offset: Offset(0, 12 * (1 - wordmark)),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          for (var i = 0; i < _word.length; i++)
+                            Text(
+                              _word[i],
+                              style: const TextStyle(
+                                fontSize: 32,
+                                fontWeight: FontWeight.w800,
+                                letterSpacing: -0.5,
+                                color: Colors.white,
+                              ),
+                            ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 6),
-              // Wordmark: one letter at a time.
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  for (var i = 0; i < _word.length; i++)
-                    _Letter(
-                      char: _word[i],
-                      progress: _segment(0.42 + i * 0.030, 0.62 + i * 0.030),
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  // Practical Citizen Tagline
+                  Opacity(
+                    opacity: tagline,
+                    child: Transform.translate(
+                      offset: Offset(0, 8 * (1 - tagline)),
+                      child: Text(
+                        l10n?.welcomeTagline ??
+                            'Alamin ang dadalhing papel bago pumila.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 14,
+                          height: 1.4,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white.withValues(alpha: 0.8),
+                        ),
+                      ),
                     ),
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  // Clear, Dignified Unofficial Badge
+                  Opacity(
+                    opacity: chip,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 5,
+                      ),
+                      decoration: BoxDecoration(
+                        color: _paperSurface,
+                        border: Border.all(
+                          color: _tealPrimary.withValues(alpha: 0.6),
+                          width: 1.2,
+                        ),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            width: 6,
+                            height: 6,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: _tealLight,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            (l10n?.unofficialBadge ?? 'Unofficial').toUpperCase(),
+                            style: const TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w800,
+                              letterSpacing: 1.4,
+                              color: Color(0xFFD4ECE3),
+                            ),
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            '• 100% OFFLINE',
+                            style: TextStyle(
+                              fontSize: 9,
+                              fontWeight: FontWeight.w700,
+                              letterSpacing: 0.8,
+                              color: Colors.white.withValues(alpha: 0.7),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 28),
+
+                  // Skip prompt
+                  Opacity(
+                    opacity: skip,
+                    child: Text(
+                      l10n?.welcomeSkip ?? 'Tap to continue',
+                      style: TextStyle(
+                        fontSize: 12,
+                        letterSpacing: 0.5,
+                        color: Colors.white.withValues(alpha: 0.4),
+                      ),
+                    ),
+                  ),
                 ],
               ),
-              const SizedBox(height: 10),
-              Opacity(
-                opacity: tagline,
-                child: Transform.translate(
-                  offset: Offset(0, 8 * (1 - tagline)),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 32),
-                    child: Text(
-                      l10n?.welcomeTagline ?? '',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 14,
-                        height: 1.4,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white.withValues(alpha: 0.82),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 28),
-              // Unofficial marker stays visible even here.
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 4,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.14),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Text(
-                  l10n?.unofficialBadge ?? 'Unofficial',
-                  style: const TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 40),
-              Opacity(
-                opacity: _segment(0.75, 0.95),
-                child: Text(
-                  l10n?.welcomeSkip ?? '',
-                  style: TextStyle(
-                    fontSize: 11,
-                    letterSpacing: 0.4,
-                    color: Colors.white.withValues(alpha: 0.6),
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),
@@ -229,28 +293,125 @@ class _WelcomeScene extends StatelessWidget {
   }
 }
 
-class _Letter extends StatelessWidget {
-  const _Letter({required this.char, required this.progress});
+/// Paints a clean document with simulated checklist lines and an authentic
+/// circular verification seal stamp in civil deep teal ink.
+class _CivilDocumentPainter extends CustomPainter {
+  const _CivilDocumentPainter({
+    required this.seal,
+    required this.check,
+  });
 
-  final String char;
-  final double progress;
+  final double seal;
+  final double check;
+
+  static const _inkTeal = Color(0xFF138A72);
+  static const _ruleColor = Color(0xFF2C3E38);
 
   @override
-  Widget build(BuildContext context) {
-    return Opacity(
-      opacity: progress,
-      child: Transform.translate(
-        offset: Offset(0, 16 * (1 - progress)),
-        child: Text(
-          char,
-          style: const TextStyle(
-            fontSize: 34,
-            fontWeight: FontWeight.w800,
-            letterSpacing: -0.8,
-            color: Colors.white,
-          ),
-        ),
-      ),
+  void paint(Canvas canvas, Size size) {
+    // Top document header line
+    final headerPaint = Paint()
+      ..color = _ruleColor
+      ..strokeWidth = 2.0;
+    canvas.drawLine(
+      const Offset(18, 22),
+      Offset(size.width - 18, 22),
+      headerPaint,
     );
+
+    // Document checklist simulated rows
+    final rowPaint = Paint()
+      ..color = _ruleColor.withValues(alpha: 0.7)
+      ..strokeWidth = 1.2;
+
+    for (var i = 0; i < 4; i++) {
+      final y = 38.0 + i * 16;
+      canvas.drawLine(
+        Offset(34, y),
+        Offset(size.width - 20 - (i == 3 ? 30 : 0), y),
+        rowPaint,
+      );
+    }
+
+    // Small square checklist boxes on the rows
+    final boxPaint = Paint()
+      ..color = _ruleColor
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.0;
+
+    for (var i = 0; i < 4; i++) {
+      final y = 38.0 + i * 16;
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(
+          Rect.fromLTWH(18, y - 5, 10, 10),
+          const Radius.circular(2),
+        ),
+        boxPaint,
+      );
+    }
+
+    // Ticks inside top two checkboxes
+    if (check > 0.1) {
+      final tickPaint = Paint()
+        ..color = _inkTeal
+        ..strokeWidth = 1.6
+        ..strokeCap = StrokeCap.round
+        ..style = PaintingStyle.stroke;
+
+      for (var i = 0; i < 2; i++) {
+        final y = 38.0 + i * 16;
+        final p = Path()
+          ..moveTo(19.5, y)
+          ..lineTo(22, y + 2.5)
+          ..lineTo(26.5, y - 2);
+        canvas.drawPath(p, tickPaint);
+      }
+    }
+
+    // Official Seal Stamp in center-bottom
+    final center = Offset(size.width * 0.5, size.height * 0.68);
+
+    if (seal > 0.05) {
+      final sealPaint = Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1.8
+        ..color = _inkTeal.withValues(alpha: 0.9 * seal);
+
+      canvas.drawCircle(center, 38 * seal, sealPaint);
+      canvas.drawCircle(center, 32 * seal, sealPaint..strokeWidth = 1.0);
+
+      // Inner circular decorative dots
+      final dotPaint = Paint()
+        ..style = PaintingStyle.fill
+        ..color = _inkTeal.withValues(alpha: 0.7 * seal);
+      const dotCount = 12;
+      for (var i = 0; i < dotCount; i++) {
+        final angle = (i / dotCount) * math.pi * 2;
+        final dx = center.dx + math.cos(angle) * (26 * seal);
+        final dy = center.dy + math.sin(angle) * (26 * seal);
+        canvas.drawCircle(Offset(dx, dy), 1.2 * seal, dotPaint);
+      }
+    }
+
+    // Clear Civil Checkmark inside seal
+    if (check > 0.05) {
+      final checkPath = Path()
+        ..moveTo(center.dx - 12 * check, center.dy)
+        ..lineTo(center.dx - 3 * check, center.dy + 10 * check)
+        ..lineTo(center.dx + 13 * check, center.dy - 8 * check);
+
+      final checkPaint = Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 3.5
+        ..strokeCap = StrokeCap.round
+        ..strokeJoin = StrokeJoin.round
+        ..color = const Color(0xFF26A69A);
+
+      canvas.drawPath(checkPath, checkPaint);
+    }
   }
+
+  @override
+  bool shouldRepaint(covariant _CivilDocumentPainter oldDelegate) =>
+      oldDelegate.seal != seal || oldDelegate.check != check;
 }

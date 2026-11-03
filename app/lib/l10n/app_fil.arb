@@ -111,5 +111,17 @@
   "locationSaved": "Nai-save ang lokasyon",
   "locationClear": "Alisin ang lokasyon ko",
   "locationSetPrompt": "Ilagay ang barangay mo para sa lokal na requirement",
-  "locationAttribution": "Mga pangalan ng lugar mula sa PSA Philippine Standard Geographic Code, ginagamit sa ilalim ng CC BY 4.0."
+  "locationAttribution": "Mga pangalan ng lugar mula sa PSA Philippine Standard Geographic Code, ginagamit sa ilalim ng CC BY 4.0.",
+  "docAlreadyHaveTitle": "Mayroon ka na ba nito?",
+  "docAlreadyHaveSubtitle": "I-marka bilang nakuha na upang maging kumpleto ito sa lahat ng checklist at bundle.",
+  "docMarkAcquired": "Mayroon na ako nito",
+  "docAcquiredBadge": "Mayroon Na",
+  "docAcquiredNotice": "Mayroon ka na ng dokumentong ito",
+  "docUnmarkAcquired": "Alisin sa mayroon na",
+  "docPlaceFor": "Para sa {place}",
+  "docPlacePsgc": "PSGC {code}",
+  "docPlaceMissingTitle": "Ilagay ang barangay mo",
+  "docPlaceMissingBody": "I-set ang lokasyon mo at mapupunan ang clearance na ito ng sarili mong barangay, lungsod at postal code.",
+  "docPlaceChange": "Palitan",
+  "docPlaceSet": "I-set ang lokasyon"
 }

@@ -1,4 +1,4 @@
-# Seed entry — status: draft until verified by the human maintainer.
+# Seed entry — status: verified until verified by the human maintainer.
 # Requirements, steps and fee/processing notes below were read from the official
 # NBI pages: /how-to-apply-nbi-clearance and the Citizen's Charter page for
 # first-time jobseekers. Nothing here is guessed; the maintainer still confirms
@@ -9,7 +9,9 @@ name:
   en: NBI Clearance
   fil: NBI Clearance
 agency: nbi
-status: draft
+status: verified
+last_verified: '2026-11-02'
+verified_by: JamesMangao
 source_url: https://nbi.gov.ph/how-to-apply-nbi-clearance
 apply_online: true
 apply_online_url: https://clearance.nbi.gov.ph

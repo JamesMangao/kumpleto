@@ -41,6 +41,39 @@ class ProgressRepository {
     return statement.go();
   }
 
+  /// Marks an entire document as acquired (ticks all requirements + stores an
+  /// acquired marker).
+  Future<void> markDocumentAcquired(
+    String documentId,
+    Iterable<String> requirementIds,
+  ) async {
+    await _db.transaction(() async {
+      final now = DateTime.now().millisecondsSinceEpoch;
+      for (final reqId in requirementIds) {
+        await _db.into(_db.progressEntries).insertOnConflictUpdate(
+              ProgressEntriesCompanion.insert(
+                documentId: documentId,
+                requirementId: reqId,
+                checked: true,
+                updatedAt: now,
+              ),
+            );
+      }
+      await _db.into(_db.progressEntries).insertOnConflictUpdate(
+            ProgressEntriesCompanion.insert(
+              documentId: documentId,
+              requirementId: '__acquired__',
+              checked: true,
+              updatedAt: now,
+            ),
+          );
+    });
+  }
+
+  /// Clears the acquired status and unchecks all requirements for [documentId].
+  Future<void> unmarkDocumentAcquired(String documentId) =>
+      resetDocument(documentId);
+
   Future<void> resetAll() => _db.delete(_db.progressEntries).go();
 
   /// Deletes rows whose document or requirement no longer exists in the loaded
@@ -50,7 +83,9 @@ class ProgressRepository {
     final rows = await _db.select(_db.progressEntries).get();
     final orphans = [
       for (final row in rows)
-        if (!validPairs.contains('${row.documentId}/${row.requirementId}')) row,
+        if (row.requirementId != '__acquired__' &&
+            !validPairs.contains('${row.documentId}/${row.requirementId}'))
+          row,
     ];
     if (orphans.isEmpty) return 0;
     await _db.transaction(() async {

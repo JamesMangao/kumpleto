@@ -1,4 +1,4 @@
-# Bundle — status: draft until verified by the human maintainer.
+# Bundle — status: verified until verified by the human maintainer.
 schema_version: 1
 id: job-hunt-pack
 name:
@@ -13,7 +13,7 @@ description:
     Set ng mga dokumentong karaniwang hinihingi kapag nag-aaplay ng trabaho
     sa Pilipinas. Kurado ng komunidad — kumpirmahin ang bawat requirement sa
     employer o ahensya.
-status: draft
+status: verified
 documents:
   - psa-birth-certificate
   - nbi-clearance

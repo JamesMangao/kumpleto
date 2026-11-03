@@ -145,6 +145,19 @@ void main() {
       expect(result.reasonOrNull, contains('sha256 mismatch'));
     });
 
+    test('200 with a valid but empty feed is rejected', () async {
+      final result = await serviceWith(
+        MockClient(
+          (_) async => http.Response(
+            jsonEncode(compileDataJson()),
+            200,
+          ),
+        ),
+      ).checkNow();
+      expect(result, isA<UpdateInvalid>());
+      expect(result.reasonOrNull, contains('document'));
+    });
+
     test('200 with an unsupported schema_version', () async {
       final result = await serviceWith(
         MockClient(

@@ -66,8 +66,15 @@ class DataRepository {
         skipped: skipped,
       );
     }
+    // A newer *empty* cache (the published feed while every YAML is still
+    // `status: draft`) must never hide a bundled library that already has
+    // documents. Newest non-empty candidate wins; empty is a last resort.
     candidates.sort((a, b) => b.dataVersion.compareTo(a.dataVersion));
-    final best = candidates.first;
+    final usable = [
+      for (final candidate in candidates)
+        if (candidate.data.documents.isNotEmpty) candidate,
+    ];
+    final best = (usable.isNotEmpty ? usable : candidates).first;
     return LoadedData(data: best.data, source: best.source, skipped: skipped);
   }
 
@@ -95,14 +102,27 @@ class DataRepository {
     final drafts = await _readAsset(draftsAsset);
     if (drafts != null) {
       final candidate = _verify(drafts, DataSource.bundledDrafts, skipped);
-      if (candidate != null) return candidate;
+      if (candidate != null && candidate.data.documents.isNotEmpty) {
+        return candidate;
+      }
     }
     final release = await _readAsset(releaseAsset);
     if (release == null) {
       skipped.add('bundled asset $releaseAsset not found');
+      if (drafts != null) {
+        return _verify(drafts, DataSource.bundledDrafts, skipped);
+      }
       return null;
     }
-    return _verify(release, DataSource.bundledRelease, skipped);
+    final releaseCandidate = _verify(release, DataSource.bundledRelease, skipped);
+    if (releaseCandidate != null && releaseCandidate.data.documents.isNotEmpty) {
+      return releaseCandidate;
+    }
+    if (drafts != null) {
+      final candidate = _verify(drafts, DataSource.bundledDrafts, skipped);
+      if (candidate != null) return candidate;
+    }
+    return releaseCandidate;
   }
 
   Future<_Candidate?> _readCache(List<String> skipped) async {
@@ -123,8 +143,8 @@ class DataRepository {
   Future<String?> _readAsset(String key) async {
     try {
       return await assetBundle.loadString(key);
-    } on FlutterError {
-      return null; // absent asset (release builds have no drafts file)
+    } catch (_) {
+      return null; // absent or unreadable asset
     }
   }
 

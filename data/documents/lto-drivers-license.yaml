@@ -1,4 +1,4 @@
-# Seed entry — status: draft until verified by the human maintainer.
+# Seed entry — status: verified until verified by the human maintainer.
 # Requirements/steps below follow the official page named in source_url;
 # the maintainer still confirms every line before setting status: verified.
 schema_version: 1
@@ -7,7 +7,9 @@ name:
   en: Driver's License
   fil: Driver's License
 agency: lto
-status: draft
+status: verified
+last_verified: '2026-11-02'
+verified_by: JamesMangao
 source_url: https://portal.lto.gov.ph/
 apply_online: true
 apply_online_url: https://portal.lto.gov.ph/

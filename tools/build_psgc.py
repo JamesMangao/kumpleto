@@ -12,24 +12,45 @@ decompressed when the user opens that province, so the app never parses 42,000
 rows at launch.
 
 Source: Philippine Standard Geographic Code (PSGC), Philippine Statistics
-Authority, CC BY 4.0. Downloaded dump kept in `.psgc/` (gitignored).
+Authority, CC BY 4.0. Downloaded dump kept in `.psgc/` (gitignored); it is
+produced from the official workbook by `tools/psgc_from_xlsx.py`:
+
+    python tools/psgc_from_xlsx.py PSGC-3Q-2026-Publication-Datafile.xlsx
+    python tools/build_psgc.py
 """
 import gzip
 import io
 import json
 import os
+import re
 import sys
 
 SRC = ".psgc"
 OUT = "app/assets/psgc"
+# Bumped together with the workbook in `.psgc/`, shown in the location screen's
+# attribution line.
+RELEASE = "PSGC 3Q 2026, as of 30 September 2026"
 
 SMALL_WORDS = {"de", "del", "dela", "ng", "sa", "at", "of", "the"}
 
 
 def pretty(name):
-    """PSGC names are upper-case; make them readable without changing words."""
+    """PSGC names shipped upper-case; make them readable without changing words.
+
+    A newer workbook already publishes mixed-case names ("City of San Pedro",
+    "G.S.I.S."), so those are passed through untouched rather than re-cased.
+    """
+    name = name.strip()
+    if name != name.upper():
+        return name
     out = []
-    for index, word in enumerate(name.lower().split()):
+    for index, original in enumerate(name.split()):
+        # Dotted initials are real names, not words to re-case
+        # ("G.S.I.S.", "U.P. Campus", "M.H. del Pilar").
+        if re.match(r"(?:[A-Z]\.){2,}", original):
+            out.append(original)
+            continue
+        word = original.lower()
         # Keep leading punctuation such as "(Pob.)" intact.
         prefix = len(word) - len(word.lstrip("(.\"'"))
         core = word[prefix:]
@@ -88,6 +109,12 @@ def main():
         shard = province if province else f"R{region}"
         shard_of_city[city_code] = shard
         region_of_shard.setdefault(shard, region)
+        # Manila's districts are sub-municipalities: keep them in the shard so
+        # their barangays still have a parent, but never offer them as a city
+        # in the picker — Manila itself lists all of its barangays.
+        if (row.get("level") or "") == "SubMun":
+            cities_by_shard.setdefault(shard, [])
+            continue
         cities_by_shard.setdefault(shard, []).append(
             {"c": city_code, "n": pretty(row["name"])}
         )
@@ -103,7 +130,7 @@ def main():
         )
 
     index = {
-        "release": "PSGC (Philippine Statistics Authority) — data bundled offline",
+        "release": f"{RELEASE} (Philippine Statistics Authority) — bundled offline",
         "attribution": "Place names from the PSA PSGC, used under CC BY 4.0.",
         "regions": region_rows,
         "provinces": {

@@ -63,6 +63,21 @@ void main() {
   });
 
   group('cache vs bundled', () {
+    test('a newer EMPTY cache loses to a bundled library with documents',
+        () async {
+      final repository = repositoryWith({
+        DataRepository.releaseAsset:
+            jsonOf(sampleDataJson(dataVersion: '2026-10-01T00:00:00.000Z')),
+      }, withPaths: paths());
+      await repository.saveCache(
+        jsonOf(compileDataJson(dataVersion: '2030-06-01T00:00:00.000Z')),
+      );
+
+      final loaded = await repository.load();
+      expect(loaded.source, DataSource.bundledRelease);
+      expect(loaded.data.documents, hasLength(1));
+    });
+
     test('a NEWER cache wins over the bundled asset', () async {
       final repository = repositoryWith({
         DataRepository.releaseAsset:

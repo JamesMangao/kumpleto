@@ -36,8 +36,7 @@ class BundleDetailScreen extends ConsumerWidget {
 
     var completedDocs = 0;
     for (final doc in documents) {
-      final checked = checkedCount(doc, progress[doc.id] ?? const {});
-      if (doc.requirements.isNotEmpty && checked >= doc.requirements.length) {
+      if (isDocumentAcquired(doc, progress[doc.id] ?? const {})) {
         completedDocs++;
       }
     }
@@ -412,6 +411,7 @@ class _BundleDocumentModernTile extends ConsumerWidget {
     final checked = checkedFor(ref, document.id);
     final done = checkedCount(document, checked);
     final total = document.requirements.length;
+    final acquired = isDocumentAcquired(document, checked);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 3),
@@ -489,7 +489,35 @@ class _BundleDocumentModernTile extends ConsumerWidget {
                   fontSize: 11,
                 ),
               ),
-              if (total > 0) ...[
+              if (acquired) ...[
+                const SizedBox(height: 4),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: AppTheme.primaryTeal.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.check_circle_rounded,
+                        size: 11,
+                        color: AppTheme.primaryTeal,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        l10n.docAcquiredBadge,
+                        style: const TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w700,
+                          color: AppTheme.primaryTeal,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ] else if (total > 0) ...[
                 const SizedBox(height: 4),
                 ProgressLine(
                   checked: done,

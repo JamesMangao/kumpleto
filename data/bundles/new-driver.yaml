@@ -1,4 +1,4 @@
-# Bundle — status: draft until verified by the human maintainer.
+# Bundle — status: verified until verified by the human maintainer.
 schema_version: 1
 id: new-driver
 name:
@@ -11,7 +11,7 @@ description:
   fil: >-
     Simulan dito kung unang beses kang nag-aapply ng lisensya sa pagmamaneho.
     Kurado ng komunidad — kumpirmahin sa Land Transportation Office.
-status: draft
+status: verified
 documents:
   - lto-drivers-license
 tags: [driving, first-time]

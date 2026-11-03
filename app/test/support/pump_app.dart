@@ -168,8 +168,13 @@ Future<AppSettings> pumpKumpleto(
   Map<String, Object?>? data,
   bool settle = true,
   bool showWelcome = false,
+  Map<String, Object?> prefs = const <String, Object?>{},
 }) async {
-  SharedPreferences.setMockInitialValues({'first_run_done': firstRunDone});
+  SharedPreferences.setMockInitialValues(<String, Object>{
+    'first_run_done': firstRunDone,
+    for (final entry in prefs.entries)
+      if (entry.value != null) entry.key: entry.value!,
+  });
   PackageInfo.setMockInitialValues(
     appName: 'Kumpleto',
     packageName: 'io.github.jamesmangao.kumpleto',

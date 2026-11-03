@@ -77,6 +77,16 @@ class Requirement {
   final bool optional;
   final LocalizedText? note;
 
+  /// Copy with `{{placeholders}}` replaced — see [LocalizedText.filled].
+  Requirement filled(Map<String, LocalizedText> values) => Requirement(
+    id: id,
+    text: text.filled(values),
+    original: original,
+    photocopies: photocopies,
+    optional: optional,
+    note: note?.filled(values),
+  );
+
   static Requirement? fromJson(Object? json) {
     final map = _map(json);
     if (map == null) return null;
@@ -140,6 +150,47 @@ class Document {
 
   /// True when there is nothing factual to show yet (a seed/draft entry).
   bool get isEmpty => requirements.isEmpty && steps.isEmpty;
+
+  /// True when the authored text still contains `{{placeholders}}`, i.e. this
+  /// entry is written for a place the user picks (the barangay clearance).
+  /// Asked of the *unfilled* dataset, so the UI can offer to set a location.
+  bool get awaitsPlace {
+    bool pending(LocalizedText? text) =>
+        text != null && (text.en.contains('{{') || text.fil.contains('{{'));
+    return pending(name) ||
+        pending(summary) ||
+        pending(whereToApply) ||
+        pending(feeNote) ||
+        pending(processingNote) ||
+        steps.any(pending) ||
+        notes.any(pending) ||
+        requirements.any((item) => pending(item.text) || pending(item.note));
+  }
+
+  /// Copy with the place placeholders resolved: `{{barangay}}`, `{{city}}` and
+  /// friends in the summary, requirements, steps and notes. Documents written
+  /// without placeholders come back equivalent, only reallocated.
+  Document filled(Map<String, LocalizedText> values) => Document(
+    id: id,
+    name: name.filled(values),
+    agencyId: agencyId,
+    status: status,
+    summary: summary?.filled(values),
+    sourceUrl: sourceUrl,
+    lastVerified: lastVerified,
+    verifiedBy: verifiedBy,
+    validityMonths: validityMonths,
+    applyOnline: applyOnline,
+    applyOnlineUrl: applyOnlineUrl,
+    whereToApply: whereToApply?.filled(values),
+    dependsOn: dependsOn,
+    tags: tags,
+    requirements: [for (final item in requirements) item.filled(values)],
+    steps: [for (final step in steps) step.filled(values)],
+    feeNote: feeNote?.filled(values),
+    processingNote: processingNote?.filled(values),
+    notes: [for (final note in notes) note.filled(values)],
+  );
 
   static Document? fromJson(Object? json) {
     final map = _map(json);
@@ -257,6 +308,15 @@ class DataBundle {
   Agency? agency(String id) => _agencyById[id];
   Document? document(String id) => _documentById[id];
   Bundle? bundle(String id) => _bundleById[id];
+
+  /// The whole dataset with every document's place placeholders resolved.
+  DataBundle filled(Map<String, LocalizedText> values) => DataBundle(
+    schemaVersion: schemaVersion,
+    dataVersion: dataVersion,
+    agencies: agencies,
+    documents: [for (final document in documents) document.filled(values)],
+    bundles: bundles,
+  );
 
   /// The bundle's documents in authored order, skipping ids that are not in
   /// the current dataset (e.g. a draft document excluded from the feed).

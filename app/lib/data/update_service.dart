@@ -232,6 +232,7 @@ class UpdateService {
     final reason = verifyDataJson(
       json,
       maxSchemaVersion: supportedSchemaVersion,
+      minDocuments: kMinPublishableDocuments,
     );
     if (reason != null) return UpdateInvalid(reason);
 

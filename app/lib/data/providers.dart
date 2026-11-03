@@ -6,6 +6,8 @@ import '../core/constants.dart';
 import '../models/models.dart';
 import 'app_paths.dart';
 import 'data_repository.dart';
+import 'location.dart';
+import 'place_tokens.dart';
 import 'progress.dart';
 import 'progress_repository.dart';
 import 'update_service.dart';
@@ -59,11 +61,35 @@ final FutureProvider<LoadedData> loadedDataProvider = FutureProvider<LoadedData>
   (ref) => ref.watch(dataRepositoryProvider).load(),
 );
 
+/// The place chosen in Settings → My location, live for the session.
+///
+/// Saved to SharedPreferences by the location screen; held here as well so the
+/// document text that depends on it rebuilds the moment it changes.
+class SavedLocationNotifier extends Notifier<SavedLocation?> {
+  @override
+  SavedLocation? build() =>
+      SavedLocation.read(ref.watch(sharedPreferencesProvider));
+
+  void set(SavedLocation? value) => state = value;
+}
+
+final NotifierProvider<SavedLocationNotifier, SavedLocation?>
+savedLocationProvider = NotifierProvider<SavedLocationNotifier, SavedLocation?>(
+  SavedLocationNotifier.new,
+);
+
 /// Convenience view of the loaded dataset for widgets.
+///
+/// Place placeholders (`{{barangay}}`, `{{city}}`, `{{address}}`) are resolved
+/// here, once, so every screen already reading the bundle shows the user's own
+/// barangay without a second lookup.
 final Provider<AsyncValue<DataBundle>> dataBundleProvider =
-    Provider<AsyncValue<DataBundle>>(
-      (ref) => ref.watch(loadedDataProvider).whenData((loaded) => loaded.data),
-    );
+    Provider<AsyncValue<DataBundle>>((ref) {
+      final tokens = PlaceTokens.of(ref.watch(savedLocationProvider));
+      return ref
+          .watch(loadedDataProvider)
+          .whenData((loaded) => loaded.data.filled(tokens.values));
+    });
 
 final Provider<ProgressRepository> progressRepositoryProvider =
     Provider<ProgressRepository>(
@@ -101,9 +127,22 @@ final Provider<DataBundle?> currentDataProvider = Provider<DataBundle?>(
   (ref) => ref.watch(dataBundleProvider).value,
 );
 
+const String acquiredSentinel = '__acquired__';
+
 /// Checked requirement ids for one document (empty when untouched).
 Set<String> checkedFor(WidgetRef ref, String documentId) =>
     ref.watch(progressProvider).value?[documentId] ?? const <String>{};
+
+/// Returns true if the user marked this document as already acquired,
+/// or if all its requirements are checked.
+bool isDocumentAcquired(Document document, Set<String> checkedIds) {
+  if (checkedIds.contains(acquiredSentinel)) return true;
+  if (document.requirements.isNotEmpty &&
+      document.requirements.every((r) => checkedIds.contains(r.id))) {
+    return true;
+  }
+  return false;
+}
 
 /// How many of [document]'s requirements are ticked.
 int checkedCount(Document document, Set<String> checkedIds) =>

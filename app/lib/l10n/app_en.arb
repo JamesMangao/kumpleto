@@ -170,5 +170,17 @@
   "locationSaved": "Location saved",
   "locationClear": "Remove my location",
   "locationSetPrompt": "Set your barangay for local requirements",
-  "locationAttribution": "Place names from the PSA Philippine Standard Geographic Code, used under CC BY 4.0."
+  "locationAttribution": "Place names from the PSA Philippine Standard Geographic Code, used under CC BY 4.0.",
+  "docAlreadyHaveTitle": "Already have this document?",
+  "docAlreadyHaveSubtitle": "Mark as acquired so it counts as ready across all your checklists and bundles.",
+  "docMarkAcquired": "I already have this document",
+  "docAcquiredBadge": "Acquired",
+  "docAcquiredNotice": "You already have this document",
+  "docUnmarkAcquired": "Mark as not yet acquired",
+  "docPlaceFor": "For {place}",
+  "docPlacePsgc": "PSGC {code}",
+  "docPlaceMissingTitle": "Add your barangay",
+  "docPlaceMissingBody": "Set your location and this clearance fills in with your own barangay, city and postal code.",
+  "docPlaceChange": "Change",
+  "docPlaceSet": "Set location"
 }
