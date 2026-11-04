@@ -9,6 +9,13 @@ import 'progress.dart';
 class ProgressRepository {
   ProgressRepository(this._db);
 
+  /// The requirement id that stands for "the whole document is in hand".
+  ///
+  /// It is not a real requirement, so nothing renders a row for it; its
+  /// `updatedAt` is when the reader said they already had the document, which
+  /// is what validity counts from.
+  static const String acquiredRowId = '__acquired__';
+
   final KumpletoDb _db;
 
   /// Emits on every change (drift watches the table).
@@ -16,6 +23,22 @@ class ProgressRepository {
     final query = _db.select(_db.progressEntries)
       ..where((row) => row.checked.equals(true));
     return query.watch().map(_group);
+  }
+
+  /// When each document was marked as acquired, keyed by document id.
+  ///
+  /// Documents acquired by ticking every requirement have no acquired row and
+  /// so no date — validity is only shown when the day is actually known.
+  Stream<Map<String, DateTime>> watchAcquiredDates() {
+    final query = _db.select(_db.progressEntries)
+      ..where((row) => row.requirementId.equals(acquiredRowId));
+    return query.watch().map(
+      (rows) => {
+        for (final row in rows)
+          if (row.checked)
+            row.documentId: DateTime.fromMillisecondsSinceEpoch(row.updatedAt),
+      },
+    );
   }
 
   Future<void> setChecked(
@@ -62,7 +85,7 @@ class ProgressRepository {
       await _db.into(_db.progressEntries).insertOnConflictUpdate(
             ProgressEntriesCompanion.insert(
               documentId: documentId,
-              requirementId: '__acquired__',
+              requirementId: acquiredRowId,
               checked: true,
               updatedAt: now,
             ),
@@ -83,7 +106,7 @@ class ProgressRepository {
     final rows = await _db.select(_db.progressEntries).get();
     final orphans = [
       for (final row in rows)
-        if (row.requirementId != '__acquired__' &&
+        if (row.requirementId != acquiredRowId &&
             !validPairs.contains('${row.documentId}/${row.requirementId}'))
           row,
     ];

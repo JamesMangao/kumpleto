@@ -32,3 +32,7 @@ Thumbs.db
 
 # PSGC dump used by tools/build_psgc.py (assets are committed instead)
 .psgc/
+
+# APKs (binary, gitignored per https://github.com/JamesMangao/kumpleto)
+apk/
+build/

@@ -10,6 +10,8 @@ import '../data/providers.dart';
 import '../l10n/app_localizations.dart';
 import '../models/models.dart';
 import '../widgets/shared.dart';
+import '../widgets/swipe_action.dart';
+import '../widgets/validity.dart';
 
 /// Document detail screen matching mockup 62d05427-34ed-40a8-8826-0388116eb44f.jpg.
 class DocumentDetailScreen extends ConsumerStatefulWidget {
@@ -707,149 +709,148 @@ class _AcquiredCard extends ConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
+    final acquiredAt = ref.watch(acquiredDatesProvider).value?[document.id];
+
+    void toggle() {
+      final repository = ref.read(progressRepositoryProvider);
+      if (isAcquired) {
+        repository.unmarkDocumentAcquired(document.id);
+        return;
+      }
+      repository.markDocumentAcquired(
+        document.id,
+        document.requirements.map((requirement) => requirement.id),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            '${document.name.localized(context)}: ${l10n.docAcquiredBadge}',
+          ),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    }
 
     if (isAcquired) {
-      return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-        decoration: BoxDecoration(
-          color: isDark ? const Color(0xFF132D24) : const Color(0xFFE6F5EE),
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(
-            color: isDark ? const Color(0xFF1F5C48) : const Color(0xFFA2DEC7),
+      final validity = validityText(context, l10n, document, acquiredAt);
+      return SwipeAction(
+        direction: AxisDirection.left,
+        onAction: toggle,
+        semanticLabel: l10n.docUnmarkAcquired,
+        icon: Icons.undo_rounded,
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+          decoration: BoxDecoration(
+            color: isDark ? const Color(0xFF132D24) : const Color(0xFFE6F5EE),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: isDark ? const Color(0xFF1F5C48) : const Color(0xFFA2DEC7),
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: AppTheme.primaryTeal.withValues(alpha: 0.15),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.verified_rounded,
+                      color: AppTheme.primaryTeal,
+                      size: 22,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          l10n.docAcquiredNotice,
+                          style: theme.textTheme.titleSmall?.copyWith(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 13,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          // The badge alone when the day is unknown; with a
+                          // validity period it also says how long is left.
+                          validity == null
+                              ? l10n.docAcquiredBadge
+                              : '${l10n.docAcquiredBadge} · $validity',
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                            color: AppTheme.primaryTeal,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              SwipeHint(label: l10n.docSwipeToUnmark, toRight: false),
+            ],
           ),
         ),
-        child: Row(
+      );
+    }
+
+    return SwipeAction(
+      direction: AxisDirection.right,
+      onAction: toggle,
+      semanticLabel: l10n.docMarkAcquired,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: isDark ? const Color(0xFF162420) : const Color(0xFFEFF7F3),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: isDark ? const Color(0xFF23443B) : const Color(0xFFC8E6DA),
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: AppTheme.primaryTeal.withValues(alpha: 0.15),
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                Icons.verified_rounded,
-                color: AppTheme.primaryTeal,
-                size: 22,
-              ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    l10n.docAcquiredNotice,
+            Row(
+              children: [
+                const Icon(
+                  Icons.inventory_2_outlined,
+                  size: 18,
+                  color: AppTheme.primaryTeal,
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    l10n.docAlreadyHaveTitle,
                     style: theme.textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.w700,
                       fontSize: 13,
                     ),
                   ),
-                  const SizedBox(height: 2),
-                  Text(
-                    l10n.docAcquiredBadge,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                      color: AppTheme.primaryTeal,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                ref
-                    .read(progressRepositoryProvider)
-                    .unmarkDocumentAcquired(document.id);
-              },
-              child: Text(
-                l10n.docUnmarkAcquired,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: theme.colorScheme.onSurfaceVariant,
                 ),
+              ],
+            ),
+            const SizedBox(height: 4),
+            Text(
+              l10n.docAlreadyHaveSubtitle,
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+                fontSize: 12,
               ),
             ),
+            const SizedBox(height: 12),
+            SwipeHint(label: l10n.docSwipeToMark),
           ],
         ),
-      );
-    }
-
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF162420) : const Color(0xFFEFF7F3),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: isDark ? const Color(0xFF23443B) : const Color(0xFFC8E6DA),
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const Icon(
-                Icons.inventory_2_outlined,
-                size: 18,
-                color: AppTheme.primaryTeal,
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  l10n.docAlreadyHaveTitle,
-                  style: theme.textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 13,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 4),
-          Text(
-            l10n.docAlreadyHaveSubtitle,
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-              fontSize: 12,
-            ),
-          ),
-          const SizedBox(height: 10),
-          SizedBox(
-            width: double.infinity,
-            child: FilledButton.tonalIcon(
-              icon: const Icon(Icons.check_circle_outline_rounded, size: 18),
-              label: Text(
-                l10n.docMarkAcquired,
-                style: const TextStyle(fontWeight: FontWeight.w600),
-              ),
-              style: FilledButton.styleFrom(
-                backgroundColor: AppTheme.primaryTeal,
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                minimumSize: const Size.fromHeight(42),
-              ),
-              onPressed: () {
-                ref.read(progressRepositoryProvider).markDocumentAcquired(
-                      document.id,
-                      document.requirements.map((r) => r.id),
-                    );
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      '${document.name.localized(context)}: ${l10n.docAcquiredBadge}',
-                    ),
-                    duration: const Duration(seconds: 2),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
       ),
     );
   }

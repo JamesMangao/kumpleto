@@ -182,5 +182,11 @@
   "docPlaceMissingTitle": "Add your barangay",
   "docPlaceMissingBody": "Set your location and this clearance fills in with your own barangay, city and postal code.",
   "docPlaceChange": "Change",
-  "docPlaceSet": "Set location"
+  "docPlaceSet": "Set location",
+  "docSwipeToMark": "Swipe right to mark as already acquired",
+  "docSwipeToUnmark": "Swipe left to mark as not yet acquired",
+  "docValidUntil": "Valid until {date}",
+  "docValidityMonthsLeft": "{months} months left",
+  "docValidityOneMonthLeft": "1 month left",
+  "docValidityExpired": "Expired {date}"
 }

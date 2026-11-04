@@ -1,3 +1,4 @@
+import '../core/place_names.dart';
 import '../models/localized_text.dart';
 import 'location.dart';
 
@@ -46,21 +47,29 @@ class PlaceTokens {
     // "Barangay Pacita 1, City of San Pedro, Laguna 4023" — the same order a
     // Philippine address is written in, minus whatever the user has not set.
     final barangayLabel = barangay == null ? null : 'Barangay $barangay';
-    final address = [
-      [?barangayLabel, ?city, ?province].join(', '),
+    // The PSGC catalogue is English-only, so the Filipino sentence says
+    // "Lungsod ng San Pedro" instead of pasting "City of San Pedro" into it.
+    final cityFil = city == null ? null : filipinoPlaceName(city);
+    String addressWith(String? cityName) => [
+      [?barangayLabel, ?cityName, ?province].join(', '),
       if (zip.isNotEmpty) zip,
     ].join(' ');
 
     final barangayText = barangayLabel == null
         ? null
         : LocalizedText(en: barangayLabel, fil: barangayLabel);
-    final cityText = city == null ? null : LocalizedText(en: city, fil: city);
+    final cityText = city == null
+        ? null
+        : LocalizedText(en: city, fil: cityFil!);
 
     return PlaceTokens({
       ..._fallback,
       'barangay': ?barangayText,
       'city': ?cityText,
-      'address': LocalizedText(en: address, fil: address),
+      'address': LocalizedText(
+        en: addressWith(city),
+        fil: addressWith(cityFil),
+      ),
     });
   }
 }

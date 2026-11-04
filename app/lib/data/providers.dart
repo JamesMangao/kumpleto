@@ -102,6 +102,12 @@ final StreamProvider<Map<String, Set<String>>> progressProvider =
       (ref) => ref.watch(progressRepositoryProvider).watchAll(),
     );
 
+/// When each document was marked as acquired, live from the database.
+final StreamProvider<Map<String, DateTime>> acquiredDatesProvider =
+    StreamProvider<Map<String, DateTime>>(
+      (ref) => ref.watch(progressRepositoryProvider).watchAcquiredDates(),
+    );
+
 /// All documents, name-sorted for the list screen.
 final Provider<List<Document>> documentsProvider = Provider<List<Document>>((
   ref,
@@ -127,7 +133,7 @@ final Provider<DataBundle?> currentDataProvider = Provider<DataBundle?>(
   (ref) => ref.watch(dataBundleProvider).value,
 );
 
-const String acquiredSentinel = '__acquired__';
+const String acquiredSentinel = ProgressRepository.acquiredRowId;
 
 /// Checked requirement ids for one document (empty when untouched).
 Set<String> checkedFor(WidgetRef ref, String documentId) =>

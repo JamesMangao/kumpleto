@@ -3,7 +3,7 @@
 **Kumpleto collects no personal data. There is no analytics, no crash
 reporting, no advertising, no accounts, and no cloud sync.**
 
-_Last updated: 2026-10-15_
+_Last updated: 2026-11-04_
 
 ## What the app does on your device
 

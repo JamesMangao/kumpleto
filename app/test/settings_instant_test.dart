@@ -74,17 +74,15 @@ void main() {
   group('Welcome scene', () {
     testWidgets('plays on launch, then hands over to the app', (tester) async {
       await pumpKumpleto(tester, showWelcome: true, settle: false);
-      final l10n = l10nOf(tester);
 
-      // Roughly 2 s in: the wordmark/tagline/skip hint are on screen.
-      expect(find.text(l10n.welcomeSkip), findsOneWidget);
-      expect(find.text(l10n.welcomeTagline), findsOneWidget);
-      expect(find.text(l10n.unofficialBadge), findsWidgets);
+      // The scene is up: its stamp and skip control are there from the start.
+      expect(find.text('KUMPLETO'), findsOneWidget);
+      expect(find.text('Skip'), findsOneWidget);
 
       // It is a finite animation: settling it removes the scene for good.
       await tester.pumpAndSettle();
-      expect(find.text(l10n.welcomeSkip), findsNothing);
-      expect(find.text(l10n.welcomeTagline), findsNothing);
+      expect(find.text('KUMPLETO'), findsNothing);
+      expect(find.text('Skip'), findsNothing);
     });
   });
 }

@@ -167,7 +167,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             'assets/logo/app-icon.png',
             width: 42,
             height: 42,
-            errorBuilder: (_, __, ___) => const Icon(
+            errorBuilder: (_, _, _) => const Icon(
               Icons.assignment_turned_in_rounded,
               color: _tealAccent,
               size: 32,
@@ -412,7 +412,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   Widget _buildPrivacyButton(AppLocalizations l10n) {
     return TextButton(
-      onPressed: () => context.push('/settings'),
+      onPressed: () => context.push('/privacy'),
       style: TextButton.styleFrom(
         foregroundColor: Colors.white.withValues(alpha: 0.6),
         minimumSize: const Size(48, 48),

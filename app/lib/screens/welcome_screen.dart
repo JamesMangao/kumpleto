@@ -1,33 +1,50 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/motion.dart';
 import '../core/theme.dart';
+import '../data/providers.dart';
 import '../l10n/app_localizations.dart';
 
-/// Shows the animated welcome scene on top of the app on every launch.
+/// Shows the welcome scene on top of the app.
 ///
-/// Designed to feel like an authentic, dignified Philippine civil document
-/// companion — clean paper textures, official stamp seal, deep forest teal ink,
-/// and grounded citizen-first typography (no futuristic cyber neon orbs).
-class WelcomeGate extends StatefulWidget {
-  const WelcomeGate({super.key, required this.show, required this.child});
+/// - First launch: full ~3s sequence (checklist ticks off, then a
+///   "KUMPLETO" rubber stamp lands).
+/// - Later launches / reduced motion: ~0.7s compact brand fade. The
+///   first-launch flag lives in SharedPreferences, read here, so main.dart
+///   needs no changes.
+/// - Skip button is available immediately; tapping anywhere also skips.
+class WelcomeGate extends ConsumerStatefulWidget {
+  const WelcomeGate({
+    super.key,
+    required this.show,
+    required this.child,
+    this.compact = false,
+  });
 
-  /// Set to false in widget tests (and for reduced-motion launches) so the
-  /// first frame is the real screen.
+  /// Set to false in widget tests so the first frame is the real screen.
   final bool show;
+
+  /// Force the short version. Returning users and reduced motion get it
+  /// automatically, so callers normally leave this false.
+  final bool compact;
+
   final Widget child;
 
   @override
-  State<WelcomeGate> createState() => _WelcomeGateState();
+  ConsumerState<WelcomeGate> createState() => _WelcomeGateState();
 }
 
-class _WelcomeGateState extends State<WelcomeGate>
+class _WelcomeGateState extends ConsumerState<WelcomeGate>
     with SingleTickerProviderStateMixin {
+  static const _seenKey = 'welcome_seen';
+
   late final AnimationController _controller = AnimationController(vsync: this);
   bool _started = false;
   bool _finished = false;
+  bool _compact = false;
 
   @override
   void didChangeDependencies() {
@@ -38,10 +55,13 @@ class _WelcomeGateState extends State<WelcomeGate>
       _finished = true;
       return;
     }
-    // Reduce-motion keeps a short cross-fade instead of the full sequence.
-    _controller.duration = Motion.reduced(context)
-        ? const Duration(milliseconds: 300)
-        : const Duration(milliseconds: 2200);
+    final prefs = ref.read(sharedPreferencesProvider);
+    final seen = prefs.getBool(_seenKey) ?? false;
+    prefs.setBool(_seenKey, true);
+    _compact = widget.compact || seen || Motion.reduced(context);
+    _controller.duration = _compact
+        ? const Duration(milliseconds: 700)
+        : const Duration(milliseconds: 3000);
     _controller.forward().whenComplete(() {
       if (mounted) setState(() => _finished = true);
     });
@@ -51,7 +71,7 @@ class _WelcomeGateState extends State<WelcomeGate>
     if (_finished) return;
     _controller.animateTo(
       1,
-      duration: const Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 180),
       curve: Curves.easeOut,
     );
   }
@@ -64,20 +84,419 @@ class _WelcomeGateState extends State<WelcomeGate>
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.show || _finished) return widget.child;
+    final showing = widget.show && !_finished;
+    // The app keeps the same parent in every state. Handing the child back
+    // bare once the scene ends would reparent the global-keyed Navigator,
+    // which leaves live widgets depending on an InheritedWidget that is
+    // being torn down (debug asserts with "_dependents.isEmpty").
     return Stack(
+      // While the scene is up the app keeps the loose constraints it has
+      // always had behind it; once the scene ends it gets the same tight
+      // constraints it would get as the bare `builder` child. Only the fit
+      // changes, so the child is never reparented.
+      fit: showing ? StackFit.loose : StackFit.expand,
       children: [
-        widget.child,
+        // Keep the real app out of the accessibility tree while the overlay
+        // is up so TalkBack doesn't read both.
+        ExcludeSemantics(excluding: showing, child: widget.child),
         Positioned.fill(
-          child: Semantics(
-            button: true,
-            label: AppLocalizations.of(context)?.welcomeSkip,
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: _skip,
-              child: AnimatedBuilder(
-                animation: _controller,
-                builder: (context, _) => _WelcomeScene(t: _controller.value),
+          child: IgnorePointer(
+            ignoring: !showing,
+            child: showing
+                ? GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: _skip,
+                    child: RepaintBoundary(
+                      child: AnimatedBuilder(
+                        animation: _controller,
+                        builder: (context, _) => _WelcomeScene(
+                          t: _controller.value,
+                          compact: _compact,
+                          onSkip: _skip,
+                        ),
+                      ),
+                    ),
+                  )
+                : const SizedBox.shrink(),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Palette (light + dark)
+// ---------------------------------------------------------------------------
+
+class _Palette {
+  const _Palette({
+    required this.bg,
+    required this.card,
+    required this.cardBorder,
+    required this.ink,
+    required this.muted,
+    required this.accent,
+    required this.stamp,
+  });
+
+  final Color bg;
+  final Color card;
+  final Color cardBorder;
+  final Color ink;
+  final Color muted;
+  final Color accent;
+  final Color stamp;
+
+  static _Palette of(BuildContext context) {
+    final dark = Theme.of(context).brightness == Brightness.dark;
+    return dark
+        ? const _Palette(
+            bg: Color(0xFF101715),
+            card: Color(0xFF192522),
+            cardBorder: Color(0xFF2C3E38),
+            ink: Color(0xFFF1F5F3),
+            muted: Color(0xFF9DB3AB),
+            accent: Color(0xFF2FA88C),
+            stamp: Color(0xFF4CC2A6),
+          )
+        : const _Palette(
+            bg: Color(0xFFF6F1E7), // warm paper
+            card: Color(0xFFFFFFFF),
+            cardBorder: Color(0xFFE2D9C6),
+            ink: Color(0xFF14211D),
+            muted: Color(0xFF5E6F69),
+            accent: AppTheme.primaryTeal, // #0E6B58
+            stamp: AppTheme.primaryTeal,
+          );
+  }
+}
+
+bool _isFil(BuildContext context) {
+  final code = Localizations.localeOf(context).languageCode;
+  return code == 'fil' || code == 'tl';
+}
+
+// ---------------------------------------------------------------------------
+// Scene
+// ---------------------------------------------------------------------------
+
+class _WelcomeScene extends StatelessWidget {
+  const _WelcomeScene({
+    required this.t,
+    required this.compact,
+    required this.onSkip,
+  });
+
+  final double t;
+  final bool compact;
+  final VoidCallback onSkip;
+
+  static const _docs = [
+    'NBI Clearance',
+    'PSA Birth Certificate',
+    'National ID',
+    'Passport',
+  ];
+
+  double _segment(double start, double end) =>
+      ((t - start) / (end - start)).clamp(0.0, 1.0);
+
+  double _ease(double start, double end) =>
+      compact ? 1.0 : Curves.easeOutCubic.transform(_segment(start, end));
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final p = _Palette.of(context);
+    final fil = _isFil(context);
+
+    final fadeOut = compact ? _segment(0.7, 1.0) : _segment(0.9, 1.0);
+    final fadeIn = compact ? _segment(0.0, 0.35) : 1.0;
+
+    final wordmark = _ease(0.02, 0.20);
+    final card = _ease(0.08, 0.26);
+    final tagline = _ease(0.14, 0.32);
+    final chips = _ease(0.62, 0.78);
+    final stampT = compact ? 1.0 : _segment(0.58, 0.72);
+
+    final cardWidth = math.min(320.0, MediaQuery.sizeOf(context).width - 48);
+
+    return Opacity(
+      opacity: (1 - fadeOut) * fadeIn,
+      child: Material(
+        color: p.bg,
+        child: SafeArea(
+          child: Stack(
+            children: [
+              Center(
+                child: SingleChildScrollView(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 56),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Wordmark
+                      Opacity(
+                        opacity: wordmark,
+                        child: Transform.translate(
+                          offset: Offset(0, 12 * (1 - wordmark)),
+                          child: Text(
+                            'Kumpleto',
+                            style: TextStyle(
+                              fontSize: 38,
+                              fontWeight: FontWeight.w800,
+                              letterSpacing: -0.8,
+                              color: p.ink,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Opacity(
+                        opacity: tagline,
+                        child: Text(
+                          l10n?.welcomeTagline ??
+                              'Alamin ang dadalhing papel bago pumila.',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 15,
+                            height: 1.4,
+                            fontWeight: FontWeight.w500,
+                            color: p.muted,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 28),
+
+                      // Checklist card + stamp
+                      Opacity(
+                        opacity: card,
+                        child: Transform.translate(
+                          offset: Offset(0, 24 * (1 - card)),
+                          child: SizedBox(
+                            width: cardWidth,
+                            child: _ChecklistCard(
+                              palette: p,
+                              docs: _docs,
+                              title: fil
+                                  ? 'Kumpleto ba ang papeles mo?'
+                                  : 'Is your paperwork complete?',
+                              tickProgress: [
+                                for (var i = 0; i < _docs.length; i++)
+                                  compact
+                                      ? 1.0
+                                      : Curves.easeInOut.transform(
+                                          _segment(
+                                            0.18 + i * 0.09,
+                                            0.30 + i * 0.09,
+                                          ),
+                                        ),
+                              ],
+                              stampProgress: stampT,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+
+                      // Promises
+                      Opacity(
+                        opacity: chips,
+                        child: Transform.translate(
+                          offset: Offset(0, 8 * (1 - chips)),
+                          child: Wrap(
+                            alignment: WrapAlignment.center,
+                            spacing: 8,
+                            runSpacing: 8,
+                            children: [
+                              _PromiseChip(
+                                palette: p,
+                                icon: Icons.wifi_off_rounded,
+                                label: 'Offline',
+                              ),
+                              _PromiseChip(
+                                palette: p,
+                                icon: Icons.person_off_outlined,
+                                label: fil ? 'Walang account' : 'No account',
+                              ),
+                              _PromiseChip(
+                                palette: p,
+                                icon: Icons.block_rounded,
+                                label: fil ? 'Walang ads' : 'No ads',
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+
+                      // Unofficial notice (kept visible, not alarming)
+                      Opacity(
+                        opacity: chips,
+                        child: Text(
+                          (l10n?.unofficialBadge ?? 'Unofficial').toUpperCase(),
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 1.6,
+                            color: p.muted,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              // Skip: available from the first frame, 48dp target.
+              Positioned(
+                top: 4,
+                right: 8,
+                child: Semantics(
+                  button: true,
+                  label: l10n?.welcomeSkip,
+                  child: TextButton(
+                    onPressed: onSkip,
+                    style: TextButton.styleFrom(
+                      minimumSize: const Size(48, 48),
+                      foregroundColor: p.muted,
+                    ),
+                    child: Text(fil ? 'Laktawan' : 'Skip'),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Checklist card
+// ---------------------------------------------------------------------------
+
+class _ChecklistCard extends StatelessWidget {
+  const _ChecklistCard({
+    required this.palette,
+    required this.docs,
+    required this.title,
+    required this.tickProgress,
+    required this.stampProgress,
+  });
+
+  final _Palette palette;
+  final List<String> docs;
+  final String title;
+  final List<double> tickProgress;
+  final double stampProgress;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = palette;
+    final stampScale = 1.0 + 0.8 * (1 - Curves.easeOutBack.transform(stampProgress));
+
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.fromLTRB(20, 18, 20, 56),
+          decoration: BoxDecoration(
+            color: p.card,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: p.cardBorder, width: 1.5),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.12),
+                blurRadius: 24,
+                offset: const Offset(0, 10),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  color: p.muted,
+                ),
+              ),
+              const SizedBox(height: 14),
+              for (var i = 0; i < docs.length; i++)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 7),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 22,
+                        height: 22,
+                        child: CustomPaint(
+                          painter: _TickBoxPainter(
+                            progress: tickProgress[i],
+                            border: p.cardBorder,
+                            fill: p.accent,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          docs[i],
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: p.ink,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+            ],
+          ),
+        ),
+
+        // Rubber stamp
+        Positioned(
+          right: 14,
+          bottom: 12,
+          child: Opacity(
+            opacity: (stampProgress * 2).clamp(0.0, 1.0),
+            child: Transform.rotate(
+              angle: -0.14,
+              child: Transform.scale(
+                scale: stampScale,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: p.stamp, width: 3),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: p.stamp, width: 1),
+                      borderRadius: BorderRadius.circular(3),
+                    ),
+                    child: Text(
+                      'KUMPLETO',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 3,
+                        color: p.stamp,
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
@@ -87,331 +506,101 @@ class _WelcomeGateState extends State<WelcomeGate>
   }
 }
 
-/// Dignified, civil document-inspired welcome scene.
-///
-/// Sequence:
-/// 1. Warm dark paper surface emerges
-/// 2. Clean official document sheet slides in
-/// 3. Official checklist seal stamps onto the sheet with deep teal ink
-/// 4. "Kumpleto" wordmark appears cleanly
-/// 5. Tagline & unofficial badge settle
-/// 6. Smooth fade out into the main screen
-class _WelcomeScene extends StatelessWidget {
-  const _WelcomeScene({required this.t});
+class _PromiseChip extends StatelessWidget {
+  const _PromiseChip({
+    required this.palette,
+    required this.icon,
+    required this.label,
+  });
 
-  final double t;
-
-  static const _word = 'Kumpleto';
-  static const _bgDark = Color(0xFF101715);
-  static const _paperSurface = Color(0xFF192522);
-  static const _cardBorder = Color(0xFF2C3E38);
-  static const _tealPrimary = AppTheme.primaryTeal; // #0E6B58
-  static const _tealLight = Color(0xFF389B84);
-
-  double _segment(double start, double end) =>
-      ((t - start) / (end - start)).clamp(0.0, 1.0);
-
-  double _ease(double start, double end) =>
-      Curves.easeOutCubic.transform(_segment(start, end));
+  final _Palette palette;
+  final IconData icon;
+  final String label;
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
-    final fadeOut = _segment(0.88, 1.0);
-    final paper = Curves.easeOutBack.transform(_segment(0.06, 0.32));
-    final seal = _ease(0.20, 0.50);
-    final check = Curves.easeInOutCubic.transform(_segment(0.36, 0.62));
-    final wordmark = _ease(0.48, 0.70);
-    final tagline = _ease(0.58, 0.78);
-    final chip = _ease(0.66, 0.84);
-    final skip = _ease(0.72, 0.88);
-
-    final paperY = 40.0 * (1 - paper);
-
-    return Opacity(
-      opacity: 1 - fadeOut,
-      child: ColoredBox(
-        color: _bgDark,
-        child: SafeArea(
-          child: Center(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // Document sheet with official seal stamp
-                  Transform.translate(
-                    offset: Offset(0, paperY),
-                    child: Opacity(
-                      opacity: paper.clamp(0.0, 1.0),
-                      child: Container(
-                        width: 170,
-                        height: 200,
-                        decoration: BoxDecoration(
-                          color: _paperSurface,
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: _cardBorder, width: 1.5),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.4),
-                              blurRadius: 20,
-                              offset: const Offset(0, 10),
-                            ),
-                          ],
-                        ),
-                        child: CustomPaint(
-                          painter: _CivilDocumentPainter(
-                            seal: seal,
-                            check: check,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 24),
-
-                  // Brand Wordmark
-                  Opacity(
-                    opacity: wordmark,
-                    child: Transform.translate(
-                      offset: Offset(0, 12 * (1 - wordmark)),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          for (var i = 0; i < _word.length; i++)
-                            Text(
-                              _word[i],
-                              style: const TextStyle(
-                                fontSize: 32,
-                                fontWeight: FontWeight.w800,
-                                letterSpacing: -0.5,
-                                color: Colors.white,
-                              ),
-                            ),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 8),
-
-                  // Practical Citizen Tagline
-                  Opacity(
-                    opacity: tagline,
-                    child: Transform.translate(
-                      offset: Offset(0, 8 * (1 - tagline)),
-                      child: Text(
-                        l10n?.welcomeTagline ??
-                            'Alamin ang dadalhing papel bago pumila.',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 14,
-                          height: 1.4,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white.withValues(alpha: 0.8),
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 16),
-
-                  // Clear, Dignified Unofficial Badge
-                  Opacity(
-                    opacity: chip,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 5,
-                      ),
-                      decoration: BoxDecoration(
-                        color: _paperSurface,
-                        border: Border.all(
-                          color: _tealPrimary.withValues(alpha: 0.6),
-                          width: 1.2,
-                        ),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            width: 6,
-                            height: 6,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: _tealLight,
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Text(
-                            (l10n?.unofficialBadge ?? 'Unofficial').toUpperCase(),
-                            style: const TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w800,
-                              letterSpacing: 1.4,
-                              color: Color(0xFFD4ECE3),
-                            ),
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            '• 100% OFFLINE',
-                            style: TextStyle(
-                              fontSize: 9,
-                              fontWeight: FontWeight.w700,
-                              letterSpacing: 0.8,
-                              color: Colors.white.withValues(alpha: 0.7),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 28),
-
-                  // Skip prompt
-                  Opacity(
-                    opacity: skip,
-                    child: Text(
-                      l10n?.welcomeSkip ?? 'Tap to continue',
-                      style: TextStyle(
-                        fontSize: 12,
-                        letterSpacing: 0.5,
-                        color: Colors.white.withValues(alpha: 0.4),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: palette.card,
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: palette.cardBorder),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 16, color: palette.accent),
+          const SizedBox(width: 6),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w700,
+              color: palette.ink,
             ),
           ),
-        ),
+        ],
       ),
     );
   }
 }
 
-/// Paints a clean document with simulated checklist lines and an authentic
-/// circular verification seal stamp in civil deep teal ink.
-class _CivilDocumentPainter extends CustomPainter {
-  const _CivilDocumentPainter({
-    required this.seal,
-    required this.check,
+// ---------------------------------------------------------------------------
+// Painters
+// ---------------------------------------------------------------------------
+
+class _TickBoxPainter extends CustomPainter {
+  const _TickBoxPainter({
+    required this.progress,
+    required this.border,
+    required this.fill,
   });
 
-  final double seal;
-  final double check;
-
-  static const _inkTeal = Color(0xFF138A72);
-  static const _ruleColor = Color(0xFF2C3E38);
+  final double progress;
+  final Color border;
+  final Color fill;
 
   @override
   void paint(Canvas canvas, Size size) {
-    // Top document header line
-    final headerPaint = Paint()
-      ..color = _ruleColor
-      ..strokeWidth = 2.0;
-    canvas.drawLine(
-      const Offset(18, 22),
-      Offset(size.width - 18, 22),
-      headerPaint,
+    final rrect = RRect.fromRectAndRadius(
+      Offset.zero & size,
+      const Radius.circular(6),
     );
 
-    // Document checklist simulated rows
-    final rowPaint = Paint()
-      ..color = _ruleColor.withValues(alpha: 0.7)
-      ..strokeWidth = 1.2;
-
-    for (var i = 0; i < 4; i++) {
-      final y = 38.0 + i * 16;
-      canvas.drawLine(
-        Offset(34, y),
-        Offset(size.width - 20 - (i == 3 ? 30 : 0), y),
-        rowPaint,
-      );
-    }
-
-    // Small square checklist boxes on the rows
-    final boxPaint = Paint()
-      ..color = _ruleColor
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.0;
-
-    for (var i = 0; i < 4; i++) {
-      final y = 38.0 + i * 16;
+    if (progress > 0) {
       canvas.drawRRect(
-        RRect.fromRectAndRadius(
-          Rect.fromLTWH(18, y - 5, 10, 10),
-          const Radius.circular(2),
-        ),
-        boxPaint,
+        rrect,
+        Paint()..color = fill.withValues(alpha: progress),
       );
     }
-
-    // Ticks inside top two checkboxes
-    if (check > 0.1) {
-      final tickPaint = Paint()
-        ..color = _inkTeal
-        ..strokeWidth = 1.6
-        ..strokeCap = StrokeCap.round
-        ..style = PaintingStyle.stroke;
-
-      for (var i = 0; i < 2; i++) {
-        final y = 38.0 + i * 16;
-        final p = Path()
-          ..moveTo(19.5, y)
-          ..lineTo(22, y + 2.5)
-          ..lineTo(26.5, y - 2);
-        canvas.drawPath(p, tickPaint);
-      }
-    }
-
-    // Official Seal Stamp in center-bottom
-    final center = Offset(size.width * 0.5, size.height * 0.68);
-
-    if (seal > 0.05) {
-      final sealPaint = Paint()
+    canvas.drawRRect(
+      rrect.deflate(0.75),
+      Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 1.8
-        ..color = _inkTeal.withValues(alpha: 0.9 * seal);
+        ..strokeWidth = 1.5
+        ..color = Color.lerp(border, fill, progress)!,
+    );
 
-      canvas.drawCircle(center, 38 * seal, sealPaint);
-      canvas.drawCircle(center, 32 * seal, sealPaint..strokeWidth = 1.0);
-
-      // Inner circular decorative dots
-      final dotPaint = Paint()
-        ..style = PaintingStyle.fill
-        ..color = _inkTeal.withValues(alpha: 0.7 * seal);
-      const dotCount = 12;
-      for (var i = 0; i < dotCount; i++) {
-        final angle = (i / dotCount) * math.pi * 2;
-        final dx = center.dx + math.cos(angle) * (26 * seal);
-        final dy = center.dy + math.sin(angle) * (26 * seal);
-        canvas.drawCircle(Offset(dx, dy), 1.2 * seal, dotPaint);
-      }
-    }
-
-    // Clear Civil Checkmark inside seal
-    if (check > 0.05) {
-      final checkPath = Path()
-        ..moveTo(center.dx - 12 * check, center.dy)
-        ..lineTo(center.dx - 3 * check, center.dy + 10 * check)
-        ..lineTo(center.dx + 13 * check, center.dy - 8 * check);
-
-      final checkPaint = Paint()
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 3.5
-        ..strokeCap = StrokeCap.round
-        ..strokeJoin = StrokeJoin.round
-        ..color = const Color(0xFF26A69A);
-
-      canvas.drawPath(checkPath, checkPaint);
+    if (progress > 0.2) {
+      final k = ((progress - 0.2) / 0.8).clamp(0.0, 1.0);
+      final path = Path()
+        ..moveTo(size.width * 0.26, size.height * 0.52)
+        ..lineTo(size.width * 0.43, size.height * 0.68)
+        ..lineTo(size.width * 0.74, size.height * 0.34);
+      final metric = path.computeMetrics().first;
+      canvas.drawPath(
+        metric.extractPath(0, metric.length * k),
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 2.4
+          ..strokeCap = StrokeCap.round
+          ..strokeJoin = StrokeJoin.round
+          ..color = Colors.white,
+      );
     }
   }
 
   @override
-  bool shouldRepaint(covariant _CivilDocumentPainter oldDelegate) =>
-      oldDelegate.seal != seal || oldDelegate.check != check;
+  bool shouldRepaint(covariant _TickBoxPainter old) =>
+      old.progress != progress || old.border != border || old.fill != fill;
 }

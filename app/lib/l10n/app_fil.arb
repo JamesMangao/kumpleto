@@ -123,5 +123,11 @@
   "docPlaceMissingTitle": "Ilagay ang barangay mo",
   "docPlaceMissingBody": "I-set ang lokasyon mo at mapupunan ang clearance na ito ng sarili mong barangay, lungsod at postal code.",
   "docPlaceChange": "Palitan",
-  "docPlaceSet": "I-set ang lokasyon"
+  "docPlaceSet": "I-set ang lokasyon",
+  "docSwipeToMark": "I-swipe pakanan para markahang mayroon na",
+  "docSwipeToUnmark": "I-swipe pakaliwa para alisin sa mayroon na",
+  "docValidUntil": "Valid hanggang {date}",
+  "docValidityMonthsLeft": "{months} buwan ang natitira",
+  "docValidityOneMonthLeft": "1 buwan ang natitira",
+  "docValidityExpired": "Nag-expire noong {date}"
 }

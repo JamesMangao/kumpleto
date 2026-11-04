@@ -5,9 +5,11 @@ import 'package:go_router/go_router.dart';
 import '../core/motion.dart';
 import '../core/theme.dart';
 import '../data/providers.dart';
+import '../data/search.dart';
 import '../l10n/app_localizations.dart';
 import '../models/models.dart';
 import '../widgets/shared.dart';
+import '../widgets/validity.dart';
 import 'scaffold_with_nav.dart';
 
 /// Documents screen matching mockup 57dbaf1b-61d1-4044-8f0e-1d4b292a8522.jpg.
@@ -66,18 +68,17 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
       for (final document in documents) ...document.tags,
     }.toList()..sort();
 
-    final needle = _query.trim().toLowerCase();
+    // Full-text, not just the title: summaries, requirement lines, notes,
+    // tags and the agency in both languages all count (see data/search.dart).
     final filtered = [
       for (final document in documents)
         if ((_tag == null || document.tags.contains(_tag)) &&
             (_agency == null || document.agencyId == _agency) &&
-            (needle.isEmpty ||
-                document.name.en.toLowerCase().contains(needle) ||
-                document.name.fil.toLowerCase().contains(needle) ||
-                (data?.agency(document.agencyId)?.name.en
-                        .toLowerCase()
-                        .contains(needle) ??
-                    false)))
+            documentMatches(
+              document,
+              query: _query,
+              agency: data?.agency(document.agencyId),
+            ))
           document,
     ];
 
@@ -324,6 +325,7 @@ class _DocumentModernCard extends ConsumerWidget {
     final done = checkedCount(document, checked);
     final total = document.requirements.length;
     final acquired = isDocumentAcquired(document, checked);
+    final acquiredAt = ref.watch(acquiredDatesProvider).value?[document.id];
     final fraction = total == 0 ? (acquired ? 1.0 : 0.0) : (done / total).clamp(0.0, 1.0);
 
     return Card(
@@ -424,6 +426,11 @@ class _DocumentModernCard extends ConsumerWidget {
                           ),
                         ],
                       ),
+                    ),
+                    ValidityPill(
+                      document: document,
+                      acquiredAt: acquiredAt,
+                      dense: true,
                     ),
                   ],
                 ),

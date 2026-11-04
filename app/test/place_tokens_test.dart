@@ -33,7 +33,8 @@ void main() {
       );
       final filled = text.filled(PlaceTokens.of(saved).values);
       expect(filled.en, 'The hall of Barangay Pacita 1 in City of San Pedro.');
-      expect(filled.fil, 'Ang hall ng Barangay Pacita 1 sa City of San Pedro.');
+      // The Filipino sentence translates the generic part of the PSGC name.
+      expect(filled.fil, 'Ang hall ng Barangay Pacita 1 sa Lungsod ng San Pedro.');
     });
 
     test('leaves text without tokens alone', () {
