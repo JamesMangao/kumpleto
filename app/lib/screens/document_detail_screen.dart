@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../core/constants.dart';
 import '../core/theme.dart';
+import '../data/location.dart';
 import '../data/place_tokens.dart';
 import '../data/providers.dart';
 import '../l10n/app_localizations.dart';
 import '../models/models.dart';
 import '../widgets/shared.dart';
-import '../widgets/swipe_action.dart';
 import '../widgets/validity.dart';
 
 /// Document detail screen matching mockup 62d05427-34ed-40a8-8826-0388116eb44f.jpg.
@@ -81,6 +82,13 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
             fontWeight: FontWeight.w700,
           ),
         ),
+        actions: [
+          IconButton(
+            tooltip: l10n.bundleExportShare,
+            icon: const Icon(Icons.share_outlined),
+            onPressed: () => _shareDoc(context, l10n, document, agency),
+          ),
+        ],
       ),
       body: SafeArea(
         child: ListView(
@@ -162,7 +170,7 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
                           icon: Icons.calendar_today_outlined,
                           label: document.validityMonths == 0
                               ? l10n.docValidForever
-                              : 'Valid ${document.validityMonths} months',
+                              : l10n.docValidMonths(document.validityMonths!),
                         ),
                       if (document.applyOnline != null)
                         _MetaPill(
@@ -216,12 +224,6 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
 
             const SizedBox(height: 12),
 
-            // Already Acquired interactive card
-            _AcquiredCard(
-              document: document,
-              isAcquired: acquired,
-            ),
-
             if (document.status == DocStatus.deprecated) ...[
               const SizedBox(height: 14),
               Container(
@@ -262,7 +264,7 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
               SectionCard(
                 icon: Icons.checklist_rounded,
                 title: l10n.docRequirements,
-                subtitle: 'Bring these documents when you apply.',
+                subtitle: l10n.docRequirementsSubtitle,
                 child: Column(
                   children: [
                     for (final req in document.requirements)
@@ -301,7 +303,7 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
               SectionCard(
                 icon: Icons.format_list_numbered_rounded,
                 title: l10n.docSteps,
-                subtitle: 'Follow these steps to get your ${document.name.localized(context)}.',
+                subtitle: l10n.docStepsSubtitle,
                 child: Column(
                   children: [
                     for (var i = 0; i < document.steps.length; i++)
@@ -344,22 +346,85 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
                 ),
               ),
 
-            // Where to apply Card
+            // Where to apply Card. The office is a map search rather than a
+            // fixed coordinate: the data names an agency, not a branch.
             if (document.whereToApply != null)
               SectionCard(
                 icon: Icons.location_on_outlined,
                 title: l10n.docWhere,
-                child: Row(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: Text(
-                        document.whereToApply!.localized(context),
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.w500,
+                    Text(
+                      document.whereToApply!.localized(context),
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    InkWell(
+                      borderRadius: BorderRadius.circular(10),
+                      onTap: () => openExternal(
+                        context,
+                        mapsSearchUri(
+                          _mapsQuery(
+                            context,
+                            document: document,
+                            agency: agency,
+                            place: ref.watch(savedLocationProvider),
+                          ),
+                        ),
+                      ),
+                      child: Ink(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 9,
+                        ),
+                        decoration: BoxDecoration(
+                          color: isDark
+                              ? const Color(0xFF19332A)
+                              : const Color(0xFFE8F4F0),
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: isDark
+                                ? const Color(0xFF2C5546)
+                                : const Color(0xFFC7E2D8),
+                            width: 1.0,
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.map_outlined,
+                              size: 18,
+                              color: isDark
+                                  ? const Color(0xFF5ED6B3)
+                                  : AppTheme.primaryTeal,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              l10n.docOpenInMaps,
+                              style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w700,
+                                color: isDark
+                                    ? const Color(0xFF8CEFD0)
+                                    : AppTheme.primaryTeal,
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                            Icon(
+                              Icons.arrow_outward_rounded,
+                              size: 14,
+                              color: isDark
+                                  ? const Color(0xFF8CEFD0)
+                                  : AppTheme.primaryTeal,
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                    const Icon(Icons.chevron_right, size: 20, color: Colors.grey),
                   ],
                 ),
               ),
@@ -372,6 +437,51 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    if (ref.watch(firstTimeJobseekerProvider) &&
+                        const {
+                          'nbi-clearance',
+                          'police-clearance',
+                          'barangay-clearance',
+                        }.contains(document.id)) ...[
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 10),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          color: isDark
+                              ? const Color(0xFF132D24)
+                              : const Color(0xFFE6F5EE),
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: isDark
+                                ? const Color(0xFF1F5C48)
+                                : const Color(0xFFA2DEC7),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.verified_rounded,
+                              size: 16,
+                              color: AppTheme.primaryTeal,
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                l10n.docFirstTimeFree,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppTheme.primaryTeal,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                     if (document.feeNote != null)
                       Text(
                         document.feeNote!.localized(context),
@@ -395,7 +505,7 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
               SectionCard(
                 icon: Icons.link,
                 title: l10n.docDependsOn,
-                subtitle: 'May require these documents first.',
+                subtitle: l10n.docDependsOnSubtitle,
                 child: Wrap(
                   spacing: 8,
                   runSpacing: 8,
@@ -423,6 +533,43 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
                   ],
                 ),
               ),
+
+            // Bag & Departure Checklist (Before You Go)
+            SectionCard(
+              icon: Icons.backpack_outlined,
+              title: l10n.docBeforeYouGoTitle,
+              subtitle: l10n.docBeforeYouGoSubtitle,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _BagCheckItem(
+                    icon: Icons.edit_outlined,
+                    title: l10n.docBagPenTitle,
+                    subtitle: l10n.docBagPenBody,
+                  ),
+                  _BagCheckItem(
+                    icon: Icons.badge_outlined,
+                    title: l10n.docBagIdsTitle,
+                    subtitle: l10n.docBagIdsBody,
+                  ),
+                  _BagCheckItem(
+                    icon: Icons.photo_camera_front_outlined,
+                    title: l10n.docBagPhotosTitle,
+                    subtitle: l10n.docBagPhotosBody,
+                  ),
+                  _BagCheckItem(
+                    icon: Icons.payments_outlined,
+                    title: l10n.docBagCashTitle,
+                    subtitle: l10n.docBagCashBody,
+                  ),
+                  _BagCheckItem(
+                    icon: Icons.folder_open_outlined,
+                    title: l10n.docBagEnvelopeTitle,
+                    subtitle: l10n.docBagEnvelopeBody,
+                  ),
+                ],
+              ),
+            ),
 
             const SizedBox(height: 14),
 
@@ -497,6 +644,91 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
           ],
         ),
       ),
+      bottomNavigationBar: SafeArea(
+        top: false,
+        child: Container(
+          decoration: BoxDecoration(
+            color: isDark ? const Color(0xFF141F1A) : Colors.white,
+            border: Border(
+              top: BorderSide(
+                color: isDark ? const Color(0xFF24382F) : const Color(0xFFE2EDE7),
+                width: 1.0,
+              ),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: isDark ? 0.35 : 0.08),
+                blurRadius: 16,
+                offset: const Offset(0, -4),
+              ),
+            ],
+          ),
+          child: _AcquiredStickyBar(
+            document: document,
+            isAcquired: acquired,
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// "National Bureau of Investigation, Pacita 1, San Pedro, Laguna" — the
+  /// agency plus wherever the reader said they live. Without a saved place the
+  /// agency alone still opens the map on its branches.
+  String _mapsQuery(
+    BuildContext context, {
+    required Document document,
+    required Agency? agency,
+    required SavedLocation? place,
+  }) {
+    final office = agency?.name.localized(context) ??
+        document.name.localized(context);
+    if (place == null || place.isEmpty) return office;
+    return '$office, ${place.label}';
+  }
+
+  void _shareDoc(
+    BuildContext context,
+    AppLocalizations l10n,
+    Document document,
+    Agency? agency,
+  ) {
+    final buffer = StringBuffer();
+    buffer.writeln('📋 ${document.name.localized(context)}');
+    if (agency != null) {
+      buffer.writeln('Ahensya: ${agency.name.localized(context)}');
+    }
+    buffer.writeln();
+    if (document.summary != null) {
+      buffer.writeln('${document.summary!.localized(context)}\n');
+    }
+    if (document.requirements.isNotEmpty) {
+      buffer.writeln('Mga Kailangang Dalhin:');
+      for (final req in document.requirements) {
+        final opt = req.optional ? ' (Optional)' : '';
+        final orig = req.original ? ' (Original)' : '';
+        buffer.writeln('• ${req.text.localized(context)}$opt$orig');
+      }
+      buffer.writeln();
+    }
+    if (document.steps.isNotEmpty) {
+      buffer.writeln('Mga Hakbang:');
+      for (var i = 0; i < document.steps.length; i++) {
+        buffer.writeln('${i + 1}. ${document.steps[i].localized(context)}');
+      }
+      buffer.writeln();
+    }
+    if (document.feeNote != null) {
+      buffer.writeln('Bayad / Fees: ${document.feeNote!.localized(context)}');
+    }
+    buffer.writeln(
+      '\nIbinahagi mula sa Kumpleto App (100% Offline, Unofficial Citizen Guide).',
+    );
+    SharePlus.instance.share(
+      ShareParams(
+        text: buffer.toString(),
+        subject: document.name.localized(context),
+      ),
     );
   }
 
@@ -520,7 +752,9 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
       ),
     );
     if (confirmed != true) return;
-    await ref.read(progressRepositoryProvider).resetDocument(document.id);
+    await ref
+        .read(progressRepositoryProvider)
+        .resetDocument(ref.read(currentProfileProvider).id, document.id);
   }
 }
 
@@ -609,7 +843,12 @@ class _RequirementItem extends ConsumerWidget {
         ),
         onChanged: (value) => ref
             .read(progressRepositoryProvider)
-            .setChecked(document.id, requirement.id, value ?? false),
+            .setChecked(
+              ref.read(currentProfileProvider).id,
+              document.id,
+              requirement.id,
+              value ?? false,
+            ),
       ),
     );
   }
@@ -695,8 +934,8 @@ class _MetaPill extends StatelessWidget {
   }
 }
 
-class _AcquiredCard extends ConsumerWidget {
-  const _AcquiredCard({
+class _AcquiredStickyBar extends ConsumerWidget {
+  const _AcquiredStickyBar({
     required this.document,
     required this.isAcquired,
   });
@@ -710,14 +949,25 @@ class _AcquiredCard extends ConsumerWidget {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final acquiredAt = ref.watch(acquiredDatesProvider).value?[document.id];
+    final validity = isAcquired ? validityText(context, l10n, document, acquiredAt) : null;
 
     void toggle() {
       final repository = ref.read(progressRepositoryProvider);
+      final profileId = ref.read(currentProfileProvider).id;
       if (isAcquired) {
-        repository.unmarkDocumentAcquired(document.id);
+        repository.unmarkDocumentAcquired(profileId, document.id);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              '${document.name.localized(context)}: ${l10n.docUnmarkAcquired}',
+            ),
+            duration: const Duration(seconds: 2),
+          ),
+        );
         return;
       }
       repository.markDocumentAcquired(
+        profileId,
         document.id,
         document.requirements.map((requirement) => requirement.id),
       );
@@ -731,127 +981,194 @@ class _AcquiredCard extends ConsumerWidget {
       );
     }
 
-    if (isAcquired) {
-      final validity = validityText(context, l10n, document, acquiredAt);
-      return SwipeAction(
-        direction: AxisDirection.left,
-        onAction: toggle,
-        semanticLabel: l10n.docUnmarkAcquired,
-        icon: Icons.undo_rounded,
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 16),
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-          decoration: BoxDecoration(
-            color: isDark ? const Color(0xFF132D24) : const Color(0xFFE6F5EE),
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: isDark ? const Color(0xFF1F5C48) : const Color(0xFFA2DEC7),
-            ),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: AppTheme.primaryTeal.withValues(alpha: 0.15),
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.verified_rounded,
-                      color: AppTheme.primaryTeal,
-                      size: 22,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          l10n.docAcquiredNotice,
-                          style: theme.textTheme.titleSmall?.copyWith(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 13,
-                          ),
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          // The badge alone when the day is unknown; with a
-                          // validity period it also says how long is left.
-                          validity == null
-                              ? l10n.docAcquiredBadge
-                              : '${l10n.docAcquiredBadge} · $validity',
-                          style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
-                            color: AppTheme.primaryTeal,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              SwipeHint(label: l10n.docSwipeToUnmark, toRight: false),
-            ],
-          ),
-        ),
-      );
-    }
+    // A caption beside the action stops fitting once the reader scales text
+    // up: at 200% the label alone is wider than a phone, so a Row overflows
+    // instead of shrinking the primary action. Past that point the bar stacks,
+    // which keeps every word readable and every target tappable.
+    final stacked = MediaQuery.textScalerOf(context).scale(13) > 19;
 
-    return SwipeAction(
-      direction: AxisDirection.right,
-      onAction: toggle,
-      semanticLabel: l10n.docMarkAcquired,
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16),
-        padding: const EdgeInsets.all(14),
-        decoration: BoxDecoration(
-          color: isDark ? const Color(0xFF162420) : const Color(0xFFEFF7F3),
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(
-            color: isDark ? const Color(0xFF23443B) : const Color(0xFFC8E6DA),
+    final markButton = FilledButton.icon(
+      style: FilledButton.styleFrom(
+        backgroundColor: AppTheme.primaryTeal,
+        foregroundColor: Colors.white,
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        elevation: 0,
+      ),
+      onPressed: toggle,
+      icon: const Icon(Icons.check_rounded, size: 18),
+      label: Text(
+        l10n.docMarkAcquired,
+        textAlign: TextAlign.center,
+        style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+      ),
+    );
+
+    final unmarkButton = OutlinedButton(
+      style: OutlinedButton.styleFrom(
+        foregroundColor: isDark
+            ? const Color(0xFFF78A8A)
+            : AppTheme.statusRedText,
+        side: BorderSide(
+          color: isDark ? const Color(0xFF5A2020) : const Color(0xFFF7C8C8),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      ),
+      onPressed: toggle,
+      child: Text(
+        l10n.docUnmarkAcquired,
+        textAlign: TextAlign.center,
+        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
+      ),
+    );
+
+    final editDateButton =
+        document.validityMonths != null && document.validityMonths! > 0
+        ? IconButton(
+            tooltip: l10n.docSetDate,
+            icon: const Icon(
+              Icons.edit_calendar_outlined,
+              size: 20,
+              color: AppTheme.primaryTeal,
+            ),
+            onPressed: () async {
+              final picked = await showDatePicker(
+                context: context,
+                initialDate: acquiredAt ?? DateTime.now(),
+                firstDate: DateTime(2010),
+                lastDate: DateTime.now(),
+              );
+              if (picked != null) {
+                final profileId = ref.read(currentProfileProvider).id;
+                await ref
+                    .read(progressRepositoryProvider)
+                    .updateAcquiredDate(profileId, document.id, picked);
+              }
+            },
+          )
+        : null;
+
+    final checkBadge = Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: AppTheme.primaryTeal.withValues(alpha: 0.15),
+        shape: BoxShape.circle,
+      ),
+      child: const Icon(
+        Icons.check_circle_rounded,
+        color: AppTheme.primaryTeal,
+        size: 22,
+      ),
+    );
+
+    final acquiredNotice = Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          l10n.docAcquiredNotice,
+          style: theme.textTheme.titleSmall?.copyWith(
+            fontWeight: FontWeight.w700,
+            fontSize: 13,
           ),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+        const SizedBox(height: 2),
+        Text(
+          validity == null
+              ? l10n.docAcquiredBadge
+              : '${l10n.docAcquiredBadge} · $validity',
+          style: const TextStyle(
+            fontSize: 11.5,
+            fontWeight: FontWeight.w700,
+            color: AppTheme.primaryTeal,
+          ),
+        ),
+      ],
+    );
+
+    final alreadyHave = Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          l10n.docAlreadyHaveTitle,
+          style: theme.textTheme.titleSmall?.copyWith(
+            fontWeight: FontWeight.w800,
+            fontSize: 13,
+          ),
+        ),
+        const SizedBox(height: 2),
+        Text(
+          l10n.docAlreadyHaveSubtitle,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            fontSize: 11,
+            color: theme.colorScheme.onSurfaceVariant,
+          ),
+        ),
+      ],
+    );
+
+    final Widget content;
+    if (isAcquired) {
+      content = stacked
+          ? Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Icon(
-                  Icons.inventory_2_outlined,
-                  size: 18,
-                  color: AppTheme.primaryTeal,
+                Row(
+                  children: [
+                    checkBadge,
+                    const SizedBox(width: 12),
+                    Expanded(child: acquiredNotice),
+                  ],
                 ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    l10n.docAlreadyHaveTitle,
-                    style: theme.textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 13,
-                    ),
-                  ),
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ?editDateButton,
+                    if (editDateButton != null) const SizedBox(width: 4),
+                    Flexible(child: unmarkButton),
+                  ],
                 ),
               ],
-            ),
-            const SizedBox(height: 4),
-            Text(
-              l10n.docAlreadyHaveSubtitle,
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-                fontSize: 12,
-              ),
-            ),
-            const SizedBox(height: 12),
-            SwipeHint(label: l10n.docSwipeToMark),
-          ],
-        ),
-      ),
+            )
+          : Row(
+              children: [
+                checkBadge,
+                const SizedBox(width: 12),
+                Expanded(child: acquiredNotice),
+                ?editDateButton,
+                const SizedBox(width: 4),
+                unmarkButton,
+              ],
+            );
+    } else {
+      content = stacked
+          ? Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                alreadyHave,
+                const SizedBox(height: 10),
+                markButton,
+              ],
+            )
+          : Row(
+              children: [
+                Expanded(child: alreadyHave),
+                const SizedBox(width: 12),
+                markButton,
+              ],
+            );
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      child: content,
     );
   }
 }
@@ -946,6 +1263,90 @@ class _PlaceStrip extends ConsumerWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _BagCheckItem extends StatefulWidget {
+  const _BagCheckItem({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+  });
+
+  final IconData icon;
+  final String title;
+  final String subtitle;
+
+  @override
+  State<_BagCheckItem> createState() => _BagCheckItemState();
+}
+
+class _BagCheckItemState extends State<_BagCheckItem> {
+  bool _checked = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(10),
+        onTap: () => setState(() => _checked = !_checked),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Checkbox(
+                value: _checked,
+                activeColor: AppTheme.primaryTeal,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                onChanged: (val) => setState(() => _checked = val ?? false),
+              ),
+              const SizedBox(width: 4),
+              Icon(
+                widget.icon,
+                size: 20,
+                color: _checked
+                    ? AppTheme.primaryTeal
+                    : (isDark ? Colors.white60 : Colors.black54),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.title,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w700,
+                        decoration:
+                            _checked ? TextDecoration.lineThrough : null,
+                        color: _checked
+                            ? theme.colorScheme.onSurfaceVariant
+                            : null,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      widget.subtitle,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

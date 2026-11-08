@@ -102,3 +102,8 @@ processing_note:
     The MID number is usually issued the same day; the ID card takes longer.
   fil: >-
     Karaniwang same day ang MID number; mas matagal ang ID card.
+
+# Registration is free; monthly contributions are recurring and not a fee for
+# this document, so only the (zero) registration cost is stated.
+fee_min: 0
+fee_max: 0

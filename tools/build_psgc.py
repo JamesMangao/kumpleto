@@ -129,6 +129,33 @@ def main():
             {"c": row["brgy_code"], "n": pretty(row["name"])}
         )
 
+    # The app looks a city up in its shard by code, so a city with no
+    # barangays — or a shard whose code does not match the index — silently
+    # empties the picker. Fail the build instead of shipping that.
+    orphans = []
+    for shard, rows in cities_by_shard.items():
+        grouped = barangays_by_shard.get(shard, {})
+        for row in rows:
+            code = row["c"]
+            if grouped.get(code):
+                continue
+            if code.endswith("00"):
+                parent = code[:-2]
+                if any(
+                    key != code and key.startswith(parent) and value
+                    for key, value in grouped.items()
+                ):
+                    continue
+            orphans.append((shard, code, row["n"]))
+    if orphans:
+        print(
+            f"ERROR: {len(orphans)} city/cities have no barangays in their shard:",
+            file=sys.stderr,
+        )
+        for row in orphans[:10]:
+            print(f"  {row[0]}  {row[1]}  {row[2]}", file=sys.stderr)
+        return 1
+
     index = {
         "release": f"{RELEASE} (Philippine Statistics Authority) — bundled offline",
         "attribution": "Place names from the PSA PSGC, used under CC BY 4.0.",

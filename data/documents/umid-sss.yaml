@@ -1,0 +1,144 @@
+# SSS UMID Card
+# Facts sourced from the Social Security System page "SSS reminds members of
+# guidelines in filing of UMID Card applications" and the SSS Citizen's Charter
+# procedure for the non-ATM UMID card on sss.gov.ph: the accomplished UMID
+# application form (or a My.SSS appointment when the SS number was filed
+# online), the requirement of one (1) primary valid ID or, in its absence, two
+# (2) secondary valid IDs, the biometric data capture at the branch, and the
+# twenty (20) day processing time. Re-checked 2026-11-07 against the SSS
+# guidelines page (one primary valid ID, or two secondary IDs both with a
+# signature and at least one with a photo; biometrics only at a branch) and the
+# SSS Citizen's Charter processing time. The card itself carries no expiry
+# date. Promoted to verified on the maintainer's instruction.
+schema_version: 1
+id: umid-sss
+name:
+  en: SSS UMID Card
+  fil: SSS UMID Card
+agency: sss
+status: verified
+source_url: https://www.sss.gov.ph/news-and-updates/sss-reminds-members-of-guidelines-in-filing-of-umid-card-applications
+last_verified: '2026-11-07'
+verified_by: JamesMangao
+apply_online: true
+apply_online_url: https://www.sss.gov.ph/
+validity_months: 0
+fee_min: 0
+fee_max: 200
+processing_days_min: 20
+processing_days_max: 20
+summary:
+  en: >-
+    Unified Multi-Purpose ID issued by the SSS to its members — a government ID
+    with photo, signature, and biometrics, and the primary ID accepted by most
+    agencies.
+  fil: >-
+    Unified Multi-Purpose ID na inilalabas ng SSS sa mga miyembro nito — ID ng
+    gobyerno na may litrato, pirma, at biometrics, at ang primary ID na
+    tinatanggap ng karamihan ng ahensya.
+tags: [id, sss, government-id, umid]
+where_to_apply:
+  en: >-
+    An SSS branch, with an appointment booked through My.SSS for the biometric
+    data capture.
+  fil: >-
+    Sangay ng SSS, na may appointment na naka-book sa My.SSS para sa biometric
+    data capture.
+requirements:
+  - id: umid-form
+    text:
+      en: >-
+        One (1) properly accomplished UMID Card application form, downloadable
+        from the SSS website.
+      fil: >-
+        Isang (1) wastong nasagutang UMID Card application form, na
+        maaaring i-download sa website ng SSS.
+    original: true
+  - id: primary-id
+    text:
+      en: >-
+        One (1) primary valid ID — for example a passport, driver's license, or
+        PhilID.
+      fil: >-
+        Isang (1) primary valid ID — halimbawa pasaporte, driver's license, o
+        PhilID.
+    original: true
+  - id: secondary-ids
+    text:
+      en: >-
+        If there is no primary ID: two (2) secondary IDs, both with signature
+        and at least one with a photo.
+      fil: >-
+        Kung walang primary ID: dalawang (2) secondary ID, parehong may pirma
+        at kahit isa ay may litrato.
+    optional: true
+  - id: appointment
+    text:
+      en: >-
+        My.SSS appointment for the biometric data capture, when the application
+        is filed online.
+      fil: >-
+        Appointment sa My.SSS para sa biometric data capture, kapag online ang
+        pag-file ng aplikasyon.
+    optional: true
+steps:
+  - en: >-
+      Download and accomplish the UMID Card application form, or book a
+      biometrics appointment in My.SSS.
+    fil: >-
+      I-download at sagutan ang UMID Card application form, o mag-book ng
+      biometrics appointment sa My.SSS.
+  - en: >-
+      Go to the SSS branch on your appointment date with the form and your
+      primary ID, or two secondary IDs.
+    fil: >-
+      Pumunta sa sangay ng SSS sa appointment date dala ang form at primary ID,
+      o dalawang secondary ID.
+  - en: >-
+      Have your photo, fingerprints, and signature captured, and keep the
+      transaction receipt.
+    fil: >-
+      Kunan ng litrato, fingerprints, at pirma, at itago ang receipt ng
+      transaksyon.
+  - en: >-
+      Claim the card at the branch when it arrives, or have it delivered if the
+      branch offers that.
+    fil: >-
+      Kunin ang card sa sangay kapag dumating, o ipa-deliver kung inaalok ito ng
+      sangay.
+fee_note:
+  en: >-
+    Free for a first-time applicant; ₱200.00 for a replacement of a lost or
+    damaged card, or for an update, paid at the SSS branch.
+  fil: >-
+    Libre para sa first-time applicant; ₱200.00 para sa kapalit ng nawala o
+    nasirang card, o para sa update, binabayaran sa sangay ng SSS.
+processing_note:
+  en: >-
+    The SSS Citizen's Charter budgets twenty (20) days for the application and
+    about eight (8) minutes for the release of the card at the branch.
+  fil: >-
+    Ang SSS Citizen's Charter ay nagtatakda ng dalawampung (20) araw para sa
+    aplikasyon at mga walong (8) minuto para sa paglabas ng card sa sangay.
+notes:
+  - en: >-
+      Card production can run past the published 20 working days; SSS texts
+      you when it is ready, and the card is claimed at the branch that took
+      your biometrics.
+    fil: >-
+      Maaaring lumampas sa 20 working day ang paggawa ng card; magte-text ang
+      SSS kapag ready na ito, at kukunin ang card sa sangay na kumuha ng
+      biometrics mo.
+  - en: >-
+      The UMID is a primary ID for most government transactions, but PhilSys is
+      replacing it as the national ID; keep both if you have them.
+    fil: >-
+      Ang UMID ay primary ID sa karamihan ng transaksyon sa gobyerno, pero
+      pinapalitan na ito ng PhilSys bilang national ID; itago ang dalawa kung
+      mayroon ka.
+  - en: >-
+      Only the SSS issues a UMID to private-sector members — do not transact
+      with fixers.
+    fil: >-
+      Ang SSS lang ang naglalabas ng UMID sa mga miyembro sa pribadong sektor —
+      huwag makipagtransaksyon sa fixer.

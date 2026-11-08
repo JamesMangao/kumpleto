@@ -1,0 +1,223 @@
+# Mayor's / Business Permit
+# Legal basis sourced from RA No. 7160 (Local Government Code of 1991) on the
+# Senate Legislative Reference Bureau: Sec. 147 (the LGU may impose fees and
+# charges on business before anyone may engage in it), Sec. 167 (local taxes,
+# fees and charges are paid within the first twenty days of January or of each
+# subsequent quarter, extendible by ordinance), and the rule that no permit may
+# be issued unless a barangay clearance is first obtained. The documentary
+# checklist is set by each city or municipal revenue code — the Taguig, Imus,
+# General Trias, and San Fernando BPLO citizen's charters are the models for the
+# requirements below. Verified against RA 7160 on 2026-11-06 at the
+# maintainer's request; the local checklist still differs per LGU.
+schema_version: 1
+id: mayors-business-permit
+name:
+  en: Mayor's / Business Permit
+  fil: Mayor's / Business Permit
+agency: lgu
+status: verified
+last_verified: '2026-11-06'
+verified_by: JamesMangao
+source_url: https://ldr.senate.gov.ph/node/13553
+apply_online: false
+summary:
+  en: >-
+    Annual permit from your city or municipal Business Permit and Licensing
+    Office that allows a business to operate. It comes after the DTI/SEC
+    registration and the barangay clearance, and before BIR registration.
+  fil: >-
+    Taunang permit mula sa Business Permit and Licensing Office ng lungsod o
+    munisipalidad na nagpapahintulot sa negosyo na makapag-operate. Ito ang
+    kasunod ng DTI/SEC registration at barangay clearance, at bago ang BIR
+    registration.
+tags: [business, livelihood, permit, lgu]
+where_to_apply:
+  en: >-
+    The Business Permit and Licensing Office (BPLO) at your city or municipal
+    hall. Most LGUs run a Business One-Stop Shop (BOSS) in January that bundles
+    the barangay, sanitary, fire, and zoning steps.
+  fil: >-
+    Business Permit and Licensing Office (BPLO) sa city o municipal hall. Mas
+    maraming LGU ang may Business One-Stop Shop (BOSS) tuwing Enero na pinagsasama
+    ang barangay, sanitary, fire, at zoning na hakbang.
+requirements:
+  - id: business-registration
+    text:
+      en: >-
+        DTI Certificate of Business Name Registration for a sole proprietorship,
+        SEC registration for a corporation or partnership, or CDA registration
+        for a cooperative — under the same name you will use on the permit.
+      fil: >-
+        DTI Certificate of Business Name Registration para sa sole proprietorship,
+        SEC registration para sa corporation o partnership, o CDA registration
+        para sa kooperatiba — parehong pangalan sa gagamitin sa permit.
+    original: true
+  - id: barangay-clearance
+    text:
+      en: >-
+        Barangay business clearance. RA 7160 does not allow a city or
+        municipality to issue any business permit without it.
+      fil: >-
+        Barangay business clearance. Hindi pinapayagan ng RA 7160 ang lungsod o
+        munisipalidad na maglabas ng business permit nang wala ito.
+    original: true
+  - id: proof-of-premises
+    text:
+      en: >-
+        Contract of lease, or the tax declaration if you own the premises, or
+        the lessor's affidavit of consent.
+      fil: >-
+        Contract of lease, o tax declaration kung ikaw ang may-ari ng lugar, o
+        affidavit of consent ng nagpapaupa.
+    original: true
+  - id: fire-safety
+    text:
+      en: >-
+        Fire Safety Inspection Certificate (FSIC) for the establishment, issued
+        by the Bureau of Fire Protection after inspection.
+      fil: >-
+        Fire Safety Inspection Certificate (FSIC) para sa establisyimento, na
+        inilalabas ng Bureau of Fire Protection pagkatapos ng inspeksyon.
+    original: true
+  - id: sanitary-permit
+    text:
+      en: >-
+        Sanitary permit, with health certificates for food handlers and other
+        covered staff.
+      fil: >-
+        Sanitary permit, kasama ang health certificate para sa mga humahawak ng
+        pagkain at iba pang saklaw na staff.
+    original: true
+  - id: locational-clearance
+    text:
+      en: >-
+        Locational or zoning clearance from the city planning or zoning office,
+        where the LGU requires one.
+      fil: >-
+        Locational o zoning clearance mula sa city planning o zoning office, kung
+        hinihingi ng LGU.
+    original: true
+    optional: true
+  - id: occupancy-permit
+    text:
+      en: >-
+        Certificate of occupancy or building permit documents for the premises,
+        where the LGU requires them.
+      fil: >-
+        Certificate of occupancy o building permit documents para sa lugar, kung
+        hinihingi ng LGU.
+    optional: true
+  - id: financial-statement
+    text:
+      en: >-
+        Sworn statement of capital invested and annual gross sales, or the
+        audited financial statement — the basis for the business tax assessment.
+      fil: >-
+        Sworn statement ng capital at taunang gross sales, o audited financial
+        statement — basehan ng assessment ng business tax.
+    original: true
+  - id: ctc
+    text:
+      en: Current-year Community Tax Certificate (cedula).
+      fil: Cedula (Community Tax Certificate) para sa kasalukuyang taon.
+    original: true
+  - id: id-photos
+    text:
+      en: >-
+        Passport-size ID pictures of the owner, or of the president or managing
+        partner for a corporation or partnership.
+      fil: >-
+        Passport-size na litrato ng may-ari, o ng president o managing partner
+        para sa corporation o partnership.
+    optional: true
+  - id: payment
+    text:
+      en: >-
+        Payment of the assessed business tax, permit fee, business plate, and
+        inspection fees at the city or municipal treasurer.
+      fil: >-
+        Bayad sa in-assess na business tax, permit fee, business plate, at
+        inspection fees sa treasurer ng lungsod o munisipalidad.
+steps:
+  - en: >-
+      Register the business name with DTI (sole proprietor), SEC, or CDA, then
+      secure the barangay business clearance for the site.
+    fil: >-
+      Iparehistro ang pangalan ng negosyo sa DTI (sole proprietor), SEC, o CDA,
+      pagkatapos kunin ang barangay business clearance para sa lugar.
+  - en: >-
+      File the business permit application at the BPLO or the Business One-Stop
+      Shop, with the lease or tax declaration and the financial statement.
+    fil: >-
+      Ihain ang aplikasyon ng business permit sa BPLO o Business One-Stop Shop,
+      kasama ang lease o tax declaration at financial statement.
+  - en: >-
+      Have the premises inspected for fire safety and sanitation — the FSIC and
+      sanitary permit are issued after these inspections.
+    fil: >-
+      Pa-inspeksyon ang lugar para sa fire safety at sanitation — inilalabas ang
+      FSIC at sanitary permit pagkatapos ng inspeksyon.
+  - en: >-
+      Receive the assessment and pay the business tax, permit fee, business
+      plate, and inspection fees at the treasurer's office.
+    fil: >-
+      Tanggapin ang assessment at bayaran ang business tax, permit fee, business
+      plate, at inspection fees sa treasurer's office.
+  - en: >-
+      Claim the Mayor's permit, the business plate, and the sanitary permit, and
+      post the permit at the establishment.
+    fil: >-
+      Kunin ang Mayor's permit, business plate, at sanitary permit, at ipaskil
+      ang permit sa establisyimento.
+fee_note:
+  en: >-
+    Set by each city or municipal revenue code: business tax based on gross
+    sales or receipts, plus the Mayor's permit fee, the business plate, and the
+    fire and sanitary inspection fees. Ask the BPLO for the assessment before
+    you pay anything.
+  fil: >-
+    Itinatakda ng revenue code ng bawat lungsod o munisipalidad: business tax
+    base sa gross sales o receipts, dagdag ang Mayor's permit fee, business
+    plate, at fire at sanitary inspection fees. Itanong sa BPLO ang assessment
+    bago magbayad ng kahit ano.
+processing_note:
+  en: >-
+    The assessment is issued after the fire safety and sanitary inspections, so
+    the wait depends on the LGU's Business One-Stop Shop schedule; many LGUs
+    release the permit in the same visit once the inspections are done.
+  fil: >-
+    Inilalabas ang assessment pagkatapos ng fire safety at sanitary inspection,
+    kaya depende sa iskedyul ng Business One-Stop Shop ng LGU ang tagal; maraming
+    LGU ang naglalabas ng permit sa parehong pagpunta kapag tapos na ang
+    inspeksyon.
+notes:
+  - en: >-
+      Business taxes and permit fees are annual: RA 7160 requires them to be
+      paid within the first twenty (20) days of January or of each subsequent
+      quarter, and the sanggunian may extend the deadline by ordinance for up to
+      six months.
+    fil: >-
+      Taunan ang business tax at permit fees: ayon sa RA 7160, bayad ito sa loob
+      ng unang dalawampung (20) araw ng Enero o ng bawat susunod na quarter, at
+      maaaring pahabain ng sanggunian ang deadline sa pamamagitan ng ordinansa
+      nang hanggang anim na buwan.
+  - en: >-
+      Each branch needs its own permit: a business with three branches in three
+      cities holds three Mayor's permits.
+    fil: >-
+      Bawat sangay ay may sariling permit: ang negosyong may tatlong sangay sa
+      tatlong lungsod ay may tatlong Mayor's permit.
+  - en: >-
+      The exact checklist is local. Taguig, Imus, General Trias, and San
+      Fernando publish theirs in their BPLO citizen's charters — check your own
+      LGU's list before queueing.
+    fil: >-
+      Lokal ang eksaktong checklist. Inilalathala ito ng Taguig, Imus, General
+      Trias, at San Fernando sa kanilang BPLO citizen's charter — tingnan ang
+      listahan ng LGU mo bago pumila.
+  - en: >-
+      BIR registration comes after the Mayor's permit: the Certificate of
+      Registration (Form 2303) is issued against it.
+    fil: >-
+      Ang BIR registration ang kasunod ng Mayor's permit: doon nakabatay ang
+      Certificate of Registration (Form 2303).

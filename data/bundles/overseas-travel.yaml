@@ -1,0 +1,58 @@
+# Bundle — verified 2026-11-06: every document it lists is status: verified.
+schema_version: 1
+id: overseas-travel
+name:
+  en: Overseas Travel / Migration Pack
+  fil: Overseas Travel / Migration Pack
+description:
+  en: >-
+    The three documents that come up first for a trip or a move abroad: the PSA
+    birth certificate the passport application asks for, the passport itself,
+    and the NBI clearance employers and embassies request. Community-curated —
+    confirm the checklist with the DFA and the embassy you are applying to.
+  fil: >-
+    Ang tatlong dokumentong unang hinihingi para sa biyahe o paglipat sa
+    ibang bansa: ang PSA birth certificate na kailangan sa passport, ang
+    pasaporte mismo, at ang NBI clearance na hinihingi ng employer at embahada.
+    Kurado ng komunidad — kumpirmahin ang checklist sa DFA at sa embahadang
+    aaplyan mo.
+status: verified
+documents:
+  - psa-birth-certificate
+  - passport-dfa
+  - nbi-clearance
+tags: [travel, migration, passport]
+icon: flight_takeoff
+notes:
+  - en: >-
+      Book the passport appointment first — slots fill up and the DFA does not
+      accept walk-ins. Order the PSA birth certificate afterwards so it is still
+      fresh on your appointment date.
+    fil: >-
+      Mag-book muna ng passport appointment — nauubos ang slot at walang
+      walk-in sa DFA. Pagkatapos mag-order ng PSA birth certificate para sariwa
+      pa ito sa araw ng appointment mo.
+  - en: >-
+      The DFA requires the PSA birth certificate printed on security paper, not
+      the copy from your local civil registrar. Keep the original — it goes with
+      you to the consular office.
+    fil: >-
+      Hinihingi ng DFA ang PSA birth certificate na nakaprinta sa security
+      paper, hindi ang kopya mula sa local civil registrar. Ingatan ang
+      orihinal — dadalhin ito sa consular office.
+  - en: >-
+      The NBI clearance is applied for online and claimed at the branch with two
+      valid IDs. A "HIT" means a return visit, so start it well before your
+      flight.
+    fil: >-
+      Online ang aplikasyon ng NBI clearance at kinukuha sa branch kasama ang
+      dalawang valid ID. Kapag may "HIT", babalik ka, kaya simulang maaga bago
+      ang flight mo.
+  - en: >-
+      Some embassies add a CENOMAR, a marriage certificate, or a birth
+      certificate for each child. Read the embassy's own checklist before you
+      queue at the PSA.
+    fil: >-
+      May embahada na humihingi pa ng CENOMAR, marriage certificate, o birth
+      certificate ng bawat anak. Basahin ang checklist ng embahada bago pumila
+      sa PSA.

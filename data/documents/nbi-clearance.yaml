@@ -135,3 +135,10 @@ notes:
     fil: >-
       Kapag na-mark na "PAID" ang transaksyon, may 15-araw na grace period ayon
       sa mga bagong update ng system para puntahan ang napiling branch.
+
+# ₱130 basic fee plus the ₱25–₱30 e-payment charge from the note above; the
+# clearance is released the same day (minutes, per the note).
+fee_min: 155
+fee_max: 160
+processing_days_min: 0
+processing_days_max: 0

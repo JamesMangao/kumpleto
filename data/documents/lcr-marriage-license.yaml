@@ -1,0 +1,230 @@
+# Marriage License (Local Civil Registrar)
+# Facts sourced from the Family Code of the Philippines (EO 209, s. 1987) on the
+# Official Gazette: Art. 9 (where to file), Art. 11 (separate sworn
+# applications), Art. 12 (birth/baptismal certificates), Arts. 14-16 (parental
+# consent, parental advice, marriage counseling), Art. 17 (ten-day posting),
+# Art. 19 (fees), Art. 20 (120-day validity). CENOMAR is required by the
+# city/municipal civil registrars in practice, not by the Family Code itself —
+# noted on the requirement. Verified against the Official Gazette text on
+# 2026-11-06 at the maintainer's request.
+schema_version: 1
+id: lcr-marriage-license
+name:
+  en: Marriage License (Local Civil Registrar)
+  fil: Marriage License (Local Civil Registrar)
+agency: lgu
+status: verified
+last_verified: '2026-11-06'
+verified_by: JamesMangao
+source_url: https://www.officialgazette.gov.ph/1987/07/06/executive-order-no-209-s-1987/
+apply_online: false
+validity_months: 4
+summary:
+  en: >-
+    License issued by the city or municipal civil registrar that authorises a
+    civil or church wedding. It is valid anywhere in the Philippines for 120
+    days from issuance and is automatically cancelled if unused.
+  fil: >-
+    Lisensyang inilalabas ng city o municipal civil registrar para sa kasal
+    sibil o sa simbahan. Valid ito sa buong Pilipinas sa loob ng 120 araw mula
+    nang ilabas at awtomatikong nakakansela kapag hindi nagamit.
+tags: [civil-registry, marriage, wedding, lgu]
+where_to_apply:
+  en: >-
+    Office of the Local Civil Registrar (City/Municipal Civil Registrar) of the
+    city or municipality where either contracting party habitually resides.
+  fil: >-
+    Tanggapan ng Local Civil Registrar (City/Municipal Civil Registrar) ng
+    lungsod o munisipalidad kung saan permanenteng nakatira ang isa sa
+    magpapakasal.
+requirements:
+  - id: application-form
+    text:
+      en: >-
+        Separate sworn applications for marriage license, one filed by each
+        contracting party (Family Code, Art. 11).
+      fil: >-
+        Hiwalay na sworn application para sa marriage license, isa mula sa
+        bawat magpapakasal (Family Code, Art. 11).
+    original: true
+  - id: birth-certificate
+    text:
+      en: >-
+        Birth certificate of both contracting parties; a baptismal certificate
+        may be presented in default (Art. 12).
+      fil: >-
+        Birth certificate ng dalawang magpapakasal; maaaring baptismal
+        certificate ang ipakita kung wala ito (Art. 12).
+    original: true
+  - id: previous-marriage
+    text:
+      en: >-
+        If either party was previously married: the death certificate of the
+        deceased spouse, or the judicial decree of divorce, annulment, or
+        declaration of nullity of the previous marriage (Art. 13).
+      fil: >-
+        Kung may naunang kasal ang isa sa magpapakasal: death certificate ng
+        namatay na asawa, o judicial decree ng divorce, annulment, o
+        declaration of nullity ng naunang kasal (Art. 13).
+    original: true
+    optional: true
+  - id: foreigner-capacity
+    text:
+      en: >-
+        If either party is a foreign national: a certificate of legal capacity
+        to contract marriage from that country's embassy or consulate; stateless
+        persons and refugees submit an affidavit instead (Art. 21).
+      fil: >-
+        Kung dayuhan ang isa sa magpapakasal: certificate of legal capacity to
+        contract marriage mula sa embahada o konsulado ng bansa niya; affidavit
+        naman ang isinusumite ng stateless person at refugee (Art. 21).
+    original: true
+    optional: true
+  - id: cenomar
+    text:
+      en: >-
+        Certificate of No Marriage Record (CENOMAR) from the PSA for each
+        contracting party.
+      fil: >-
+        Certificate of No Marriage Record (CENOMAR) mula sa PSA para sa bawat
+        magpapakasal.
+    original: true
+    note:
+      en: >-
+        Required by city and municipal civil registrars as proof of legal
+        capacity to marry; the Family Code itself lists only the birth or
+        baptismal certificate.
+      fil: >-
+        Hinihingi ito ng city at municipal civil registrar bilang patunay na
+        walang legal na hadlang sa pagpapakasal; birth o baptismal certificate
+        lang ang nakalista sa Family Code.
+  - id: parental-consent
+    text:
+      en: >-
+        Written parental consent if either party is 18 to 21 years old
+        (Art. 14).
+      fil: >-
+        Nakasulat na pahintulot ng magulang kung 18 hanggang 21 taong gulang
+        ang isa sa magpapakasal (Art. 14).
+    original: true
+    optional: true
+  - id: parental-advice
+    text:
+      en: >-
+        Written parental advice if either party is 21 to 25 years old
+        (Art. 15).
+      fil: >-
+        Nakasulat na payo ng magulang kung 21 hanggang 25 taong gulang ang isa
+        sa magpapakasal (Art. 15).
+    original: true
+    optional: true
+  - id: marriage-counseling
+    text:
+      en: >-
+        Certificate of marriage counseling if either party is 18 to 25 years
+        old (Art. 16).
+      fil: >-
+        Certificate ng marriage counseling kung 18 hanggang 25 taong gulang ang
+        isa sa magpapakasal (Art. 16).
+    original: true
+    optional: true
+  - id: residency
+    text:
+      en: >-
+        Proof that either party habitually resides in the city or municipality
+        where you file (Art. 9) — usually an ID with that address or a barangay
+        certificate.
+      fil: >-
+        Patunay na permanenteng nakatira sa lungsod o munisipalidad kung saan
+        kayo maghahain ang isa sa magpapakasal (Art. 9) — karaniwang ID na may
+        address na iyon o barangay certificate.
+    original: true
+  - id: payment
+    text:
+      en: >-
+        Payment of the fees prescribed by the local government before the
+        license is issued (Art. 19).
+      fil: >-
+        Bayad sa mga fee na itinakda ng lokal na pamahalaan bago ilabas ang
+        lisensya (Art. 19).
+steps:
+  - en: >-
+      File separate sworn applications at the civil registrar of the city or
+      municipality where either of you habitually resides.
+    fil: >-
+      Maghain ng hiwalay na sworn application sa civil registrar ng lungsod o
+      munisipalidad kung saan permanenteng nakatira ang isa sa inyo.
+  - en: >-
+      Submit both birth certificates, the PSA CENOMARs, proof of residence, and
+      — when applicable — the parental consent or advice and the marriage
+      counseling certificate.
+    fil: >-
+      Isumite ang birth certificate ng dalawa, PSA CENOMAR, patunay ng
+      paninirahan, at — kung kailangan — parental consent o advice at
+      certificate ng marriage counseling.
+  - en: Pay the fees assessed by the treasurer's office.
+    fil: Bayaran ang fees na ina-assess ng treasurer's office.
+  - en: >-
+      Wait for the notice of application to be posted for ten (10) consecutive
+      days outside the civil registrar's office.
+    fil: >-
+      Hintayin ang notice of application na ipaskil nang sampung (10) sunod na
+      araw sa labas ng tanggapan ng civil registrar.
+  - en: >-
+      Claim the license, and use it before it expires — the 120-day period
+      counts from the date of issuance.
+    fil: >-
+      Kunin ang lisensya at gamitin bago ito mag-expire — binibilang ang 120
+      araw mula sa petsa ng paglabas.
+fee_note:
+  en: >-
+    Set by each city or municipal government, so the amount differs per LGU.
+    The Family Code only requires that the prescribed fees be paid before the
+    license is issued (Art. 19), and it must be issued free of charge to
+    indigent parties (Art. 19) — ask your civil registrar for the current
+    amount.
+  fil: >-
+    Itinatakda ng bawat lungsod o munisipalidad, kaya iba-iba ang halaga sa
+    bawat LGU. Ang hinihingi lang ng Family Code ay bayaran ang mga itinakdang
+    fee bago ilabas ang lisensya (Art. 19), at libre ito para sa mga mahihirap
+    (Art. 19) — itanong sa civil registrar ang kasalukuyang halaga.
+processing_note:
+  en: >-
+    The notice of application must be posted for ten (10) consecutive days
+    before the license is issued (Art. 17), so allow at least that long.
+  fil: >-
+    Kailangang ipaskil ang notice of application nang sampung (10) sunod na araw
+    bago ilabas ang lisensya (Art. 17), kaya maglaan ng hindi bababa sa ganoong
+    tagal.
+processing_days_min: 10
+notes:
+  - en: >-
+      The license is valid in any part of the Philippines for 120 days from the
+      date of issue and is automatically cancelled if the couple has not used
+      it within that period (Art. 20).
+    fil: >-
+      Valid ang lisensya sa kahit saang bahagi ng Pilipinas sa loob ng 120 araw
+      mula nang ilabas at awtomatikong nakakansela kapag hindi ito nagamit sa
+      panahong iyon (Art. 20).
+  - en: >-
+      Failure to attach the marriage counseling certificate suspends issuance
+      of the license for three months from the completion of the posting
+      (Art. 16).
+    fil: >-
+      Kapag walang marriage counseling certificate, nasususpinde ang paglabas
+      ng lisensya nang tatlong buwan mula nang matapos ang posting (Art. 16).
+  - en: >-
+      Some marriages need no license at all: a party at the point of death
+      (Art. 27), a residence with no means of transportation to the registrar
+      (Art. 28), Muslim or ethnic cultural rites (Art. 33), and a couple who
+      have lived together as husband and wife for at least five years without
+      any legal impediment (Art. 34).
+    fil: >-
+      May mga kasal na hindi kailangan ng lisensya: nasa bingit ng kamatayan
+      ang isang partido (Art. 27), walang transportasyon papunta sa registrar
+      (Art. 28), kasal ayon sa kaugalian ng Muslim o ethnic community
+      (Art. 33), at magkasamang nanirahan bilang mag-asawa nang limang taon na
+      walang legal na hadlang (Art. 34).
+depends_on:
+  - psa-birth-certificate
+  - psa-cenomar

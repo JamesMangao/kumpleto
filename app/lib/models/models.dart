@@ -125,6 +125,10 @@ class Document {
     this.steps = const <LocalizedText>[],
     this.feeNote,
     this.processingNote,
+    this.feeMin,
+    this.feeMax,
+    this.processingDaysMin,
+    this.processingDaysMax,
     this.notes = const <LocalizedText>[],
   });
 
@@ -146,6 +150,17 @@ class Document {
   final List<LocalizedText> steps;
   final LocalizedText? feeNote;
   final LocalizedText? processingNote;
+
+  /// Pesos, extracted from [feeNote] by the authoring side — see
+  /// docs/DATA_GUIDE.md. Null when the note states no amount, which is why a
+  /// total only ever covers the entries that do.
+  final int? feeMin;
+  final int? feeMax;
+
+  /// Working days, extracted from [processingNote]; `0` means the same day.
+  final int? processingDaysMin;
+  final int? processingDaysMax;
+
   final List<LocalizedText> notes;
 
   /// True when there is nothing factual to show yet (a seed/draft entry).
@@ -189,6 +204,10 @@ class Document {
     steps: [for (final step in steps) step.filled(values)],
     feeNote: feeNote?.filled(values),
     processingNote: processingNote?.filled(values),
+    feeMin: feeMin,
+    feeMax: feeMax,
+    processingDaysMin: processingDaysMin,
+    processingDaysMax: processingDaysMax,
     notes: [for (final note in notes) note.filled(values)],
   );
 
@@ -222,6 +241,10 @@ class Document {
       ],
       feeNote: LocalizedText.fromJson(map['fee_note']),
       processingNote: LocalizedText.fromJson(map['processing_note']),
+      feeMin: _int(map['fee_min']),
+      feeMax: _int(map['fee_max']),
+      processingDaysMin: _int(map['processing_days_min']),
+      processingDaysMax: _int(map['processing_days_max']),
       notes: [
         for (final raw in _list(map['notes'])) ?LocalizedText.fromJson(raw),
       ],

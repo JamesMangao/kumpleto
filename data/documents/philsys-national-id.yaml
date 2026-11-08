@@ -102,3 +102,8 @@ processing_note:
   fil: >-
     Ang registration ay mga 15–30 minuto sa site; ang pisikal na card ay
     darating pagkalipas ng ilang buwan.
+
+# Registration, the ePhilID and the card are free. Card delivery is measured in
+# months, so no working-day figure is stated.
+fee_min: 0
+fee_max: 0

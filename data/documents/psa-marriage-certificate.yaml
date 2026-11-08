@@ -1,0 +1,58 @@
+# PSA Marriage Certificate
+schema_version: 1
+id: psa-marriage-certificate
+name:
+  en: PSA Marriage Certificate
+  fil: PSA Marriage Certificate
+agency: psa
+status: verified
+last_verified: '2026-11-05'
+verified_by: JamesMangao
+source_url: https://psaserbilis.com.ph/
+apply_online: true
+apply_online_url: https://psaserbilis.com.ph/
+fee_min: 155
+fee_max: 365
+processing_days_min: 3
+processing_days_max: 7
+summary:
+  en: >-
+    Official certified copy of a marriage certificate printed on PSA security paper (SECPA). Essential for name change, spousal benefits, insurance, and joint loans.
+  fil: >-
+    Opisyal at sertipikadong kopya ng kontrata sa kasal na nakaprinta sa security paper ng PSA. Kailangan para sa pagpalit ng apelyido, benepisyo ng asawa, insurance, at loan.
+tags: [civil-registry, marriage, wedding, family]
+where_to_apply:
+  en: >-
+    PSA CRS outlets nationwide or through PSA Serbilis online delivery.
+  fil: >-
+    Sa alinmang PSA CRS outlet nationwide o sa pamamagitan ng online order sa PSA Serbilis.
+requirements:
+  - id: valid-id
+    text:
+      en: Valid government ID of the requesting spouse or authorized representative.
+      fil: Valid na ID ng gobyerno ng asawang humihiling o awtorisadong kinatawan.
+    original: true
+  - id: marriage-details
+    text:
+      en: Complete details of both spouses, exact marriage date, and place of marriage.
+      fil: Kumpletong detalye ng mag-asawa, eksaktong petsa, at lugar kung saan ikinasal.
+    original: true
+  - id: lcr-copy
+    text:
+      en: Endorsed Local Civil Registrar (LCR) copy if the marriage took place recently (less than 6 months).
+      fil: Endorsed copy mula sa Local Civil Registrar (LCR) kung bago pa lamang ikinasal (wala pang 6 buwan).
+    optional: true
+steps:
+  - en: Schedule a slot online via PSA CRS appointment or submit a request on PSA Serbilis.
+    fil: Mag-schedule ng slot sa PSA CRS online appointment o magsumite ng order sa PSA Serbilis.
+  - en: Pay the fee (₱155 at outlet, ₱365 for delivery).
+    fil: Magbayad (₱155 sa outlet, ₱365 kapag online delivery).
+  - en: Present valid ID to claim or receive via courier.
+    fil: Ipakita ang valid ID sa pag-claim o tanggapin sa courier.
+fee_note:
+  en: ₱155 per copy walk-in at PSA CRS Outlets; ₱365 per copy via online courier delivery.
+  fil: ₱155 bawat kopya sa outlet; ₱365 bawat kopya via PSA Serbilis delivery.
+processing_note:
+  en: Released same-day for outlet walk-in; 3 to 7 working days for online courier delivery.
+  fil: Released sa parehong araw sa outlet; 3 hanggang 7 araw ng trabaho para sa delivery.
+

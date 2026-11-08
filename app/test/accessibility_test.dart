@@ -34,7 +34,12 @@ void main() {
 
     await tester.tap(find.text(l10nOf(tester).navHome));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Job Hunt Pack'));
+    // At 200% text the bundles sit below the fold, so scroll like a reader
+    // would before tapping.
+    final bundleCard = find.text('Job Hunt Pack');
+    await tester.ensureVisible(bundleCard);
+    await tester.pumpAndSettle();
+    await tester.tap(bundleCard);
     await tester.pumpAndSettle();
     await body('Bundle detail');
     await tester.tap(find.byTooltip(l10nOf(tester).back));
@@ -138,12 +143,38 @@ void main() {
       });
     });
 
+    testWidgets('the acquired bar lays out without overflowing', (tester) async {
+      usePhoneViewport(tester);
+      tester.platformDispatcher.textScaleFactorTestValue = 2.0;
+      addTearDown(tester.platformDispatcher.clearAllTestValues);
+
+      await pumpKumpleto(tester);
+      await tester.tap(find.text(l10nOf(tester).navDocuments));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('NBI Clearance'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text(l10nOf(tester).docMarkAcquired));
+      await tester.pumpAndSettle();
+      expect(
+        tester.takeException(),
+        isNull,
+        reason: 'the acquired bar overflowed at 200% text scale',
+      );
+    });
+
     testWidgets('onboarding lays out without overflowing', (tester) async {
       usePhoneViewport(tester);
       tester.platformDispatcher.textScaleFactorTestValue = 2.0;
       addTearDown(tester.platformDispatcher.clearAllTestValues);
 
       await pumpKumpleto(tester, firstRunDone: false);
+      expect(tester.takeException(), isNull, reason: 'disclaimer gate');
+
+      final agree = find.text(l10nOf(tester).disclaimerScreenAgree);
+      await tester.ensureVisible(agree);
+      await tester.pumpAndSettle();
+      await tester.tap(agree);
+      await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
     });
   });

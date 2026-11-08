@@ -113,7 +113,10 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
       barangay: _barangay,
       zip: _zip.text.trim(),
     );
-    await location.save(ref.read(sharedPreferencesProvider));
+    await location.save(
+      ref.read(sharedPreferencesProvider),
+      profileId: ref.read(activeProfileProvider),
+    );
     ref.read(savedLocationProvider.notifier).set(location);
     if (!mounted) return;
     ScaffoldMessenger.of(
@@ -124,7 +127,10 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
 
   Future<void> _clear() async {
     final prefs = ref.read(sharedPreferencesProvider);
-    await prefs.remove(SavedLocation.prefsKey);
+    await SavedLocation.clear(
+      prefs,
+      profileId: ref.read(activeProfileProvider),
+    );
     ref.read(savedLocationProvider.notifier).set(null);
     if (!mounted) return;
     setState(() {
@@ -141,6 +147,7 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
+    final profile = ref.watch(currentProfileProvider);
     final index = ref.watch(placeIndexProvider);
 
     return Scaffold(
@@ -172,9 +179,20 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
                     height: 1.4,
                   ),
                 ),
+                const SizedBox(height: 6),
+                Text(
+                  l10n.locationForProfile(
+                    profile.isMe ? l10n.profileMe : profile.name,
+                  ),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: AppTheme.primaryTeal,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
                 const SizedBox(height: 16),
 
                 _PlaceField(
+                  key: const ValueKey('region'),
                   label: l10n.locationRegion,
                   items: data.regions,
                   value: _region,
@@ -190,6 +208,7 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
 
                 if (provinces.isNotEmpty) ...[
                   _PlaceField(
+                    key: ValueKey('province:${_region?.code}'),
                     label: l10n.locationProvince,
                     items: provinces,
                     value: _province,
@@ -204,6 +223,7 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
                 ],
 
                 _PlaceField(
+                  key: ValueKey('city:${_region?.code}:${_province?.code}'),
                   label: l10n.locationCity,
                   items: cities,
                   value: _city,
@@ -219,12 +239,52 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
                   future: _barangayFuture,
                   builder: (context, snapshot) {
                     final items = snapshot.data ?? const <Place>[];
-                    return _PlaceField(
-                      label: l10n.locationBarangay,
-                      items: items,
-                      value: _barangay,
-                      onChanged: (value) =>
-                          setState(() => _barangay = value),
+                    final loading =
+                        snapshot.connectionState == ConnectionState.waiting;
+                    final failed = snapshot.hasError;
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _PlaceField(
+                          key: ValueKey('barangay:${_city?.code}'),
+                          label: l10n.locationBarangay,
+                          items: items,
+                          value: _barangay,
+                          onChanged: (value) =>
+                              setState(() => _barangay = value),
+                        ),
+                        if (loading)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 6, left: 12),
+                            child: Text(
+                              l10n.locationPlacesLoading,
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: theme.colorScheme.onSurfaceVariant,
+                              ),
+                            ),
+                          ),
+                        if (failed)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 6),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    l10n.locationPlacesUnavailable,
+                                    style: theme.textTheme.bodySmall?.copyWith(
+                                      color: AppTheme.statusRedText,
+                                    ),
+                                  ),
+                                ),
+                                TextButton(
+                                  onPressed: () =>
+                                      setState(() => _loadBarangays(data)),
+                                  child: Text(l10n.locationRetry),
+                                ),
+                              ],
+                            ),
+                          ),
+                      ],
                     );
                   },
                 ),
@@ -281,6 +341,7 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
 
 class _PlaceField extends StatelessWidget {
   const _PlaceField({
+    super.key,
     required this.label,
     required this.items,
     required this.value,

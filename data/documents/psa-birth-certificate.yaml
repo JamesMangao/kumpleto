@@ -114,3 +114,8 @@ processing_note:
   fil: >-
     Same day sa maraming outlet; ang online order na may courier ay karaniwang
     ilang araw.
+
+# About ₱155 per copy through PSA Serbilis. Courier working days are not stated,
+# so there is no processing_days_* pair here.
+fee_min: 155
+fee_max: 155

@@ -57,6 +57,22 @@
     },
     "fee_note": { "$ref": "#/definitions/bilingualOrNull" },
     "processing_note": { "$ref": "#/definitions/bilingualOrNull" },
+    "fee_min": {
+      "oneOf": [{ "type": "integer", "minimum": 0 }, { "type": "null" }],
+      "description": "Lowest total cost in pesos stated by fee_note; a structured extract, not a new claim."
+    },
+    "fee_max": {
+      "oneOf": [{ "type": "integer", "minimum": 0 }, { "type": "null" }],
+      "description": "Highest total cost in pesos stated by fee_note; must be >= fee_min."
+    },
+    "processing_days_min": {
+      "oneOf": [{ "type": "integer", "minimum": 0 }, { "type": "null" }],
+      "description": "Fewest working days stated by processing_note; 0 means the same day."
+    },
+    "processing_days_max": {
+      "oneOf": [{ "type": "integer", "minimum": 0 }, { "type": "null" }],
+      "description": "Most working days stated by processing_note; must be >= processing_days_min."
+    },
     "notes": {
       "type": "array",
       "items": { "$ref": "#/definitions/bilingual" }

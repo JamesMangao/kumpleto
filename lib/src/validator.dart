@@ -147,6 +147,34 @@ ValidationReport validateDataSet(
       }
     }
 
+    // The structured fee/time pair is an *extract* of the notes above, never an
+    // independent claim: it exists so the app can total a bundle, and the note
+    // stays the thing a reader checks. Enforce that relationship here.
+    final feeMin = data['fee_min'];
+    final feeMax = data['fee_max'];
+    if (feeMin == null && feeMax != null) {
+      error('document "$id": fee_max without fee_min');
+    }
+    if (feeMin is int && feeMax is int && feeMax < feeMin) {
+      error('document "$id": fee_max ($feeMax) is below fee_min ($feeMin)');
+    }
+    if ((feeMin != null || feeMax != null) && data['fee_note'] == null) {
+      error('document "$id": fee range without fee_note to source it from');
+    }
+    final daysMin = data['processing_days_min'];
+    final daysMax = data['processing_days_max'];
+    if (daysMin == null && daysMax != null) {
+      error('document "$id": processing_days_max without processing_days_min');
+    }
+    if (daysMin is int && daysMax is int && daysMax < daysMin) {
+      error('document "$id": processing_days_max ($daysMax) is below '
+          'processing_days_min ($daysMin)');
+    }
+    if ((daysMin != null || daysMax != null) && data['processing_note'] == null) {
+      error('document "$id": processing days without processing_note to '
+          'source them from');
+    }
+
     // Duplicate requirement ids within the document.
     final reqs = data['requirements'];
     if (reqs is List) {

@@ -72,14 +72,15 @@ void main() {
   });
 
   group('Welcome scene', () {
-    testWidgets('plays on launch, then hands over to the app', (tester) async {
+    testWidgets('plays on launch, welcome stays until dismissed', (tester) async {
       await pumpKumpleto(tester, showWelcome: true, settle: false);
 
       // The scene is up: its stamp and skip control are there from the start.
       expect(find.text('KUMPLETO'), findsOneWidget);
       expect(find.text('Skip'), findsOneWidget);
 
-      // It is a finite animation: settling it removes the scene for good.
+      // Welcome stays until user taps Skip (no auto-alis)
+      await tester.tap(find.text('Skip'));
       await tester.pumpAndSettle();
       expect(find.text('KUMPLETO'), findsNothing);
       expect(find.text('Skip'), findsNothing);

@@ -115,3 +115,8 @@ processing_note:
   fil: >-
     Ang online registration ay karaniwang ilang araw; same day kapag sa
     branch.
+
+# No fee for an individual TIN without a business. Business registration fees
+# apply to a different case and are not included in this figure.
+fee_min: 0
+fee_max: 0

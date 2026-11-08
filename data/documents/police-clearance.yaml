@@ -91,3 +91,10 @@ processing_note:
     Same day at most branches once the biometrics are captured.
   fil: >-
     Same day sa karamihan ng branch kapag nakuha na ang biometrics.
+
+# About ₱150 for the clearance itself; the online transaction fee is not a fixed
+# amount in the data, so it is not included. Same day at most branches.
+fee_min: 150
+fee_max: 150
+processing_days_min: 0
+processing_days_max: 0

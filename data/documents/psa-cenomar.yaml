@@ -1,0 +1,60 @@
+# PSA Certificate of No Marriage Record (CENOMAR)
+schema_version: 1
+id: psa-cenomar
+name:
+  en: PSA CENOMAR (Certificate of No Marriage)
+  fil: PSA CENOMAR (Certificate of No Marriage)
+agency: psa
+status: verified
+last_verified: '2026-11-05'
+verified_by: JamesMangao
+source_url: https://psaserbilis.com.ph/
+apply_online: true
+apply_online_url: https://psaserbilis.com.ph/
+validity_months: 6
+fee_min: 210
+fee_max: 430
+processing_days_min: 3
+processing_days_max: 7
+summary:
+  en: >-
+    Certification issued by PSA confirming that a person has never contracted
+    marriage, or records of previous marriages. Standard requirement for marriage licenses and foreign visas.
+  fil: >-
+    Katibayan mula sa PSA na nagpapatunay na walang rekord ng kasal ang isang tao, o listahan ng mga nakaraang kasal. Pangunahing requirement sa Marriage License at foreign visa.
+tags: [civil-registry, marriage, wedding, visa]
+where_to_apply:
+  en: >-
+    Any PSA CRS outlet (walk-in with online appointment) or online via PSA Serbilis / PSA Helpline with nationwide courier delivery.
+  fil: >-
+    Sa alinmang PSA CRS outlet (walk-in na may online appointment) o online sa PSA Serbilis / PSA Helpline na may delivery sa bahay.
+requirements:
+  - id: valid-id
+    text:
+      en: One (1) valid government-issued ID of the document owner or authorized requester.
+      fil: Isang (1) valid na ID ng gobyerno ng may-ari ng dokumento o awtorisadong kinatawan.
+    original: true
+  - id: cenomar-request-form
+    text:
+      en: Duly accomplished PSA CENOMAR Application Form with complete personal and parents' details.
+      fil: Nasagutang PSA CENOMAR Application Form na may kumpletong detalye ng aplikante at mga magulang.
+    original: true
+  - id: authorization-letter
+    text:
+      en: Signed authorization letter and valid ID of owner if requested by an immediate family member.
+      fil: Nilagdaang authorization letter at valid ID ng may-ari kung kamag-anak ang kukuha.
+    optional: true
+steps:
+  - en: Book an online appointment via PSA CRS portal or place an order via PSA Serbilis / Helpline.
+    fil: Mag-book ng appointment sa PSA CRS portal o mag-order online sa PSA Serbilis / Helpline.
+  - en: Pay the required fee (₱210 for walk-in / ₱430 for online delivery).
+    fil: Bayaran ang kaukulang halaga (₱210 sa outlet / ₱430 kapag online delivery).
+  - en: Claim the CENOMAR on your appointment date or wait for courier delivery.
+    fil: Kunin ang CENOMAR sa araw ng appointment o hintayin ang delivery ng courier.
+fee_note:
+  en: ₱210 per copy at PSA CRS Outlets; ₱430 per copy via PSA Serbilis online delivery.
+  fil: ₱210 bawat kopya sa PSA CRS Outlets; ₱430 bawat kopya kapag nag-order online sa PSA Serbilis.
+processing_note:
+  en: Same-day release for walk-in with appointment; 3–7 working days for online courier delivery.
+  fil: Same-day release sa walk-in outlet; 3–7 araw ng trabaho kapag door-to-door delivery.
+

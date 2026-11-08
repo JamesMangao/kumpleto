@@ -1,0 +1,185 @@
+# LTO Student-Driver's Permit
+# Facts sourced from the LTO Citizen's Charter 2026 (1st Edition) PDF on
+# lto.gov.ph: the ₱150 student-driver's permit fee plus ₱100 application fee,
+# the one-year validity, the 15-hour Theoretical Driving Course certificate,
+# the e-transmitted medical certificate, the accepted proof-of-birth IDs, and
+# the parent's consent for applicants below 18. Verified against the Citizen's
+# Charter on 2026-11-06 at the maintainer's request.
+schema_version: 1
+id: lto-student-permit
+name:
+  en: LTO Student-Driver's Permit
+  fil: LTO Student-Driver's Permit
+agency: lto
+status: verified
+last_verified: '2026-11-06'
+verified_by: JamesMangao
+source_url: https://lto.gov.ph/wp-content/uploads/2026/07/Citizens-Charter-2026-1st-Edition-2.pdf
+apply_online: true
+apply_online_url: https://portal.lto.gov.ph/
+validity_months: 12
+fee_min: 250
+fee_max: 250
+processing_days_min: 0
+processing_days_max: 0
+summary:
+  en: >-
+    Permit that lets you practise driving while a licensed driver sits beside
+    you. You need it before a non-professional driver's license, and it is
+    issued only after the 15-hour Theoretical Driving Course.
+  fil: >-
+    Permit na nagpapahintulot mag-practice magmaneho habang may lisensyadong
+    driver sa tabi mo. Kailangan ito bago ang non-professional driver's license,
+    at inilalabas lang pagkatapos ng 15-oras na Theoretical Driving Course.
+tags: [driving, transport, first-time]
+where_to_apply:
+  en: >-
+    Apply on the LTMS portal, then go to the LTO licensing office or district
+    office you chose for the requirements check, photo, and payment.
+  fil: >-
+    Mag-apply sa LTMS portal, pagkatapos pumunta sa LTO licensing office o
+    district office na pinili mo para sa checking ng requirements, litrato, at
+    bayad.
+requirements:
+  - id: ltms-account
+    text:
+      en: >-
+        LTMS portal account with your complete profile and an active email
+        address.
+      fil: >-
+        LTMS portal account na may kumpletong profile at aktibong email address.
+  - id: apl-form
+    text:
+      en: >-
+        System-generated Application for Permits and Licenses (APL) form printed
+        from the portal.
+      fil: >-
+        System-generated Application for Permits and Licenses (APL) form na
+        in-print mula sa portal.
+    original: true
+  - id: tdc-certificate
+    text:
+      en: >-
+        Certificate of completion of the fifteen (15) hour Theoretical Driving
+        Course, electronically transmitted by the LTO Driver's Education Center
+        or an accredited driving school.
+      fil: >-
+        Certificate of completion ng labinlimang (15) oras na Theoretical
+        Driving Course, na e-transmitted ng LTO Driver's Education Center o
+        accredited na driving school.
+    original: true
+  - id: medical-certificate
+    text:
+      en: >-
+        Medical certificate electronically transmitted by an LTO-accredited
+        clinic or physician.
+      fil: >-
+        Medical certificate na e-transmitted ng LTO-accredited clinic o doktor.
+    original: true
+  - id: proof-of-birth
+    text:
+      en: >-
+        Any one of: PSA birth certificate, Philippine Identification Card,
+        passport, or a Local Civil Registrar birth certificate where there is no
+        PSA office; married women may present the PSA marriage certificate.
+      fil: >-
+        Alinman sa: PSA birth certificate, Philippine Identification Card,
+        passport, o birth certificate mula sa Local Civil Registrar kung walang
+        PSA office; ang may asawa ay maaaring magpakita ng PSA marriage
+        certificate.
+    original: true
+    photocopies: 1
+  - id: parental-consent
+    text:
+      en: >-
+        For applicants below 18: a notarised parent's consent, with a photocopy
+        of the parent's or guardian's valid government ID bearing photo and
+        signature.
+      fil: >-
+        Para sa aplikanteng wala pang 18: notaryadong pahintulot ng magulang,
+        kasama ang photocopy ng valid na ID ng magulang o guardian na may
+        litrato at pirma.
+    original: true
+    optional: true
+  - id: tin
+    text:
+      en: TIN, if you are employed.
+      fil: TIN, kung may trabaho ka.
+    optional: true
+steps:
+  - en: >-
+      Enrol in the 15-hour Theoretical Driving Course at the LTO Driver's
+      Education Center, an accredited driving school, or an accredited TESDA
+      training center.
+    fil: >-
+      Mag-enrol sa 15-oras na Theoretical Driving Course sa LTO Driver's
+      Education Center, accredited na driving school, o accredited na TESDA
+      training center.
+  - en: >-
+      Get a medical certificate from an LTO-accredited clinic; the clinic
+      transmits it to the LTO electronically.
+    fil: >-
+      Kumuha ng medical certificate sa LTO-accredited clinic; ang clinic ang
+      nag-transmit nito sa LTO nang elektroniko.
+  - en: >-
+      Create your LTMS account, apply for the Student-Driver's Permit, and pick
+      a branch and schedule.
+    fil: >-
+      Gumawa ng LTMS account, mag-apply ng Student-Driver's Permit, at pumili ng
+      branch at schedule.
+  - en: >-
+      Go to the branch with the APL form and original IDs, have your photo and
+      signature captured, and pay the fees at the cashier.
+    fil: >-
+      Pumunta sa branch dala ang APL form at mga orihinal na ID, kunan ng litrato
+      at pirma, at bayaran ang fees sa cashier.
+  - en: >-
+      Claim the student permit and practise only with a licensed driver
+      accompanying you, in a vehicle covered by their restriction codes.
+    fil: >-
+      Kunin ang student permit at mag-practice lang kapag may kasamang
+      lisensyadong driver, sa sasakyang saklaw ng restriction code nila.
+fee_note:
+  en: >-
+    ₱150 student-driver's permit fee plus ₱100 application fee — ₱250 in total
+    at the LTO cashier. The Theoretical Driving Course and the medical
+    certificate are paid separately to the school and the clinic.
+  fil: >-
+    ₱150 student-driver's permit fee at ₱100 application fee — ₱250 sa kabuuan
+    sa cashier ng LTO. Hiwalay ang bayad sa Theoretical Driving Course at
+    medical certificate, sa school at clinic.
+processing_note:
+  en: >-
+    Released at the licensing office on the same visit once the requirements are
+    complete and the fees are paid; the Citizen's Charter budgets about 50
+    minutes at the cashier alone.
+  fil: >-
+    Inilalabas sa licensing office sa parehong pagpunta kapag kumpleto ang
+    requirements at bayad na; ang Citizen's Charter ay nagtatakda ng mga 50
+    minuto para sa cashier pa lang.
+notes:
+  - en: >-
+      The student permit is valid for one (1) year. After that it can no longer
+      be used for the practical driving course, though it can still support a
+      non-professional license application if the practical course was finished
+      within the year.
+    fil: >-
+      Valid ang student permit nang isang (1) taon. Pagkatapos nito, hindi na
+      ito magagamit sa practical driving course, pero maaari pa ring gamitin sa
+      aplikasyon ng non-professional license kung natapos ang practical course
+      sa loob ng taon.
+  - en: >-
+      Hold the student permit for at least one (1) month before applying for a
+      non-professional driver's license.
+    fil: >-
+      Hawakan ang student permit nang hindi bababa sa isang (1) buwan bago
+      mag-apply ng non-professional driver's license.
+  - en: >-
+      Driving alone on a student permit is a violation — the accompanying
+      driver must hold a valid license with the right restriction codes.
+    fil: >-
+      Paglabag ang magmaneho nang mag-isa gamit ang student permit — ang
+      kasamang driver ay dapat may valid na lisensya na may tamang restriction
+      code.
+depends_on:
+  - psa-birth-certificate

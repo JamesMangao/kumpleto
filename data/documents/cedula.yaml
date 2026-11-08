@@ -1,0 +1,165 @@
+# Community Tax Certificate (Cedula)
+# Facts sourced from the Municipality of San Manuel, Pangasinan Citizen's
+# Charter entry "Issuance of Community Tax Certificate" on gov.ph: the
+# information/declaration form, any valid ID, the previous cedula if any, the
+# ₱5.00 basic tax plus ₱1.00 per ₱1,000 of gross receipts (capped at ₱5,000),
+# and the 2% monthly interest after February 28. The corporate rates
+# (₱500.00 basic, ₱2.00 per ₱5,000, capped at ₱10,000) are the ones published
+# in the City of San Fernando Citizen's Charter, and the legal basis is
+# RA 7160 Sec. 156-158. Rates re-checked 2026-11-07: Sec. 156 sets the basic
+# community tax and the additional tax on gross receipts for individuals and
+# corporations, Sec. 157 the ₱5.00 individual / ₱500.00 corporate floor, and
+# Sec. 158 the 2% monthly interest on unpaid tax after the due date. The
+# certificate is issued for a calendar year, so it is renewed every January,
+# not twelve months after whatever date it was paid. Promoted to verified on
+# the maintainer's instruction.
+schema_version: 1
+id: cedula
+name:
+  en: Community Tax Certificate (Cedula)
+  fil: Community Tax Certificate (Cedula)
+agency: lgu
+status: verified
+source_url: https://sanmanuel.gov.ph/services/treasury-services/issuance-of-community-tax-certificate
+last_verified: '2026-11-07'
+verified_by: JamesMangao
+apply_online: false
+validity_months: 12
+fee_min: 5
+fee_max: 5000
+processing_days_min: 0
+processing_days_max: 0
+summary:
+  en: >-
+    Yearly tax receipt issued by the city or municipal treasurer. Banks,
+    notaries, and most government offices ask for it, and it is a documentary
+    requirement for filing income tax and for registering or renewing a
+    business.
+  fil: >-
+    Taunang resibo ng buwis na inilalabas ng treasurer ng lungsod o
+    munisipalidad. Hinihingi ito ng mga bangko, notaryo, at karamihan ng
+    tanggapan ng gobyerno, at kailangan sa pag-file ng income tax at sa
+    pagpaparehistro o pag-renew ng negosyo.
+tags: [tax, lgu, identification, business, notary]
+where_to_apply:
+  en: >-
+    The Office of the City or Municipal Treasurer where you live, or where the
+    corporation's principal office is located.
+  fil: >-
+    Tanggapan ng Treasurer ng lungsod o munisipalidad kung saan ka nakatira, o
+    kung saan ang principal office ng korporasyon.
+requirements:
+  - id: declaration-form
+    text:
+      en: >-
+        Accomplished Community Tax Declaration Form (information sheet), from
+        the treasurer's office.
+      fil: >-
+        Nasagutang Community Tax Declaration Form (information sheet), mula sa
+        treasurer's office.
+    original: true
+  - id: valid-id
+    text:
+      en: Any valid ID showing your name and address.
+      fil: Kahit anong valid ID na may pangalan at address mo.
+    original: true
+    photocopies: 1
+  - id: previous-ctc
+    text:
+      en: Previous Community Tax Certificate, if you already have one.
+      fil: Nakaraang Community Tax Certificate, kung mayroon ka na.
+    optional: true
+  - id: proof-of-income
+    text:
+      en: >-
+        For employees and professionals: pay slip, BIR Form 2316, or income tax
+        return, so the additional tax can be computed.
+      fil: >-
+        Para sa empleyado at propesyonal: pay slip, BIR Form 2316, o income tax
+        return, para makuwenta ang additional tax.
+    optional: true
+  - id: business-assessment
+    text:
+      en: >-
+        For business owners: the previous year's gross receipts or the
+        assessment from the business permit application.
+      fil: >-
+        Para sa may negosyo: gross receipts ng nakaraang taon o ang assessment
+        mula sa aplikasyon ng business permit.
+    optional: true
+  - id: authorization
+    text:
+      en: >-
+        If a representative files for you: an authorization letter or SPA, plus
+        the representative's valid ID.
+      fil: >-
+        Kung may kinatawan na mag-aasikaso: authorization letter o SPA, at
+        valid ID ng kinatawan.
+    optional: true
+steps:
+  - en: >-
+      Get the Community Tax Declaration Form at the treasurer's office and fill
+      it in completely.
+    fil: >-
+      Kunin ang Community Tax Declaration Form sa treasurer's office at
+      sagutan ito nang kumpleto.
+  - en: >-
+      Present the form with your valid ID, and your pay slip or BIR Form 2316
+      if you are employed, so the additional tax can be assessed.
+    fil: >-
+      Isumite ang form kasama ang valid ID, at pay slip o BIR Form 2316 kung
+      empleyado ka, para ma-assess ang additional tax.
+  - en: >-
+      Pay the assessed amount at the cashier — basic tax plus the additional
+      tax on income or real property.
+    fil: >-
+      Bayaran ang in-assess na halaga sa cashier — basic tax at ang additional
+      tax sa kita o real property.
+  - en: >-
+      Receive the Community Tax Certificate. Check that your name, address,
+      civil status, and the amount paid are correct before leaving the counter.
+    fil: >-
+      Tanggapin ang Community Tax Certificate. Tiyakin na tama ang pangalan,
+      address, civil status, at halagang binayaran bago umalis sa counter.
+fee_note:
+  en: >-
+    Individuals pay a ₱5.00 basic tax plus ₱1.00 for every ₱1,000 of gross
+    receipts or income, capped at ₱5,000. Corporations pay a ₱500.00 basic tax
+    plus ₱2.00 for every ₱5,000, capped at ₱10,000. From March 1 a 2% interest
+    per month is added to the total.
+  fil: >-
+    Ang indibidwal ay nagbabayad ng ₱5.00 basic tax at ₱1.00 kada ₱1,000 ng
+    gross receipts o kita, hanggang ₱5,000. Ang korporasyon ay ₱500.00 basic
+    tax at ₱2.00 kada ₱5,000, hanggang ₱10,000. Mula Marso 1, may 2% interest
+    kada buwan sa kabuuan.
+processing_note:
+  en: >-
+    Issued on the same visit; the citizen's charter budgets three to five
+    minutes at the counter once the form and the ID are complete.
+  fil: >-
+    Inilalabas sa parehong pagpunta; ang citizen's charter ay nagtatakda ng
+    tatlo hanggang limang minuto sa counter kapag kumpleto ang form at ID.
+notes:
+  - en: >-
+      The certificate covers one calendar year, so a cedula paid in June still
+      lapses on 31 December and a new one is due in January.
+    fil: >-
+      Saklaw ng sertipiko ang isang taon ng kalendaryo, kaya ang cedula na
+      binayaran sa Hunyo ay magwawakas pa rin sa 31 Disyembre at kailangan ng
+      bago sa Enero.
+  - en: >-
+      Pay on time: the same certificate is required before a notary can
+      acknowledge a document, and before most licences and permits are
+      released.
+    fil: >-
+      Magbayad nang maaga: kailangan ang parehong sertipiko bago
+      ma-acknowledge ng notaryo ang isang dokumento, at bago ilabas ang
+      karamihan ng lisensya at permit.
+  - en: >-
+      The rates above are the national floor from RA 7160; a city or
+      municipality may add its own local taxes by ordinance, so ask the
+      treasurer for the exact amount.
+    fil: >-
+      Ang mga rate sa itaas ay ang national floor mula sa RA 7160; maaaring
+      magdagdag ng lokal na buwis ang lungsod o munisipalidad sa pamamagitan
+      ng ordinansa, kaya itanong sa treasurer ang eksaktong halaga.

@@ -118,3 +118,8 @@ processing_note:
   fil: >-
     Karaniwang same day ang registration; ang pisikal na ID card ay pwedeng
     ilang linggo.
+
+# Registration is free; premiums are recurring and not a fee for this document,
+# so only the (zero) registration cost is stated.
+fee_min: 0
+fee_max: 0

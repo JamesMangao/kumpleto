@@ -1,0 +1,50 @@
+# Bundle — verified 2026-11-06: every document it lists is status: verified.
+schema_version: 1
+id: kasal
+name:
+  en: Kasal Package (Getting Married)
+  fil: Kasal Package (Pagpapakasal)
+description:
+  en: >-
+    The papers a couple prepares before a civil or church wedding: birth
+    certificates, CENOMAR, and the marriage license from your local civil
+    registrar. Community-curated — confirm with the PSA and your City or
+    Municipal Civil Registrar.
+  fil: >-
+    Mga papeles na inihahanda ng magpapakasal bago ang kasal sibil o sa
+    simbahan: birth certificate, CENOMAR, at marriage license mula sa local
+    civil registrar. Kurado ng komunidad — kumpirmahin sa PSA at sa City o
+    Municipal Civil Registrar ninyo.
+status: verified
+documents:
+  - psa-birth-certificate
+  - psa-cenomar
+  - lcr-marriage-license
+tags: [wedding, civil-registry]
+icon: family_restroom
+notes:
+  - en: >-
+      Order matters: the CENOMAR is valid for six (6) months and the marriage
+      license for 120 days, so request the PSA copies once your wedding date is
+      fixed — not months in advance.
+    fil: >-
+      Mahalaga ang pagkakasunod-sunod: valid ang CENOMAR nang anim (6) na buwan
+      at ang marriage license nang 120 araw, kaya kunin ang PSA copies kapag
+      final na ang petsa ng kasal — hindi nang ilang buwan nang maaga.
+  - en: >-
+      File the license application with the civil registrar of the city or
+      municipality where either of you habitually resides; the license is then
+      valid anywhere in the Philippines (Family Code, Arts. 9 and 20).
+    fil: >-
+      Ihain ang aplikasyon ng lisensya sa civil registrar ng lungsod o
+      munisipalidad kung saan permanenteng nakatira ang isa sa inyo; valid ang
+      lisensya sa buong Pilipinas pagkatapos (Family Code, Art. 9 at 20).
+  - en: >-
+      If either of you is 18 to 25, ask the civil registrar which parental
+      consent, parental advice, or marriage counseling certificate applies —
+      the missing paper can delay the license by up to three months.
+    fil: >-
+      Kung 18 hanggang 25 taong gulang ang isa sa inyo, itanong sa civil
+      registrar kung parental consent, parental advice, o marriage counseling
+      certificate ang kailangan — pwedeng maantala ang lisensya nang hanggang
+      tatlong buwan kapag kulang.

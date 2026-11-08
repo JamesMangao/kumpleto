@@ -1,0 +1,149 @@
+# COMELEC Voter Registration (Register of Voters)
+# Source: COMELEC (comelec.gov.ph) and RA 8189, the Voter's Registration Act of
+# 1996: application filed with the Office of the Election Officer of the city
+# or municipality where the applicant resides, biometrics captured, and the
+# application approved by the Election Registration Board before the voter is
+# entered in the Register of Voters. Registration runs only during periods set
+# by COMELEC resolution, and filing is free. Re-checked 2026-11-08 before
+# promotion. This is the registration itself — the Voter's Certification entry
+# covers the printed proof that you are already registered.
+schema_version: 1
+id: comelec-voter-registration
+name:
+  en: COMELEC Voter Registration
+  fil: COMELEC Voter Registration
+agency: comelec
+status: verified
+last_verified: '2026-11-08'
+verified_by: JamesMangao
+source_url: https://comelec.gov.ph/
+apply_online: false
+summary:
+  en: >-
+    Enrolment in the Commission on Elections' Register of Voters for the city
+    or municipality where you live — the record that lets you vote and that the
+    Voter's Certification is printed from. Filing is free, but only while a
+    registration period is open.
+  fil: >-
+    Pagpapatala sa Register of Voters ng Commission on Elections para sa
+    lungsod o munisipalidad kung saan ka nakatira — ang record na
+    nagpapahintulot sa iyong bumoto at pinagmumulan ng Voter's Certification.
+    Walang bayad, pero bukas lang ito habang may registration period.
+tags: [election, registration, id]
+where_to_apply:
+  en: >-
+    The Office of the Election Officer (OEO) in the city or municipality where
+    you reside. COMELEC announces the registration periods by resolution, so
+    check the current schedule before going.
+  fil: >-
+    Office of the Election Officer (OEO) sa lungsod o munisipalidad kung saan
+    ka nakatira. Iniaanunsyo ng COMELEC ang registration periods sa
+    resolusyon, kaya tingnan ang kasalukuyang schedule bago pumunta.
+requirements:
+  - id: application-form
+    text:
+      en: >-
+        Accomplished CEF-1 voter registration application form, available at
+        the OEO or downloadable from the COMELEC website.
+      fil: >-
+        Nasagutang CEF-1 voter registration application form, makukuha sa OEO
+        o nada-download sa website ng COMELEC.
+    original: true
+  - id: proof-of-identity
+    text:
+      en: >-
+        Any valid ID with photo and signature, or a birth certificate or other
+        document that proves your identity and age.
+      fil: >-
+        Kahit anong valid na ID na may litrato at pirma, o birth certificate o
+        ibang dokumentong nagpapatunay ng pagkakakilanlan at edad.
+    original: true
+  - id: proof-of-residence
+    text:
+      en: >-
+        Proof that you live in the city or municipality: barangay
+        certification, lease contract, utility bill or tax declaration.
+      fil: >-
+        Patunay na nakatira ka sa lungsod o munisipalidad: barangay
+        certification, lease contract, utility bill o tax declaration.
+    original: true
+  - id: biometrics
+    text:
+      en: >-
+        Personal appearance for the biometrics capture — photograph,
+        fingerprints and signature. A representative cannot do this for you.
+      fil: >-
+        Personal na pagpunta para sa biometrics — litrato, fingerprints at
+        pirma. Hindi ito maaaring gawin ng kinatawan para sa iyo.
+    original: true
+steps:
+  - en: >-
+      Check that a registration period is open, then get the CEF-1 form at the
+      OEO of your city or municipality.
+    fil: >-
+      Tingnan kung bukas ang registration period, pagkatapos kumuha ng CEF-1
+      form sa OEO ng lungsod o munisipalidad.
+  - en: >-
+      Fill in the form truthfully and submit it with your proof of identity and
+      residence at the OEO.
+    fil: >-
+      Sagutan nang totoo ang form at isumite kasama ang patunay ng
+      pagkakakilanlan at tirahan sa OEO.
+  - en: >-
+      Have your biometrics captured at the OEO — the photo, fingerprints and
+      signature go into the voter's record.
+    fil: >-
+      Pa-capture ang biometrics sa OEO — ang litrato, fingerprints at pirma ay
+      mapupunta sa voter record.
+  - en: >-
+      Get your application receipt and wait for the Election Registration Board
+      to approve it; approval is what puts you in the Register of Voters.
+    fil: >-
+      Kunin ang receipt ng aplikasyon at hintayin ang approval ng Election
+      Registration Board; ang approval ang naglalagay sa iyo sa Register of
+      Voters.
+  - en: >-
+      Once approved, request a Voter's Certification when you need printed
+      proof of registration.
+    fil: >-
+      Kapag aprubado na, humingi ng Voter's Certification kapag kailangan mo ng
+      nakaprintang patunay ng registration.
+fee_note:
+  en: >-
+    Free. COMELEC does not charge a fee for registration, reactivation,
+    transfer or correction of voter records, and no fixer or "processing fee"
+    is part of the process.
+  fil: >-
+    Walang bayad. Hindi nagpapataw ng fee ang COMELEC sa registration,
+    reactivation, transfer o correction ng voter record, at wala sa proseso ang
+    fixer o "processing fee".
+processing_note:
+  en: >-
+    The application and biometrics are done in one visit; the Election
+    Registration Board then acts on the applications, so the record appears in
+    the Register of Voters after the board's approval, not on the day you file.
+  fil: >-
+    Isang pagpunta lang ang aplikasyon at biometrics; pagkatapos ay ang
+    Election Registration Board ang mag-aaksyon, kaya lumalabas ang record sa
+    Register of Voters pagkatapos ng approval, hindi sa araw ng filing.
+notes:
+  - en: >-
+      Register where you actually live. Voting in a place you have moved away
+      from is a election offense, and a transfer of registration is a separate
+      application.
+    fil: >-
+      Magpatala kung saan ka talaga nakatira. Election offense ang bumoto sa
+      lugar na iniwan mo na, at hiwalay na aplikasyon ang transfer ng
+      registration.
+  - en: >-
+      Registration is not open year-round: COMELEC sets the periods, and it
+      usually suspends registration close to an election.
+    fil: >-
+      Hindi bukas buong taon ang registration: ang COMELEC ang nagtatakda ng
+      periods, at kadalasan itong suspendido kapag malapit na ang eleksyon.
+  - en: >-
+      This is the enrolment itself. If you only need proof that you are already
+      registered, the Voter's Certification entry is the shorter route.
+    fil: >-
+      Ito ang pagpapatala mismo. Kung patunay lang na registered ka na ang
+      kailangan mo, ang Voter's Certification entry ang mas maikling ruta.

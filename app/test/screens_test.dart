@@ -54,9 +54,15 @@ void main() {
       await tester.tap(find.text('Job Hunt Pack'));
       await tester.pumpAndSettle();
 
+      // The bundle header (progress + cost estimate) fills the first screen, so
+      // walk down the list like a reader would.
+      await scrollIntoView(tester, find.text(l10n.bundleDocuments));
       expect(find.text(l10n.bundleDocuments), findsOneWidget);
+      await scrollIntoView(tester, find.text('NBI Clearance'));
       expect(find.text('NBI Clearance'), findsOneWidget);
+      await scrollIntoView(tester, find.text('Postal ID (old card)'));
       expect(find.text('Postal ID (old card)'), findsOneWidget);
+      await scrollIntoView(tester, find.text(l10n.bundleNotes));
       expect(find.text(l10n.bundleNotes), findsOneWidget);
     });
   });
@@ -235,7 +241,7 @@ void main() {
   });
 
   group('Settings', () {
-    testWidgets('shows the data version, source and update button', (
+    testWidgets('keeps the update button and hides the internal data details', (
       tester,
     ) async {
       await pumpKumpleto(tester);
@@ -243,11 +249,16 @@ void main() {
       await tester.pumpAndSettle();
       final l10n = l10nOf(tester);
 
-      // _Row renders "<label>: " as a single text.
-      expect(find.text('${l10n.settingsDataVersion}: '), findsOneWidget);
-      expect(find.text('2026-10-01T00:00:00.000Z'), findsOneWidget);
-      expect(find.text(l10n.settingsNeverChecked), findsOneWidget);
+      // The reminders section sits above the data card, so the card starts
+      // below the fold.
+      await scrollIntoView(tester, find.text(l10n.settingsCheckForUpdates));
       expect(find.text(l10n.settingsCheckForUpdates), findsOneWidget);
+
+      // Data version, source and last-check are bookkeeping for the
+      // maintainer — a normal user never needs them on this screen.
+      expect(find.text('${l10n.settingsDataVersion}: '), findsNothing);
+      expect(find.text(l10n.settingsNeverChecked), findsNothing);
+      expect(find.text('2026-10-01T00:00:00.000Z'), findsNothing);
 
       await scrollIntoView(
         tester,
@@ -290,7 +301,12 @@ void main() {
       // Tick one requirement through the repository (as the UI would).
       await container
           .read(progressRepositoryProvider)
-          .setChecked('nbi-clearance', 'reference-number', true);
+          .setChecked(
+            'me',
+            'nbi-clearance',
+            'reference-number',
+            true,
+          );
       await tester.pumpAndSettle();
 
       await tester.tap(find.text(l10n.navSettings));
@@ -328,7 +344,12 @@ void main() {
 
       await container
           .read(progressRepositoryProvider)
-          .setChecked('nbi-clearance', 'reference-number', true);
+          .setChecked(
+            'me',
+            'nbi-clearance',
+            'reference-number',
+            true,
+          );
       await tester.pumpAndSettle();
 
       await tester.tap(find.text(l10n.navSettings));
@@ -362,9 +383,23 @@ void main() {
       await tester.pumpAndSettle();
       final l10n = l10nOf(tester);
 
+      final updateButton = find.widgetWithText(
+        OutlinedButton,
+        l10n.settingsCheckForUpdates,
+      );
+      await scrollIntoView(tester, updateButton);
+      expect(updateButton, findsOneWidget);
+
+      // Expiry reminders live above the data card as a switch, not a row.
+      final reminderSwitch = find.widgetWithText(
+        SwitchListTile,
+        l10n.settingsReminders,
+      );
+      await scrollIntoView(tester, reminderSwitch);
+      expect(reminderSwitch, findsOneWidget);
       expect(
-        find.widgetWithText(OutlinedButton, l10n.settingsCheckForUpdates),
-        findsOneWidget,
+        tester.widget<SwitchListTile>(reminderSwitch).onChanged,
+        isNotNull,
       );
 
       // The rows below the fold only exist once they are scrolled to, so each

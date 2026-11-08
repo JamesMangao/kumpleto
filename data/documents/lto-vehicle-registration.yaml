@@ -1,0 +1,172 @@
+# LTO Motor Vehicle Registration (Initial / OR-CR)
+# Facts re-checked 2026-11-07 against the LTO "Motor Vehicle Registration
+# Transactions" Citizen's Charter entry (lto.gov.ph, November 2025): the
+# documentary requirements for initial registration (sales invoice, dealer's
+# Certificate of Stock Reported, CTPL Certificate of Cover, PNP-HPG clearance
+# where the unit is not brand new), the fees (MVUC per schedule, PhP 10.00
+# Legal Research Fund, PhP 50.00 transfer fee, plate cost PhP 450.00 for a
+# motor vehicle / PhP 224.00 trailer / PhP 120.00 motorcycle), and the
+# same-visit OR/CR printing and plate release at the New Registration Unit.
+# CORRECTION: Memorandum Circular No. VDM-2025-4665 (same-day registration and
+# plate release at the point of sale) never took effect — it was deferred on
+# 13 October 2025 and then suspended by the incoming LTO chief, so this entry
+# no longer relies on it. Promoted to verified on the maintainer's instruction,
+# 2026-11-07.
+schema_version: 1
+id: lto-vehicle-registration
+name:
+  en: LTO Motor Vehicle Registration (OR/CR)
+  fil: LTO Motor Vehicle Registration (OR/CR)
+agency: lto
+status: verified
+source_url: https://lto.gov.ph/wp-content/uploads/2025/11/MV-CC-2025.pdf
+apply_online: true
+apply_online_url: https://portal.lto.gov.ph/
+last_verified: '2026-11-07'
+verified_by: JamesMangao
+processing_days_min: 0
+processing_days_max: 7
+summary:
+  en: >-
+    Registration of a motor vehicle with the Land Transportation Office, which
+    produces the Official Receipt (OR), the Certificate of Registration (CR),
+    the plates, and the RFID sticker.
+  fil: >-
+    Pagpaparehistro ng motor vehicle sa Land Transportation Office, na
+    naglalabas ng Official Receipt (OR), Certificate of Registration (CR),
+    plaka, at RFID sticker.
+tags: [transport, vehicle, registration, lto]
+where_to_apply:
+  en: >-
+    The LTO New Registration Unit (NRU) or an authorized district or extension
+    office. A dealer may file the initial registration for a brand-new unit,
+    but the sale still has to be reported to the LTO first.
+  fil: >-
+    LTO New Registration Unit (NRU) o awtorisadong district o extension office.
+    Maaaring i-file ng dealer ang initial registration ng brand-new na unit,
+    pero kailangan munang mai-report ang benta sa LTO.
+requirements:
+  - id: sales-invoice
+    text:
+      en: Original sales invoice from the dealer.
+      fil: Orihinal na sales invoice mula sa dealer.
+    original: true
+  - id: csr
+    text:
+      en: >-
+        Certificate of Stock Reported (CSR) filed by the dealer, when the unit
+        is brand new.
+      fil: >-
+        Certificate of Stock Reported (CSR) na inihain ng dealer, kung
+        brand-new ang unit.
+    original: true
+    optional: true
+  - id: ctpl
+    text:
+      en: >-
+        Compulsory Third Party Liability (CTPL) insurance Certificate of Cover,
+        electronically transmitted to the LTO.
+      fil: >-
+        Certificate of Cover ng Compulsory Third Party Liability (CTPL)
+        insurance, na e-transmitted sa LTO.
+    original: true
+  - id: hpg-clearance
+    text:
+      en: >-
+        PNP-HPG Motor Vehicle Clearance with macro-etching report, for imported
+        or previously used units.
+      fil: >-
+        PNP-HPG Motor Vehicle Clearance na may macro-etching report, para sa
+        imported o nagamit nang unit.
+    original: true
+    optional: true
+  - id: valid-id
+    text:
+      en: Valid government-issued ID of the registered owner.
+      fil: Valid na ID ng gobyerno ng may-ari na ire-register.
+    original: true
+  - id: payment
+    text:
+      en: Payment of the MVUC, the Legal Research Fund, and the plate cost.
+      fil: Bayad sa MVUC, Legal Research Fund, at cost ng plaka.
+steps:
+  - en: >-
+      The dealer reports the sale to the LTO (Sales Reporting) before the unit
+      can be registered.
+    fil: >-
+      Iniulat ng dealer ang benta sa LTO (Sales Reporting) bago marehistro ang
+      unit.
+  - en: >-
+      Submit the sales invoice, the CTPL certificate, the CSR, and your valid
+      ID at the New Registration Unit.
+    fil: >-
+      Isumite ang sales invoice, CTPL certificate, CSR, at valid ID sa New
+      Registration Unit.
+  - en: >-
+      Present the vehicle for inspection and stencilling, and have the
+      evaluator approve the documents.
+    fil: >-
+      Ipakita ang sasakyan para sa inspeksyon at stencilling, at ipa-approve
+      ang mga dokumento sa evaluator.
+  - en: >-
+      Pay the assessed MVUC, the Legal Research Fund, and the plate cost at the
+      cashier.
+    fil: >-
+      Bayaran ang in-assess na MVUC, Legal Research Fund, at cost ng plaka sa
+      cashier.
+  - en: >-
+      Receive the Official Receipt, the Certificate of Registration, the
+      plates, and the RFID sticker.
+    fil: >-
+      Tanggapin ang Official Receipt, Certificate of Registration, plaka, at
+      RFID sticker.
+fee_note:
+  en: >-
+    The Motor Vehicle User's Charge follows the LTO schedule by vehicle type
+    and weight, plus a ₱10.00 Legal Research Fund and the plate cost — ₱450.00
+    for a motor vehicle and ₱120.00 for a motorcycle.
+  fil: >-
+    Ang Motor Vehicle User's Charge ay sumusunod sa schedule ng LTO ayon sa uri
+    at timbang ng sasakyan, dagdag ang ₱10.00 Legal Research Fund at ang cost
+    ng plaka — ₱450.00 para sa motor vehicle at ₱120.00 para sa motorsiklo.
+processing_note:
+  en: >-
+    At a New Registration Unit the Citizen's Charter lists the CR print and the
+    plate release as same-visit steps; registration coursed through a dealer
+    still depends on the dealer filing the sale, and the LTO allows up to seven
+    (7) working days from the sale to the release of the plates.
+  fil: >-
+    Sa New Registration Unit, nakalista sa Citizen's Charter na sa parehong
+    pagpunta ang pag-print ng CR at paglabas ng plaka; ang registration na
+    dumaan sa dealer ay nakadepende sa pag-file ng benta, at pinapayagan ng LTO
+    ang hanggang pitong (7) working day mula sa benta hanggang sa paglabas ng
+    plaka.
+notes:
+  - en: >-
+      The same-day registration and plate release at the point of sale
+      (Memorandum Circular No. VDM-2025-4665) was deferred on 13 October 2025
+      and then suspended, so do not expect the plate to be turned over with a
+      brand-new unit while it is on hold.
+    fil: >-
+      Ang same-day registration at plate release sa pinagbilhan (Memorandum
+      Circular No. VDM-2025-4665) ay na-defer noong 13 October 2025 at
+      sinuspinde, kaya huwag asahan na kasama ng brand-new na unit ang plaka
+      habang nakabinbin ito.
+  - en: >-
+      Renewal is yearly after the initial registration period, and the renewal
+      month follows the last digit of the plate number.
+    fil: >-
+      Taunan ang renewal pagkatapos ng initial registration period, at ang
+      buwan ng renewal ay sumusunod sa huling digit ng plaka.
+  - en: >-
+      Buying a used vehicle is a different transaction: it needs the transfer
+      of ownership, with the PNP-HPG clearance and the deed of sale.
+    fil: >-
+      Ibang transaksyon ang pagbili ng second-hand: kailangan ang transfer of
+      ownership, kasama ang PNP-HPG clearance at deed of sale.
+  - en: >-
+      A registration that lapses carries a weekly fine, so renew before the
+      month on the plate ends.
+    fil: >-
+      May multa kada linggo ang lumipas na registration, kaya mag-renew bago
+      matapos ang buwan sa plaka.

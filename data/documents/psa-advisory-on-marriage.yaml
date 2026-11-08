@@ -1,0 +1,126 @@
+# PSA Advisory on Marriage
+# Facts re-checked 2026-11-07 against the PSA Serbilis terms and FAQ
+# (psaserbilis.com.ph/TermandCondition, /GetFaQs) and the PSA advisories on
+# Viewable Online (PhP 130.00 / PhP 185.00) and the E-Certificate service.
+# An Advisory on Marriage is NOT a renamed CENOMAR: PSA issues it in place of
+# the CENOMAR when its database holds one or more marriage records under the
+# requester's name, and it lists those marriages. Fees: PhP 210.00 per copy for
+# outlet pick-up, PhP 430.00 per copy for delivery, PhP 185.00 for a Viewable
+# Online copy (plus PhP 80.00 if a printed copy is requested at the outlet).
+# Delivery processing is 3-9 working days; an outlet copy is released on the
+# outlet's own schedule, not the one-working-day figure this entry used to
+# claim. The requester must be the owner or a duly authorized representative.
+# Promoted to verified on the maintainer's instruction, 2026-11-07.
+schema_version: 1
+id: psa-advisory-on-marriage
+name:
+  en: PSA Advisory on Marriage
+  fil: PSA Advisory on Marriage
+agency: psa
+status: verified
+source_url: https://www.psaserbilis.com.ph/GetFaQs
+apply_online: true
+apply_online_url: https://psaserbilis.com.ph/
+last_verified: '2026-11-07'
+verified_by: JamesMangao
+fee_min: 210
+fee_max: 430
+processing_days_min: 0
+processing_days_max: 9
+summary:
+  en: >-
+    The document PSA issues in place of a Certificate of No Marriage (CENOMAR)
+    when its database holds one or more marriage records under your name. It
+    lists those marriages — dates, places, and annotations such as annulment or
+    foreign divorce — and is what a previously married applicant submits for a
+    marriage license or a visa.
+  fil: >-
+    Ang dokumentong inilalabas ng PSA kapalit ng Certificate of No Marriage
+    (CENOMAR) kapag may isa o higit pang marriage record sa pangalan mo sa
+    database nito. Nakalista dito ang mga kasal — petsa, lugar, at anotasyon
+    gaya ng annulment o foreign divorce — at ito ang isinusumite ng dati nang
+    kasal para sa marriage license o visa.
+tags: [civil-registry, marriage, psa, kasal]
+where_to_apply:
+  en: >-
+    Online through PSA Serbilis or PSA Helpline, or in person at any PSA Civil
+    Registry System outlet.
+  fil: >-
+    Online sa PSA Serbilis o PSA Helpline, o personal sa kahit anong PSA Civil
+    Registry System outlet.
+requirements:
+  - id: requester-details
+    text:
+      en: >-
+        Your personal information — sex, civil status, date of birth, and
+        parents' names — entered before choosing the certificate.
+      fil: >-
+        Personal na impormasyon mo — sex, civil status, petsa ng kapanganakan,
+        at pangalan ng mga magulang — na ilalagay bago piliin ang sertipiko.
+    original: true
+  - id: purpose
+    text:
+      en: >-
+        A specific purpose for the request; a general statement is not
+        accepted.
+      fil: >-
+        Tiyak na layunin ng request; hindi tinatanggap ang pangkalahatang
+        pahayag.
+    original: true
+  - id: valid-id
+    text:
+      en: Valid government-issued ID, and an authorization letter or SPA if a
+        representative files for you.
+      fil: Valid na ID ng gobyerno, at authorization letter o SPA kung may
+        kinatawang mag-aasikaso.
+    original: true
+steps:
+  - en: Create or log in to a PSA Serbilis account and choose the certificate.
+    fil: Gumawa o mag-log in sa PSA Serbilis account at piliin ang sertipiko.
+  - en: >-
+      Enter your personal details, the purpose, and the number of copies, then
+      pay the fee.
+    fil: >-
+      Ilagay ang personal na detalye, layunin, at bilang ng kopya, pagkatapos
+      bayaran ang fee.
+  - en: >-
+      Claim the advisory at the outlet, or wait for delivery — it is released
+      within one working day.
+    fil: >-
+      Kunin ang advisory sa outlet, o hintayin ang delivery — inilalabas ito
+      sa loob ng isang working day.
+fee_note:
+  en: >-
+    ₱210.00 per copy for pick-up at a PSA outlet, ₱430.00 per copy for
+    door-to-door delivery, and ₱185.00 for a Viewable Online copy whose fee is
+    paid at a PSA outlet (₱80.00 more per printed copy requested there).
+  fil: >-
+    ₱210.00 kada kopya kung kukunin sa PSA outlet, ₱430.00 kada kopya kung
+    ipapadeliver, at ₱185.00 para sa Viewable Online copy na binabayaran sa PSA
+    outlet (dagdag na ₱80.00 kada printed copy na hihingin doon).
+processing_note:
+  en: >-
+    An outlet copy is released on that outlet's own schedule, usually on the
+    same visit with a booked appointment. Delivery orders take about three (3)
+    to nine (9) working days after payment.
+  fil: >-
+    Ang kopyang kukunin sa outlet ay inilalabas ayon sa schedule ng outlet,
+    kadalasan sa parehong pagpunta kung may naka-book na appointment. Ang
+    delivery order ay tumatagal ng mga tatlo (3) hanggang siyam (9) na working
+    day pagkatapos ng bayad.
+notes:
+  - en: >-
+      You request a CENOMAR; PSA decides which document to issue. If it finds a
+      marriage record you get this advisory instead, so read what it actually
+      says before submitting it with a marriage-license application.
+    fil: >-
+      CENOMAR ang hinihingi mo; ang PSA ang magdedesisyon kung alin ang
+      ilalabas. Kapag may nakita itong marriage record, itong advisory ang
+      ibibigay sa halip, kaya basahin ang nilalaman bago isumite kasama ng
+      aplikasyon ng marriage license.
+  - en: >-
+      The certification is only as current as the PSA database; if you married
+      recently, wait for the record to be transmitted before requesting.
+    fil: >-
+      Ang sertipikasyon ay kasing-bago ng database ng PSA; kung bagong kasal
+      ka, hintayin ma-transmit ang record bago mag-request.

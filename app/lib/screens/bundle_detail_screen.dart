@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:printing/printing.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../core/theme.dart';
+import '../data/checklist_export.dart';
+import '../data/estimate.dart';
 import '../data/providers.dart';
 import '../l10n/app_localizations.dart';
 import '../models/models.dart';
@@ -31,8 +35,26 @@ class BundleDetailScreen extends ConsumerWidget {
       );
     }
 
+    final isFirstTimeJobseeker = ref.watch(firstTimeJobseekerProvider);
+    final isJobHuntBundle = bundle.id == 'job-hunt-pack' ||
+        bundle.tags.contains('job-hunt');
+
     final documents = data.documentsOf(bundle);
     final totals = bundleProgress(documents: documents, progress: progress);
+    final rawEstimate = bundleEstimate(documents);
+
+    // Apply RA 11261 waiver if first-time jobseeker toggle is ON
+    final estimate = (isFirstTimeJobseeker && isJobHuntBundle)
+        ? BundleEstimate(
+            documentCount: rawEstimate.documentCount,
+            feeCovered: rawEstimate.feeCovered,
+            feeMin: 0,
+            feeMax: 0,
+            daysCovered: rawEstimate.daysCovered,
+            daysMin: rawEstimate.daysMin,
+            daysMax: rawEstimate.daysMax,
+          )
+        : rawEstimate;
 
     var completedDocs = 0;
     for (final doc in documents) {
@@ -56,6 +78,34 @@ class BundleDetailScreen extends ConsumerWidget {
             fontWeight: FontWeight.w700,
           ),
         ),
+        actions: [
+          PopupMenuButton<_ExportAction>(
+            tooltip: l10n.bundleExportMenu,
+            icon: const Icon(Icons.ios_share),
+            onSelected: (action) => switch (action) {
+              _ExportAction.share => _share(
+                context,
+                l10n,
+                _content(context, l10n, bundle, documents, data),
+              ),
+              _ExportAction.print => _print(
+                context,
+                l10n,
+                _content(context, l10n, bundle, documents, data),
+              ),
+            },
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: _ExportAction.share,
+                child: Text(l10n.bundleExportShare),
+              ),
+              PopupMenuItem(
+                value: _ExportAction.print,
+                child: Text(l10n.bundleExportPrint),
+              ),
+            ],
+          ),
+        ],
       ),
       body: SafeArea(
         child: ListView(
@@ -149,6 +199,84 @@ class BundleDetailScreen extends ConsumerWidget {
                     totals: totals,
                     bundleName: bundle.name.localized(context),
                   ),
+
+                  // What the whole bundle costs and how long it takes, from the
+                  // numbers the entries themselves state.
+                  if (estimate.hasFee || estimate.daysIsComplete) ...[
+                    const SizedBox(height: 10),
+                    _EstimateCard(estimate: estimate),
+                  ],
+
+                  // First-Time Jobseeker (RA 11261) benefit card & toggle
+                  // Exclusive only to Job Hunt / Employment packs
+                  if (isJobHuntBundle) ...[
+                    const SizedBox(height: 10),
+                    Card(
+                      elevation: 0,
+                      margin: EdgeInsets.zero,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        side: BorderSide(
+                          color: isFirstTimeJobseeker
+                              ? AppTheme.primaryTeal
+                              : (isDark ? AppTheme.borderDark : AppTheme.borderLight),
+                          width: isFirstTimeJobseeker ? 1.5 : 1.0,
+                        ),
+                      ),
+                      color: isFirstTimeJobseeker
+                          ? (isDark ? const Color(0xFF132821) : const Color(0xFFE8F5F1))
+                          : null,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.school_outlined,
+                              color: isFirstTimeJobseeker
+                                  ? AppTheme.primaryTeal
+                                  : (isDark ? Colors.white70 : Colors.black87),
+                              size: 24,
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'First-Time Jobseeker? (RA 11261)',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 13,
+                                      color: isFirstTimeJobseeker
+                                          ? AppTheme.primaryTeal
+                                          : null,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    isFirstTimeJobseeker
+                                        ? 'Libre ang bayad sa Barangay, Police, at NBI Clearances! (Waived fees applied sa lahat ng docs)'
+                                        : 'I-on para maging libre ang clearances sa buong Job Hunt pack.',
+                                    style: TextStyle(
+                                      fontSize: 11.5,
+                                      color: theme.colorScheme.onSurfaceVariant,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Switch(
+                              value: isFirstTimeJobseeker,
+                              activeThumbColor: AppTheme.primaryTeal,
+                              onChanged: (val) => ref
+                                  .read(firstTimeJobseekerProvider.notifier)
+                                  .set(val),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),
@@ -279,6 +407,73 @@ class BundleDetailScreen extends ConsumerWidget {
   }
 }
 
+/// The two things a reader does with a bundle away from the phone: send it to
+/// somebody, or print it.
+enum _ExportAction { share, print }
+
+/// Wraps the bundle in the one structure both exports read from.
+ChecklistContent _content(
+  BuildContext context,
+  AppLocalizations l10n,
+  Bundle bundle,
+  List<Document> documents,
+  DataBundle data,
+) {
+  final languageCode = Localizations.localeOf(context).languageCode;
+  final date = MaterialLocalizations.of(
+    context,
+  ).formatShortDate(DateTime.now());
+  return ChecklistContent(
+    l10n: l10n,
+    languageCode: languageCode,
+    bundle: bundle,
+    documents: documents,
+    agencyOf: (document) =>
+        data.agency(document.agencyId)?.name.pick(languageCode) ??
+        document.agencyId,
+    footer: l10n.bundleExportFooter(date),
+  );
+}
+
+Future<void> _share(
+  BuildContext context,
+  AppLocalizations l10n,
+  ChecklistContent content,
+) async {
+  try {
+    await SharePlus.instance.share(
+      ShareParams(
+        text: checklistText(content),
+        subject: content.bundle.name.pick(content.languageCode),
+      ),
+    );
+  } on Object {
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(l10n.bundleExportFailed)));
+  }
+}
+
+Future<void> _print(
+  BuildContext context,
+  AppLocalizations l10n,
+  ChecklistContent content,
+) async {
+  try {
+    final bytes = await checklistPdf(content);
+    await Printing.layoutPdf(
+      onLayout: (format) async => bytes,
+      name: '${content.bundle.id}-checklist',
+    );
+  } on Object {
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(l10n.bundleExportFailed)));
+  }
+}
+
 class _CompactProgressCard extends StatelessWidget {
   const _CompactProgressCard({
     required this.checked,
@@ -385,6 +580,114 @@ class _CompactProgressCard extends StatelessWidget {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// "₱1,105–₱1,355 · About 7–12 working days in total", with the coverage that
+/// makes the number honest (how many entries stated one).
+class _EstimateCard extends StatelessWidget {
+  const _EstimateCard({required this.estimate});
+
+  final BundleEstimate estimate;
+
+  String? _feeText(AppLocalizations l10n) {
+    if (!estimate.hasFee) return null;
+    if (estimate.isFree) return l10n.bundleEstimateFeeFree;
+    if (estimate.feeMin == estimate.feeMax) {
+      return l10n.bundleEstimateFeeSingle(groupedAmount(estimate.feeMin));
+    }
+    return l10n.bundleEstimateFeeRange(
+      groupedAmount(estimate.feeMin),
+      groupedAmount(estimate.feeMax),
+    );
+  }
+
+  String? _timeText(AppLocalizations l10n) {
+    if (!estimate.daysIsComplete) return null;
+    if (estimate.isSameDay) return l10n.bundleEstimateTimeSameDay;
+    if (estimate.daysMin == estimate.daysMax) {
+      return l10n.bundleEstimateTimeSingle(estimate.daysMin);
+    }
+    return l10n.bundleEstimateTimeRange(estimate.daysMin, estimate.daysMax);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final fee = _feeText(l10n);
+    final time = _timeText(l10n);
+
+    return Card(
+      elevation: 0,
+      margin: EdgeInsets.zero,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(
+          color: isDark ? AppTheme.borderDark : AppTheme.borderLight,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                const Icon(
+                  Icons.payments_outlined,
+                  size: 16,
+                  color: AppTheme.primaryTeal,
+                ),
+                const SizedBox(width: 6),
+                Flexible(
+                  child: Text(
+                    l10n.bundleEstimateTitle,
+                    style: theme.textTheme.labelLarge?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            if (fee != null) ...[
+              const SizedBox(height: 6),
+              Text(
+                fee,
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: -0.2,
+                ),
+              ),
+            ],
+            if (time != null) ...[
+              const SizedBox(height: 2),
+              Text(
+                time,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+            if (estimate.feeIsPartial) ...[
+              const SizedBox(height: 6),
+              Text(
+                l10n.bundleEstimateCaption(
+                  estimate.feeCovered,
+                  estimate.documentCount,
+                ),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                  fontSize: 11,
+                ),
+              ),
+            ],
+          ],
         ),
       ),
     );

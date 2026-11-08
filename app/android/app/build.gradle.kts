@@ -15,6 +15,8 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+        // flutter_local_notifications needs java.time on the minSdk devices.
+        isCoreLibraryDesugaringEnabled = true
     }
 
     defaultConfig {
@@ -22,7 +24,7 @@ android {
         applicationId = "io.github.jamesmangao.kumpleto"
         minSdk = flutter.minSdkVersion
         targetSdk = 36
-        // versionName/versionCode come from pubspec.yaml (version: 0.1.0+1).
+        // versionName/versionCode come from pubspec.yaml (version: 1.0.0+1).
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
@@ -74,6 +76,10 @@ android {
             }
         }
     }
+}
+
+dependencies {
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
 }
 
 kotlin {

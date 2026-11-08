@@ -4,14 +4,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'core/deep_links.dart';
 import 'core/settings.dart';
 import 'core/theme.dart';
 import 'data/app_paths.dart';
 import 'data/progress.dart';
 import 'data/providers.dart';
+import 'data/update_service.dart';
 import 'l10n/app_localizations.dart';
 import 'router.dart';
 import 'screens/welcome_screen.dart';
+import 'widgets/reminder_sync.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,8 +39,13 @@ Future<void> main() async {
       child: KumpletoApp(settings: settings),
     ),
   );
-  // Silent, at most once per 24 h: the first frame never waits for this.
-  container.read(scheduledUpdateProvider.future);
+  // Silent, at most once per 24 h: the first frame never waits for this. An
+  // accepted payload is handed to the home screen's one-off notice.
+  container.read(scheduledUpdateProvider.future).then((result) {
+    if (result is UpdateAccepted) {
+      container.read(lastUpdateProvider.notifier).set(result);
+    }
+  });
 }
 
 /// Root widget.
@@ -64,7 +72,12 @@ class KumpletoApp extends StatefulWidget {
 }
 
 class _KumpletoAppState extends State<KumpletoApp> {
-  late final GoRouter _router = buildRouter(widget.settings);
+  // A cold start from a deep link already knows its destination, so the very
+  // first frame is the requested document instead of the home tab.
+  late final GoRouter _router = buildRouter(
+    widget.settings,
+    initialLocation: initialDeepLinkPath(),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -81,9 +94,12 @@ class _KumpletoAppState extends State<KumpletoApp> {
         locale: widget.settings.locale,
         routerConfig: _router,
         debugShowCheckedModeBanner: false,
-        builder: (context, child) => WelcomeGate(
-          show: widget.showWelcome,
-          child: child ?? const SizedBox.shrink(),
+        builder: (context, child) => ReminderSync(
+          settings: widget.settings,
+          child: WelcomeGate(
+            show: widget.showWelcome,
+            child: child ?? const SizedBox.shrink(),
+          ),
         ),
       ),
     );

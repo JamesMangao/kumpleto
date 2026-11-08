@@ -16,6 +16,8 @@ import '../l10n/app_localizations.dart';
 ///   first-launch flag lives in SharedPreferences, read here, so main.dart
 ///   needs no changes.
 /// - Skip button is available immediately; tapping anywhere also skips.
+/// - The scene never leaves on its own: it holds its last frame until the
+///   reader skips it.
 class WelcomeGate extends ConsumerStatefulWidget {
   const WelcomeGate({
     super.key,
@@ -44,6 +46,7 @@ class _WelcomeGateState extends ConsumerState<WelcomeGate>
   late final AnimationController _controller = AnimationController(vsync: this);
   bool _started = false;
   bool _finished = false;
+  bool _dismissing = false;
   bool _compact = false;
 
   @override
@@ -62,18 +65,19 @@ class _WelcomeGateState extends ConsumerState<WelcomeGate>
     _controller.duration = _compact
         ? const Duration(milliseconds: 700)
         : const Duration(milliseconds: 3000);
-    _controller.forward().whenComplete(() {
-      if (mounted) setState(() => _finished = true);
-    });
+    _controller.forward();
   }
 
+  /// The scene never hands over on its own: the sequence settles and waits
+  /// for this. Fading first keeps the hand-over soft, and reduced motion gets
+  /// the instant swap.
   void _skip() {
-    if (_finished) return;
-    _controller.animateTo(
-      1,
-      duration: const Duration(milliseconds: 180),
-      curve: Curves.easeOut,
-    );
+    if (_finished || _dismissing) return;
+    if (Motion.reduced(context)) {
+      setState(() => _finished = true);
+      return;
+    }
+    setState(() => _dismissing = true);
   }
 
   @override
@@ -103,16 +107,26 @@ class _WelcomeGateState extends ConsumerState<WelcomeGate>
           child: IgnorePointer(
             ignoring: !showing,
             child: showing
-                ? GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: _skip,
-                    child: RepaintBoundary(
-                      child: AnimatedBuilder(
-                        animation: _controller,
-                        builder: (context, _) => _WelcomeScene(
-                          t: _controller.value,
-                          compact: _compact,
-                          onSkip: _skip,
+                ? AnimatedOpacity(
+                    opacity: _dismissing ? 0 : 1,
+                    duration: Motion.of(context, Motion.fast),
+                    curve: Motion.standard,
+                    onEnd: () {
+                      if (_dismissing && mounted) {
+                        setState(() => _finished = true);
+                      }
+                    },
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: _skip,
+                      child: RepaintBoundary(
+                        child: AnimatedBuilder(
+                          animation: _controller,
+                          builder: (context, _) => _WelcomeScene(
+                            t: _controller.value,
+                            compact: _compact,
+                            onSkip: _skip,
+                          ),
                         ),
                       ),
                     ),
@@ -211,7 +225,8 @@ class _WelcomeScene extends StatelessWidget {
     final p = _Palette.of(context);
     final fil = _isFil(context);
 
-    final fadeOut = compact ? _segment(0.7, 1.0) : _segment(0.9, 1.0);
+    // The scene holds its last frame until the user skips, so only the
+    // entrance fades: the exit is the overlay's own dismiss fade.
     final fadeIn = compact ? _segment(0.0, 0.35) : 1.0;
 
     final wordmark = _ease(0.02, 0.20);
@@ -223,7 +238,7 @@ class _WelcomeScene extends StatelessWidget {
     final cardWidth = math.min(320.0, MediaQuery.sizeOf(context).width - 48);
 
     return Opacity(
-      opacity: (1 - fadeOut) * fadeIn,
+      opacity: fadeIn,
       child: Material(
         color: p.bg,
         child: SafeArea(

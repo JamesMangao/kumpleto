@@ -1,0 +1,48 @@
+# Bundle — every document it lists (psa-birth-certificate, lto-student-permit,
+# lto-drivers-license) is now verified, so the bundle was promoted on
+# 2026-11-07.
+schema_version: 1
+id: student-to-driver
+name:
+  en: Student to Driver Pack
+  fil: Student to Driver Pack
+description:
+  en: >-
+    The route from first lesson to first license: birth certificate, the
+    student permit after the 15-hour theoretical course, then the
+    non-professional driver's license. Community-curated — confirm with the
+    Land Transportation Office.
+  fil: >-
+    Ang ruta mula unang lesson hanggang unang lisensya: birth certificate,
+    student permit pagkatapos ng 15-oras na theoretical course, pagkatapos ang
+    non-professional driver's license. Kurado ng komunidad — kumpirmahin sa
+    Land Transportation Office.
+status: verified
+documents:
+  - psa-birth-certificate
+  - lto-student-permit
+  - lto-drivers-license
+tags: [driver, transport]
+icon: directions_car
+notes:
+  - en: >-
+      Do it in order. The student permit needs the 15-hour theoretical course
+      first, and the license needs the permit held for at least one month plus
+      the practical driving course.
+    fil: >-
+      Sundin ang pagkakasunod-sunod. Kailangan muna ng student permit ang
+      15-oras na theoretical course, at kailangan ng lisensya ang permit na
+      hawak nang hindi bababa sa isang buwan at ang practical driving course.
+  - en: >-
+      The student permit expires after one year. If it lapses before you finish
+      the practical course, you start the permit step again.
+    fil: >-
+      Nag-expire ang student permit pagkatapos ng isang taon. Kapag nalampasan
+      ito bago matapos ang practical course, balik ka sa permit step.
+  - en: >-
+      Only drive with a licensed companion while on a student permit — driving
+      alone is a violation even if you already passed the theoretical exam.
+    fil: >-
+      Magmaneho lang kasama ang lisensyadong kasama habang student permit pa —
+      paglabag ang magmaneho nang mag-isa kahit pumasa ka na sa theoretical
+      exam.

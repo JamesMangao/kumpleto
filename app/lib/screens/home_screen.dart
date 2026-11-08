@@ -3,8 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../core/theme.dart';
-import '../data/location.dart';
+import '../data/profiles.dart';
 import '../data/providers.dart';
+import '../data/update_service.dart';
 import '../l10n/app_localizations.dart';
 import '../models/models.dart';
 import '../widgets/shared.dart';
@@ -21,6 +22,9 @@ class HomeScreen extends ConsumerStatefulWidget {
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   final TextEditingController _searchController = TextEditingController();
 
+  /// True once the "new data" notice has been shown for this launch.
+  bool _announcedUpdate = false;
+
   @override
   void dispose() {
     _searchController.dispose();
@@ -33,6 +37,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final theme = Theme.of(context);
     final data = ref.watch(dataBundleProvider);
     final progress = ref.watch(progressProvider).value ?? const {};
+
+    // A feed check that replaced the data happened without the reader doing
+    // anything, so say it once. Silent until `main()` reports an update.
+    if (!_announcedUpdate && ref.watch(lastUpdateProvider) is UpdateAccepted) {
+      _announcedUpdate = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        final version = ref.read(dataBundleProvider).value?.dataVersion;
+        if (version == null) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(l10n.dataUpdatedNotice(version))),
+        );
+      });
+    }
 
     return Scaffold(
       appBar: unofficialAppBar(context, l10n.appTitle),
@@ -77,9 +95,7 @@ class _HomeBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final savedLocation = SavedLocation.read(
-      ref.watch(sharedPreferencesProvider),
-    );
+    final savedLocation = ref.watch(savedLocationProvider);
     final documents = ref.watch(documentsProvider);
     final bundles = ref.watch(bundlesProvider);
     final isDark = theme.brightness == Brightness.dark;
@@ -103,19 +119,28 @@ class _HomeBody extends ConsumerWidget {
     return ListView(
       padding: const EdgeInsets.only(bottom: 32),
       children: [
-        // Hero headline
+        // Hero headline, with whose checklist this is on the right.
         Padding(
-          padding: const EdgeInsets.fromLTRB(20, 16, 20, 12),
-          child: Text(
-            isFilipino
-                ? 'Ano ang kailangan mo ngayon?'
-                : 'What do you need today?',
-            style: theme.textTheme.headlineMedium?.copyWith(
-              fontWeight: FontWeight.w800,
-              fontSize: 26,
-              letterSpacing: -0.5,
-              color: theme.colorScheme.onSurface,
-            ),
+          padding: const EdgeInsets.fromLTRB(20, 16, 16, 12),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Text(
+                  isFilipino
+                      ? 'Ano ang kailangan mo ngayon?'
+                      : 'What do you need today?',
+                  style: theme.textTheme.headlineMedium?.copyWith(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 26,
+                    letterSpacing: -0.5,
+                    color: theme.colorScheme.onSurface,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              const Padding(padding: EdgeInsets.only(top: 4), child: _ProfileChip()),
+            ],
           ),
         ),
 
@@ -324,6 +349,211 @@ class _HomeBody extends ConsumerWidget {
       ],
     );
   }
+}
+
+/// Whose checklist is on screen, and the way to switch or add a person.
+///
+/// It sits beside the hero question rather than in Settings because it changes
+/// what every list on this screen means.
+class _ProfileChip extends ConsumerWidget {
+  const _ProfileChip();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final profile = ref.watch(currentProfileProvider);
+    final label = profile.isMe ? l10n.profileMe : profile.name;
+
+    return Semantics(
+      button: true,
+      label: l10n.profileSwitcher(label),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(20),
+        onTap: () => _showProfileSheet(context, ref),
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(10, 6, 8, 6),
+          decoration: BoxDecoration(
+            color: isDark ? const Color(0xFF1D2E27) : const Color(0xFFEAF5F1),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: isDark ? const Color(0xFF2C4439) : const Color(0xFFD4E8E0),
+            ),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(
+                Icons.person_outline,
+                size: 15,
+                color: AppTheme.primaryTeal,
+              ),
+              const SizedBox(width: 5),
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 92),
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                    color: isDark
+                        ? const Color(0xFF8AE0C4)
+                        : AppTheme.primaryTeal,
+                  ),
+                ),
+              ),
+              Icon(
+                Icons.expand_more,
+                size: 15,
+                color: isDark ? const Color(0xFF8AE0C4) : AppTheme.primaryTeal,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+Future<void> _showProfileSheet(BuildContext context, WidgetRef ref) {
+  return showModalBottomSheet<void>(
+    context: context,
+    showDragHandle: true,
+    builder: (sheetContext) => SafeArea(
+      child: Consumer(
+        builder: (sheetContext, sheetRef, _) {
+          final l10n = AppLocalizations.of(sheetContext)!;
+          final profiles = sheetRef.watch(profilesProvider);
+          final active = sheetRef.watch(currentProfileProvider);
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              for (final profile in profiles)
+                ListTile(
+                  leading: Icon(
+                    profile == active
+                        ? Icons.radio_button_checked
+                        : Icons.radio_button_unchecked,
+                    color: profile == active ? AppTheme.primaryTeal : null,
+                  ),
+                  title: Text(profile.isMe ? l10n.profileMe : profile.name),
+                  trailing: profile.isMe
+                      ? null
+                      : IconButton(
+                          tooltip: l10n.profileRemove,
+                          icon: const Icon(Icons.delete_outline),
+                          onPressed: () =>
+                              _confirmRemoveProfile(sheetContext, sheetRef, l10n, profile),
+                        ),
+                  onTap: () async {
+                    await sheetRef
+                        .read(activeProfileProvider.notifier)
+                        .select(profile.id);
+                    if (sheetContext.mounted) Navigator.of(sheetContext).pop();
+                  },
+                ),
+              ListTile(
+                leading: const Icon(Icons.person_add_alt),
+                title: Text(l10n.profileAdd),
+                onTap: () => _addProfile(sheetContext, sheetRef, l10n),
+              ),
+            ],
+          );
+        },
+      ),
+    ),
+  );
+}
+
+Future<void> _addProfile(
+  BuildContext context,
+  WidgetRef ref,
+  AppLocalizations l10n,
+) async {
+  final name = await showDialog<String>(
+    context: context,
+    builder: (dialogContext) => const _AddProfileDialog(),
+  );
+  if (name == null || name.trim().isEmpty) return;
+  final profile = await ref.read(profilesProvider.notifier).add(name);
+  await ref.read(activeProfileProvider.notifier).select(profile.id);
+  if (context.mounted) Navigator.of(context).pop();
+}
+
+/// Asks for a name. The field owns its controller so it is disposed with the
+/// route instead of while the dialog is still closing.
+class _AddProfileDialog extends StatefulWidget {
+  const _AddProfileDialog();
+
+  @override
+  State<_AddProfileDialog> createState() => _AddProfileDialogState();
+}
+
+class _AddProfileDialogState extends State<_AddProfileDialog> {
+  final TextEditingController _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return AlertDialog(
+      title: Text(l10n.profileAddTitle),
+      content: TextField(
+        controller: _controller,
+        autofocus: true,
+        textCapitalization: TextCapitalization.words,
+        decoration: InputDecoration(
+          labelText: l10n.profileNameLabel,
+          hintText: l10n.profileNameHint,
+        ),
+        onSubmitted: (value) => Navigator.of(context).pop(value),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(l10n.cancel),
+        ),
+        FilledButton(
+          onPressed: () => Navigator.of(context).pop(_controller.text),
+          child: Text(l10n.confirm),
+        ),
+      ],
+    );
+  }
+}
+
+Future<void> _confirmRemoveProfile(
+  BuildContext context,
+  WidgetRef ref,
+  AppLocalizations l10n,
+  Profile profile,
+) async {
+  final confirmed = await showDialog<bool>(
+    context: context,
+    builder: (dialogContext) => AlertDialog(
+      title: Text(l10n.profileRemoveTitle(profile.name)),
+      content: Text(l10n.profileRemoveMessage),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(dialogContext).pop(false),
+          child: Text(l10n.cancel),
+        ),
+        FilledButton(
+          onPressed: () => Navigator.of(dialogContext).pop(true),
+          child: Text(l10n.confirm),
+        ),
+      ],
+    ),
+  );
+  if (confirmed != true) return;
+  await ref.read(profilesProvider.notifier).remove(profile.id);
 }
 
 class _SectionHeader extends StatelessWidget {

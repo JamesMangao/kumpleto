@@ -123,3 +123,10 @@ processing_note:
   fil: >-
     Ang regular ay mga 12 working days at ang expedited mga 7 working days,
     mula sa petsa ng appointment.
+
+# ₱950 regular / ₱1,200 expedited and 12 / 7 working days, both straight from
+# the notes above. Delivery is extra.
+fee_min: 950
+fee_max: 1200
+processing_days_min: 7
+processing_days_max: 12

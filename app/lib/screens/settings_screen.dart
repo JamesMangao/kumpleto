@@ -6,8 +6,6 @@ import 'package:package_info_plus/package_info_plus.dart';
 import '../core/constants.dart';
 import '../core/settings.dart';
 import '../core/theme.dart';
-import '../data/data_repository.dart';
-import '../data/location.dart';
 import '../data/providers.dart';
 import '../data/update_service.dart';
 import '../l10n/app_localizations.dart';
@@ -73,6 +71,25 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     if (result is UpdateAccepted) ref.invalidate(loadedDataProvider);
   }
 
+  /// Turning reminders on is the moment to ask the OS: without the permission
+  /// the switch would claim to be on while nothing is ever delivered.
+  Future<void> _setReminders(bool value) async {
+    final l10n = AppLocalizations.of(context)!;
+    if (!value) {
+      await ref.read(reminderSchedulerProvider).cancelAll();
+      await widget.settings.setRemindersEnabled(false);
+      return;
+    }
+    final granted = await ref.read(reminderSchedulerProvider).requestPermission();
+    if (!mounted) return;
+    if (!granted) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(l10n.settingsRemindersDenied)));
+    }
+    await widget.settings.setRemindersEnabled(granted);
+  }
+
   Future<void> _resetProgress() async {
     final l10n = AppLocalizations.of(context)!;
     final confirmed = await showDialog<bool>(
@@ -93,7 +110,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       ),
     );
     if (confirmed != true || !mounted) return;
-    await ref.read(progressRepositoryProvider).resetAll();
+    await ref.read(progressRepositoryProvider).resetEverything();
     if (!mounted) return;
     ScaffoldMessenger.of(
       context,
@@ -106,11 +123,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final settings = widget.settings;
-    final loaded = ref.watch(loadedDataProvider);
 
-    final prefs = ref.watch(sharedPreferencesProvider);
-    final lastCheck = prefs.getInt(PrefsKeys.lastDataCheck);
-    final savedLocation = SavedLocation.read(prefs);
+    final savedLocation = ref.watch(savedLocationProvider);
 
     return Scaffold(
       appBar: unofficialAppBar(context, l10n.appTitle),
@@ -320,7 +334,42 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
             const SizedBox(height: 10),
 
-            // Section 3: Content Data & Legal Grouped Card
+            // Section 3: Expiry reminders
+            _SectionLabel(l10n.settingsReminders),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Card(
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  side: BorderSide(
+                    color: isDark ? AppTheme.borderDark : AppTheme.borderLight,
+                  ),
+                ),
+                child: SwitchListTile(
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 2,
+                  ),
+                  secondary: const SquircleIcon(
+                    icon: Icons.notifications_active_outlined,
+                    size: 36,
+                    iconSize: 20,
+                  ),
+                  title: Text(
+                    l10n.settingsReminders,
+                    style: const TextStyle(fontWeight: FontWeight.w700),
+                  ),
+                  subtitle: Text(l10n.settingsRemindersSubtitle),
+                  value: settings.remindersEnabled,
+                  onChanged: _setReminders,
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 10),
+
+            // Section 4: Content Data & Legal Grouped Card
             _SectionLabel(l10n.settingsData),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -334,97 +383,46 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 ),
                 child: Column(
                   children: [
-                    // Data Version Item
+                    // Update check — the data version, source and last-check
+                    // stamp are internal bookkeeping, so they stay out of the
+                    // screen a normal user reads.
                     Padding(
                       padding: const EdgeInsets.all(14),
-                      child: loaded.when(
-                        loading: () => const Center(
-                          child: Padding(
-                            padding: EdgeInsets.all(8),
-                            child: CircularProgressIndicator(),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          SizedBox(
+                            width: double.infinity,
+                            child: OutlinedButton.icon(
+                              icon: _checking
+                                  ? const SizedBox(
+                                      width: 16,
+                                      height: 16,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                      ),
+                                    )
+                                  : const Icon(Icons.sync, size: 18),
+                              label: Text(_checking
+                                  ? l10n.settingsChecking
+                                  : l10n.settingsCheckForUpdates),
+                              style: OutlinedButton.styleFrom(
+                                shape: const StadiumBorder(),
+                              ),
+                              onPressed: _checking ? null : _checkForUpdates,
+                            ),
                           ),
-                        ),
-                        error: (error, stack) => Text('$error'),
-                        data: (loadedData) => Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                const SquircleIcon(
-                                  icon: Icons.sync,
-                                  size: 36,
-                                  iconSize: 20,
-                                ),
-                                const SizedBox(width: 12),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      _Row(
-                                        label: l10n.settingsDataVersion,
-                                        value: loadedData.data.dataVersion,
-                                      ),
-                                      const SizedBox(height: 4),
-                                      _Row(
-                                        label: l10n.settingsDataSource,
-                                        value: switch (loadedData.source) {
-                                          DataSource.bundledRelease => 'Bundled',
-                                          DataSource.bundledDrafts => 'Bundled (drafts)',
-                                          DataSource.cache => 'Cached update',
-                                        },
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                        lastCheck == null
-                                            ? l10n.settingsNeverChecked
-                                            : l10n.settingsLastChecked(
-                                                DateTime.fromMillisecondsSinceEpoch(
-                                                  lastCheck,
-                                                ).toLocal().toString().replaceAll('T', ' '),
-                                              ),
-                                        style: theme.textTheme.bodySmall?.copyWith(
-                                          color: theme.colorScheme.onSurfaceVariant,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 10),
-                            SizedBox(
-                              width: double.infinity,
-                              child: OutlinedButton.icon(
-                                icon: _checking
-                                    ? const SizedBox(
-                                        width: 16,
-                                        height: 16,
-                                        child: CircularProgressIndicator(
-                                          strokeWidth: 2,
-                                        ),
-                                      )
-                                    : const Icon(Icons.sync, size: 18),
-                                label: Text(_checking
-                                    ? l10n.settingsChecking
-                                    : l10n.settingsCheckForUpdates),
-                                style: OutlinedButton.styleFrom(
-                                  shape: const StadiumBorder(),
-                                ),
-                                onPressed: _checking ? null : _checkForUpdates,
+                          if (_updateMessage != null) ...[
+                            const SizedBox(height: 8),
+                            Text(
+                              _updateMessage!,
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: AppTheme.primaryTeal,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
-                            if (_updateMessage != null) ...[
-                              const SizedBox(height: 8),
-                              Text(
-                                _updateMessage!,
-                                style: theme.textTheme.bodySmall?.copyWith(
-                                  color: AppTheme.primaryTeal,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
                           ],
-                        ),
+                        ],
                       ),
                     ),
 
@@ -551,6 +549,33 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
                     const Divider(height: 1),
 
+                    // Replay Onboarding & Disclaimer Item
+                    ListTile(
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 2,
+                      ),
+                      leading: const SquircleIcon(
+                        icon: Icons.replay_rounded,
+                        size: 36,
+                        iconSize: 20,
+                      ),
+                      title: Text(
+                        l10n.settingsReplayOnboarding,
+                        style: const TextStyle(fontWeight: FontWeight.w700),
+                      ),
+                      subtitle: Text(l10n.settingsReplayOnboardingSubtitle),
+                      trailing: const Icon(Icons.chevron_right, size: 18),
+                      onTap: () async {
+                        await widget.settings.resetFirstRun();
+                        if (context.mounted) {
+                          context.go('/first-run');
+                        }
+                      },
+                    ),
+
+                    const Divider(height: 1),
+
                     // Privacy Item
                     ListTile(
                       contentPadding: const EdgeInsets.symmetric(
@@ -626,35 +651,6 @@ class _SectionLabel extends StatelessWidget {
           fontSize: 14,
         ),
       ),
-    );
-  }
-}
-
-class _Row extends StatelessWidget {
-  const _Row({required this.label, required this.value});
-
-  final String label;
-  final String value;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    if (value.isEmpty) {
-      return Text(label, style: theme.textTheme.bodyMedium);
-    }
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('$label: ', style: theme.textTheme.bodyMedium),
-        Expanded(
-          child: Text(
-            value,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: theme.colorScheme.onSurfaceVariant,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

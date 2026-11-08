@@ -1,0 +1,162 @@
+# RA 9048 Administrative Petition for Correction
+# Facts sourced from the Philippine Statistics Authority page
+# https://psa.gov.ph/administrative-petition-for-correction: where the petition
+# is filed (the civil registry office where the record is kept, or the
+# Philippine consulate for a birth reported abroad), the ₱1,000 fee for a
+# correction of clerical error and the ₱3,000 fee for a change of first name,
+# the US$50 / US$150 consular rates, and the supporting documents (at least two
+# public or private documents showing the correct entry plus whatever else the
+# registrar considers necessary). RA 9048 itself is published on the same site.
+# Fees and the decision deadline re-checked 2026-11-07 against the PSA page and
+# RA 9048 Sec. 6 (the registrar decides within five working days after the
+# posting/publication requirement). Local registrars also charge posting and
+# legal-instrument fees, and the whole petition runs for months because of the
+# ten-day posting and the PSA's own review. Promoted to verified on the
+# maintainer's instruction.
+schema_version: 1
+id: ra-9048-civil-registry-correction
+name:
+  en: RA 9048 Civil Registry Correction
+  fil: RA 9048 Civil Registry Correction
+agency: psa
+status: verified
+source_url: https://psa.gov.ph/administrative-petition-for-correction
+last_verified: '2026-11-07'
+verified_by: JamesMangao
+apply_online: false
+fee_min: 1000
+fee_max: 3000
+summary:
+  en: >-
+    Administrative petition that fixes a clerical or typographical error in a
+    birth, marriage, or death record — or changes a first name or nickname —
+    without going to court.
+  fil: >-
+    Administratibong petisyon na nagwawasto ng clerical o typographical error
+    sa birth, marriage, o death record — o nagpapalit ng first name o nickname
+    — nang hindi na kailangan ng korte.
+tags: [civil-registry, correction, psa, petition]
+where_to_apply:
+  en: >-
+    The local civil registry office of the city or municipality where the
+    record is kept. If you live elsewhere, you may file at the civil registrar
+    where you reside or are domiciled; a birth reported abroad is handled by
+    the Philippine consulate where it was reported.
+  fil: >-
+    Local civil registry office ng lungsod o munisipalidad kung saan
+    nakatago ang record. Kung sa iba ka nakatira, maaari kang mag-file sa
+    civil registrar kung saan ka nakatira o domiciled; ang birth na iniulat sa
+    ibang bansa ay sa konsulado ng Pilipinas kung saan ito iniulat.
+requirements:
+  - id: petition-form
+    text:
+      en: >-
+        Duly accomplished and notarised petition form, available from the civil
+        registry office.
+      fil: >-
+        Nasagutan at notaryadong petition form, makukuha sa civil registry
+        office.
+    original: true
+  - id: psa-copy
+    text:
+      en: >-
+        PSA-authentic copy, or certified machine copy, of the civil registry
+        document to be corrected.
+      fil: >-
+        PSA-authentic copy, o certified machine copy, ng civil registry
+        dokumentong ipapawasto.
+    original: true
+  - id: supporting-documents
+    text:
+      en: >-
+        At least two (2) public or private documents showing the correct entry,
+        such as a school record, employment record, baptismal certificate, or
+        a government ID.
+      fil: >-
+        Hindi bababa sa dalawang (2) pampubliko o pribadong dokumentong
+        nagpapakita ng tamang entry, gaya ng school record, employment record,
+        baptismal certificate, o ID ng gobyerno.
+    original: true
+    photocopies: 2
+  - id: valid-id
+    text:
+      en: Valid government-issued ID of the petitioner.
+      fil: Valid na ID ng gobyerno ng petisyoner.
+    original: true
+  - id: authorization
+    text:
+      en: >-
+        If a representative files: an authorization letter or SPA, plus the
+        representative's valid ID.
+      fil: >-
+        Kung may kinatawan: authorization letter o SPA, at valid ID ng
+        kinatawan.
+    optional: true
+steps:
+  - en: >-
+      Confirm the error can be fixed this way: RA 9048 covers clerical or
+      typographical errors and a change of first name or nickname. Nationality,
+      age, and civil status need a court order.
+    fil: >-
+      Tiyakin na kaya itong ayusin sa ganitong paraan: saklaw ng RA 9048 ang
+      clerical o typographical error at pagpapalit ng first name o nickname.
+      Ang nationality, edad, at civil status ay kailangan ng court order.
+  - en: >-
+      Get the petition form at the civil registry office, fill it in, and have
+      it notarised.
+    fil: >-
+      Kunin ang petition form sa civil registry office, sagutan ito, at
+      ipa-notaryo.
+  - en: >-
+      File it with the PSA copy and at least two documents showing the correct
+      entry, and pay the filing fee.
+    fil: >-
+      Ihain ito kasama ang PSA copy at hindi bababa sa dalawang dokumentong
+      nagpapakita ng tamang entry, at bayaran ang filing fee.
+  - en: >-
+      The city or municipal civil registrar decides within five (5) working
+      days and forwards the approved petition to the PSA for the record update.
+    fil: >-
+      Magpapasya ang city o municipal civil registrar sa loob ng limang (5)
+      working day at ipapadala ang aprubadong petisyon sa PSA para sa update ng
+      record.
+  - en: >-
+      Request a new PSA copy of the corrected document once the change has been
+      posted.
+    fil: >-
+      Mag-request ng bagong PSA copy ng naayos na dokumento kapag naipasok na
+      ang pagbabago.
+fee_note:
+  en: >-
+    ₱1,000.00 for a correction of clerical error under RA 9048 and ₱3,000.00
+    for a change of first name, or for a clerical correction under RA 10172.
+    At a Philippine consulate the rates are US$50 and US$150.
+  fil: >-
+    ₱1,000.00 para sa correction of clerical error sa ilalim ng RA 9048 at
+    ₱3,000.00 para sa change of first name, o para sa clerical correction sa
+    ilalim ng RA 10172. Sa konsulado ng Pilipinas, US$50 at US$150.
+notes:
+  - en: >-
+      A petition is not finished in a week. The city or municipal registrar
+      posts the petition for ten (10) days before deciding, then endorses it to
+      the PSA, so budget several months and ask the registry what local posting
+      and legal-instrument fees it also collects.
+    fil: >-
+      Hindi natatapos ang petisyon sa isang linggo. Ipinoposte ng city o
+      municipal registrar ang petisyon nang sampung (10) araw bago magdesisyon,
+      pagkatapos ay i-endorse ito sa PSA, kaya maglaan ng ilang buwan at
+      itanong sa registry kung anong posting at legal-instrument fees ang
+      kinokolekta nito.
+  - en: >-
+      Who may file: the owner of the record, their spouse, children, parents,
+      brothers, sisters, grandparents, guardian, or a person authorised by law.
+    fil: >-
+      Sino ang puwedeng mag-file: ang may-ari ng record, asawa, anak,
+      magulang, kapatid na lalaki o babae, lolo o lola, guardian, o taong
+      awtorisado ng batas.
+  - en: >-
+      A change of gender or of the birth date and month is governed by
+      RA 10172, a separate petition with its own requirements.
+    fil: >-
+      Ang pagpapalit ng kasarian o ng petsa at buwan ng kapanganakan ay saklaw
+      ng RA 10172, isang hiwalay na petisyon na may sariling requirements.

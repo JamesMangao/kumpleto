@@ -1,0 +1,180 @@
+# DFA Apostille / Authentication
+# Sources: DFA Office of Consular Affairs, Authentication Division —
+# Application Process (https://www.apostille.gov.ph/application-process/) and
+# Schedule of Fees (https://www.apostille.gov.ph/schedule-of-fees-tab/):
+# regular processing ₱100 released after 5 working days, expedited ₱200 after
+# 2 working days, e-Apostille ₱200 after 1 working day. Applications are by
+# online appointment only through the Apostille Application & Appointment
+# System (AAAS), whose ₱200 booking fee is credited to the first declared
+# document. Re-checked 2026-11-08 before promotion.
+schema_version: 1
+id: dfa-apostille
+name:
+  en: DFA Apostille / Authentication
+  fil: DFA Apostille / Authentication
+agency: dfa
+status: verified
+last_verified: '2026-11-08'
+verified_by: JamesMangao
+source_url: https://www.apostille.gov.ph/schedule-of-fees-tab/
+apply_online: true
+apply_online_url: https://appointment.apostille.gov.ph/
+summary:
+  en: >-
+    The DFA certificate that lets a Philippine public document be used abroad.
+    Countries in the Apostille Convention accept an Apostille; the rest need
+    authentication. It certifies the signature and seal on the document, not
+    what the document says.
+  fil: >-
+    Sertipiko ng DFA na nagpapahintulot gamitin sa ibang bansa ang isang
+    pampublikong dokumento ng Pilipinas. Ang mga bansang kasapi sa Apostille
+    Convention ay tumatanggap ng Apostille; ang iba ay authentication ang
+    kailangan. Pinapatunayan nito ang pirma at selyo sa dokumento, hindi ang
+    nilalaman nito.
+tags: [overseas, travel, authentication, documents]
+where_to_apply:
+  en: >-
+    DFA Aseana (Pasay City) and the DFA consular offices that accept
+    authentication applications, by online appointment through the Apostille
+    Application and Appointment System (AAAS).
+  fil: >-
+    DFA Aseana (Pasay City) at ang mga consular office ng DFA na tumatanggap
+    ng authentication application, sa pamamagitan ng online appointment sa
+    Apostille Application and Appointment System (AAAS).
+requirements:
+  - id: appointment-letter
+    text:
+      en: >-
+        Printed, confirmed appointment letter and the payment confirmation.
+        Only documents declared in the online application are processed.
+      fil: >-
+        Naka-print at kumpirmadong appointment letter at ang patunay ng bayad.
+        Ang mga dokumentong idineklara lang sa online application ang
+        proseso.
+    original: true
+  - id: document
+    text:
+      en: >-
+        The original Philippine public document, in the form its issuing agency
+        released it — for example a PSA-issued certificate, a PRC licence, or a
+        document certified by the agency that issued it.
+      fil: >-
+        Ang orihinal na pampublikong dokumento, sa anyong inilabas ng ahensya
+        na nagbigay nito — halimbawa sertipikong galing sa PSA, lisensya ng
+        PRC, o dokumentong sinertipikahan ng naglabas na ahensya.
+    original: true
+  - id: valid-id
+    text:
+      en: Valid government-issued ID of the document owner, original and photocopy.
+      fil: >-
+        Valid na ID ng gobyerno ng may-ari ng dokumento, orihinal at
+        photocopy.
+    original: true
+  - id: authorization
+    text:
+      en: >-
+        For a representative: a signed authorization letter and the
+        representative's own valid ID, original and photocopy.
+      fil: >-
+        Para sa kinatawan: pirmafong authorization letter at sariling valid ID
+        ng kinatawan, orihinal at photocopy.
+    optional: true
+  - id: spa-minor
+    text:
+      en: >-
+        For a minor document owner: the parent's Special Power of Attorney,
+        notarized by a Philippine embassy or consulate when the parent is
+        abroad.
+      fil: >-
+        Para sa menor de edad na may-ari: Special Power of Attorney ng
+        magulang, notaryado ng embahada o konsulado ng Pilipinas kung nasa
+        ibang bansa ang magulang.
+    optional: true
+  - id: payment
+    text:
+      en: >-
+        Payment of the per-document fee at the DFA cashier on the appointment
+        date. Additional documents beyond the first are paid there.
+      fil: >-
+        Bayad sa per-document fee sa cashier ng DFA sa araw ng appointment.
+        Ang dagdag na dokumento bukod sa una ay doon binabayaran.
+steps:
+  - en: >-
+      Book an appointment on the AAAS, declaring every document you need
+      apostilled, and pay the ₱200 booking fee within the payment window.
+    fil: >-
+      Mag-book ng appointment sa AAAS, ideklara ang lahat ng dokumentong
+      papa-apostille, at bayaran ang ₱200 booking fee sa loob ng payment
+      window.
+  - en: >-
+      Bring the printed appointment letter, the original documents and a valid
+      ID to the DFA office at your appointment time.
+    fil: >-
+      Dalhin ang naka-print na appointment letter, ang orihinal na dokumento at
+      valid ID sa DFA office sa oras ng appointment.
+  - en: >-
+      Present the documents for assessment at the processing window, then pay
+      the per-document fee at the cashier.
+    fil: >-
+      Ipakita ang mga dokumento para sa assessment sa processing window, at
+      bayaran ang per-document fee sa cashier.
+  - en: >-
+      Return on the release date stated on your receipt, or have your
+      representative claim with the authorization letter and IDs.
+    fil: >-
+      Bumalik sa release date na nakasaad sa resibo, o ipakuha sa kinatawan
+      kasama ang authorization letter at mga ID.
+  - en: >-
+      Check that the Apostille names the right document and country before you
+      send it abroad; it is issued per document.
+    fil: >-
+      Tingnan kung tama ang dokumento at bansa na nakasaad sa Apostille bago
+      ito ipadala sa ibang bansa; isa ito kada dokumento.
+fee_note:
+  en: >-
+    Per document: ₱100 for regular processing (5 working days), ₱200 for
+    expedited (2 working days), ₱200 for e-Apostille (1 working day). The ₱200
+    booking fee covers the first declared document; extra documents are paid
+    at the cashier. All payments are non-refundable.
+  fil: >-
+    Kada dokumento: ₱100 sa regular processing (5 working days), ₱200 sa
+    expedited (2 working days), ₱200 sa e-Apostille (1 working day). Ang ₱200
+    booking fee ay para sa unang dokumentong idineklara; ang dagdag na
+    dokumento ay binabayaran sa cashier. Walang refund ang mga bayad.
+processing_note:
+  en: >-
+    Release runs from acceptance of a complete application: 5 working days for
+    regular, 2 for expedited, 1 for e-Apostille. Holidays and office
+    suspensions move the date.
+  fil: >-
+    Ang release ay mula sa pagtanggap ng kumpletong aplikasyon: 5 working days
+    sa regular, 2 sa expedited, 1 sa e-Apostille. Nagbabago ang petsa kapag may
+    holiday o suspensyon ng opisina.
+notes:
+  - en: >-
+      Use an Apostille for countries in the 1961 Apostille Convention, and
+      authentication (sometimes called red ribbon) for countries that are not
+      part of it.
+    fil: >-
+      Gumamit ng Apostille para sa mga bansang kasapi sa 1961 Apostille
+      Convention, at authentication (tinatawag ding red ribbon) para sa mga
+      bansang hindi kasapi.
+  - en: >-
+      The DFA apostilles Philippine documents for use abroad. It does not
+      apostille a foreign document for use in the Philippines.
+    fil: >-
+      Ang DFA ay nag-a-apostille ng dokumentong Pilipino para gamitin sa ibang
+      bansa. Hindi nito ina-apostille ang dayuhang dokumento para gamitin sa
+      Pilipinas.
+  - en: >-
+      An Apostille proves the signature and seal, not the truth of the
+      contents — the receiving country may still ask for a translation or for
+      more paperwork.
+    fil: >-
+      Pinapatunayan ng Apostille ang pirma at selyo, hindi ang katotohanan ng
+      nilalaman — maaaring humingi pa ng translation o dagdag na papeles ang
+      tatanggap na bansa.
+fee_min: 100
+fee_max: 200
+processing_days_min: 1
+processing_days_max: 5

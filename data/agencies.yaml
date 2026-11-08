@@ -59,6 +59,12 @@
     fil: Philippine National Police
   website: https://pnp.gov.ph/
 
+- id: bfp
+  name:
+    en: Bureau of Fire Protection
+    fil: Bureau of Fire Protection
+  website: https://bfp.gov.ph/
+
 - id: lto
   name:
     en: Land Transportation Office
@@ -83,3 +89,39 @@
     fil: Barangay (lokal na yunit ng pamahalaan)
   website: null
   # No single national website: each barangay issues its own clearance.
+
+- id: lgu
+  name:
+    en: Local Government Unit (City / Municipality)
+    fil: Lokal na Pamahalaan (Lungsod / Munisipalidad)
+  website: null
+
+- id: dti
+  name:
+    en: Department of Trade and Industry
+    fil: Kagawaran ng Kalakalan at Industriya (DTI)
+  website: https://www.dti.gov.ph/
+
+- id: prc
+  name:
+    en: Professional Regulation Commission
+    fil: Komisyon sa Regulasyon ng mga Propesyon (PRC)
+  website: https://www.prc.gov.ph/
+
+- id: dswd
+  name:
+    en: Department of Social Welfare and Development
+    fil: Kagawaran ng Kagalingan at Pagpapaunlad Panlipunan (DSWD)
+  website: https://www.dswd.gov.ph/
+
+- id: owwa
+  name:
+    en: Overseas Workers Welfare Administration
+    fil: Overseas Workers Welfare Administration (OWWA)
+  website: https://owwa.gov.ph/
+
+- id: dmw
+  name:
+    en: Department of Migrant Workers
+    fil: Kagawaran ng Manggagawang Mandarayuhan (DMW)
+  website: https://dmw.gov.ph/

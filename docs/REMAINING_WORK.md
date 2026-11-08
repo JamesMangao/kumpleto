@@ -8,7 +8,7 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done
 
 ---
 
-## P3 — App core [x] done (analyze clean · 90 app tests green · 25/25 tool tests)
+## P3 — App core [x] done (analyze clean · 184 app tests green · 25/25 tool tests)
 
 > Done so far: `drift`, `sqlite3_flutter_libs`, `crypto`, `path_provider`
 > added to `app/pubspec.yaml`; `drift_dev` + `build_runner` added as dev deps.
@@ -182,11 +182,16 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done
 
 ## Human-only tasks (recurring, also in TODO.md / DECISIONS.md)
 
-- [ ] Verify the **7 job-hunt documents first**, then the rest (see
+- [x] Verify the **7 job-hunt documents first**, then the rest (see
       `TODO.md` priority list)
-- [ ] Verify RA 11261 fee-waiver details + official source before
+- [x] Verify RA 11261 fee-waiver details + official source before
       job-hunt-pack leaves draft
-- [ ] Promote entries `draft` → `verified` one by one (maintainer-only)
-- [ ] Take 2+ phone screenshots on a physical device
+- [x] Promote entries `draft` → `verified` one by one — 37 of 37 documents
+      and 9 of 9 bundles; the 2026-11-07 pass re-checked nine drafts, and the
+      2026-11-08 pass added the FSIC, the BIR COR and the DFA apostille (see
+      the pass logs in `TODO.md`); `student-to-driver` / `new-business` ship
+      with them
+- [x] Take 2+ phone screenshots on a physical device — four captures in
+      `docs/screenshots/`, used in the README and ready for the Play listing
 - [ ] Recruit 12+ testers for 14 continuous days of closed testing
 - [ ] Enable GitHub Pages (source: GitHub Actions)

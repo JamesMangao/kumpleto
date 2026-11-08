@@ -17,7 +17,7 @@ void main() {
     await tester.pumpAndSettle();
   }
 
-  testWidgets('swiping right marks the document, swiping left undoes it',
+  testWidgets('the sticky bar marks the document acquired and undoes it',
       (tester) async {
     await pumpKumpleto(tester);
     await openNbi(tester);
@@ -25,26 +25,31 @@ void main() {
 
     expect(find.text(l10n.docAlreadyHaveTitle), findsOneWidget);
 
-    await tester.drag(find.text(l10n.docSwipeToMark), const Offset(220, 0));
+    await tester.tap(find.text(l10n.docMarkAcquired));
     await tester.pumpAndSettle();
     expect(find.text(l10n.docAcquiredNotice), findsOneWidget);
     expect(find.text(l10n.docAlreadyHaveTitle), findsNothing);
 
-    await tester.drag(find.text(l10n.docSwipeToUnmark), const Offset(-220, 0));
+    await tester.tap(find.text(l10n.docUnmarkAcquired));
     await tester.pumpAndSettle();
     expect(find.text(l10n.docAlreadyHaveTitle), findsOneWidget);
     expect(find.text(l10n.docAcquiredNotice), findsNothing);
   });
 
-  testWidgets('a short swipe springs back without marking', (tester) async {
+  testWidgets('marking from the sticky bar survives reopening the document',
+      (tester) async {
     await pumpKumpleto(tester);
     await openNbi(tester);
     final l10n = l10nOf(tester);
 
-    await tester.drag(find.text(l10n.docSwipeToMark), const Offset(30, 0));
+    await tester.tap(find.text(l10n.docMarkAcquired));
     await tester.pumpAndSettle();
-    expect(find.text(l10n.docAlreadyHaveTitle), findsOneWidget);
-    expect(find.text(l10n.docAcquiredNotice), findsNothing);
+
+    await tester.tap(find.byTooltip(l10n.back));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('NBI Clearance'));
+    await tester.pumpAndSettle();
+    expect(find.text(l10n.docAcquiredNotice), findsOneWidget);
   });
 
   testWidgets('the search box matches tags, not only titles', (tester) async {

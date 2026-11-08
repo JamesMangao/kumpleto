@@ -59,7 +59,7 @@ back to the debug key, which is why CI and a fresh clone can still run
 `app/pubspec.yaml` is the single source of truth:
 
 ```yaml
-version: 0.1.0+1   # versionName 0.1.0 · versionCode 1
+version: 1.0.0+1   # versionName 1.0.0 · versionCode 1 (first release)
 ```
 
 * **versionCode must strictly increase for every Play upload.** Bump the `+N`
@@ -188,6 +188,33 @@ Play requires **12+ testers opted in for 14 continuous days** before a new
 personal account can release publicly. Track it in `TODO.md`; the testers opt
 in through the internal/closed testing track link, not by installing the AAB
 by hand.
+
+## 9b. Size audit — 2026-11-07 (1.0.0, prod flavor)
+
+`flutter build apk --flavor prod --release` → `app-prod-release.apk`,
+**71,531,272 bytes (71.5 MB)** with three ABIs bundled, `versionName 1.0.0`,
+`versionCode 1`, `minSdk 24`, `targetSdk 36`, `compileSdk 36` (confirmed with
+`aapt dump badging`). Unpacked sizes:
+
+| Bucket | Size | Contents |
+| --- | --- | --- |
+| `lib/` (native) | 67.3 MB | `libflutter.so` + `libapp.so` + `libsqlite3.so`, three times (one per ABI) |
+| assets | 2.4 MB | launcher/logo PNGs 1.78 MB, PSGC place shards 0.51 MB, `data.json` 0.16 MB |
+| `classes.dex` | 1.2 MB | app + plugin classes (desugared) |
+| `res/` | 0.6 MB | mipmaps, launcher icons |
+
+Per ABI: x86_64 24.2 MB, arm64-v8a 22.7 MB, armeabi-v7a 20.4 MB.
+
+`flutter build appbundle --flavor prod --release` → `app-prod-release.aab`,
+**68,998,854 bytes (65.8 MB)** on disk for the same 1.0.0 build; Play splits it
+per device.
+
+Reading: the app's own payload is ~4 MB — the download is three copies of the
+Flutter engine. Ship the App Bundle (§5) so Play delivers ~23 MB to a phone
+instead of 71.5 MB; the universal APK stays a sideload/QA artifact. The bundled
+`data.json` in this build hashes `ae067899…b4ea5` and matches `dist/data.json`
+exactly, so no draft asset leaked into the release (neither the APK nor the AAB
+contains `data_drafts.json`).
 
 ## 10. Release checklist
 

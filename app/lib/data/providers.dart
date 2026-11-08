@@ -3,11 +3,13 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../core/constants.dart';
+import '../core/reminders.dart';
 import '../models/models.dart';
 import 'app_paths.dart';
 import 'data_repository.dart';
 import 'location.dart';
 import 'place_tokens.dart';
+import 'profiles.dart';
 import 'progress.dart';
 import 'progress_repository.dart';
 import 'update_service.dart';
@@ -28,6 +30,27 @@ final Provider<SharedPreferences> sharedPreferencesProvider =
       (ref) => throw UnimplementedError(
         'sharedPreferencesProvider must be overridden',
       ),
+    );
+
+/// Global First-Time Jobseeker benefit toggle (RA 11261)
+class FirstTimeJobseekerNotifier extends Notifier<bool> {
+  static const _key = 'is_first_time_jobseeker';
+
+  @override
+  bool build() {
+    return ref.watch(sharedPreferencesProvider).getBool(_key) ?? false;
+  }
+
+  Future<void> set(bool value) async {
+    state = value;
+    await ref.read(sharedPreferencesProvider).setBool(_key, value);
+  }
+}
+
+final NotifierProvider<FirstTimeJobseekerNotifier, bool>
+firstTimeJobseekerProvider =
+    NotifierProvider<FirstTimeJobseekerNotifier, bool>(
+      FirstTimeJobseekerNotifier.new,
     );
 
 final Provider<UpdateService> updateServiceProvider = Provider<UpdateService>(
@@ -51,6 +74,22 @@ final FutureProvider<UpdateResult?> scheduledUpdateProvider =
       return result;
     });
 
+/// The last automatic feed check, but only when it actually replaced the data.
+///
+/// `main()` sets it after [scheduledUpdateProvider] finishes, and the home
+/// screen turns it into a one-off notice. It stays null in tests, on failure
+/// and on a 304, so nothing ever floats a message about a check that changed
+/// nothing.
+class LastUpdateNotifier extends Notifier<UpdateResult?> {
+  @override
+  UpdateResult? build() => null;
+
+  void set(UpdateResult? value) => state = value;
+}
+
+final NotifierProvider<LastUpdateNotifier, UpdateResult?> lastUpdateProvider =
+    NotifierProvider<LastUpdateNotifier, UpdateResult?>(LastUpdateNotifier.new);
+
 final Provider<DataRepository> dataRepositoryProvider =
     Provider<DataRepository>(
       (ref) => DataRepository(paths: ref.watch(appPathsProvider)),
@@ -67,8 +106,10 @@ final FutureProvider<LoadedData> loadedDataProvider = FutureProvider<LoadedData>
 /// document text that depends on it rebuilds the moment it changes.
 class SavedLocationNotifier extends Notifier<SavedLocation?> {
   @override
-  SavedLocation? build() =>
-      SavedLocation.read(ref.watch(sharedPreferencesProvider));
+  SavedLocation? build() => SavedLocation.read(
+    ref.watch(sharedPreferencesProvider),
+    profileId: ref.watch(activeProfileProvider),
+  );
 
   void set(SavedLocation? value) => state = value;
 }
@@ -96,17 +137,100 @@ final Provider<ProgressRepository> progressRepositoryProvider =
       (ref) => ProgressRepository(ref.watch(kumpletoDbProvider)),
     );
 
-/// `documentId → checked requirement ids`, live from the database.
-final StreamProvider<Map<String, Set<String>>> progressProvider =
-    StreamProvider<Map<String, Set<String>>>(
-      (ref) => ref.watch(progressRepositoryProvider).watchAll(),
-    );
+/// Schedules the expiry reminders; a no-op where notifications are unsupported.
+final Provider<ReminderScheduler> reminderSchedulerProvider =
+    Provider<ReminderScheduler>((ref) => ReminderScheduler());
 
-/// When each document was marked as acquired, live from the database.
-final StreamProvider<Map<String, DateTime>> acquiredDatesProvider =
-    StreamProvider<Map<String, DateTime>>(
-      (ref) => ref.watch(progressRepositoryProvider).watchAcquiredDates(),
+/// The people whose checklists this device tracks, `me` first.
+///
+/// Removing somebody drops their row data too: a profile without progress is
+/// gone, not hidden.
+class ProfilesNotifier extends Notifier<List<Profile>> {
+  late final ProfilesStore _store = ProfilesStore(
+    ref.watch(sharedPreferencesProvider),
+  );
+
+  @override
+  List<Profile> build() => _store.read();
+
+  /// Adds a person and returns the new profile. The id is derived from the
+  /// clock because the list is local and never merged with anything.
+  Future<Profile> add(String name) async {
+    final profile = Profile(
+      id: 'p${DateTime.now().microsecondsSinceEpoch}',
+      name: name.trim(),
     );
+    final next = [...state, profile];
+    await _store.write(next);
+    state = next;
+    return profile;
+  }
+
+  Future<void> remove(String id) async {
+    if (id == Profile.meId || !state.any((profile) => profile.id == id)) return;
+    await ref.read(progressRepositoryProvider).resetAll(id);
+    await SavedLocation.clear(
+      ref.read(sharedPreferencesProvider),
+      profileId: id,
+    );
+    final next = [
+      for (final profile in state)
+        if (profile.id != id) profile,
+    ];
+    await _store.write(next);
+    state = next;
+    if (ref.read(activeProfileProvider) == id) {
+      await ref.read(activeProfileProvider.notifier).select(Profile.meId);
+    }
+  }
+}
+
+final NotifierProvider<ProfilesNotifier, List<Profile>> profilesProvider =
+    NotifierProvider<ProfilesNotifier, List<Profile>>(ProfilesNotifier.new);
+
+/// Which person the checklists on screen belong to.
+class ActiveProfileNotifier extends Notifier<String> {
+  late final ProfilesStore _store = ProfilesStore(
+    ref.watch(sharedPreferencesProvider),
+  );
+
+  @override
+  String build() => _store.readActiveId();
+
+  Future<void> select(String id) async {
+    await _store.writeActiveId(id);
+    state = id;
+  }
+}
+
+final NotifierProvider<ActiveProfileNotifier, String> activeProfileProvider =
+    NotifierProvider<ActiveProfileNotifier, String>(ActiveProfileNotifier.new);
+
+/// The active profile, resolved against the stored list (an id that no longer
+/// exists falls back to `me`).
+final Provider<Profile> currentProfileProvider = Provider<Profile>((ref) {
+  final id = ref.watch(activeProfileProvider);
+  final profiles = ref.watch(profilesProvider);
+  for (final profile in profiles) {
+    if (profile.id == id) return profile;
+  }
+  return Profile.me;
+});
+
+/// `documentId → checked requirement ids` for the active profile, live from the
+/// database.
+final StreamProvider<Map<String, Set<String>>> progressProvider =
+    StreamProvider<Map<String, Set<String>>>((ref) {
+      final profileId = ref.watch(currentProfileProvider).id;
+      return ref.watch(progressRepositoryProvider).watchAll(profileId);
+    });
+
+/// When each document was marked as acquired, for the active profile.
+final StreamProvider<Map<String, DateTime>> acquiredDatesProvider =
+    StreamProvider<Map<String, DateTime>>((ref) {
+      final profileId = ref.watch(currentProfileProvider).id;
+      return ref.watch(progressRepositoryProvider).watchAcquiredDates(profileId);
+    });
 
 /// All documents, name-sorted for the list screen.
 final Provider<List<Document>> documentsProvider = Provider<List<Document>>((

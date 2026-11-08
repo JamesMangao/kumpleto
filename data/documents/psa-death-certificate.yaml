@@ -1,0 +1,146 @@
+# PSA Death Certificate
+# Facts sourced from the Philippine Statistics Authority regional page
+# https://rsso01.psa.gov.ph/death-certificate (the information a requester has
+# to supply) and the PSA Serbilis request channel on psaserbilis.com.ph (who
+# may be issued a death certificate, the fees, and the outlet pick-up). PSA
+# Office Memorandum No. 2017-050 restricts issuance to the owner, spouse,
+# parent, direct descendants, guardian or an institution legally in charge.
+# Fees re-checked 2026-11-07 on PSA Serbilis' published terms (PhP 155.00 per
+# copy at a PSA outlet, PhP 330.00 per copy by delivery, PhP 130.00 for a
+# Viewable Online copy paid at an outlet), and the outlet release plus the
+# delivery window against the same page. Promoted to verified on the
+# maintainer's instruction.
+schema_version: 1
+id: psa-death-certificate
+name:
+  en: PSA Death Certificate
+  fil: PSA Death Certificate
+agency: psa
+status: verified
+source_url: https://rsso01.psa.gov.ph/death-certificate
+last_verified: '2026-11-07'
+verified_by: JamesMangao
+apply_online: true
+apply_online_url: https://psaserbilis.com.ph/
+fee_min: 130
+fee_max: 330
+processing_days_min: 0
+processing_days_max: 9
+summary:
+  en: >-
+    Certified copy of a death record from the Philippine Statistics Authority,
+    used for estate settlement, insurance and pension claims, remarriage, and
+    correcting other records.
+  fil: >-
+    Sertipikadong kopya ng death record mula sa Philippine Statistics
+    Authority, ginagamit sa estate settlement, insurance at pension claims,
+    muling pag-aasawa, at pagwawasto ng ibang record.
+tags: [civil-registry, death, psa, estate, pension]
+where_to_apply:
+  en: >-
+    Online through PSA Serbilis or the PSA Helpline, or in person at any PSA
+    Civil Registry System outlet.
+  fil: >-
+    Online sa PSA Serbilis o PSA Helpline, o personal sa kahit anong PSA Civil
+    Registry System outlet.
+requirements:
+  - id: deceased-details
+    text:
+      en: >-
+        Complete name of the deceased, date of death, place of death, and place
+        of marriage.
+      fil: >-
+        Kumpletong pangalan ng namatay, petsa ng kamatayan, lugar ng
+        kamatayan, at lugar ng kasal.
+    original: true
+  - id: requester-details
+    text:
+      en: >-
+        Your complete name and address, the number of copies needed, and the
+        purpose of the request — a general statement of purpose is not
+        accepted.
+      fil: >-
+        Kumpletong pangalan at address mo, bilang ng kopyang kailangan, at
+        layunin ng request — hindi tinatanggap ang pangkalahatang layunin.
+    original: true
+  - id: valid-id
+    text:
+      en: Valid government-issued ID of the requester.
+      fil: Valid na ID ng gobyerno ng nagre-request.
+    original: true
+  - id: authorization
+    text:
+      en: >-
+        If a representative files: an authorization letter or SPA naming the
+        document type, plus the representative's valid ID. A guardian also
+        presents proof of guardianship.
+      fil: >-
+        Kung may kinatawan: authorization letter o SPA na nakasaad ang uri ng
+        dokumento, at valid ID ng kinatawan. Ang guardian ay nagpapakita rin ng
+        patunay ng guardianship.
+    optional: true
+steps:
+  - en: >-
+      Confirm you are entitled to the record: the owner, spouse, parent,
+      direct descendant, guardian, or an institution legally in charge.
+    fil: >-
+      Tiyakin na karapatan mong kunin ang record: ang may-ari, asawa,
+      magulang, direct descendant, guardian, o institusyong legal na
+      namamahala.
+  - en: >-
+      Fill out the request online at PSA Serbilis, or get the application form
+      at a PSA Civil Registry System outlet.
+    fil: >-
+      Sagutan ang request online sa PSA Serbilis, o kunin ang application form
+      sa PSA Civil Registry System outlet.
+  - en: >-
+      Pay the fee — online, over the counter, or at the outlet — and keep the
+      receipt and reference number.
+    fil: >-
+      Bayaran ang fee — online, sa counter, o sa outlet — at itago ang resibo
+      at reference number.
+  - en: >-
+      Claim the certificate at the outlet, or wait for delivery if you chose
+      door-to-door.
+    fil: >-
+      Kunin ang sertipiko sa outlet, o hintayin ang delivery kung door-to-door
+      ang pinili mo.
+fee_note:
+  en: >-
+    ₱155 per copy for outlet pick-up, ₱330 per copy with delivery, and ₱130 for
+    a viewable online copy that must be paid in person at a PSA outlet.
+  fil: >-
+    ₱155 kada kopya kung sa outlet kukunin, ₱330 kada kopya kung ipapadeliver,
+    at ₱130 para sa viewable online copy na kailangang bayaran nang personal sa
+    PSA outlet.
+processing_note:
+  en: >-
+    Copy issuance at a PSA outlet is released on the outlet's own schedule,
+    usually on the same visit with a booked appointment. Delivery orders take
+    about three (3) to nine (9) working days after payment.
+  fil: >-
+    Ang copy issuance sa PSA outlet ay inilalabas ayon sa schedule ng outlet,
+    kadalasan sa parehong pagpunta kung may naka-book na appointment. Ang
+    delivery order ay tumatagal ng mga tatlo (3) hanggang siyam (9) na working
+    day pagkatapos ng bayad.
+notes:
+  - en: >-
+      Check the record first. If the death was never registered, or the entry
+      is blurred or misspelled, the local civil registrar has to endorse a
+      corrected copy to the PSA before a clean certificate can be issued.
+    fil: >-
+      Tiyakin muna ang record. Kung hindi nairehistro ang kamatayan, o malabo
+      o mali ang entry, kailangang i-endorse ng local civil registrar ang
+      naayos na kopya sa PSA bago makakuha ng malinaw na sertipiko.
+  - en: >-
+      Order more than one copy: banks, insurers, and the estate settlement all
+      keep the certificate they receive.
+    fil: >-
+      Kumuha ng higit sa isang kopya: kinukuha ng mga bangko, insurer, at ng
+      estate settlement ang sertipikong natatanggap nila.
+  - en: >-
+      For a death abroad of a Filipino citizen, the record is reported to the
+      Philippine consulate and then endorsed to the PSA.
+    fil: >-
+      Para sa pagkamatay ng Pilipino sa ibang bansa, iniuulat ang record sa
+      konsulado ng Pilipinas at pagkatapos i-endorse sa PSA.

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'core/deep_links.dart';
 import 'core/motion.dart';
 import 'core/settings.dart';
 import 'screens/bundle_detail_screen.dart';
+import 'screens/disclaimer_screen.dart';
 import 'screens/document_detail_screen.dart';
 import 'screens/documents_screen.dart';
 import 'screens/home_screen.dart';
@@ -13,23 +15,37 @@ import 'screens/onboarding_screen.dart';
 import 'screens/scaffold_with_nav.dart';
 import 'screens/settings_screen.dart';
 
-/// Builds the app router. The first-run gate redirects to /onboarding until
-/// the disclaimer has been acknowledged; [AppSettings] notifies the router
-/// when that changes.
+/// Builds the app router. On a fresh install the gate sends every route to
+/// /first-run (the disclaimer) and then to /onboarding, until the user
+/// acknowledges; [AppSettings] notifies the router when that changes.
 ///
 /// The router is created once per app (see `KumpletoApp`), so the navigation
 /// stack survives locale and theme changes.
-GoRouter buildRouter(AppSettings settings) {
+GoRouter buildRouter(AppSettings settings, {String? initialLocation}) {
   return GoRouter(
-    initialLocation: '/',
+    initialLocation: initialLocation ?? '/',
     refreshListenable: settings,
     redirect: (context, state) {
-      final onOnboarding = state.matchedLocation == '/onboarding';
-      if (!settings.firstRunDone && !onOnboarding) return '/onboarding';
-      if (settings.firstRunDone && onOnboarding) return '/';
+      // A kumpleto://doc/<id> or kumpleto://bundle/<id> link, whether it
+      // launched the app or arrived while it was already open, is translated
+      // here so the rest of the router only ever sees normal paths.
+      final deepLink = deepLinkPath(state.uri.toString());
+      if (deepLink != null) return deepLink;
+      final location = state.matchedLocation;
+      final inFirstRun = location == '/first-run' || location == '/onboarding';
+      // The privacy page is a read-only push from inside the flow, so it has
+      // to stay reachable before the acknowledgement.
+      if (!settings.firstRunDone) {
+        return inFirstRun || location == '/privacy' ? null : '/first-run';
+      }
+      if (inFirstRun) return '/';
       return null;
     },
     routes: [
+      GoRoute(
+        path: '/first-run',
+        builder: (context, state) => const DisclaimerScreen(),
+      ),
       GoRoute(
         path: '/onboarding',
         builder: (context, state) => OnboardingScreen(settings: settings),

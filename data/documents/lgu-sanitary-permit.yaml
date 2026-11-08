@@ -1,0 +1,161 @@
+# Sanitary Permit to Operate
+# Source: Code on Sanitation of the Philippines (P.D. 856) and the DOH
+# implementing rules for establishments — permit issued in writing by the city
+# or municipal health officer, fees set by local ordinance and paid on
+# application, renewal and noting, valid for one year ending 31 December and
+# renewed at the start of each year, posted inside the establishment, with
+# health certificates required for the operator and staff. Re-checked
+# 2026-11-08 before promotion.
+schema_version: 1
+id: lgu-sanitary-permit
+name:
+  en: Sanitary Permit to Operate
+  fil: Sanitary Permit to Operate
+agency: lgu
+status: verified
+last_verified: '2026-11-08'
+verified_by: JamesMangao
+source_url: https://www.officialgazette.gov.ph/1975/12/23/presidential-decree-no-856-s-1975/
+validity_months: 12
+apply_online: false
+summary:
+  en: >-
+    Permit from your city or municipal health office saying the establishment
+    meets the minimum sanitary requirements. The BPLO asks for it before it
+    issues or renews the Mayor's / business permit.
+  fil: >-
+    Permit mula sa city o municipal health office na nagsasabing pasado sa
+    minimum sanitary requirements ang establisyimento. Hinihingi ito ng BPLO
+    bago maglabas o mag-renew ng Mayor's / business permit.
+tags: [business, permit, health, lgu]
+where_to_apply:
+  en: >-
+    The City or Municipal Health Office — specifically its sanitation or
+    environmental health section — often at the LGU's Business One-Stop Shop
+    in January.
+  fil: >-
+    City o Municipal Health Office — partikular ang sanitation o environmental
+    health section nito — madalas sa Business One-Stop Shop ng LGU tuwing
+    Enero.
+requirements:
+  - id: business-permit
+    text:
+      en: >-
+        Mayor's / business permit for the current year, or the BPLO assessment
+        while the permit is still being processed.
+      fil: >-
+        Mayor's / business permit para sa kasalukuyang taon, o ang assessment
+        ng BPLO habang pinoproseso pa ang permit.
+    original: true
+  - id: health-certificates
+    text:
+      en: >-
+        Health certificates for the operator and every employee — issued after
+        the required physical exam, chest x-ray and, for food handlers,
+        stool and hepatitis A tests.
+      fil: >-
+        Health certificate ng may-ari at ng lahat ng empleyado — inilalabas
+        pagkatapos ng required na physical exam, chest x-ray at, para sa
+        humahawak ng pagkain, stool at hepatitis A tests.
+    original: true
+  - id: water-analysis
+    text:
+      en: >-
+        Bacteriological and physicochemical water analysis from a
+        DOH-accredited laboratory, for food establishments, water refilling
+        stations and others that serve water.
+      fil: >-
+        Bacteriological at physicochemical water analysis mula sa
+        DOH-accredited laboratory, para sa food establishments, water
+        refilling stations at iba pang naghahain ng tubig.
+    optional: true
+  - id: pest-control
+    text:
+      en: Pest control service report from an accredited provider, where the LGU requires it.
+      fil: >-
+        Pest control service report mula sa accredited provider, kung
+        hinihingi ng LGU.
+    optional: true
+  - id: previous-permit
+    text:
+      en: Last year's sanitary permit, for renewal.
+      fil: Sanitary permit ng nakaraang taon, para sa renewal.
+    optional: true
+  - id: official-receipt
+    text:
+      en: Official receipt of the sanitary fee paid at the city or municipal treasury.
+      fil: >-
+        Official receipt ng sanitary fee na binayaran sa treasury ng lungsod o
+        munisipalidad.
+    original: true
+steps:
+  - en: >-
+      File the business permit application at the BPLO first, then go to the
+      City or Municipal Health Office's sanitation section.
+    fil: >-
+      Ihain muna ang business permit application sa BPLO, pagkatapos pumunta
+      sa sanitation section ng City o Municipal Health Office.
+  - en: >-
+      Submit the permit or assessment and the health certificates, and get the
+      order of payment for the sanitary fee.
+    fil: >-
+      Isumite ang permit o assessment at ang mga health certificate, at kunin
+      ang order of payment para sa sanitary fee.
+  - en: >-
+      Pay at the city or municipal treasury and bring the official receipt
+      back to the health office.
+    fil: >-
+      Magbayad sa treasury ng lungsod o munisipalidad at ibalik ang official
+      receipt sa health office.
+  - en: >-
+      Let the sanitary inspector check the premises — water, waste, toilets,
+      food handling and pest control.
+    fil: >-
+      Painspeksyon sa sanitary inspector ang lugar — tubig, basura, palikuran,
+      paghawak ng pagkain at pest control.
+  - en: >-
+      Claim the sanitary permit, post it inside the establishment, and keep it
+      with the Mayor's permit.
+    fil: >-
+      Kunin ang sanitary permit, ipaskil sa loob ng establisyimento, at itabi
+      kasama ng Mayor's permit.
+fee_note:
+  en: >-
+    Set by city or municipal ordinance, so it differs per LGU and per type of
+    establishment; some LGUs fold it into the business permit assessment. Ask
+    the health office for the order of payment before paying.
+  fil: >-
+    Itinatakda ng ordinansa ng lungsod o munisipalidad, kaya iba-iba kada LGU
+    at kada uri ng establisyimento; may LGU na isinasama ito sa assessment ng
+    business permit. Itanong sa health office ang order of payment bago
+    magbayad.
+processing_note:
+  en: >-
+    Usually issued during the business-permit run — same day when the health
+    certificates and the inspection are complete, longer if the inspector
+    finds something to correct.
+  fil: >-
+    Karaniwang inilalabas kasabay ng business permit — same day kapag kumpleto
+    ang health certificate at inspeksyon, mas matagal kung may nakitang dapat
+    ayusin ang inspector.
+notes:
+  - en: >-
+      The permit is valid for one year and ends on 31 December, so it is
+      renewed at the start of each year with the business permit — not on the
+      anniversary of when you first got it.
+    fil: >-
+      Valid ang permit nang isang taon at nagtatapos sa 31 Disyembre, kaya
+      nire-renew ito sa simula ng bawat taon kasabay ng business permit —
+      hindi sa anibersaryo ng unang pagkuha.
+  - en: >-
+      Food handlers need their own health certificate, and it must be worn or
+      kept at the establishment while they work.
+    fil: >-
+      Kailangan ng mga humahawak ng pagkain ang sariling health certificate,
+      at dapat itong suotin o itabi sa establisyimento habang nagtatrabaho.
+  - en: >-
+      Selling the business? The new owner has fourteen working days to have
+      the change noted on the permit and pay the noting fee.
+    fil: >-
+      Ibebenta ang negosyo? May labing-apat na working days ang bagong may-ari
+      para ipa-note ang pagbabago sa permit at bayaran ang noting fee.

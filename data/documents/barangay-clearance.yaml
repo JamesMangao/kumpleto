@@ -182,3 +182,11 @@ notes:
       Naglalagay ng sariling fee schedule at office hours ang barangay hall sa
       counter. Hilingin itong makita, at itanong kung kailangan ang cedula bago
       pumila — iba-iba ang patakarang ito sa bawat barangay.
+
+# Structured extract of the two notes above, so the app can total a bundle: a
+# personal clearance is ₱20–₱100, and RA 11032 caps the transaction at one
+# working day. Zero days means the same day.
+fee_min: 20
+fee_max: 100
+processing_days_min: 0
+processing_days_max: 1

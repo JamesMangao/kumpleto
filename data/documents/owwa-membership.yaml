@@ -1,0 +1,127 @@
+# OWWA Membership
+# Facts sourced from the OWWA Citizen's Charter (owwa.gov.ph PDF) and the OWWA
+# membership collection entry: the USD 25.00 membership contribution, the
+# two-year coverage from the date of payment, the application form and valid
+# passport plus employment contract and work visa, and renewal with proof of
+# active employment through the OWWA Mobile App, a Regional Welfare Office, or
+# the Migrant Workers Office abroad. Re-checked 2026-11-07 against the OWWA
+# Citizen's Charter (USD 25.00 contribution; membership active until the
+# existing contract expires or two years from contract effectivity, whichever
+# comes first) and DMW Advisory No. 44, s. 2026 (the OWWA e-Card issued on the
+# USD 25 payment, valid two years from the date of payment). Promoted to
+# verified on the maintainer's instruction.
+schema_version: 1
+id: owwa-membership
+name:
+  en: OWWA Membership
+  fil: OWWA Membership
+agency: owwa
+status: verified
+source_url: https://owwa.gov.ph/wp-content/uploads/2026/05/OWWA_CC_2026v3.pdf
+last_verified: '2026-11-07'
+verified_by: JamesMangao
+apply_online: true
+apply_online_url: https://owwa.gov.ph/
+validity_months: 24
+summary:
+  en: >-
+    Membership in the Overseas Workers Welfare Administration, paid with the
+    overseas employment processing, that gives an OFW and their dependents
+    access to OWWA's welfare programs.
+  fil: >-
+    Pagiging miyembro ng Overseas Workers Welfare Administration, binabayaran
+    kasama ng processing ng overseas employment, na nagbibigay sa OFW at sa
+    pamilya nito ng access sa mga programa ng OWWA.
+tags: [ofw, overseas, membership, welfare]
+where_to_apply:
+  en: >-
+    At the DMW processing of your employment contract before departure, at an
+    OWWA Regional Welfare Office, at the Migrant Workers Office or POLO abroad,
+    or through the OWWA Mobile App.
+  fil: >-
+    Sa DMW processing ng employment contract bago umalis, sa OWWA Regional
+    Welfare Office, sa Migrant Workers Office o POLO sa ibang bansa, o sa OWWA
+    Mobile App.
+requirements:
+  - id: membership-form
+    text:
+      en: Accomplished OWWA membership application form (OFW Information Sheet).
+      fil: Nasagutang OWWA membership application form (OFW Information Sheet).
+    original: true
+  - id: passport
+    text:
+      en: Valid Philippine passport.
+      fil: Valid na pasaporte ng Pilipinas.
+    original: true
+  - id: employment-contract
+    text:
+      en: Employment contract, verified where the rules require it.
+      fil: Employment contract, verified kung hinihingi ng rules.
+    original: true
+  - id: work-visa
+    text:
+      en: Valid visa or work permit for the destination country.
+      fil: Valid na visa o work permit para sa pupuntahang bansa.
+    original: true
+  - id: proof-of-employment
+    text:
+      en: >-
+        For a renewal: proof of active employment — certificate of employment,
+        company ID, or a recent pay slip.
+      fil: >-
+        Para sa renewal: patunay ng aktibong trabaho — certificate of
+        employment, company ID, o recent pay slip.
+    optional: true
+steps:
+  - en: >-
+      Have your employment contract processed at the DMW, or go to an OWWA
+      Regional Welfare Office or the Migrant Workers Office abroad.
+    fil: >-
+      Ipa-process ang employment contract sa DMW, o pumunta sa OWWA Regional
+      Welfare Office o Migrant Workers Office sa ibang bansa.
+  - en: Accomplish the membership form and present your passport, contract, and visa.
+    fil: Isagutan ang membership form at ipakita ang pasaporte, kontrata, at visa.
+  - en: >-
+      Pay the USD 25.00 membership contribution (or its local equivalent) and
+      keep the official receipt.
+    fil: >-
+      Bayaran ang USD 25.00 membership contribution (o katumbas nito sa lokal
+      na pera) at itago ang opisyal na resibo.
+  - en: >-
+      Keep the receipt or e-card as proof of coverage; renew after two years
+      with proof of active employment.
+    fil: >-
+      Itago ang resibo o e-card bilang patunay ng coverage; mag-renew
+      pagkatapos ng dalawang taon na may patunay ng aktibong trabaho.
+fee_note:
+  en: >-
+    USD 25.00 membership contribution, paid in the local equivalent, covering
+    two (2) years from the date of payment. It is collected with the DMW
+    processing of the contract.
+  fil: >-
+    USD 25.00 membership contribution, bayad sa katumbas na lokal na pera,
+    sakop ang dalawang (2) taon mula sa petsa ng bayad. Kinokolekta ito kasama
+    ng DMW processing ng kontrata.
+notes:
+  - en: >-
+      Coverage runs until the existing employment contract ends or two years
+      from its effectivity, whichever comes first — not a flat two years. A
+      change of employer also requires a renewal.
+    fil: >-
+      Ang coverage ay hanggang matapos ang kasalukuyang kontrata o dalawang
+      taon mula sa effectivity nito, alinman ang mauna — hindi laging dalawang
+      taon. Kailangan din ng renewal kapag nagpalit ng employer.
+  - en: >-
+      Membership is required to obtain the Overseas Employment Certificate for
+      a documented OFW, and it is what makes the OFW eligible for OWWA
+      benefits.
+    fil: >-
+      Kailangan ang membership para makakuha ng Overseas Employment Certificate
+      ang dokumentadong OFW, at ito ang nagbibigay ng karapatan sa mga benepisyo
+      ng OWWA.
+  - en: >-
+      A next-of-kin may renew the membership at the nearest Regional Welfare
+      Office when the OFW cannot do it personally.
+    fil: >-
+      Maaaring i-renew ng kamag-anak ang membership sa pinakamalapit na
+      Regional Welfare Office kung hindi ito magawa ng OFW mismo.

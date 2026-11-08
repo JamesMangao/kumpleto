@@ -1,0 +1,204 @@
+# Solo Parent Identification Card (SPIC)
+# Requirements verified against the City of San Pedro, Laguna Citizen's Charter
+# 2025 (1st Edition), City Social Welfare and Development Office entry
+# "Issuance of Solo Parent ID" (p. 28), published through the city's Citizen's
+# Charter page: barangay certification of solo parent status, notarised
+# affidavit of solo parenting, photocopy of the child's birth certificate, two
+# 1x1 pictures, and the CSWDO application form. The one-year validity, the free
+# issuance, the seven-day parental leave, and the PhilHealth coverage come from
+# RA 8972 as amended by RA 11861 (full text on the PCW site).
+schema_version: 1
+id: solo-parent-id
+name:
+  en: Solo Parent ID (SPIC)
+  fil: Solo Parent ID (SPIC)
+agency: lgu
+status: verified
+last_verified: '2026-11-06'
+verified_by: JamesMangao
+source_url: https://cityofsanpedrolaguna.gov.ph/citizens-charter-2
+apply_online: false
+validity_months: 12
+fee_min: 0
+fee_max: 0
+summary:
+  en: >-
+    Identification card and booklet issued by the city or municipal social
+    welfare office to a parent raising a child alone. It is the proof of status
+    for the seven-day parental leave, flexible work schedule, automatic
+    PhilHealth coverage, and LGU cash subsidies under RA 8972 as expanded by
+    RA 11861.
+  fil: >-
+    ID at booklet na inilalabas ng city o municipal social welfare office sa
+    magulang na nagpapalaki ng anak nang mag-isa. Ito ang patunay ng status para
+    sa pitong araw na parental leave, flexible work schedule, awtomatikong
+    PhilHealth coverage, at cash subsidy ng LGU sa ilalim ng RA 8972 na
+    pinalawak ng RA 11861.
+tags: [welfare, discounts, solo-parent, family]
+where_to_apply:
+  en: >-
+    The City or Municipal Social Welfare and Development Office
+    (CSWDO/MSWDO) — in San Pedro, Laguna, the CSWDO at the New City Hall.
+    Larger LGUs run a separate Solo Parent Office (SPO) or Solo Parent
+    Division (SPD).
+  fil: >-
+    City o Municipal Social Welfare and Development Office (CSWDO/MSWDO) — sa
+    San Pedro, Laguna, ang CSWDO sa New City Hall. Ang mas malalaking LGU ay may
+    hiwalay na Solo Parent Office (SPO) o Solo Parent Division (SPD).
+requirements:
+  - id: barangay-certification
+    text:
+      en: >-
+        Barangay certification that you are a solo parent (1 original), from the
+        barangay where you live.
+      fil: >-
+        Barangay certification na solo parent ka (1 orihinal), mula sa barangay
+        kung saan ka nakatira.
+    original: true
+  - id: solo-parent-affidavit
+    text:
+      en: >-
+        Affidavit of being a solo parent (1 original), notarised at a law office
+        of your choice, declaring that you have sole parental care and support
+        and are not cohabiting with a partner.
+      fil: >-
+        Affidavit na solo parent ka (1 orihinal), notaryado sa law office na
+        pipiliin mo, na nagsasaad na ikaw lang ang may parental care at support
+        at hindi ka nakatira kasama ng partner.
+    original: true
+  - id: child-birth-certificate
+    text:
+      en: >-
+        Birth certificate of the child or children (1 photocopy), from the PSA
+        or the local civil registrar.
+      fil: >-
+        Birth certificate ng anak o mga anak (1 photocopy), mula sa PSA o local
+        civil registrar.
+    photocopies: 1
+  - id: id-photos
+    text:
+      en: Two (2) 1x1 ID pictures (2 original copies).
+      fil: Dalawang (2) 1x1 ID picture (2 orihinal na kopya).
+    original: true
+  - id: application-form
+    text:
+      en: >-
+        Accomplished Solo Parent ID application form (1 original), available
+        from the social welfare office.
+      fil: >-
+        Nasagutang Solo Parent ID application form (1 orihinal), makukuha sa
+        social welfare office.
+    original: true
+  - id: category-proof
+    text:
+      en: >-
+        Category proof, where your LGU asks for it: death certificate of the
+        spouse, court order or decree, police report, or the medical record of
+        an incapacitated spouse.
+      fil: >-
+        Patunay ng kategorya, kung hinihingi ng LGU mo: death certificate ng
+        asawa, court order o decree, police report, o medical record ng asawang
+        may kapansanan.
+    original: true
+    optional: true
+  - id: income-documents
+    text:
+      en: >-
+        Some LGUs also ask for a BIR Certificate of Tax Exemption, an Income Tax
+        Return, or a Certificate of Employment — these are used for the local
+        cash subsidy and discounts.
+      fil: >-
+        May mga LGU na humihingi rin ng BIR Certificate of Tax Exemption, Income
+        Tax Return, o Certificate of Employment — ginagamit ito sa lokal na cash
+        subsidy at mga diskwento.
+    original: true
+    optional: true
+steps:
+  - en: >-
+      Go to the social welfare office and ask for the Solo Parent ID application
+      form and its current checklist — San Pedro's is five items.
+    fil: >-
+      Pumunta sa social welfare office at humingi ng Solo Parent ID application
+      form at ng kasalukuyang checklist — lima ang item sa San Pedro.
+  - en: >-
+      Secure the barangay certification and have the affidavit of solo parenting
+      notarised; bring a photocopy of the child's birth certificate.
+    fil: >-
+      Kunin ang barangay certification at ipa-notaryo ang affidavit of solo
+      parenting; magdala ng photocopy ng birth certificate ng anak.
+  - en: >-
+      Submit the form with the barangay certification, affidavit, birth
+      certificate, and 1x1 pictures, and get your queue number.
+    fil: >-
+      Isumite ang form kasama ang barangay certification, affidavit, birth
+      certificate, at 1x1 pictures, at kunin ang queue number.
+  - en: >-
+      Wait for the social worker's assessment — some LGUs schedule a home visit
+      — then claim the SPIC and the Solo Parent booklet.
+    fil: >-
+      Hintayin ang assessment ng social worker — may LGU na nagsasagawa ng home
+      visit — pagkatapos kunin ang SPIC at ang Solo Parent booklet.
+  - en: >-
+      Renew before the one-year validity ends; renewal goes through a new
+      assessment at the same office.
+    fil: >-
+      Mag-renew bago matapos ang isang taong validity; may bagong assessment sa
+      parehong opisina para sa renewal.
+fee_note:
+  en: >-
+    Free (₱0.00) — San Pedro's charter lists no fee, and RA 11861 requires the
+    LGU to issue the SPIC and booklet free of charge.
+  fil: >-
+    Libre (₱0.00) — walang bayad sa charter ng San Pedro, at inaatasan ng
+    RA 11861 ang LGU na ilabas ang SPIC at booklet nang walang bayad.
+processing_note:
+  en: >-
+    The CSWDO classifies it as a simple government-to-citizen transaction: queue,
+    submit the requirements, then wait for the assessment before the card is
+    printed. Release depends on the social worker's caseload.
+  fil: >-
+    Simple government-to-citizen transaction ito para sa CSWDO: pumila, isumite
+    ang requirements, pagkatapos hintayin ang assessment bago i-print ang card.
+    Depende sa caseload ng social worker ang release.
+notes:
+  - en: >-
+      The SPIC and booklet are valid for one (1) year (RA 8972, Sec. 20, as
+      amended by RA 11861).
+    fil: >-
+      Valid ang SPIC at booklet nang isang (1) taon (RA 8972, Sec. 20, na
+      inamyendahan ng RA 11861).
+  - en: >-
+      Parental leave is seven (7) working days with pay every year, on top of
+      existing leave, for a solo parent employee with at least six months of
+      service (RA 8972, Sec. 8, as amended). Present the SPIC to your HR office.
+    fil: >-
+      Ang parental leave ay pitong (7) araw ng trabaho na may bayad taun-taon,
+      dagdag sa existing leave, para sa solo parent na empleyadong may anim na
+      buwang serbisyo (RA 8972, Sec. 8, na inamyendahan). Ipakita ang SPIC sa HR
+      office.
+  - en: >-
+      Solo parents registered with the LGU are automatically covered by
+      PhilHealth and the national government pays the premium (RA 11861;
+      PhilHealth Circular 2024-0020). Children up to 22 may be declared
+      dependents.
+    fil: >-
+      Ang solo parent na nakarehistro sa LGU ay awtomatikong saklaw ng
+      PhilHealth at gobyerno ang nagbabayad ng premium (RA 11861; PhilHealth
+      Circular 2024-0020). Maaaring ideklarang dependent ang anak hanggang 22
+      taong gulang.
+  - en: >-
+      The checklist is local. San Pedro's 2025 charter asks for five items;
+      other LGUs add category proof and income documents, and some add a local
+      cash subsidy ordinance.
+    fil: >-
+      Lokal ang checklist. Limang item ang hinihingi sa charter ng San Pedro
+      2025; may LGU na may dagdag na category proof at income documents, at may
+      lokal na ordinansa para sa cash subsidy.
+  - en: >-
+      A solo parent who is also a senior citizen or PWD keeps the senior or PWD
+      discounts without forfeiting the solo parent benefits.
+    fil: >-
+      Ang solo parent na senior citizen o PWD din ay nananatili ang senior o PWD
+      discount nang hindi nawawala ang benepisyo bilang solo parent.
+depends_on:
+  - psa-birth-certificate

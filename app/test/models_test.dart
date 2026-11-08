@@ -163,6 +163,43 @@ void main() {
       );
     });
 
+    test('the structured fee/time extract parses and survives filled()', () {
+      final document = Document.fromJson({
+        'id': 'passport-dfa',
+        'name': {'en': 'Passport', 'fil': 'Pasaporte'},
+        'agency': 'dfa',
+        'status': 'verified',
+        'fee_note': {'en': 'About ₱950–₱1,200'},
+        'processing_note': {'en': '7–12 working days'},
+        'fee_min': 950,
+        'fee_max': 1200,
+        'processing_days_min': 7,
+        'processing_days_max': 12,
+      })!;
+
+      expect(document.feeMin, 950);
+      expect(document.feeMax, 1200);
+      expect(document.processingDaysMin, 7);
+      expect(document.processingDaysMax, 12);
+
+      final filled = document.filled(const {});
+      expect(filled.feeMin, 950);
+      expect(filled.processingDaysMax, 12);
+    });
+
+    test('a document without the extract keeps nulls', () {
+      final document = Document.fromJson({
+        'id': 'lto-drivers-license',
+        'name': {'en': 'Driver\'s License'},
+        'agency': 'lto',
+        'status': 'verified',
+      })!;
+      expect(document.feeMin, isNull);
+      expect(document.feeMax, isNull);
+      expect(document.processingDaysMin, isNull);
+      expect(document.processingDaysMax, isNull);
+    });
+
     test('non-list requirements/steps degrade to empty lists', () {
       final document = Document.fromJson({
         'id': 'x',

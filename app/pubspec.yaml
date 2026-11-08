@@ -2,8 +2,9 @@ name: kumpleto
 description: "Unofficial offline-first checklist of Philippine government document requirements. Not affiliated with any government agency."
 publish_to: 'none'
 
-# versionName = 0.1.0, versionCode = 1 (Android), file version (Windows)
-version: 0.1.0+1
+# versionName = 1.0.0, versionCode = 1 (Android), file version (Windows)
+# First public release: versionCode 1, and it must strictly increase afterwards.
+version: 1.0.0+1
 
 environment:
   sdk: ^3.13.5
@@ -29,6 +30,12 @@ dependencies:
   # so the app's verify gate can never drift from what the compiler published.
   kumpleto_data_contract:
     path: ../packages/data_contract
+  share_plus: ^13.3.1
+  printing: ^5.15.1
+  pdf: ^3.13.1
+  flutter_local_notifications: ^22.0.0
+  flutter_timezone: ^5.1.1
+  timezone: ^0.11.2
 
 dev_dependencies:
   flutter_test:

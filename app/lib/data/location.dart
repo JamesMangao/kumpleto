@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:flutter/services.dart' show AssetBundle, rootBundle;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'profiles.dart';
+
 /// One selectable place: a PSGC code plus its display name.
 class Place {
   const Place({required this.code, required this.name});
@@ -148,8 +150,19 @@ class SavedLocation {
 
   static const String prefsKey = 'saved_location';
 
-  static SavedLocation? read(SharedPreferences prefs) {
-    final raw = prefs.getString(prefsKey);
+  /// Where [profileId]'s location lives.
+  ///
+  /// `me` keeps the original key, so a location saved before profiles existed
+  /// still loads for the reader; every added person gets their own key, and
+  /// therefore their own barangay hints.
+  static String prefsKeyFor(String profileId) =>
+      profileId == Profile.meId ? prefsKey : '${prefsKey}_$profileId';
+
+  static SavedLocation? read(
+    SharedPreferences prefs, {
+    String profileId = Profile.meId,
+  }) {
+    final raw = prefs.getString(prefsKeyFor(profileId));
     if (raw == null || raw.isEmpty) return null;
     try {
       final map = jsonDecode(raw) as Map<String, Object?>;
@@ -168,8 +181,16 @@ class SavedLocation {
     }
   }
 
-  Future<void> save(SharedPreferences prefs) => prefs.setString(
-    prefsKey,
+  static Future<void> clear(
+    SharedPreferences prefs, {
+    String profileId = Profile.meId,
+  }) => prefs.remove(prefsKeyFor(profileId));
+
+  Future<void> save(
+    SharedPreferences prefs, {
+    String profileId = Profile.meId,
+  }) => prefs.setString(
+    prefsKeyFor(profileId),
     jsonEncode({
       'region': region?.toJson(),
       'province': province?.toJson(),

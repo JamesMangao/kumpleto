@@ -1,0 +1,60 @@
+# Bundle — every document it lists (dti-business-name, barangay-clearance,
+# bfp-fire-safety-inspection-certificate, mayors-business-permit, tin-bir,
+# bir-certificate-of-registration) is verified, so the bundle stays promoted.
+# The FSIC and the COR were added on 2026-11-08 to close the two gaps a new
+# business hits after the Mayor's permit.
+schema_version: 1
+id: new-business
+name:
+  en: New Business / Sari-Sari Store Pack
+  fil: New Business / Sari-Sari Store Pack
+description:
+  en: >-
+    Every clearance and registration a small sole proprietorship needs before
+    it can legally open — a sari-sari store, an online shop, or a freelance
+    practice: DTI business name, barangay clearance, fire safety certificate,
+    Mayor's permit, BIR TIN, and the BIR Certificate of Registration. Community-
+    curated — confirm each step with the issuing office.
+  fil: >-
+    Lahat ng clearance at rehistro na kailangan ng maliit na sole
+    proprietorship bago legal na makapagbukas — sari-sari store, online shop, o
+    freelance practice: DTI business name, barangay clearance, fire safety
+    certificate, Mayor's permit, BIR TIN, at BIR Certificate of Registration.
+    Kurado ng komunidad — kumpirmahin ang bawat hakbang sa naglalabas na
+    opisina.
+status: verified
+documents:
+  - dti-business-name
+  - barangay-clearance
+  - bfp-fire-safety-inspection-certificate
+  - mayors-business-permit
+  - tin-bir
+  - bir-certificate-of-registration
+tags: [business, livelihood]
+icon: work
+notes:
+  - en: >-
+      Follow the order. The DTI certificate is one of the requirements for the
+      barangay business clearance; the barangay clearance comes before the
+      Mayor's permit; the FSIC is issued against the BPLO's assessment; and the
+      BIR registration needs the Mayor's permit before it releases the COR.
+    fil: >-
+      Sundin ang pagkakasunod-sunod. Ang DTI certificate ay isa sa requirements
+      sa barangay business clearance; ang barangay clearance bago ang Mayor's
+      permit; ang FSIC ay inilalabas base sa assessment ng BPLO; at ang BIR
+      registration ay nangangailangan ng Mayor's permit bago ilabas ang COR.
+  - en: >-
+      Renew the DTI registration every five years, the barangay clearance before
+      it expires, and the Mayor's permit in the January 1–20 window. Missing the
+      January window means surcharges and interest.
+    fil: >-
+      I-renew ang DTI registration tuwing limang taon, ang barangay clearance
+      bago mag-expire, at ang Mayor's permit sa Enero 1–20. May surcharge at
+      interes kapag nalampasan ang window ng Enero.
+  - en: >-
+      A sari-sari store run from home still needs the same four steps, plus the
+      sanitary permit and, for food handlers, a health certificate.
+    fil: >-
+      Ang sari-sari store na nasa bahay ay kailangan pa rin ng parehong apat na
+      hakbang, dagdag ang sanitary permit at, para sa humahawak ng pagkain,
+      health certificate.

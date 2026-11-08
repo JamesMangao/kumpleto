@@ -1,0 +1,63 @@
+# PWD ID (Persons with Disability)
+schema_version: 1
+id: pwd-id
+name:
+  en: Persons with Disability (PWD) ID
+  fil: Persons with Disability (PWD) ID
+agency: lgu
+status: verified
+last_verified: '2026-11-05'
+verified_by: JamesMangao
+source_url: https://ncda.gov.ph/
+apply_online: false
+validity_months: 60
+fee_min: 0
+fee_max: 0
+processing_days_min: 1
+processing_days_max: 5
+summary:
+  en: >-
+    Official government identification card issued to Filipinos with permanent disabilities under RA 7277 and RA 10754. Entitles the holder to a 20% discount and VAT exemption on medicine, medical services, dining, transport, and utilities.
+  fil: >-
+    Opisyal na ID ng gobyerno para sa mga Pilipinong may kapansanan sa ilalim ng RA 7277 at RA 10754. Nagbibigay ng 20% diskwento at VAT exemption sa gamot, serbisyong medikal, pagkain, pamasahe, at kuryente/tubig.
+tags: [welfare, discounts, health, disability]
+where_to_apply:
+  en: >-
+    Persons with Disability Affairs Office (PDAO) or City/Municipal Social Welfare and Development Office (CSWDO/MSWDO) in your city or municipal hall.
+  fil: >-
+    Sa Persons with Disability Affairs Office (PDAO) o City/Municipal Social Welfare and Development Office (CSWDO/MSWDO) sa inyong city o municipal hall.
+requirements:
+  - id: medical-certificate
+    text:
+      en: Medical Certificate or Assessment Form from an attending physician indicating the specific type of disability and license number.
+      fil: Medical Certificate mula sa lisensyadong doktor na nagsasaad ng uri ng kapansanan at PRC license number.
+    original: true
+  - id: id-photos
+    text:
+      en: Two (2) recent 1x1 or 2x2 ID photos with white background.
+      fil: Dalawang (2) pirasong 1x1 o 2x2 ID picture na may puting background.
+    original: true
+  - id: proof-of-residence
+    text:
+      en: Barangay Certificate of Residency or valid government ID showing residence in the LGU.
+      fil: Barangay Certificate of Residency o valid na ID na nagpapatunay ng paninirahan sa lungsod o bayan.
+    original: true
+  - id: application-form
+    text:
+      en: Accomplished PWD ID Application Form (available at PDAO / MSWDO office).
+      fil: Nasagutang PWD ID Application Form (makukuha sa tanggapan ng PDAO o MSWDO).
+    original: true
+steps:
+  - en: Secure medical certificate specifying your disability from your clinic or hospital.
+    fil: Kumuha ng medical certificate na may deskripsyon ng kapansanan mula sa iyong doktor.
+  - en: Go to your City/Municipal PDAO or MSWDO office and submit the requirements.
+    fil: Magtungo sa tanggapan ng PDAO o MSWDO sa inyong munisipyo o city hall at ipasa ang requirements.
+  - en: Complete the interview and biometric/photo capture, then claim your PWD ID and purchase purchase booklet.
+    fil: Sumailalim sa maikling interview at kunin ang PWD ID kasama ang purchase booklet para sa gamot at grocery.
+fee_note:
+  en: Free (₱0.00). Government policy prohibits charging any fee for PWD ID issuance.
+  fil: Libre (₱0.00). Ipinagbabawal ng batas ang paniningil ng anumang bayad sa pagkuha ng PWD ID.
+processing_note:
+  en: Same-day release in most LGUs, or up to 3–5 working days depending on printing schedules.
+  fil: Same-day release sa karamihan ng LGU, o hanggang 3–5 araw depende sa iskedyul ng ID printing.
+

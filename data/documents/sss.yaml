@@ -99,3 +99,8 @@ processing_note:
     weeks.
   fil: >-
     Agad na ibinibigay ang SS number online; ang UMID card ay ilang linggo.
+
+# Registration is free; contributions are recurring and not a fee for this
+# document, so only the (zero) registration cost is stated.
+fee_min: 0
+fee_max: 0

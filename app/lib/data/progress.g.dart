@@ -9,6 +9,18 @@ class $ProgressEntriesTable extends ProgressEntries
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $ProgressEntriesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _profileIdMeta = const VerificationMeta(
+    'profileId',
+  );
+  @override
+  late final GeneratedColumn<String> profileId = GeneratedColumn<String>(
+    'profile_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('me'),
+  );
   static const VerificationMeta _documentIdMeta = const VerificationMeta(
     'documentId',
   );
@@ -58,6 +70,7 @@ class $ProgressEntriesTable extends ProgressEntries
   );
   @override
   List<GeneratedColumn> get $columns => [
+    profileId,
     documentId,
     requirementId,
     checked,
@@ -75,6 +88,12 @@ class $ProgressEntriesTable extends ProgressEntries
   }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
+    if (data.containsKey('profile_id')) {
+      context.handle(
+        _profileIdMeta,
+        profileId.isAcceptableOrUnknown(data['profile_id']!, _profileIdMeta),
+      );
+    }
     if (data.containsKey('document_id')) {
       context.handle(
         _documentIdMeta,
@@ -114,11 +133,19 @@ class $ProgressEntriesTable extends ProgressEntries
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {documentId, requirementId};
+  Set<GeneratedColumn> get $primaryKey => {
+    profileId,
+    documentId,
+    requirementId,
+  };
   @override
   ProgressEntry map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return ProgressEntry(
+      profileId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}profile_id'],
+      )!,
       documentId: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}document_id'],
@@ -145,11 +172,19 @@ class $ProgressEntriesTable extends ProgressEntries
 }
 
 class ProgressEntry extends DataClass implements Insertable<ProgressEntry> {
+  /// Which person this row belongs to.
+  ///
+  /// Households chase documents for more than one person, so progress is keyed
+  /// per profile: the same requirement can be ticked for "me" and untouched for
+  /// a profile added for a spouse. Rows written before profiles existed belong
+  /// to [defaultProfileId].
+  final String profileId;
   final String documentId;
   final String requirementId;
   final bool checked;
   final int updatedAt;
   const ProgressEntry({
+    required this.profileId,
     required this.documentId,
     required this.requirementId,
     required this.checked,
@@ -158,6 +193,7 @@ class ProgressEntry extends DataClass implements Insertable<ProgressEntry> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    map['profile_id'] = Variable<String>(profileId);
     map['document_id'] = Variable<String>(documentId);
     map['requirement_id'] = Variable<String>(requirementId);
     map['checked'] = Variable<bool>(checked);
@@ -167,6 +203,7 @@ class ProgressEntry extends DataClass implements Insertable<ProgressEntry> {
 
   ProgressEntriesCompanion toCompanion(bool nullToAbsent) {
     return ProgressEntriesCompanion(
+      profileId: Value(profileId),
       documentId: Value(documentId),
       requirementId: Value(requirementId),
       checked: Value(checked),
@@ -180,6 +217,7 @@ class ProgressEntry extends DataClass implements Insertable<ProgressEntry> {
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return ProgressEntry(
+      profileId: serializer.fromJson<String>(json['profileId']),
       documentId: serializer.fromJson<String>(json['documentId']),
       requirementId: serializer.fromJson<String>(json['requirementId']),
       checked: serializer.fromJson<bool>(json['checked']),
@@ -190,6 +228,7 @@ class ProgressEntry extends DataClass implements Insertable<ProgressEntry> {
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
+      'profileId': serializer.toJson<String>(profileId),
       'documentId': serializer.toJson<String>(documentId),
       'requirementId': serializer.toJson<String>(requirementId),
       'checked': serializer.toJson<bool>(checked),
@@ -198,11 +237,13 @@ class ProgressEntry extends DataClass implements Insertable<ProgressEntry> {
   }
 
   ProgressEntry copyWith({
+    String? profileId,
     String? documentId,
     String? requirementId,
     bool? checked,
     int? updatedAt,
   }) => ProgressEntry(
+    profileId: profileId ?? this.profileId,
     documentId: documentId ?? this.documentId,
     requirementId: requirementId ?? this.requirementId,
     checked: checked ?? this.checked,
@@ -210,6 +251,7 @@ class ProgressEntry extends DataClass implements Insertable<ProgressEntry> {
   );
   ProgressEntry copyWithCompanion(ProgressEntriesCompanion data) {
     return ProgressEntry(
+      profileId: data.profileId.present ? data.profileId.value : this.profileId,
       documentId: data.documentId.present
           ? data.documentId.value
           : this.documentId,
@@ -224,6 +266,7 @@ class ProgressEntry extends DataClass implements Insertable<ProgressEntry> {
   @override
   String toString() {
     return (StringBuffer('ProgressEntry(')
+          ..write('profileId: $profileId, ')
           ..write('documentId: $documentId, ')
           ..write('requirementId: $requirementId, ')
           ..write('checked: $checked, ')
@@ -234,11 +277,12 @@ class ProgressEntry extends DataClass implements Insertable<ProgressEntry> {
 
   @override
   int get hashCode =>
-      Object.hash(documentId, requirementId, checked, updatedAt);
+      Object.hash(profileId, documentId, requirementId, checked, updatedAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is ProgressEntry &&
+          other.profileId == this.profileId &&
           other.documentId == this.documentId &&
           other.requirementId == this.requirementId &&
           other.checked == this.checked &&
@@ -246,12 +290,14 @@ class ProgressEntry extends DataClass implements Insertable<ProgressEntry> {
 }
 
 class ProgressEntriesCompanion extends UpdateCompanion<ProgressEntry> {
+  final Value<String> profileId;
   final Value<String> documentId;
   final Value<String> requirementId;
   final Value<bool> checked;
   final Value<int> updatedAt;
   final Value<int> rowid;
   const ProgressEntriesCompanion({
+    this.profileId = const Value.absent(),
     this.documentId = const Value.absent(),
     this.requirementId = const Value.absent(),
     this.checked = const Value.absent(),
@@ -259,6 +305,7 @@ class ProgressEntriesCompanion extends UpdateCompanion<ProgressEntry> {
     this.rowid = const Value.absent(),
   });
   ProgressEntriesCompanion.insert({
+    this.profileId = const Value.absent(),
     required String documentId,
     required String requirementId,
     required bool checked,
@@ -269,6 +316,7 @@ class ProgressEntriesCompanion extends UpdateCompanion<ProgressEntry> {
        checked = Value(checked),
        updatedAt = Value(updatedAt);
   static Insertable<ProgressEntry> custom({
+    Expression<String>? profileId,
     Expression<String>? documentId,
     Expression<String>? requirementId,
     Expression<bool>? checked,
@@ -276,6 +324,7 @@ class ProgressEntriesCompanion extends UpdateCompanion<ProgressEntry> {
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
+      if (profileId != null) 'profile_id': profileId,
       if (documentId != null) 'document_id': documentId,
       if (requirementId != null) 'requirement_id': requirementId,
       if (checked != null) 'checked': checked,
@@ -285,6 +334,7 @@ class ProgressEntriesCompanion extends UpdateCompanion<ProgressEntry> {
   }
 
   ProgressEntriesCompanion copyWith({
+    Value<String>? profileId,
     Value<String>? documentId,
     Value<String>? requirementId,
     Value<bool>? checked,
@@ -292,6 +342,7 @@ class ProgressEntriesCompanion extends UpdateCompanion<ProgressEntry> {
     Value<int>? rowid,
   }) {
     return ProgressEntriesCompanion(
+      profileId: profileId ?? this.profileId,
       documentId: documentId ?? this.documentId,
       requirementId: requirementId ?? this.requirementId,
       checked: checked ?? this.checked,
@@ -303,6 +354,9 @@ class ProgressEntriesCompanion extends UpdateCompanion<ProgressEntry> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    if (profileId.present) {
+      map['profile_id'] = Variable<String>(profileId.value);
+    }
     if (documentId.present) {
       map['document_id'] = Variable<String>(documentId.value);
     }
@@ -324,6 +378,7 @@ class ProgressEntriesCompanion extends UpdateCompanion<ProgressEntry> {
   @override
   String toString() {
     return (StringBuffer('ProgressEntriesCompanion(')
+          ..write('profileId: $profileId, ')
           ..write('documentId: $documentId, ')
           ..write('requirementId: $requirementId, ')
           ..write('checked: $checked, ')
@@ -349,6 +404,7 @@ abstract class _$KumpletoDb extends GeneratedDatabase {
 
 typedef $$ProgressEntriesTableCreateCompanionBuilder =
     ProgressEntriesCompanion Function({
+      Value<String> profileId,
       required String documentId,
       required String requirementId,
       required bool checked,
@@ -357,6 +413,7 @@ typedef $$ProgressEntriesTableCreateCompanionBuilder =
     });
 typedef $$ProgressEntriesTableUpdateCompanionBuilder =
     ProgressEntriesCompanion Function({
+      Value<String> profileId,
       Value<String> documentId,
       Value<String> requirementId,
       Value<bool> checked,
@@ -373,6 +430,11 @@ class $$ProgressEntriesTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  ColumnFilters<String> get profileId => $composableBuilder(
+    column: $table.profileId,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<String> get documentId => $composableBuilder(
     column: $table.documentId,
     builder: (column) => ColumnFilters(column),
@@ -403,6 +465,11 @@ class $$ProgressEntriesTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  ColumnOrderings<String> get profileId => $composableBuilder(
+    column: $table.profileId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get documentId => $composableBuilder(
     column: $table.documentId,
     builder: (column) => ColumnOrderings(column),
@@ -433,6 +500,9 @@ class $$ProgressEntriesTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  GeneratedColumn<String> get profileId =>
+      $composableBuilder(column: $table.profileId, builder: (column) => column);
+
   GeneratedColumn<String> get documentId => $composableBuilder(
     column: $table.documentId,
     builder: (column) => column,
@@ -483,12 +553,14 @@ class $$ProgressEntriesTableTableManager
               $$ProgressEntriesTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
+                Value<String> profileId = const Value.absent(),
                 Value<String> documentId = const Value.absent(),
                 Value<String> requirementId = const Value.absent(),
                 Value<bool> checked = const Value.absent(),
                 Value<int> updatedAt = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => ProgressEntriesCompanion(
+                profileId: profileId,
                 documentId: documentId,
                 requirementId: requirementId,
                 checked: checked,
@@ -497,12 +569,14 @@ class $$ProgressEntriesTableTableManager
               ),
           createCompanionCallback:
               ({
+                Value<String> profileId = const Value.absent(),
                 required String documentId,
                 required String requirementId,
                 required bool checked,
                 required int updatedAt,
                 Value<int> rowid = const Value.absent(),
               }) => ProgressEntriesCompanion.insert(
+                profileId: profileId,
                 documentId: documentId,
                 requirementId: requirementId,
                 checked: checked,

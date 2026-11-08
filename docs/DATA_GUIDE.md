@@ -64,6 +64,8 @@ Everything else is optional — draft entries are expected to be sparse.
 | `steps` | list of bilingual strings | Ordered procedure. |
 | `fee_note` | bilingual \| null | Fees **with** `source_url` on the same entry. |
 | `processing_note` | bilingual \| null | Typical wait time, with its source. |
+| `fee_min` / `fee_max` | int ≥ 0 \| null | **Extract of `fee_note`**, in pesos, for bundle totals. Never a new claim: only amounts the note already states, and the validator rejects a pair without a `fee_note`. |
+| `processing_days_min` / `processing_days_max` | int ≥ 0 \| null | **Extract of `processing_note`**, in working days; `0` means the same day. Omit when the note does not state a number ("a few days", "months"). |
 | `notes` | list of bilingual strings | Community notes (sources, grace periods). |
 
 ### Requirement objects
@@ -148,7 +150,7 @@ The agent never sets `verified`, `last_verified` or `verified_by`.
 
 ```powershell
 dart run tools/validate.dart              # schema + semantic validation (errors fail, warnings report)
-dart run tools/validate.dart --strict     # also fails on warnings (2 known allowlisted warnings today)
+dart run tools/validate.dart --strict     # also fails on warnings (12 known allowlisted warnings today)
 dart run tools/validate.dart --strict-on=errors   # what CI runs (see docs/DECISIONS.md, D-P2c)
 dart run tools/build_data.dart            # compile -> dist/ + app/assets/data/data.json
 dart run tools/build_data.dart --include-drafts   # dev only, gitignored

@@ -60,27 +60,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     Column(
                       children: [
                         _buildTopBadge(l10n),
-                        const SizedBox(height: 14),
+                        const SizedBox(height: 18),
                         _buildHeroLogo(),
-                        const SizedBox(height: 12),
-                        _buildHeadline(l10n, isFil),
                         const SizedBox(height: 14),
+                        _buildHeadline(l10n, isFil),
+                        const SizedBox(height: 18),
                         _buildFeatureHighlights(isFil),
                       ],
                     ),
 
-                    const SizedBox(height: 14),
-
-                    // Official Disclaimer Notice Card
-                    _buildNoticeCard(l10n),
-
-                    const SizedBox(height: 14),
+                    const SizedBox(height: 20),
 
                     // Controls & CTA
                     Column(
                       children: [
                         _buildLanguageSelector(l10n),
-                        const SizedBox(height: 14),
+                        const SizedBox(height: 16),
                         _buildCtaButton(l10n),
                         const SizedBox(height: 6),
                         _buildPrivacyButton(l10n),
@@ -233,76 +228,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           label: isFil ? 'Walang Account / Ads' : 'No Account / Ads',
         ),
       ],
-    );
-  }
-
-  Widget _buildNoticeCard(AppLocalizations l10n) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: _surfaceCard,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(
-          color: _cardBorder,
-          width: 1.2,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.25),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  color: _tealPrimary.withValues(alpha: 0.25),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.policy_outlined,
-                  color: _tealAccent,
-                  size: 16,
-                ),
-              ),
-              const SizedBox(width: 8),
-              const Expanded(
-                child: Text(
-                  'PAALALA / DISCLAIMER',
-                  style: TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 1.2,
-                    color: _tealAccent,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Container(
-            height: 1,
-            color: _cardBorder,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            l10n.onboardingDisclaimer,
-            style: TextStyle(
-              color: Colors.white.withValues(alpha: 0.85),
-              fontWeight: FontWeight.w400,
-              height: 1.4,
-              fontSize: 12,
-            ),
-          ),
-        ],
-      ),
     );
   }
 

@@ -1,0 +1,130 @@
+# DMW Overseas Employment Certificate (OEC)
+# Facts sourced from the Department of Migrant Workers pages and the POEA
+# Citizen's Charter carried on dmw.gov.ph, plus the DFA consular page on the
+# OEC: the OEC is the exit clearance presented to immigration at Philippine
+# airports for overseas employment, it exempts the worker from travel tax and
+# the airport terminal fee, it is valid for sixty (60) days from issuance, and
+# the requirements are a passport valid for at least six months, a valid visa
+# or work permit, a verified employment contract, OWWA membership, and proof of
+# employment for a Balik Manggagawa. Re-checked 2026-11-07 against the DFA
+# consular page on the OEC (60-day validity, travel-tax and terminal-fee
+# exemptions) and the POEA/DHAD Notice No. 947 fee schedule carried by DMW
+# (OEC processing fee equal to US$100.00, collected with the US$25.00 OWWA
+# contribution and the Pag-IBIG contribution). Promoted to verified on the
+# maintainer's instruction.
+schema_version: 1
+id: dmw-overseas-employment-certificate
+name:
+  en: DMW Overseas Employment Certificate (OEC)
+  fil: DMW Overseas Employment Certificate (OEC)
+agency: dmw
+status: verified
+source_url: https://bangkokpe.dfa.gov.ph/consular-office/services/other-services/oec-and-owwa-membership
+last_verified: '2026-11-07'
+verified_by: JamesMangao
+apply_online: true
+apply_online_url: https://dmw.gov.ph/
+validity_months: 2
+summary:
+  en: >-
+    Exit clearance for overseas employment, issued by the Department of Migrant
+    Workers and presented to immigration every time a Filipino leaves for work
+    abroad.
+  fil: >-
+    Exit clearance para sa overseas employment, inilalabas ng Department of
+    Migrant Workers at ipinapakita sa immigration tuwing aalis ang Pilipino
+    para magtrabaho sa ibang bansa.
+tags: [ofw, overseas, travel, dmw]
+where_to_apply:
+  en: >-
+    Online through the DMW / Balik Manggagawa portal, at a DMW regional office,
+    or through the licensed recruitment agency for a new hire.
+  fil: >-
+    Online sa DMW / Balik Manggagawa portal, sa DMW regional office, o sa
+    licensed recruitment agency para sa bagong hire.
+requirements:
+  - id: passport
+    text:
+      en: Passport valid for at least six (6) months from the intended departure.
+      fil: Pasaporte na valid nang hindi bababa sa anim (6) na buwan mula sa
+        petsa ng pag-alis.
+    original: true
+  - id: employment-contract
+    text:
+      en: >-
+        Employment contract verified by the Migrant Workers Office, or
+        authenticated by the Philippine embassy or consulate with jurisdiction.
+      fil: >-
+        Employment contract na verified ng Migrant Workers Office, o
+        authenticated ng embahada o konsulado ng Pilipinas na may hurisdiksyon.
+    original: true
+  - id: work-visa
+    text:
+      en: Valid and appropriate visa or work permit.
+      fil: Valid at angkop na visa o work permit.
+    original: true
+  - id: proof-of-employment
+    text:
+      en: >-
+        For a Balik Manggagawa: proof of existing employment — current
+        certificate of employment, company ID, or recent pay slip.
+      fil: >-
+        Para sa Balik Manggagawa: patunay ng existing employment — kasalukuyang
+        certificate of employment, company ID, o recent pay slip.
+    optional: true
+  - id: owwa-membership
+    text:
+      en: Active OWWA membership.
+      fil: Aktibong OWWA membership.
+    original: true
+  - id: pagibig
+    text:
+      en: Pag-IBIG membership or contribution, where the processing office asks for it.
+      fil: Pag-IBIG membership o contribution, kung hinihingi ng processing
+        office.
+    optional: true
+steps:
+  - en: >-
+      Log in to the DMW Balik Manggagawa portal, or have your agency file for
+      you if you are a new hire.
+    fil: >-
+      Mag-log in sa DMW Balik Manggagawa portal, o ipa-file sa agency mo kung
+      bagong hire ka.
+  - en: >-
+      Upload the passport, the verified contract, the visa or work permit, and
+      proof of employment if you are returning to the same employer.
+    fil: >-
+      I-upload ang pasaporte, verified contract, visa o work permit, at
+      patunay ng trabaho kung babalik ka sa parehong employer.
+  - en: >-
+      Pay the OEC processing fee together with the OWWA and Pag-IBIG
+      contributions, and keep the receipt.
+    fil: >-
+      Bayaran ang OEC processing fee kasama ang OWWA at Pag-IBIG
+      contributions, at itago ang resibo.
+  - en: >-
+      Print or save the OEC and present it at the airport together with your
+      passport.
+    fil: >-
+      I-print o i-save ang OEC at ipakita ito sa airport kasama ang pasaporte.
+fee_note:
+  en: >-
+    The OEC processing fee is the peso equivalent of US$100.00, collected
+    together with the OWWA membership (US$25.00) and the Pag-IBIG contribution
+    at the cashier.
+  fil: >-
+    Ang OEC processing fee ay katumbas sa piso ng US$100.00, kinokolekta
+    kasama ng OWWA membership (US$25.00) at Pag-IBIG contribution sa cashier.
+notes:
+  - en: >-
+      The OEC is valid for sixty (60) days from issuance, so do not secure it
+      months before the flight.
+    fil: >-
+      Valid ang OEC nang animnapung (60) araw mula nang ilabas, kaya huwag
+      kumuha nito ilang buwan bago ang flight.
+  - en: >-
+      Presenting the OEC exempts you from the travel tax and the airport
+      terminal fee.
+    fil: >-
+      Ang pagpapakita ng OEC ay nagbibigay ng exemption sa travel tax at airport
+      terminal fee.

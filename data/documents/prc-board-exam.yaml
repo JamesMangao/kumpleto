@@ -1,0 +1,188 @@
+# PRC Board Examination Application
+# Facts sourced from https://www.prc.gov.ph/prc-frequently-asked-questions:
+# the basic documentary requirements for the licensure examination (TOR with
+# scanned picture and the "For Board Examination Purposes Only" remarks, PSA
+# birth certificate on security paper, PSA marriage certificate for married
+# women, four passport-size pictures with a complete name tag on white
+# background, documentary stamps), the online filing through PRC Online
+# Services followed by submission at a regional office for the Notice of
+# Admission, and the examination fee schedule. Verified against the PRC FAQ on
+# 2026-11-06 at the maintainer's request.
+schema_version: 1
+id: prc-board-exam
+name:
+  en: PRC Board Examination Application
+  fil: PRC Board Examination Application
+agency: prc
+status: verified
+last_verified: '2026-11-06'
+verified_by: JamesMangao
+source_url: https://www.prc.gov.ph/prc-frequently-asked-questions
+apply_online: true
+apply_online_url: https://online.prc.gov.ph/
+summary:
+  en: >-
+    Application to take a PRC licensure examination — the step before
+    oath-taking and initial registration. File online, then submit the
+    documents at a PRC regional office to receive your Notice of Admission.
+  fil: >-
+    Aplikasyon para makapag-exam sa licensure examination ng PRC — ang hakbang
+    bago ang oath-taking at initial registration. Mag-file online, pagkatapos
+    isumite ang mga dokumento sa PRC regional office para makuha ang Notice of
+    Admission.
+tags: [professional, license, board-exam, prc]
+where_to_apply:
+  en: >-
+    Apply online through PRC Online Services, then go to the Application
+    Section of the PRC regional office or offsite service center on your
+    appointment date to submit the documents and claim the Notice of Admission.
+  fil: >-
+    Mag-apply online sa PRC Online Services, pagkatapos pumunta sa Application
+    Section ng PRC regional office o offsite service center sa appointment date
+    para isumite ang mga dokumento at kunin ang Notice of Admission.
+requirements:
+  - id: online-application
+    text:
+      en: >-
+        Application filed through PRC Online Services, with the printed
+        application form and appointment details.
+      fil: >-
+        Aplikasyong inihain sa PRC Online Services, kasama ang nakaprintang
+        application form at detalye ng appointment.
+    original: true
+  - id: tor
+    text:
+      en: >-
+        Transcript of Records with a scanned picture and the remarks "For Board
+        Examination Purposes Only".
+      fil: >-
+        Transcript of Records na may scanned na litrato at remarks na "For Board
+        Examination Purposes Only".
+    original: true
+  - id: birth-certificate
+    text:
+      en: >-
+        Birth certificate from the Philippine Statistics Authority on security
+        paper.
+      fil: >-
+        Birth certificate mula sa Philippine Statistics Authority na nasa
+        security paper.
+    original: true
+  - id: marriage-certificate
+    text:
+      en: >-
+        PSA marriage certificate, for married female applicants.
+      fil: >-
+        PSA marriage certificate, para sa babaeng aplikanteng may asawa.
+    original: true
+    optional: true
+  - id: id-photos
+    text:
+      en: >-
+        Four (4) passport-size pictures with a complete name tag, on white
+        background.
+      fil: >-
+        Apat (4) na passport-size na litrato na may kumpletong name tag, puting
+        background.
+    original: true
+  - id: documentary-stamp
+    text:
+      en: Documentary stamps.
+      fil: Documentary stamps.
+    original: true
+  - id: board-requirements
+    text:
+      en: >-
+        Additional requirements set by your Professional Regulatory Board —
+        check the list of requirements for your profession before filing.
+      fil: >-
+        Dagdag na requirement mula sa Professional Regulatory Board mo —
+        tingnan ang listahan ng requirements para sa propesyon mo bago mag-file.
+    original: true
+    optional: true
+  - id: payment
+    text:
+      en: Payment of the examination fee for your profession.
+      fil: Bayad sa examination fee para sa propesyon mo.
+steps:
+  - en: >-
+      Check the examination schedule and the filing period for your profession
+      on the PRC website, and read the requirements list for your board.
+    fil: >-
+      Tingnan ang examination schedule at filing period ng propesyon mo sa
+      website ng PRC, at basahin ang listahan ng requirements ng board mo.
+  - en: >-
+      File the application through PRC Online Services and print the generated
+      form with your appointment details.
+    fil: >-
+      Ihain ang aplikasyon sa PRC Online Services at i-print ang generated form
+      kasama ang detalye ng appointment.
+  - en: >-
+      Pay the examination fee through the authorized payment channel and keep
+      the receipt.
+    fil: >-
+      Bayaran ang examination fee sa awtorisadong payment channel at itago ang
+      resibo.
+  - en: >-
+      Go to the PRC regional office or offsite service center on your
+      appointment date with the originals and the required photocopies.
+    fil: >-
+      Pumunta sa PRC regional office o offsite service center sa appointment
+      date dala ang mga orihinal at ang kailangang photocopy.
+  - en: >-
+      Submit the documents, have your biometrics and photo captured if asked,
+      then claim the Notice of Admission (NOA).
+    fil: >-
+      Isumite ang mga dokumento, kunan ng biometrics at litrato kung hihilingin,
+      pagkatapos kunin ang Notice of Admission (NOA).
+  - en: >-
+      On examination day, bring the NOA and a valid government ID to the room
+      assignment printed on it.
+    fil: >-
+      Sa araw ng exam, dalhin ang NOA at valid na ID ng gobyerno sa room
+      assignment na nakasaad dito.
+fee_note:
+  en: >-
+    ₱900 for professions requiring a baccalaureate degree and ₱600 for
+    non-baccalaureate professions; ₱450 for conditioned applicants, ₱1,000 for
+    Dental Technologists and Dental Hygienists, and ₱1,500 for Ocular
+    Pharmacology. Confirm the current rate when you file.
+  fil: >-
+    ₱900 para sa propesyon na nangangailangan ng baccalaureate degree at ₱600
+    para sa non-baccalaureate; ₱450 para sa conditioned applicant, ₱1,000 para
+    sa Dental Technologist at Dental Hygienist, at ₱1,500 para sa Ocular
+    Pharmacology. Kumpirmahin ang kasalukuyang rate pag-file.
+fee_min: 450
+fee_max: 1500
+processing_note:
+  en: >-
+    The Notice of Admission is issued once your documents are accepted at the
+    PRC office; the examination itself follows the schedule published for your
+    profession.
+  fil: >-
+    Inilalabas ang Notice of Admission kapag tinanggap na ang mga dokumento sa
+    PRC office; ang exam mismo ay sumusunod sa schedule na inilathala para sa
+    propesyon mo.
+notes:
+  - en: >-
+      Requirements differ by profession. Architecture, accountancy, nursing and
+      the rest each have a list on the PRC "List of Requirements" page, and a
+      board may ask for more than the basic set.
+    fil: >-
+      Iba-iba ang requirements kada propesyon. May listahan ang arkitektura,
+      accountancy, nursing at iba pa sa "List of Requirements" page ng PRC, at
+      may board na humihingi ng higit sa basic na set.
+  - en: >-
+      After passing, the next steps are oath-taking and initial registration —
+      the PRC does not release the Certificate of Registration or the PRC ID
+      without the oath-taking attendance tagged in its system.
+    fil: >-
+      Kapag pumasa, ang susunod ay oath-taking at initial registration — hindi
+      inilalabas ng PRC ang Certificate of Registration o PRC ID kung wala ang
+      attendance sa oath-taking na naka-tag sa system nila.
+  - en: >-
+      Keep the Notice of Admission. It carries your room assignment and is
+      checked at the examination venue.
+    fil: >-
+      Ingatan ang Notice of Admission. Nasa loob nito ang room assignment mo at
+      ito ang tinitignan sa venue ng exam.

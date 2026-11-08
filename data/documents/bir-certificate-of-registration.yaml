@@ -1,0 +1,159 @@
+# BIR Certificate of Registration (Form 2303)
+# Sources: BIR 2025 Checklist of Documentary Requirements (COR issued upon
+# complete documents; ₱30 loose documentary stamp tax on the COR, and ₱30 per
+# set of books), BIR Citizen's Charter, and Revenue Regulations No. 7-2024
+# implementing the Ease of Paying Taxes Act (RA 11976), which removed the
+# ₱500 Annual Registration Fee — business taxpayers no longer pay it and do
+# not need to replace a COR that still shows it. Re-checked 2026-11-08 before
+# promotion.
+schema_version: 1
+id: bir-certificate-of-registration
+name:
+  en: BIR Certificate of Registration (Form 2303)
+  fil: BIR Certificate of Registration (Form 2303)
+agency: bir
+status: verified
+last_verified: '2026-11-08'
+verified_by: JamesMangao
+source_url: https://www.bir.gov.ph/
+apply_online: true
+apply_online_url: https://orus.bir.gov.ph/
+summary:
+  en: >-
+    The certificate that proves your business is registered with the BIR. It
+    shows your TIN, registered address, tax types and the returns you must
+    file, and it is what banks, suppliers and the BPLO ask for after the
+    Mayor's permit.
+  fil: >-
+    Sertipikong nagpapatunay na rehistrado sa BIR ang iyong negosyo. Nakasaad
+    dito ang TIN, rehistradong address, mga tax type at mga return na kailangang
+    ihain, at ito ang hinihingi ng bangko, supplier at BPLO pagkatapos ng
+    Mayor's permit.
+tags: [tax, business, registration]
+where_to_apply:
+  en: >-
+    Online through ORUS, or the New Business Registrant counter of the Revenue
+    District Office that covers your business address.
+  fil: >-
+    Online sa ORUS, o sa New Business Registrant counter ng Revenue District
+    Office na sumasaklaw sa address ng negosyo.
+requirements:
+  - id: application-form
+    text:
+      en: >-
+        Accomplished registration form for your taxpayer type — 1901 for a sole
+        proprietor, 1903 for a partnership or corporation.
+      fil: >-
+        Nasagutang registration form para sa uri ng taxpayer — 1901 para sa
+        sole proprietor, 1903 para sa partnership o corporation.
+    original: true
+  - id: business-registration
+    text:
+      en: >-
+        DTI Certificate of Business Name Registration, or the SEC or CDA
+        certificate, original and photocopy.
+      fil: >-
+        DTI Certificate of Business Name Registration, o sertipiko ng SEC o
+        CDA, orihinal at photocopy.
+    original: true
+  - id: mayors-permit
+    text:
+      en: Mayor's / business permit for the address being registered.
+      fil: Mayor's / business permit para sa address na ire-register.
+    original: true
+  - id: valid-id
+    text:
+      en: One valid government-issued ID of the owner or authorized representative.
+      fil: Isang valid na ID ng gobyerno ng may-ari o awtorisadong kinatawan.
+    original: true
+  - id: proof-of-address
+    text:
+      en: >-
+        Proof of the business address: lease contract, tax declaration, or
+        barangay certification.
+      fil: >-
+        Patunay ng address ng negosyo: lease contract, tax declaration, o
+        barangay certification.
+    original: true
+  - id: dst
+    text:
+      en: >-
+        ₱30 loose documentary stamp tax for the certificate, and ₱30 for each
+        set of books of accounts.
+      fil: >-
+        ₱30 loose documentary stamp tax para sa sertipiko, at ₱30 para sa
+        bawat set ng books of accounts.
+    original: true
+steps:
+  - en: >-
+      Register on ORUS, or get a queue number at the RDO's New Business
+      Registrant counter, and file the correct registration form.
+    fil: >-
+      Mag-register sa ORUS, o kumuha ng queue number sa New Business Registrant
+      counter ng RDO, at ihain ang tamang registration form.
+  - en: >-
+      Submit the DTI/SEC/CDA certificate, Mayor's permit, proof of address and
+      your ID, and pay the ₱30 documentary stamp tax.
+    fil: >-
+      Isumite ang DTI/SEC/CDA certificate, Mayor's permit, patunay ng address
+      at ID, at bayaran ang ₱30 documentary stamp tax.
+  - en: >-
+      Receive the Certificate of Registration (Form 2303) showing your TIN,
+      tax types and registration details, and check every line.
+    fil: >-
+      Tanggapin ang Certificate of Registration (Form 2303) na may TIN, tax
+      types at detalye ng registration, at tingnan ang bawat linya.
+  - en: >-
+      Register your books of accounts and, if you will issue invoices, apply
+      for the Authority to Print or use the BIR Printed Invoice.
+    fil: >-
+      Ipalista ang books of accounts at, kung maglalabas ka ng invoice, humingi
+      ng Authority to Print o gumamit ng BIR Printed Invoice.
+  - en: >-
+      Post the COR and the “Ask for Receipt” notice where customers can see
+      them, and keep the original safe.
+    fil: >-
+      Ipaskil ang COR at ang “Ask for Receipt” notice sa lugar na kita ng
+      customer, at itago nang maayos ang orihinal.
+fee_note:
+  en: >-
+    ₱30 loose documentary stamp tax on the certificate, plus ₱30 for each set
+    of books of accounts. The ₱500 annual registration fee was abolished by the
+    Ease of Paying Taxes Act (RA 11976) — do not pay it, and a COR that still
+    prints it stays valid.
+  fil: >-
+    ₱30 loose documentary stamp tax sa sertipiko, dagdag ang ₱30 kada set ng
+    books of accounts. Inalis na ng Ease of Paying Taxes Act (RA 11976) ang
+    ₱500 annual registration fee — huwag itong bayaran, at valid pa rin ang
+    COR na nakalimbag pa ito.
+processing_note:
+  en: >-
+    Same day at the RDO counter when the documents are complete; online
+    registrations are usually finished within three working days.
+  fil: >-
+    Same day sa counter ng RDO kapag kumpleto ang dokumento; ang online
+    registration ay karaniwang tapos sa loob ng tatlong working days.
+notes:
+  - en: >-
+      The COR is tied to the address and tax types on it. Changing either means
+      filing BIR Form 1905, not printing a new certificate yourself.
+    fil: >-
+      Nakatali ang COR sa address at tax types na nakasaad dito. Kapag nagbago
+      ang alinman, maghain ng BIR Form 1905, huwag mag-print ng bagong
+      sertipiko.
+  - en: >-
+      A branch needs its own registration and its own COR — one certificate
+      does not cover a second location.
+    fil: >-
+      Kailangan ng sangay ang sariling registration at sariling COR — hindi
+      sakop ng isang sertipiko ang pangalawang lokasyon.
+  - en: >-
+      Lost or damaged COR: file Form 1905 with an affidavit of loss and pay the
+      ₱30 documentary stamp for the replacement.
+    fil: >-
+      Nawala o nasira ang COR: maghain ng Form 1905 kasama ang affidavit of
+      loss at bayaran ang ₱30 documentary stamp para sa kapalit.
+fee_min: 30
+fee_max: 30
+processing_days_min: 0
+processing_days_max: 3

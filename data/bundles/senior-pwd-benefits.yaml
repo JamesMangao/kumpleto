@@ -1,0 +1,53 @@
+# Bundle — verified 2026-11-06: every document it lists is status: verified.
+schema_version: 1
+id: senior-pwd-benefits
+name:
+  en: Senior & PWD Benefits Pack
+  fil: Senior at PWD Benefits Pack
+description:
+  en: >-
+    The IDs that unlock statutory discounts, priority lanes, and cash benefits —
+    for senior citizens (RA 9994), persons with disability (RA 7277 and
+    RA 10754), and solo parents (RA 11861) — plus the PhilHealth membership
+    those benefits are tied to. Community-curated: confirm with your OSCA,
+    PDAO or MSWDO, and PhilHealth.
+  fil: >-
+    Mga ID na nagbibigay ng diskwento, priority lane, at cash benefit ayon sa
+    batas — para sa senior citizen (RA 9994), persons with disability (RA 7277
+    at RA 10754), at solo parent (RA 11861) — kasama ang PhilHealth membership
+    na nakaugnay sa mga benepisyong ito. Kurado ng komunidad: kumpirmahin sa
+    OSCA, PDAO o MSWDO, at PhilHealth.
+status: verified
+documents:
+  - senior-citizen-id
+  - pwd-id
+  - solo-parent-id
+  - philhealth
+tags: [welfare, discounts]
+icon: how_to_reg
+notes:
+  - en: >-
+      The three IDs are issued by different offices in the same city or
+      municipal hall: OSCA for seniors, PDAO or MSWDO for PWDs, and the Solo
+      Parent Office or CSWDO/MSWDO for solo parents. One trip can cover all
+      three if you bring the barangay certificate once.
+    fil: >-
+      Tatlong magkaibang opisina sa iisang city o municipal hall ang
+      naglalabas ng mga ID: OSCA para sa senior, PDAO o MSWDO para sa PWD, at
+      Solo Parent Office o CSWDO/MSWDO para sa solo parent. Kaya nang isang
+      lakaran kung isang barangay certificate lang ang dadalhin.
+  - en: >-
+      A senior citizen or PWD who is also a solo parent keeps the senior or PWD
+      discounts without forfeiting the solo parent benefits under RA 11861.
+    fil: >-
+      Ang senior citizen o PWD na solo parent din ay nananatili ang senior o
+      PWD discount nang hindi nawawala ang benepisyo bilang solo parent sa
+      ilalim ng RA 11861.
+  - en: >-
+      Solo parents registered with the LGU are automatically covered by
+      PhilHealth, with the national government paying the premium — bring the
+      Solo Parent ID when updating your PhilHealth record.
+    fil: >-
+      Ang solo parent na nakarehistro sa LGU ay awtomatikong saklaw ng
+      PhilHealth, at gobyerno ang nagbabayad ng premium — dalhin ang Solo
+      Parent ID kapag nag-update ng record sa PhilHealth.

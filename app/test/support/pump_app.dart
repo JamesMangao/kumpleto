@@ -106,6 +106,10 @@ Map<String, Object?> widgetTestData() => compileDataJson(
         'en': '₱130 plus an e-payment charge.',
         'fil': '₱130 dagdag sa e-payment charge.',
       },
+      'fee_min': 130,
+      'fee_max': 160,
+      'processing_days_min': 0,
+      'processing_days_max': 0,
       'depends_on': ['psa-birth-certificate'],
     },
     <String, Object?>{

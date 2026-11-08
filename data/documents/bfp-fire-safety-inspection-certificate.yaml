@@ -1,0 +1,166 @@
+# Fire Safety Inspection Certificate (FSIC)
+# Sources: BFP Citizen's Charter (Fire Safety Inspection Fee = 15% of all fees
+# charged by the LGU/PEZA for the occupancy or business permit, but not lower
+# than ₱500; FSIC for new business is released within 1 day with a valid
+# occupancy FSIC, up to 3 days without one), the Fire Code of the Philippines
+# (RA 9514) requirement that no business permit is issued without an FSIC, and
+# the Official Gazette's fire-safety page for businesses. Re-checked
+# 2026-11-08 before promotion.
+schema_version: 1
+id: bfp-fire-safety-inspection-certificate
+name:
+  en: Fire Safety Inspection Certificate (FSIC)
+  fil: Fire Safety Inspection Certificate (FSIC)
+agency: bfp
+status: verified
+last_verified: '2026-11-08'
+verified_by: JamesMangao
+source_url: https://bfp.gov.ph/
+validity_months: 12
+apply_online: false
+summary:
+  en: >-
+    The Bureau of Fire Protection certificate that says your premises passed a
+    fire-safety inspection. Cities and municipalities cannot issue or renew a
+    Mayor's / business permit without it.
+  fil: >-
+    Sertipiko ng Bureau of Fire Protection na nagsasabing pasado sa fire-safety
+    inspection ang iyong lugar. Hindi makakapaglabas o makakapag-renew ng
+    Mayor's / business permit ang lungsod o munisipalidad nang wala ito.
+tags: [business, permit, safety, lgu]
+where_to_apply:
+  en: >-
+    The Bureau of Fire Protection unit for your city or municipality — usually
+    the fire station's Fire Safety Enforcement Unit — often inside the LGU's
+    Business One-Stop Shop in January.
+  fil: >-
+    Ang Bureau of Fire Protection unit sa iyong lungsod o munisipalidad —
+    kadalasan ang Fire Safety Enforcement Unit ng fire station — madalas sa
+    loob ng Business One-Stop Shop ng LGU tuwing Enero.
+requirements:
+  - id: application-form
+    text:
+      en: Accomplished FSIC application form or the Unified Application Form (UAF).
+      fil: Nasagutang FSIC application form o ang Unified Application Form (UAF).
+    original: true
+  - id: occupancy-permit
+    text:
+      en: >-
+        Certified true copy of the valid Certificate of Occupancy. Without one,
+        the BFP asks for the Office of the Building Official's endorsement and
+        the Certificate of Completion instead.
+      fil: >-
+        Certified true copy ng valid na Certificate of Occupancy. Kung wala,
+        hihingi ang BFP ng endorsement ng Office of the Building Official at ng
+        Certificate of Completion.
+    original: true
+  - id: bplo-assessment
+    text:
+      en: >-
+        Assessment of business permit fees, or the tax assessment bill, from the
+        BPLO — the BFP computes its fee as a share of these.
+      fil: >-
+        Assessment ng business permit fees, o ang tax assessment bill, mula sa
+        BPLO — basehan ng BFP sa pagkalkula ng bayad nito.
+    original: true
+  - id: fire-code-fee
+    text:
+      en: >-
+        For renewal: the previous year's FSIC and proof of payment of the fire
+        code fees.
+      fil: >-
+        Para sa renewal: FSIC ng nakaraang taon at patunay ng bayad sa fire
+        code fees.
+    optional: true
+  - id: fire-insurance
+    text:
+      en: Fire insurance policy for the premises, when the establishment carries one.
+      fil: >-
+        Fire insurance policy ng lugar, kung mayroon ang establisyimento.
+    optional: true
+  - id: id
+    text:
+      en: >-
+        Valid ID of the owner or authorized representative, and proof of
+        authority for a representative.
+      fil: >-
+        Valid ID ng may-ari o awtorisadong kinatawan, at patunay ng
+        kapangyarihan para sa kinatawan.
+    original: true
+steps:
+  - en: >-
+      File the business permit application at the BPLO first and get the
+      assessment of business permit fees — the BFP needs it to compute the
+      inspection fee.
+    fil: >-
+      Ihain muna ang business permit application sa BPLO at kunin ang
+      assessment ng business permit fees — kailangan ito ng BFP sa pagkalkula
+      ng inspection fee.
+  - en: >-
+      Submit the FSIC application with the occupancy permit, the assessment and
+      your ID at the city or municipal fire station.
+    fil: >-
+      Isumite ang FSIC application kasama ang occupancy permit, assessment at
+      ID sa city o municipal fire station.
+  - en: >-
+      Pay the fire safety inspection fee at the BFP cashier and keep the
+      official receipt.
+    fil: >-
+      Bayaran ang fire safety inspection fee sa cashier ng BFP at itago ang
+      official receipt.
+  - en: >-
+      Let the fire safety inspector check the premises — exits, extinguishers,
+      electrical wiring and the fire alarm or suppression system, if any.
+    fil: >-
+      Painspeksyon sa fire safety inspector ang lugar — exits, extinguishers,
+      electrical wiring at fire alarm o suppression system, kung meron.
+  - en: >-
+      Claim the FSIC, or the Notice to Comply if the inspector found something
+      to fix, and attach the FSIC to the Mayor's permit application.
+    fil: >-
+      Kunin ang FSIC, o ang Notice to Comply kung may nakitang dapat ayusin,
+      at isama ang FSIC sa aplikasyon ng Mayor's permit.
+fee_note:
+  en: >-
+    The Fire Safety Inspection Fee is 15% of all fees charged by the LGU or
+    PEZA for the business or occupancy permit, and never lower than ₱500.
+    Other fees may apply under the Fire Code's implementing rules, so ask the
+    BFP for the exact amount.
+  fil: >-
+    Ang Fire Safety Inspection Fee ay 15% ng lahat ng fees na sinisingil ng LGU
+    o PEZA para sa business o occupancy permit, at hindi bababa sa ₱500.
+    Maaaring may iba pang bayad sa ilalim ng implementing rules ng Fire Code,
+    kaya itanong sa BFP ang eksaktong halaga.
+processing_note:
+  en: >-
+    One day when a valid occupancy FSIC already covers the premises, up to
+    three days without one — the inspector may need to go back after a Notice
+    to Comply.
+  fil: >-
+    Isang araw kapag may valid na occupancy FSIC ang lugar, hanggang tatlong
+    araw kung wala — maaaring bumalik ang inspector pagkatapos ng Notice to
+    Comply.
+notes:
+  - en: >-
+      The FSIC is annual and follows the business permit cycle: renew it
+      before the permit is issued or renewed, not after.
+    fil: >-
+      Taunan ang FSIC at sumusunod sa cycle ng business permit: i-renew bago
+      ilabas o i-renew ang permit, hindi pagkatapos.
+  - en: >-
+      A home-based sari-sari store still needs an FSIC when the LGU requires
+      one for the permit — ask your city or municipal fire station.
+    fil: >-
+      Ang sari-sari store sa bahay ay kailangan pa rin ng FSIC kapag
+      hinihingi ito ng LGU para sa permit — itanong sa city o municipal fire
+      station.
+  - en: >-
+      Fix what the Notice to Comply lists, then request reinspection — an
+      unresolved FSIC blocks the Mayor's permit, not just the fire clearance.
+    fil: >-
+      Ayusin ang nakasaad sa Notice to Comply, pagkatapos humingi ng
+      reinspection — ang hindi naayos na FSIC ay humaharang sa Mayor's permit,
+      hindi lang sa fire clearance.
+fee_min: 500
+processing_days_min: 1
+processing_days_max: 3

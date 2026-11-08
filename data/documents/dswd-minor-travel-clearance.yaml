@@ -1,0 +1,156 @@
+# DSWD Travel Clearance for Minors
+# Facts sourced from the DSWD FAQ page (dswd.gov.ph/frequently-ask-questions-faqs)
+# and the DSWD Citizen's Charter entry "Processing of Application for Travel
+# Clearance for Minors Traveling Abroad": who needs one, who is exempt, the
+# documentary requirements (application form, QR-coded PSA birth certificate,
+# the parents' marriage certificate or the guardianship court decision or Solo
+# Parent ID, the written consent, two coloured passport-size photos taken
+# within six months, and the travelling companion's passport), the ₱300 / ₱600
+# fee for one or two years, and the three-working-day release. Re-checked
+# 2026-11-07 against the DSWD transparency FAQ (PhP 300.00 one year, PhP 600.00
+# two years), the Field Office 2 MTA page (online clearance PhP 800.00,
+# Certificate of Exemption PhP 300.00, both single-trip, issued within three
+# working days) and the MTA FAQ (online applications are processed at the
+# Central Office). Promoted to verified on the maintainer's instruction.
+schema_version: 1
+id: dswd-minor-travel-clearance
+name:
+  en: DSWD Travel Clearance for Minors
+  fil: DSWD Travel Clearance for Minors
+agency: dswd
+status: verified
+source_url: https://www.dswd.gov.ph/frequently-ask-questions-faqs
+apply_online: true
+apply_online_url: https://mta.dswd.gov.ph/
+last_verified: '2026-11-07'
+verified_by: JamesMangao
+validity_months: 12
+fee_min: 300
+fee_max: 800
+processing_days_min: 3
+processing_days_max: 3
+summary:
+  en: >-
+    Permit from the Department of Social Welfare and Development that lets a
+    minor travel abroad without a parent, so immigration can see the trip is
+    authorised and not trafficking.
+  fil: >-
+    Permiso mula sa Department of Social Welfare and Development na
+    nagpapahintulot sa menor de edad na maglakbay sa ibang bansa nang walang
+    magulang, para makita ng immigration na awtorisado ang biyahe at hindi
+    trafficking.
+tags: [travel, minors, dswd, clearance]
+where_to_apply:
+  en: >-
+    Any DSWD Field Office, or online through the Minors Travelling Abroad
+    (MTA) portal.
+  fil: >-
+    Kahit anong DSWD Field Office, o online sa Minors Travelling Abroad (MTA)
+    portal.
+requirements:
+  - id: application-form
+    text:
+      en: Duly accomplished travel clearance application form.
+      fil: Nasagutang travel clearance application form.
+    original: true
+  - id: birth-certificate
+    text:
+      en: QR-coded PSA birth certificate of the minor.
+      fil: QR-coded PSA birth certificate ng menor de edad.
+    original: true
+    photocopies: 1
+  - id: parents-marriage-certificate
+    text:
+      en: >-
+        QR-coded PSA marriage certificate of the parents, or the court decision
+        on guardianship, or the Solo Parent ID, as applicable.
+      fil: >-
+        QR-coded PSA marriage certificate ng mga magulang, o court decision sa
+        guardianship, o Solo Parent ID, kung applicable.
+    original: true
+  - id: written-consent
+    text:
+      en: >-
+        Written consent of both parents, the solo parent, or the legal guardian
+        allowing the minor to travel with a specific person.
+      fil: >-
+        Nakasulat na pahintulot ng dalawang magulang, ng solo parent, o ng
+        legal guardian na payagang makasama ng menor de edad ang isang tiyak na
+        tao.
+    original: true
+  - id: photos
+    text:
+      en: >-
+        Two (2) coloured passport-size photos of the minor, taken within the
+        last six (6) months.
+      fil: >-
+        Dalawang (2) colored passport-size na litrato ng menor de edad, kuha sa
+        loob ng nakaraang anim (6) na buwan.
+    original: true
+    photocopies: 2
+  - id: companion-passport
+    text:
+      en: Photocopy of the passport of the travelling companion.
+      fil: Photocopy ng pasaporte ng kasama sa biyahe.
+    original: false
+    photocopies: 1
+  - id: previous-clearance
+    text:
+      en: Photocopy of the previous travel clearance, for a renewal.
+      fil: Photocopy ng nakaraang travel clearance, para sa renewal.
+    optional: true
+steps:
+  - en: >-
+      Check whether a clearance is needed at all: a minor travelling with
+      either parent, or with the solo parent or legal guardian, is exempt.
+    fil: >-
+      Tiyakin kung kailangan nga ng clearance: exempted ang menor de edad na
+      kasama ang magulang, solo parent, o legal guardian.
+  - en: >-
+      Create an account on the Minors Travelling Abroad portal, or get the
+      application form at a DSWD Field Office.
+    fil: >-
+      Gumawa ng account sa Minors Travelling Abroad portal, o kunin ang
+      application form sa DSWD Field Office.
+  - en: >-
+      Fill in the application, upload or submit the birth certificate, the
+      parents' marriage certificate or guardianship papers, the written
+      consent, the photos, and the companion's passport.
+    fil: >-
+      Sagutan ang aplikasyon, i-upload o isumite ang birth certificate,
+      marriage certificate ng magulang o guardianship papers, written consent,
+      litrato, at pasaporte ng kasama.
+  - en: Pay the processing fee and keep the receipt and reference number.
+    fil: Bayaran ang processing fee at itago ang resibo at reference number.
+  - en: >-
+      Claim the travel clearance after three (3) working days and bring it to
+      the airport with the minor's passport.
+    fil: >-
+      Kunin ang travel clearance pagkalipas ng tatlong (3) working day at
+      dalhin ito sa airport kasama ang pasaporte ng menor de edad.
+fee_note:
+  en: >-
+    ₱300.00 for a clearance valid for one (1) year and ₱600.00 for two (2)
+    years at a DSWD Field Office; the online MTA clearance is ₱800.00 and is
+    valid for a single trip.
+  fil: >-
+    ₱300.00 para sa clearance na valid nang isang (1) taon at ₱600.00 para sa
+    dalawang (2) taon sa DSWD Field Office; ang online MTA clearance ay
+    ₱800.00 at valid para sa isang biyahe.
+processing_note:
+  en: Released within three (3) working days once the requirements are complete.
+  fil: Inilalabas sa loob ng tatlong (3) working day kapag kumpleto ang
+    requirements.
+notes:
+  - en: >-
+      If the travelling companion changes, the clearance no longer covers the
+      trip and a new one must be obtained.
+    fil: >-
+      Kapag nagbago ang kasama sa biyahe, hindi na sakop ng clearance ang
+      biyahe at kailangang kumuha ng bago.
+  - en: >-
+      A minor holding a permanent resident visa or pass, or a foreign passport,
+      does not need a travel clearance.
+    fil: >-
+      Hindi kailangan ng travel clearance ang menor de edad na may permanent
+      resident visa o pass, o may foreign passport.

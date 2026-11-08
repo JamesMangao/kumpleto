@@ -59,3 +59,14 @@ Uri reportOutdatedUri({
 
 /// GitHub repository link (Settings "view on GitHub").
 Uri repositoryUri() => Uri.https('github.com', '/$repoOwner/$repoName');
+
+/// Map search for an office, opened in the user's own map app.
+///
+/// The documented `maps/search/?api=1&query=` form needs no API key on any
+/// platform: Android hands it to Google Maps, and the browser falls back to the
+/// web map. [query] is free text (an agency plus the saved place).
+Uri mapsSearchUri(String query) =>
+    Uri.https('www.google.com', '/maps/search/', {
+      'api': '1',
+      'query': query,
+    });

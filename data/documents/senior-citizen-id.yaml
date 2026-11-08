@@ -1,0 +1,57 @@
+# Senior Citizen ID
+schema_version: 1
+id: senior-citizen-id
+name:
+  en: Senior Citizen ID & Booklet
+  fil: Senior Citizen ID & Booklet
+agency: lgu
+status: verified
+last_verified: '2026-11-05'
+verified_by: JamesMangao
+source_url: https://ncsc.gov.ph/
+apply_online: false
+fee_min: 0
+fee_max: 0
+processing_days_min: 1
+processing_days_max: 3
+summary:
+  en: >-
+    Identification card issued to Filipino citizens aged 60 and older under Expanded Senior Citizens Act (RA 9994). Entitles holders to 20% discount and VAT exemption on medicine, groceries, healthcare, transportation, and recreation.
+  fil: >-
+    ID na inilalabas para sa mga Pilipinong 60 taong gulang pataas sa ilalim ng RA 9994. Nagkakaloob ng 20% diskwento at VAT exemption sa mga gamot, pagkain, transportasyon, at serbisyong medikal.
+tags: [welfare, discounts, senior, elderly]
+where_to_apply:
+  en: >-
+    Office of the Senior Citizens Affairs (OSCA) at your City Hall or Municipal Hall.
+  fil: >-
+    Tanggapan ng Office of Senior Citizens Affairs (OSCA) sa inyong Munisipyo o City Hall.
+requirements:
+  - id: proof-of-age
+    text:
+      en: PSA Birth Certificate or valid Philippine Passport / Government ID showing age 60 or above.
+      fil: PSA Birth Certificate o valid na ID ng gobyerno na nagpapatunay na ikaw ay 60 taong gulang na pataas.
+    original: true
+  - id: proof-of-residence
+    text:
+      en: Barangay Certificate of Residency certifying at least 6 months residence in the city/municipality.
+      fil: Barangay Certificate of Residency na nagpapatunay ng paninirahan sa lokal na lugar.
+    original: true
+  - id: id-photos
+    text:
+      en: Two (2) copies of 1x1 recent ID photos.
+      fil: Dalawang (2) pirasong 1x1 recent ID picture.
+    original: true
+steps:
+  - en: Bring your proof of age (PSA Birth Certificate or Gov ID) and Barangay Certificate to the OSCA office.
+    fil: Dalhin ang patunay ng edad (PSA Birth Certificate o Gov ID) at Barangay Certificate sa opisina ng OSCA.
+  - en: Fill out the Senior Citizen Membership and Registration Form.
+    fil: Sagutan ang Senior Citizen Registration Form.
+  - en: Claim your official Senior Citizen ID and Medicine/Grocery Discount Purchase Booklets.
+    fil: Tanggapin ang opisyal na Senior Citizen ID kasama ang Medicine at Grocery Discount Booklets.
+fee_note:
+  en: Free (₱0.00). No fees are charged for initial application.
+  fil: Libre (₱0.00). Walang bayad ang aplikasyon para sa Senior Citizen ID at booklets.
+processing_note:
+  en: Same-day release in most municipalities upon submission of complete documents.
+  fil: Karaniwang parehong araw ay nakukuha na agad kapag kumpleto ang mga papeles.
+

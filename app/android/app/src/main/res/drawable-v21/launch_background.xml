@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Brand launch window: teal background with the Kumpleto mark.
-     Replaced by the animated welcome scene as soon as Flutter draws. -->
+<!-- Launch window: plain brand colour only, no logo (see drawable/). -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@color/splash_background" />
-    <item>
-        <bitmap
-            android:gravity="center"
-            android:src="@drawable/splash_logo" />
-    </item>
 </layer-list>

@@ -1,0 +1,165 @@
+# DTI Business Name Registration (BNRS)
+# Facts sourced from https://bnrs.dti.gov.ph/faq (territorial-scope fees,
+# ₱30 documentary stamp tax, five-year validity, renewal windows) and
+# https://bnrs.dti.gov.ph/resources/registration-guide (online steps and the
+# seven-calendar-day payment window). Verified against both pages on
+# 2026-11-06 at the maintainer's request.
+schema_version: 1
+id: dti-business-name
+name:
+  en: DTI Business Name Registration
+  fil: DTI Business Name Registration
+agency: dti
+status: verified
+last_verified: '2026-11-06'
+verified_by: JamesMangao
+source_url: https://bnrs.dti.gov.ph/faq
+apply_online: true
+apply_online_url: https://bnrs.dti.gov.ph/
+validity_months: 60
+summary:
+  en: >-
+    Registration of a business name for a sole proprietorship with the
+    Department of Trade and Industry. The certificate reserves the name within
+    the territorial scope you choose and is the first step before a barangay
+    business clearance, Mayor's permit, and BIR registration.
+  fil: >-
+    Pagpaparehistro ng pangalan ng negosyo para sa sole proprietorship sa
+    Department of Trade and Industry. Inilalaan ng sertipiko ang pangalan sa
+    saklaw na pinili mo, at ito ang unang hakbang bago ang barangay business
+    clearance, Mayor's permit, at pagpaparehistro sa BIR.
+tags: [business, livelihood, registration, freelancer]
+where_to_apply:
+  en: >-
+    Online through the DTI Business Name Registration System (BNRS). DTI
+    offices and Negosyo Centers assist walk-in applicants with the same online
+    process.
+  fil: >-
+    Online sa DTI Business Name Registration System (BNRS). Tumutulong ang mga
+    DTI office at Negosyo Center sa mga walk-in na aplikante sa parehong
+    online na proseso.
+requirements:
+  - id: valid-id
+    text:
+      en: >-
+        Valid government-issued ID of the business owner, uploaded as a clear
+        colored copy showing the photo, name, signature, and ID number.
+      fil: >-
+        Valid na ID ng gobyerno ng may-ari ng negosyo, ini-upload bilang malinaw
+        at may kulay na kopya na makikita ang litrato, pangalan, pirma, at ID
+        number.
+    original: true
+  - id: business-name
+    text:
+      en: >-
+        Proposed business name with a dominant name and a descriptor, e.g.
+        "Alberto's Garment Manufacturing". Generic or purely descriptive names
+        are not accepted.
+      fil: >-
+        Panukalang pangalan ng negosyo na may dominant name at descriptor, hal.
+        "Alberto's Garment Manufacturing". Hindi tinatanggap ang generic o
+        puro deskriptibong pangalan.
+  - id: business-address
+    text:
+      en: >-
+        Complete business address: house/building number, street, barangay,
+        city or municipality, province, and ZIP code. For an online-only
+        business, the owner's residence is used.
+      fil: >-
+        Kumpletong address ng negosyo: numero ng bahay/gusali, kalye, barangay,
+        lungsod o munisipalidad, probinsya, at ZIP code. Kung online lang ang
+        negosyo, address ng tirahan ng may-ari ang gagamitin.
+  - id: payment
+    text:
+      en: >-
+        Payment of the registration fee within seven (7) calendar days from the
+        date of application, otherwise the application is deemed abandoned.
+      fil: >-
+        Bayad sa registration fee sa loob ng pitong (7) araw mula sa petsa ng
+        aplikasyon, kung hindi ay ituturing na abandoned ang aplikasyon.
+  - id: authorization-letter
+    text:
+      en: >-
+        If a representative files for you: a signed authorization letter from
+        the business owner plus the representative's valid ID.
+      fil: >-
+        Kung may representante: pirmaheng authorization letter mula sa may-ari
+        ng negosyo at valid ID ng representante.
+    original: true
+    optional: true
+steps:
+  - en: >-
+      Go to the DTI BNRS portal and start a New Registration under the Business
+      Name Services.
+    fil: >-
+      Pumunta sa DTI BNRS portal at magsimula ng New Registration sa ilalim ng
+      Business Name Services.
+  - en: >-
+      Choose the territorial scope (barangay, city/municipality, regional, or
+      national), then enter the dominant name and the descriptor.
+    fil: >-
+      Piliin ang territorial scope (barangay, city/municipality, regional, o
+      national), pagkatapos ilagay ang dominant name at descriptor.
+  - en: >-
+      Fill in the owner details and complete business address, then upload the
+      scanned valid ID.
+    fil: >-
+      Isulat ang detalye ng may-ari at kumpletong address ng negosyo, pagkatapos
+      i-upload ang na-scan na valid ID.
+  - en: >-
+      Pay the registration fee through an authorized payment channel within
+      seven (7) calendar days.
+    fil: >-
+      Bayaran ang registration fee sa awtorisadong payment channel sa loob ng
+      pitong (7) araw.
+  - en: >-
+      Download and print the Certificate of Business Name Registration from
+      the portal once payment is confirmed.
+    fil: >-
+      I-download at i-print ang Certificate of Business Name Registration mula
+      sa portal kapag nakumpirma na ang bayad.
+fee_note:
+  en: >-
+    ₱200 (barangay), ₱500 (city/municipality), ₱1,000 (regional), or ₱2,000
+    (national) per registration, plus a ₱30 documentary stamp tax. Late renewal
+    adds a 50% surcharge on the registration fee.
+  fil: >-
+    ₱200 (barangay), ₱500 (city/municipality), ₱1,000 (regional), o ₱2,000
+    (national) bawat pagpaparehistro, dagdag ang ₱30 documentary stamp tax.
+    May 50% surcharge sa registration fee kapag late ang renewal.
+fee_min: 230
+fee_max: 2030
+processing_note:
+  en: >-
+    The BNRS FAQ states no fixed waiting period: the certificate is
+    downloadable once the fee is paid, and the application is abandoned if it
+    is not paid within seven (7) calendar days.
+  fil: >-
+    Walang takdang waiting period sa BNRS FAQ: naida-download ang sertipiko
+    kapag bayad na, at abandoned ang aplikasyon kung hindi mabayaran sa loob ng
+    pitong (7) araw.
+notes:
+  - en: >-
+      Territorial scope is the area where offices, stores, branches, or plants
+      using the name may be located; the BNRS FAQ states it is not a limit on
+      where the business may sell.
+    fil: >-
+      Ang territorial scope ang lugar kung saan pwedeng ilagay ang opisina,
+      tindahan, sangay, o planta na gumagamit ng pangalan; ayon sa BNRS FAQ,
+      hindi ito limitasyon sa kung saan pwedeng magbenta ang negosyo.
+  - en: >-
+      The certificate registers the name only. A sole proprietor still needs
+      the barangay business clearance, the Mayor's/business permit, and BIR
+      registration before operating.
+    fil: >-
+      Pangalan lang ang nirerehistro ng sertipiko. Kailangan pa rin ng sole
+      proprietor ang barangay business clearance, Mayor's/business permit, at
+      pagpaparehistro sa BIR bago magsimula.
+  - en: >-
+      The registration is valid for five (5) years. Renew early (up to 180
+      calendar days before expiry) or within 90 calendar days after expiry to
+      avoid the surcharge.
+    fil: >-
+      Valid ang registration nang limang (5) taon. Mag-renew nang maaga (hanggang
+      180 araw bago mag-expire) o sa loob ng 90 araw pagkatapos ng expiry para
+      maiwasan ang surcharge.

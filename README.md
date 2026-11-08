@@ -2,9 +2,10 @@
 
 **Unofficial.** Kumpleto is an offline-first Android app that keeps a
 community-maintained checklist of Philippine government document
-requirements — NBI clearance, PSA certificates, passport, national ID, and
-more — plus life-event bundles (Job Hunt Pack, First Passport, New Driver,
-Renew Expired ID).
+requirements — NBI clearance, PSA certificates, passport, national ID, LTO
+licences and permits, DTI business names, PRC licences, and more — plus
+life-event bundles (Job Hunt Pack, First Passport, New Driver, Renew Expired
+ID, Kasal, Senior & PWD Benefits, Overseas Travel).
 
 > **Disclaimer:** Kumpleto is **not** a government app and is **not
 > affiliated with any government agency**. Requirements and fees change.
@@ -21,12 +22,38 @@ off — fully usable **offline**, with **no accounts, no analytics, and no ads**
 ## Features
 
 - ✅ Per-document requirement checklists (originals, photocopies, optionals)
+- 👥 Per-person checklists — add the other people you file for, each with its
+  own saved barangay, city and postal code
 - 📦 Life-event bundles with per-document and overall progress
 - 🌐 English + Filipino interface and content
 - 📴 Works 100% offline on first launch (data bundled as an asset)
 - 🔄 Silent data refresh from a public JSON feed — no app release needed
+- 🔍 Search runs through requirements, steps, fees and notes, not just titles
+- 🔗 Deep links per document and bundle (`kumpleto://doc/<id>`,
+  `kumpleto://bundle/<id>`) for sharing a single checklist
+- 🔔 Expiry reminders a month, a week and a day before an acquired document
+  lapses (off until you switch it on in Settings, which is when the OS
+  notification permission is asked for)
 - 🔒 No accounts, no analytics, no crash reporting, no data leaves your device
 - ♿ TalkBack labels, 48dp touch targets, works at 200% font size
+
+## Release status
+
+**Version 1.0.0 (versionCode 1)** — first public release.
+
+- Artifacts from `flutter build apk --flavor prod --release` and
+  `flutter build appbundle --flavor prod --release`:
+  `app/build/app/outputs/flutter-apk/app-prod-release.apk` (universal, three
+  ABIs, 71.5 MB) and
+  `app/build/app/outputs/bundle/prodRelease/app-prod-release.aab`
+  (the Play upload format, 65.8 MB on disk; Play delivers roughly the arm64
+  split, about 23 MB per device).
+- A release build carries the verified dataset only — 37 documents, 9 bundles,
+  19 agencies. Draft entries never ship, and the bundled `data.json` hash must
+  equal `dist/data.json`.
+- Store signing: the AAB is signed with the upload key only when
+  `app/android/key.properties` exists; otherwise it stays debug-signed for QA
+  and cannot be uploaded. See [docs/PLAY_RELEASE.md](docs/PLAY_RELEASE.md) §2.
 
 ## Build (development)
 
@@ -80,7 +107,20 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the full guide.
 
 ## Screenshots
 
-_Placeholder — screenshots will be added before the Play release._
+Real captures from the app running on an Android phone (1080 × 2400, cropped
+to drop the system navigation bar). The same four are the Play listing shots.
+
+![Kumpleto welcome, home and bundle screens](docs/screenshots/overview.webp)
+
+| Home | Life-event bundle |
+|---|---|
+| <img src="docs/screenshots/home.webp" width="300" alt="Home screen with search and life-event bundle cards showing progress"> | <img src="docs/screenshots/bundle.webp" width="300" alt="Job Hunt Pack bundle with progress ring, estimated cost and RA 11261 toggle"> |
+| Search over documents and bundles, life-event bundles with per-bundle progress, and the three tabs (Home, Documents, Settings). | One bundle: documents in order, overall progress, estimated cost range, and the first-time jobseeker fee-waiver toggle. |
+
+| Document checklist | Welcome |
+|---|---|
+| <img src="docs/screenshots/document.webp" width="300" alt="PSA Birth Certificate checklist with original and optional requirement tags"> | <img src="docs/screenshots/welcome.webp" width="300" alt="Welcome screen stating offline, no account and no ads"> |
+| Requirements tagged original or optional, the official source link, and the sticky "I already have this document" bar. | First launch: what the app is, and the three promises — offline, no account, no ads. |
 
 ## Privacy
 

@@ -36,3 +36,7 @@ Thumbs.db
 # APKs (binary, gitignored per https://github.com/JamesMangao/kumpleto)
 apk/
 build/
+
+# Local APK builds and their log (the installable artifact is not source)
+/Kumpleto.apk
+/build-apk.log
