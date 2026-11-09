@@ -16,11 +16,7 @@ extension LocalizedTextX on LocalizedText {
 
 /// Brand logo widget for Kumpleto: uses official asset with graceful vector fallback.
 class KumpletoLogo extends StatelessWidget {
-  const KumpletoLogo({
-    super.key,
-    this.size = 40,
-    this.radius,
-  });
+  const KumpletoLogo({super.key, this.size = 40, this.radius});
 
   final double size;
   final double? radius;
@@ -43,11 +39,7 @@ class KumpletoLogo extends StatelessWidget {
             borderRadius: BorderRadius.circular(effectiveRadius),
           ),
           child: Center(
-            child: Icon(
-              Icons.task_alt,
-              color: Colors.white,
-              size: size * 0.65,
-            ),
+            child: Icon(Icons.task_alt, color: Colors.white, size: size * 0.65),
           ),
         ),
       ),
@@ -57,10 +49,7 @@ class KumpletoLogo extends StatelessWidget {
 
 /// Horizontal Kumpleto logo lockup.
 class KumpletoHorizontalLogo extends StatelessWidget {
-  const KumpletoHorizontalLogo({
-    super.key,
-    this.height = 32,
-  });
+  const KumpletoHorizontalLogo({super.key, this.height = 32});
 
   final double height;
 
@@ -77,10 +66,7 @@ class KumpletoHorizontalLogo extends StatelessWidget {
           const SizedBox(width: 8),
           const Text(
             'Kumpleto',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w800,
-            ),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
           ),
         ],
       ),
@@ -90,10 +76,7 @@ class KumpletoHorizontalLogo extends StatelessWidget {
 
 /// Vertical Kumpleto logo lockup.
 class KumpletoVerticalLogo extends StatelessWidget {
-  const KumpletoVerticalLogo({
-    super.key,
-    this.height = 96,
-  });
+  const KumpletoVerticalLogo({super.key, this.height = 96});
 
   final double height;
 
@@ -110,10 +93,7 @@ class KumpletoVerticalLogo extends StatelessWidget {
           const SizedBox(height: 8),
           const Text(
             'Kumpleto',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w800,
-            ),
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
           ),
         ],
       ),
@@ -143,9 +123,11 @@ class SquircleIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bg = backgroundColor ??
+    final bg =
+        backgroundColor ??
         (isDark ? const Color(0xFF1E332B) : AppTheme.mintContainer);
-    final fg = iconColor ?? (isDark ? const Color(0xFF8AE0C4) : AppTheme.primaryTeal);
+    final fg =
+        iconColor ?? (isDark ? const Color(0xFF8AE0C4) : AppTheme.primaryTeal);
 
     return Container(
       width: size,
@@ -154,11 +136,7 @@ class SquircleIcon extends StatelessWidget {
         color: bg,
         borderRadius: BorderRadius.circular(radius),
       ),
-      child: Icon(
-        icon,
-        size: iconSize,
-        color: fg,
-      ),
+      child: Icon(icon, size: iconSize, color: fg),
     );
   }
 }
@@ -234,11 +212,7 @@ class ProgressLine extends StatelessWidget {
 
 /// Verification status pill badge matching the design system mockups.
 class StatusBadge extends StatelessWidget {
-  const StatusBadge({
-    super.key,
-    required this.status,
-    this.lastVerified,
-  });
+  const StatusBadge({super.key, required this.status, this.lastVerified});
 
   final DocStatus status;
   final DateTime? lastVerified;
@@ -256,7 +230,10 @@ class StatusBadge extends StatelessWidget {
     if (status == DocStatus.verified) {
       if (lastVerified != null) {
         final age = DateTime.now().difference(lastVerified!).inDays;
-        final tier = verificationTier(lastVerified: lastVerified!, now: DateTime.now());
+        final tier = verificationTier(
+          lastVerified: lastVerified!,
+          now: DateTime.now(),
+        );
         label = l10n.docVerifiedDays(age);
         switch (tier) {
           case VerificationTier.fresh:
@@ -354,7 +331,9 @@ class VerificationAge extends StatelessWidget {
       VerificationTier.fresh => const Color(0xFF2E7D32),
       VerificationTier.stale => const Color(0xFFB26A00),
       VerificationTier.overdue => const Color(0xFFC62828),
-      VerificationTier.unknown => Theme.of(context).colorScheme.onSurfaceVariant,
+      VerificationTier.unknown => Theme.of(
+        context,
+      ).colorScheme.onSurfaceVariant,
     };
     return Semantics(
       container: true,
@@ -461,7 +440,8 @@ class CircularProgressCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    subtitle ?? 'Complete all $total documents to finish this bundle.',
+                    subtitle ??
+                        'Complete all $total documents to finish this bundle.',
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: theme.colorScheme.onSurfaceVariant,
                       height: 1.3,
@@ -511,18 +491,12 @@ class CustomCheckbox extends StatelessWidget {
               color: value ? AppTheme.primaryTeal : Colors.transparent,
               borderRadius: BorderRadius.circular(6),
               border: Border.all(
-                color: value
-                    ? AppTheme.primaryTeal
-                    : const Color(0xFFB0C4BC),
+                color: value ? AppTheme.primaryTeal : const Color(0xFFB0C4BC),
                 width: 1.8,
               ),
             ),
             child: value
-                ? const Icon(
-                    Icons.check,
-                    size: 17,
-                    color: Colors.white,
-                  )
+                ? const Icon(Icons.check, size: 17, color: Colors.white)
                 : null,
           ),
         ),
@@ -650,7 +624,9 @@ class SectionCard extends StatelessWidget {
                         Text(
                           subtitle!,
                           style: textTheme.bodySmall?.copyWith(
-                            color: Theme.of(context).colorScheme.onSurfaceVariant,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSurfaceVariant,
                           ),
                         ),
                       ],

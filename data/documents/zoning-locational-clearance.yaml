@@ -1,0 +1,155 @@
+# Zoning / Locational Clearance
+# Facts sourced 2026-11-09 from the Quezon City Citizen's Charter page for
+# "Locational Clearance for Building Permit (New, Regular, Renovation, Repair
+# and Additional) at the Building Regulation One-Stop Shop"
+# (quezoncity.gov.ph/wp-content/uploads/2024/03/LOCATIONAL-CLEARANCE-FOR-BUILDING-PERMIT-NEW-REGULAR-RENOVATION-REPAIR-AND-ADDTL-AT-BUILDING-REGULATION-ONE-STOP-SHOP-BROSS.pdf):
+# the clearance is "a pre-requisite in the issuance of a Building Permit", the
+# documentary requirements, the online eServices route, the 2-hour-46-minute
+# service time, and the fee wording (commercial processing fee PHP 10.00/sqm of
+# TFA; verification fee PHP 300.00). A residential fee and a validity period are
+# not stated on that page. Each LGU sets its own zoning rules and fees. Verified
+# on the maintainer's instruction, 2026-11-09.
+schema_version: 1
+id: zoning-locational-clearance
+name:
+  en: Zoning / Locational Clearance
+  fil: Zoning / Locational Clearance
+agency: lgu
+status: verified
+last_verified: '2026-11-09'
+verified_by: JamesMangao
+source_url: https://quezoncity.gov.ph/wp-content/uploads/2024/03/LOCATIONAL-CLEARANCE-FOR-BUILDING-PERMIT-NEW-REGULAR-RENOVATION-REPAIR-AND-ADDTL-AT-BUILDING-REGULATION-ONE-STOP-SHOP-BROSS.pdf
+apply_online: null
+summary:
+  en: >-
+    Clearance from your city or municipal Zoning Administrator confirming that
+    the use you plan for a lot or building is allowed under the local zoning
+    ordinance. The LGU issues it before the building permit and, for
+    businesses, before the Mayor's permit.
+  fil: >-
+    Clearance mula sa Zoning Administrator ng lungsod o munisipalidad na
+    nagpapatunay na allowed ng local zoning ordinance ang gagawing paggamit sa
+    lote o gusali. Inilalabas ito ng LGU bago ang building permit at, para sa
+    negosyo, bago ang Mayor's permit.
+tags: [construction, zoning, permit, lgu, business]
+where_to_apply:
+  en: >-
+    The Zoning Administrator or the Building Regulation One-Stop Shop at your
+    city or municipal hall. Some LGUs, such as Quezon City, accept the
+    application through their online eServices portal.
+  fil: >-
+    Zoning Administrator o Building Regulation One-Stop Shop sa city o municipal
+    hall. May mga LGU, tulad ng Quezon City, na tumatanggap ng aplikasyon sa
+    online eServices portal nila.
+requirements:
+  - id: tax-clearance
+    text:
+      en: >-
+        Current year tax clearance or real-property tax receipt and bill.
+      fil: >-
+        Kasalukuyang taon na tax clearance o real-property tax receipt at bill.
+    original: true
+  - id: proof-of-ownership
+    text:
+      en: >-
+        Proof of lot ownership — for example a certified true copy of the title,
+        lease contract, award notice, deed of sale, or a consent/SPA from the
+        owner.
+      fil: >-
+        Proof ng pagmamay-ari ng lote — halimbawa certified true copy ng titulo,
+        lease contract, award notice, deed of sale, o consent/SPA mula sa
+        may-ari.
+    original: true
+  - id: lot-plan
+    text:
+      en: >-
+        Lot plan of the property.
+      fil: >-
+        Lot plan ng property.
+    original: true
+  - id: architectural-plan
+    text:
+      en: >-
+        Signed and sealed architectural plan of the proposed work.
+      fil: >-
+        Signed at sealed na architectural plan ng gagawing trabaho.
+    original: true
+  - id: authorization
+    text:
+      en: >-
+        Notarized authorization or special power of attorney and the
+        representative's ID, when someone else files for the owner.
+      fil: >-
+        Notarized authorization o special power of attorney at ID ng
+        representative, kung iba ang magfa-file para sa may-ari.
+    optional: true
+  - id: supplemental-clearances
+    text:
+      en: >-
+        Where applicable: neighbor's firewall consent, DPWH or MMDA clearance,
+        or a barangay resolution.
+      fil: >-
+        Kung applicable: firewall consent ng kapitbahay, DPWH o MMDA clearance,
+        o barangay resolution.
+    optional: true
+steps:
+  - en: >-
+      Register or file at the LGU's Zoning Office or Building Regulation
+      One-Stop Shop (some cities accept the filing through their eServices
+      portal).
+    fil: >-
+      Mag-register o mag-file sa Zoning Office o Building Regulation One-Stop
+      Shop ng LGU (may lungsod na tumatanggap ng filing sa eServices portal).
+  - en: >-
+      Submit the tax clearance, proof of ownership, lot plan, architectural plan
+      and any required authorization.
+    fil: >-
+      Isumite ang tax clearance, proof of ownership, lot plan, architectural
+      plan at anumang kailangang authorization.
+  - en: >-
+      Have the application evaluated against the zoning ordinance and the local
+      building code.
+    fil: >-
+      Ipa-evaluate ang aplikasyon laban sa zoning ordinance at local building
+      code.
+  - en: >-
+      Pay the assessed processing and verification fees and claim the
+      locational clearance.
+    fil: >-
+      Bayaran ang assessed processing at verification fees at kunin ang
+      locational clearance.
+fee_note:
+  en: >-
+    Fees are set by the LGU. The Quezon City charter, for example, states a
+    commercial processing fee of PHP 10.00 per square metre of total floor area
+    and a PHP 300.00 verification fee; it does not state a residential rate on
+    that page.
+  fil: >-
+    Ang fees ay itinatakda ng LGU. Halimbawa, nakasaad sa charter ng Quezon City
+    ang commercial processing fee na PHP 10.00 kada square metre ng total floor
+    area at PHP 300.00 verification fee; wala itong nakasaad na residential rate
+    sa page na iyon.
+processing_note:
+  en: >-
+    The Quezon City charter lists a total of two (2) hours and forty-six (46)
+    minutes for the covered small-building types (1-3 storey residential,
+    2-storey commercial and warehouse).
+  fil: >-
+    Nakalista sa charter ng Quezon City ang kabuuang dalawang (2) oras at
+    apatnapu't anim (46) na minuto para sa mga saklaw na maliit na gusali
+    (1-3 storey residential, 2-storey commercial at warehouse).
+processing_days_min: 0
+processing_days_max: 0
+notes:
+  - en: >-
+      The locational clearance is a prerequisite for the building permit; the
+      building permit is a prerequisite for the occupancy permit.
+    fil: >-
+      Ang locational clearance ay prerequisite ng building permit; ang building
+      permit ay prerequisite ng occupancy permit.
+  - en: >-
+      Each LGU has its own zoning ordinance, checklist and fee schedule. Confirm
+      yours with the Zoning Administrator before preparing the plans.
+    fil: >-
+      Bawat LGU ay may sariling zoning ordinance, checklist at fee schedule.
+      Kumpirmahin ito sa Zoning Administrator bago ihanda ang mga plano.

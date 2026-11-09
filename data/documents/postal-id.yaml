@@ -1,0 +1,136 @@
+# Postal ID
+# Facts sourced 2026-11-09 from PHLPost's official pages: the 19 August 2025
+# "PHLPost simplifies Postal ID application for all" page (one accomplished
+# form, one proof of identity, one proof of address, personal appearance and
+# on-site capture at a capturing/registration post office), the 17 October 2024
+# resumption announcement (issuance resumed 15 October 2024), and the 27
+# November 2024 DFA-acceptance notice (PHP 550.00 regular including tax and
+# delivery, PHP 650.00 rush; three-year card validity). PHLPost states no
+# processing time. No 2026 issuance-status page was found, so the entry tells
+# the reader to confirm at the post office. Verified on the maintainer's
+# instruction, 2026-11-09.
+schema_version: 1
+id: postal-id
+name:
+  en: Postal ID
+  fil: Postal ID
+agency: phlpost
+status: verified
+last_verified: '2026-11-09'
+verified_by: JamesMangao
+source_url: https://phlpost.gov.ph/cpt-press-releases/phlpost-simplifies-postal-id-application-for-all
+apply_online: false
+validity_months: 36
+summary:
+  en: >-
+    Government-issued identification card from the Philippine Postal
+    Corporation, available to Filipinos and foreign residents. It is a
+    secondary ID many banks and government offices accept, and it carries your
+    address — useful when a document asks for proof of address.
+  fil: >-
+    Government-issued identification card mula sa Philippine Postal
+    Corporation, available sa Filipino at dayuhang residente. Isa itong
+    secondary ID na tinatanggap ng maraming bangko at govt office, at
+    nakalagay dito ang address mo — kapaki-pakinabang kapag may dokumentong
+    humihingi ng proof of address.
+tags: [id, government-id, postal, address]
+where_to_apply:
+  en: >-
+    A PHLPost capturing or registration post office. The application is filed
+    in person: photo, fingerprints and signature are captured on site.
+  fil: >-
+    PHLPost capturing o registration post office. Personal na ina-apply: sa
+    lugar mismo kinukuha ang litrato, fingerprints at pirma.
+requirements:
+  - id: application-form
+    text:
+      en: >-
+        One accomplished Postal ID application form, written in bold letters in
+        black or blue ink.
+      fil: >-
+        Isang nasagutang Postal ID application form, nakasulat sa bold letters
+        gamit ang itim o asul na ink.
+    original: true
+  - id: proof-of-identity
+    text:
+      en: >-
+        One proof of identity — for example a PSA Birth Certificate, National
+        ID, UMID, driver's license, passport, or another government ID with
+        photo and signature.
+      fil: >-
+        Isang proof of identity — halimbawa PSA Birth Certificate, National ID,
+        UMID, driver's license, pasaporte, o ibang government ID na may litrato
+        at pirma.
+    original: true
+  - id: proof-of-address
+    text:
+      en: >-
+        One proof of address — for example a barangay certificate of residency,
+        utility bill, lease contract, land title, or school billing statement.
+      fil: >-
+        Isang proof of address — halimbawa barangay certificate of residency,
+        utility bill, lease contract, land title, o school billing statement.
+    original: true
+  - id: special-case-documents
+    text:
+      en: >-
+        Special-case documents only when they apply: marriage contract, death
+        certificate, annulment or divorce papers, or naturalization papers.
+      fil: >-
+        Special-case documents kung applicable lang: marriage contract, death
+        certificate, annulment o divorce papers, o naturalization papers.
+    optional: true
+steps:
+  - en: >-
+      Go to a PHLPost capturing or registration post office and accomplish the
+      application form on site.
+    fil: >-
+      Pumunta sa PHLPost capturing o registration post office at sagutan ang
+      application form sa lugar.
+  - en: >-
+      Submit the form with one proof of identity and one proof of address (plus
+      any special-case document that applies).
+    fil: >-
+      Isumite ang form kasama ang isang proof of identity at isang proof of
+      address (at special-case document kung applicable).
+  - en: >-
+      Have your photo, fingerprints and signature captured and pay the fee.
+    fil: >-
+      Kunan ng litrato, fingerprints at pirma at bayaran ang fee.
+  - en: >-
+      Claim the card when PHLPost releases it, or wait for delivery where the
+      post office offers it.
+    fil: >-
+      Kunin ang card kapag inilabas ng PHLPost, o hintayin ang delivery kung
+      inaalok ito ng post office.
+fee_note:
+  en: >-
+    PHLPost's November 2024 notice states PHP 550.00 for the regular Postal ID
+    (inclusive of tax and delivery) and PHP 650.00 for the rush ID. Ask the post
+    office for the current rate before paying.
+  fil: >-
+    Nakasaad sa November 2024 notice ng PHLPost ang PHP 550.00 para sa regular
+    Postal ID (kasama ang tax at delivery) at PHP 650.00 para sa rush ID.
+    Itanong sa post office ang kasalukuyang rate bago magbayad.
+fee_min: 550
+fee_max: 650
+notes:
+  - en: >-
+      PHLPost announced the resumption of Postal ID issuance on 15 October 2024
+      after a suspension. No 2026 status page was found, so confirm that your
+      post office is still capturing before you go.
+    fil: >-
+      Inanunsyo ng PHLPost ang pagbabalik ng Postal ID issuance noong 15
+      Oktubre 2024 matapos ang suspension. Walang 2026 status page na nakita,
+      kaya kumpirmahin muna sa post office bago pumunta.
+  - en: >-
+      The card is valid for three (3) years according to PHLPost.
+    fil: >-
+      Ayon sa PHLPost, may bisa ang card ng tatlong (3) taon.
+  - en: >-
+      There is no online application: PHLPost captures biometrics at its own
+      offices. Its online system only verifies an existing card.
+    fil: >-
+      Walang online application: sa sariling opisina ng PHLPost kinukuha ang
+      biometrics. Ang online system nila ay para lang i-verify ang existing
+      card.

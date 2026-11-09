@@ -6,17 +6,21 @@ name:
   fil: Mag-renew ng Expired na ID
 description:
   en: >-
-    A pack for renewing commonly held IDs and memberships after they expire.
-    Community-curated — confirm renewal requirements with each issuing
-    agency.
+    A pack for renewing commonly held IDs, licences and memberships after they
+    expire — clearance, national ID, passport, driver's licence, PRC ID, SSS
+    and PhilHealth. Confirm the renewal requirements with each issuing agency.
   fil: >-
-    Pack para sa pag-renew ng karaniwang mga ID at membership pagkatapos
-    mag-expire. Kurado ng komunidad — kumpirmahin ang mga requirement sa
-    bawat ahensya.
+    Pack para sa pag-renew ng karaniwang mga ID, lisensya at membership
+    pagkatapos mag-expire — clearance, national ID, passport, driver's license,
+    PRC ID, SSS at PhilHealth. Kumpirmahin ang mga requirement sa bawat
+    ahensya.
 status: verified
 documents:
   - nbi-clearance
   - philsys-national-id
+  - passport-dfa
+  - lto-drivers-license
+  - prc-license
   - sss
   - philhealth
 tags: [renewal, id]

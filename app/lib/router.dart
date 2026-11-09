@@ -53,24 +53,30 @@ GoRouter buildRouter(AppSettings settings, {String? initialLocation}) {
       StatefulShellRoute.indexedStack(
         builder: (context, state, shell) => ScaffoldWithNav(shell: shell),
         branches: [
-          StatefulShellBranch(routes: [
-            GoRoute(
-              path: '/',
-              builder: (context, state) => const HomeScreen(),
-            ),
-          ]),
-          StatefulShellBranch(routes: [
-            GoRoute(
-              path: '/documents',
-              builder: (context, state) => const DocumentsScreen(),
-            ),
-          ]),
-          StatefulShellBranch(routes: [
-            GoRoute(
-              path: '/settings',
-              builder: (context, state) => SettingsScreen(settings: settings),
-            ),
-          ]),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/',
+                builder: (context, state) => const HomeScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/documents',
+                builder: (context, state) => const DocumentsScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/settings',
+                builder: (context, state) => SettingsScreen(settings: settings),
+              ),
+            ],
+          ),
         ],
       ),
       GoRoute(
@@ -124,7 +130,10 @@ Page<void> _fadeThrough(LocalKey key, Widget child) {
     child: child,
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       if (Motion.reduced(context)) return child;
-      final curved = CurvedAnimation(parent: animation, curve: Motion.emphasized);
+      final curved = CurvedAnimation(
+        parent: animation,
+        curve: Motion.emphasized,
+      );
       return FadeTransition(
         opacity: curved,
         child: SlideTransition(

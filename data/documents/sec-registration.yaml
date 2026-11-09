@@ -1,0 +1,155 @@
+# SEC Registration — domestic corporation / partnership
+# Facts sourced 2026-11-09 from the SEC eSPARC pages (application selection,
+# regular processing, OneSEC overview and the SEC ZERO user guide): the
+# submission of the proposed company name and the articles-of-incorporation
+# details for SEC review, signatory authentication through eSAP, payment of the
+# assessed fees, and the digitally signed Certificate of Incorporation. The
+# name-reservation fee is charged together with the filing fees in the Payment
+# Assessment Form; payment is through eSPAYSEC or a Landbank branch. OneSEC is
+# for domestic stock corporations only and advertises one-day approval; regular
+# processing also covers partnerships. SEC does not publish one fixed peso total
+# for incorporation because the assessment depends on the application. Verified
+# on the maintainer's instruction, 2026-11-09.
+schema_version: 1
+id: sec-registration
+name:
+  en: SEC Registration (Corporation / Partnership)
+  fil: SEC Registration (Corporation / Partnership)
+agency: sec
+status: verified
+last_verified: '2026-11-09'
+verified_by: JamesMangao
+source_url: https://esparc.sec.gov.ph/application/selection
+apply_online: true
+apply_online_url: https://esparc.sec.gov.ph/application
+summary:
+  en: >-
+    Registration of a corporation or partnership with the Securities and
+    Exchange Commission. You need it before a corporation or partnership can
+    open a bank account, get a Mayor's permit, or register with the BIR; a
+    sole proprietorship registers with DTI instead.
+  fil: >-
+    Pagpaparehistro ng corporation o partnership sa Securities and Exchange
+    Commission. Kailangan ito bago makapagbukas ng bank account, makakuha ng
+    Mayor's permit, o makapag-register sa BIR ang isang corporation o
+    partnership; ang sole proprietorship ay sa DTI nagreregister.
+tags: [business, corporation, partnership, sec]
+where_to_apply:
+  en: >-
+    Online through the SEC eSPARC system (OneSEC for domestic stock
+    corporations, regular processing for other corporations and partnerships),
+    or at the SEC office handling your application.
+  fil: >-
+    Online sa SEC eSPARC system (OneSEC para sa domestic stock corporations,
+    regular processing para sa ibang corporation at partnership), o sa SEC
+    office na humahawak ng aplikasyon mo.
+requirements:
+  - id: proposed-name
+    text:
+      en: >-
+        Proposed company name, submitted for SEC review. The name reservation
+        fee is charged together with the filing fees.
+      fil: >-
+        Panukalang pangalan ng kumpanya, isinusumite para sa review ng SEC. Ang
+        name reservation fee ay kasama sa filing fees.
+    original: true
+  - id: articles-of-incorporation
+    text:
+      en: >-
+        Articles of Incorporation details for the company (for a corporation),
+        or the partnership's articles, entered in the online application.
+      fil: >-
+        Detalye ng Articles of Incorporation ng kumpanya (para sa corporation),
+        o articles ng partnership, na inilalagay sa online application.
+    original: true
+  - id: esecure-account
+    text:
+      en: >-
+        eSECURE accounts for the signatories, whose documents are authenticated
+        through eSAP.
+      fil: >-
+        eSECURE account ng mga signatory, na ang mga dokumento ay
+        ina-authenticate sa eSAP.
+    original: true
+  - id: supporting-documents
+    text:
+      en: >-
+        The supporting documents the SEC asks for during review. For regular
+        processing, the required sets of documents are submitted to the SEC
+        office that handles the application.
+      fil: >-
+        Mga supporting document na hinihingi ng SEC sa review. Para sa regular
+        processing, isinusumite ang required na set ng dokumento sa SEC office
+        na humahawak ng aplikasyon.
+    original: true
+  - id: payment
+    text:
+      en: >-
+        Payment of the assessed registration fees through eSPAYSEC, or in person
+        at a Landbank branch.
+      fil: >-
+        Bayad sa assessed registration fees sa pamamagitan ng eSPAYSEC, o
+        personal sa Landbank branch.
+    original: true
+steps:
+  - en: >-
+      Create the application in SEC eSPARC and enter the proposed company name
+      for review.
+    fil: >-
+      Gumawa ng aplikasyon sa SEC eSPARC at ilagay ang panukalang pangalan ng
+      kumpanya para sa review.
+  - en: >-
+      Complete the company and officer information and the articles of
+      incorporation details.
+    fil: >-
+      Kumpletuhin ang impormasyon ng kumpanya at officers at ang detalye ng
+      articles of incorporation.
+  - en: >-
+      Submit the application for SEC review.
+    fil: >-
+      Isumite ang aplikasyon para sa review ng SEC.
+  - en: >-
+      Authenticate the documentary requirements through eSAP.
+    fil: >-
+      I-authenticate ang mga documentary requirement sa eSAP.
+  - en: >-
+      Pay the assessed registration fees, then download the digitally signed
+      Certificate of Incorporation (or the partnership certificate) once the
+      application is approved.
+    fil: >-
+      Bayaran ang assessed registration fees, pagkatapos i-download ang
+      digitally signed Certificate of Incorporation (o partnership certificate)
+      kapag naaprubahan ang aplikasyon.
+fee_note:
+  en: >-
+    The SEC does not publish one fixed total: the name reservation fee is
+    charged together with the filing fees and appears in the Payment Assessment
+    Form (PAF) for your application. Pay through eSPAYSEC or at a Landbank
+    branch.
+  fil: >-
+    Walang isang fixed na kabuuang halaga ang SEC: ang name reservation fee ay
+    kasama ng filing fees at nakalagay sa Payment Assessment Form (PAF) ng
+    aplikasyon mo. Bayaran ito sa eSPAYSEC o sa Landbank branch.
+processing_note:
+  en: >-
+    OneSEC advertises one-day approval for domestic stock corporations; SEC
+    describes this as an aim rather than a guaranteed time. For regular
+    processing the SEC does not publish a single processing time.
+  fil: >-
+    Inaanunsyo ng OneSEC ang one-day approval para sa domestic stock
+    corporations; sinasabi ng SEC na layunin ito at hindi guaranteed na oras.
+    Para sa regular processing, walang inilalathalang isang processing time ang
+    SEC.
+notes:
+  - en: >-
+      OneSEC covers domestic stock corporations only. Partnerships and other
+      corporations go through regular processing.
+    fil: >-
+      Ang OneSEC ay para sa domestic stock corporations lang. Ang partnership
+      at ibang corporation ay sa regular processing.
+  - en: >-
+      The digitally signed certificate issued online carries the same legal
+      weight as the original, according to the SEC.
+    fil: >-
+      Ayon sa SEC, ang digitally signed certificate na inilalabas online ay may
+      parehong legal na bisa ng original.

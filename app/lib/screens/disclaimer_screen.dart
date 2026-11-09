@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../core/gate_colors.dart';
 import '../core/theme.dart';
 import '../l10n/app_localizations.dart';
-
-const _bgDark = Color(0xFF101715);
-const _surfaceCard = Color(0xFF192522);
-const _cardBorder = Color(0xFF2C3E38);
-const _tealPrimary = AppTheme.primaryTeal; // #0E6B58
-const _tealAccent = Color(0xFF2EA78B);
 
 /// First stop on a fresh install: the full disclaimer, shown after the welcome
 /// scene and before the language choice.
@@ -24,9 +19,10 @@ class DisclaimerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final c = GateColors.of(context);
 
     return Scaffold(
-      backgroundColor: _bgDark,
+      backgroundColor: c.bg,
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -43,13 +39,13 @@ class DisclaimerScreen extends StatelessWidget {
                   children: [
                     Column(
                       children: [
-                        _buildTopBadge(l10n),
+                        _buildTopBadge(l10n, c),
                         const SizedBox(height: 18),
                         Text(
                           l10n.disclaimerScreenTitle,
                           textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            color: Colors.white,
+                          style: TextStyle(
+                            color: c.ink,
                             fontSize: 24,
                             fontWeight: FontWeight.w800,
                             letterSpacing: -0.4,
@@ -57,7 +53,7 @@ class DisclaimerScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 16),
-                        _buildNoticeCard(l10n),
+                        _buildNoticeCard(l10n, c),
                       ],
                     ),
                     const SizedBox(height: 16),
@@ -65,7 +61,7 @@ class DisclaimerScreen extends StatelessWidget {
                       children: [
                         _buildCtaButton(context, l10n),
                         const SizedBox(height: 6),
-                        _buildPrivacyButton(context, l10n),
+                        _buildPrivacyButton(context, l10n, c),
                       ],
                     ),
                   ],
@@ -78,14 +74,14 @@ class DisclaimerScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTopBadge(AppLocalizations l10n) {
+  Widget _buildTopBadge(AppLocalizations l10n, GateColors c) {
     return Container(
       constraints: const BoxConstraints(maxWidth: 320),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
       decoration: BoxDecoration(
-        color: _surfaceCard,
+        color: c.surface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: _cardBorder, width: 1.2),
+        border: Border.all(color: c.border, width: 1.2),
       ),
       child: FittedBox(
         fit: BoxFit.scaleDown,
@@ -95,16 +91,16 @@ class DisclaimerScreen extends StatelessWidget {
             Container(
               width: 7,
               height: 7,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: _tealAccent,
+                color: c.accent,
               ),
             ),
             const SizedBox(width: 6),
             Text(
               l10n.unofficialBadge.toUpperCase(),
-              style: const TextStyle(
-                color: _tealAccent,
+              style: TextStyle(
+                color: c.accent,
                 fontSize: 11,
                 fontWeight: FontWeight.w800,
                 letterSpacing: 1.2,
@@ -116,14 +112,14 @@ class DisclaimerScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildNoticeCard(AppLocalizations l10n) {
+  Widget _buildNoticeCard(AppLocalizations l10n, GateColors c) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: _surfaceCard,
+        color: c.surface,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: _cardBorder, width: 1.2),
+        border: Border.all(color: c.border, width: 1.2),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -133,47 +129,43 @@ class DisclaimerScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
-                  color: _tealPrimary.withValues(alpha: 0.25),
+                  color: c.accent.withValues(alpha: 0.18),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(
-                  Icons.policy_outlined,
-                  color: _tealAccent,
-                  size: 16,
-                ),
+                child: Icon(Icons.policy_outlined, color: c.accent, size: 16),
               ),
               const SizedBox(width: 8),
-              const Expanded(
+              Expanded(
                 child: Text(
                   'PAALALA / DISCLAIMER',
                   style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1.2,
-                    color: _tealAccent,
+                    color: c.accent,
                   ),
                 ),
               ),
             ],
           ),
           const SizedBox(height: 8),
-          Container(height: 1, color: _cardBorder),
+          Container(height: 1, color: c.border),
           const SizedBox(height: 10),
-          _paragraph(l10n.disclaimerScreenBody),
+          _paragraph(l10n.disclaimerScreenBody, c),
           const SizedBox(height: 10),
-          _paragraph(l10n.disclaimerScreenBody2),
+          _paragraph(l10n.disclaimerScreenBody2, c),
           const SizedBox(height: 10),
-          _paragraph(l10n.disclaimerScreenBody3),
+          _paragraph(l10n.disclaimerScreenBody3, c),
         ],
       ),
     );
   }
 
-  Widget _paragraph(String text) {
+  Widget _paragraph(String text, GateColors c) {
     return Text(
       text,
       style: TextStyle(
-        color: Colors.white.withValues(alpha: 0.85),
+        color: c.muted,
         fontWeight: FontWeight.w400,
         height: 1.45,
         fontSize: 13,
@@ -187,7 +179,7 @@ class DisclaimerScreen extends StatelessWidget {
       height: 48,
       child: FilledButton(
         style: FilledButton.styleFrom(
-          backgroundColor: _tealPrimary,
+          backgroundColor: AppTheme.primaryTeal,
           foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
@@ -206,13 +198,17 @@ class DisclaimerScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildPrivacyButton(BuildContext context, AppLocalizations l10n) {
+  Widget _buildPrivacyButton(
+    BuildContext context,
+    AppLocalizations l10n,
+    GateColors c,
+  ) {
     return SizedBox(
       height: 44,
       child: TextButton(
         onPressed: () => context.push('/privacy'),
         style: TextButton.styleFrom(
-          foregroundColor: Colors.white.withValues(alpha: 0.7),
+          foregroundColor: c.muted,
           minimumSize: const Size(48, 44),
         ),
         child: Text(

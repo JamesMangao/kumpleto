@@ -8,7 +8,7 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done
 
 ---
 
-## P3 — App core [x] done (analyze clean · 184 app tests green · 25/25 tool tests)
+## P3 — App core [x] done (analyze clean · 190 app tests green · 25/25 tool tests)
 
 > Done so far: `drift`, `sqlite3_flutter_libs`, `crypto`, `path_provider`
 > added to `app/pubspec.yaml`; `drift_dev` + `build_runner` added as dev deps.
@@ -133,7 +133,7 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done
 
 ---
 
-## P5 — Icons & store prep ([~] artwork + release doc + Pages workflow done; human tasks open)
+## P5 — Icons & store prep ([~] artwork + release doc + Pages done; human tasks open)
 
 - [x] Launcher icon via `flutter_launcher_icons` (approved): **checkmark +
       folder motif**, no flag/seal/sun-stars, no agency branding;
@@ -145,6 +145,7 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done
 - [x] `.github/workflows/pages-data.yml` — build data on push to `main`,
       deploy `dist/data.json` to **GitHub Pages** (source: *GitHub
       Actions* — Human TODO)
+- [x] Enable GitHub Pages (source: GitHub Actions)
 - [ ] Human TODOs: create upload keystore; Play Console account;
       upload the generated graphics; confirm "Kumpleto" name availability
 
@@ -186,7 +187,7 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done
       `TODO.md` priority list)
 - [x] Verify RA 11261 fee-waiver details + official source before
       job-hunt-pack leaves draft
-- [x] Promote entries `draft` → `verified` one by one — 37 of 37 documents
+- [x] Promote entries `draft` → `verified` one by one — 46 of 46 documents
       and 9 of 9 bundles; the 2026-11-07 pass re-checked nine drafts, and the
       2026-11-08 pass added the FSIC, the BIR COR and the DFA apostille (see
       the pass logs in `TODO.md`); `student-to-driver` / `new-business` ship

@@ -189,12 +189,26 @@ personal account can release publicly. Track it in `TODO.md`; the testers opt
 in through the internal/closed testing track link, not by installing the AAB
 by hand.
 
-## 9b. Size audit — 2026-11-07 (1.0.0, prod flavor)
+## 9b. Size audit — updated 2026-11-09 (1.0.0, prod flavor)
 
-`flutter build apk --flavor prod --release` → `app-prod-release.apk`,
-**71,531,272 bytes (71.5 MB)** with three ABIs bundled, `versionName 1.0.0`,
-`versionCode 1`, `minSdk 24`, `targetSdk 36`, `compileSdk 36` (confirmed with
-`aapt dump badging`). Unpacked sizes:
+> **Rebuilt 2026-11-09 with the current dataset.** Both artifacts carry the
+> 46-document dataset (bundled `data.json` sha256 `3112cecf…`) and the new
+> welcome-scene logo, and neither contains `data_drafts.json`. They stay
+> **debug-signed** until `android/key.properties` exists, so sign with the
+> upload key per §2 before uploading.
+
+`flutter build apk --flavor prod --release --split-per-abi` (obfuscated) →
+three sideload APKs, `versionName 1.0.0`, `versionCode 1`, `minSdk 24`,
+`targetSdk 36`, `compileSdk 36` (confirmed with `aapt dump badging`):
+
+| Split | Bytes | Flutter report |
+| --- | --- | --- |
+| `app-arm64-v8a-prod-release.apk` | 26,268,812 | 25.1 MB |
+| `app-armeabi-v7a-prod-release.apk` | 23,776,214 | 22.7 MB |
+| `app-x86_64-prod-release.apk` | 27,786,077 | 26.5 MB |
+
+A universal APK (`--split-per-abi` omitted) stays available as a QA artifact
+but is three engine copies at ~70 MB; share a split instead. Unpacked sizes:
 
 | Bucket | Size | Contents |
 | --- | --- | --- |
@@ -203,18 +217,20 @@ by hand.
 | `classes.dex` | 1.2 MB | app + plugin classes (desugared) |
 | `res/` | 0.6 MB | mipmaps, launcher icons |
 
-Per ABI: x86_64 24.2 MB, arm64-v8a 22.7 MB, armeabi-v7a 20.4 MB.
+Per ABI: x86_64 26.5 MB, arm64-v8a 25.1 MB, armeabi-v7a 22.7 MB (obfuscated).
 
 `flutter build appbundle --flavor prod --release` → `app-prod-release.aab`,
-**68,998,854 bytes (65.8 MB)** on disk for the same 1.0.0 build; Play splits it
-per device.
+**66,011,186 bytes (63.0 MiB)** on disk for the same obfuscated 1.0.0 build;
+Play splits it per device. Both builds pass
+`--obfuscate --split-debug-info=build/symbols`; keep the symbols directory to
+symbolise a stack trace later (it is gitignored).
 
 Reading: the app's own payload is ~4 MB — the download is three copies of the
 Flutter engine. Ship the App Bundle (§5) so Play delivers ~23 MB to a phone
-instead of 71.5 MB; the universal APK stays a sideload/QA artifact. The bundled
-`data.json` in this build hashes `ae067899…b4ea5` and matches `dist/data.json`
-exactly, so no draft asset leaked into the release (neither the APK nor the AAB
-contains `data_drafts.json`).
+instead of 72.1 MB; the universal APK stays a sideload/QA artifact. Both
+artifacts on disk carry `data.json` hashing `3112cecf…`, matching
+`dist/data.json` byte for byte (§6 audit run 2026-11-09); no draft asset leaked
+into either of them.
 
 ## 10. Release checklist
 
@@ -227,3 +243,23 @@ contains `data_drafts.json`).
 6. Fill listing per §7 (disclaimer first), upload graphics per §8.
 7. Roll out to closed testing first; promote to production only after the
    rollout has had no crash spike.
+
+## 11. Shared links and the public checklist pages
+
+`tools/build_site.dart` turns `dist/data.json` into the public site the Pages
+workflow deploys: `data.json` stays at the root for the app's update feed, and
+every document and bundle also gets a static page (`/doc/<id>`, `/bundle/<id>`)
+plus `sitemap.xml` and `robots.txt`. Run it after `tools/build_data.dart`.
+
+The app answers to those `https` links through the second intent-filter in
+`AndroidManifest.xml`, but **without `autoVerify`**: Android will offer Kumpleto
+as one of the apps for `https://jamesmangao.github.io/kumpleto/doc/...` and the
+reader can set it as the default. Verifying the domain (silent open) requires
+`/.well-known/assetlinks.json` at the *origin root*, which a project Pages site
+cannot serve. Add that file and `android:autoVerify="true"` only after the
+project moves to a custom domain such as `kumpleto.ph`, and generate the file
+from the upload certificate's SHA-256:
+
+```bash
+keytool -list -v -keystore upload-keystore.jks -alias upload | grep SHA256
+```

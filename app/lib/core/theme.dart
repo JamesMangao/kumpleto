@@ -49,24 +49,38 @@ abstract final class AppTheme {
       onPrimaryContainer: isDark ? const Color(0xFF9EE5CE) : onMintContainer,
       secondary: const Color(0xFF2E7D68),
       onSecondary: Colors.white,
-      secondaryContainer: isDark ? const Color(0xFF233830) : const Color(0xFFD4ECE3),
+      secondaryContainer: isDark
+          ? const Color(0xFF233830)
+          : const Color(0xFFD4ECE3),
       onSecondaryContainer: isDark ? const Color(0xFFB0E8D6) : primaryDarkTeal,
       tertiary: const Color(0xFF38655A),
       onTertiary: Colors.white,
-      tertiaryContainer: isDark ? const Color(0xFF233B34) : const Color(0xFFDBEFE9),
-      onTertiaryContainer: isDark ? const Color(0xFFB5E2D4) : const Color(0xFF1E4D42),
+      tertiaryContainer: isDark
+          ? const Color(0xFF233B34)
+          : const Color(0xFFDBEFE9),
+      onTertiaryContainer: isDark
+          ? const Color(0xFFB5E2D4)
+          : const Color(0xFF1E4D42),
       error: const Color(0xFFBA1A1A),
       onError: Colors.white,
-      errorContainer: isDark ? const Color(0xFF93000A) : const Color(0xFFFFDAD6),
-      onErrorContainer: isDark ? const Color(0xFFFFDAD6) : const Color(0xFF410002),
+      errorContainer: isDark
+          ? const Color(0xFF93000A)
+          : const Color(0xFFFFDAD6),
+      onErrorContainer: isDark
+          ? const Color(0xFFFFDAD6)
+          : const Color(0xFF410002),
       surface: bg,
       onSurface: textPrimary,
       surfaceContainer: cardBg,
-      surfaceContainerHighest: isDark ? const Color(0xFF21302A) : const Color(0xFFF0F5F2),
+      surfaceContainerHighest: isDark
+          ? const Color(0xFF21302A)
+          : const Color(0xFFF0F5F2),
       surfaceContainerLow: bg,
       onSurfaceVariant: textSecondary,
       outline: border,
-      outlineVariant: isDark ? const Color(0xFF2A3C33) : const Color(0xFFEDF2EF),
+      outlineVariant: isDark
+          ? const Color(0xFF2A3C33)
+          : const Color(0xFFEDF2EF),
     );
 
     return ThemeData(
@@ -104,7 +118,9 @@ abstract final class AppTheme {
         backgroundColor: cardBg,
         elevation: 0,
         height: 68,
-        indicatorColor: isDark ? const Color(0xFF233B32) : const Color(0xFFD4ECE3),
+        indicatorColor: isDark
+            ? const Color(0xFF233B32)
+            : const Color(0xFFD4ECE3),
         labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
         iconTheme: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
@@ -148,17 +164,17 @@ abstract final class AppTheme {
           side: const BorderSide(color: primaryTeal, width: 1.5),
           shape: const StadiumBorder(),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-          textStyle: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-          ),
+          textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
           minimumSize: const Size(48, 48),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: isDark ? const Color(0xFF1B2722) : const Color(0xFFEEF4F1),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 14,
+        ),
         hintStyle: TextStyle(
           color: textSecondary,
           fontSize: 14,
@@ -181,7 +197,9 @@ abstract final class AppTheme {
       ),
       progressIndicatorTheme: ProgressIndicatorThemeData(
         color: primaryTeal,
-        linearTrackColor: isDark ? const Color(0xFF24362E) : const Color(0xFFDFEDE8),
+        linearTrackColor: isDark
+            ? const Color(0xFF24362E)
+            : const Color(0xFFDFEDE8),
       ),
       materialTapTargetSize: MaterialTapTargetSize.padded,
       visualDensity: VisualDensity.adaptivePlatformDensity,

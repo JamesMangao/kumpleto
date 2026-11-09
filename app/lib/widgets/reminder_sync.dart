@@ -67,8 +67,7 @@ class _ReminderSyncState extends ConsumerState<ReminderSync> {
           acquired: dates,
           title: (document, daysLeft) =>
               l10n.reminderTitle(document.name.localized(context), daysLeft),
-          body: (document, until) =>
-              l10n.reminderBody(dateFormatter(until)),
+          body: (document, until) => l10n.reminderBody(dateFormatter(until)),
         );
       });
     }

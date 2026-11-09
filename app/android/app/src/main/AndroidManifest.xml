@@ -38,6 +38,24 @@
                 <data android:scheme="kumpleto" android:host="doc"/>
                 <data android:scheme="kumpleto" android:host="bundle"/>
             </intent-filter>
+            <!-- Published checklist pages: https://jamesmangao.github.io/kumpleto/doc/<id>.
+                 Without autoVerify Android asks the reader which app to use;
+                 verifying the domain needs assetlinks.json at the origin root,
+                 which a project Pages site cannot serve — see
+                 docs/PLAY_RELEASE.md §11. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data
+                    android:scheme="https"
+                    android:host="jamesmangao.github.io"
+                    android:pathPrefix="/kumpleto/doc/"/>
+                <data
+                    android:scheme="https"
+                    android:host="jamesmangao.github.io"
+                    android:pathPrefix="/kumpleto/bundle/"/>
+            </intent-filter>
         </activity>
         <!-- Expiry reminders scheduled with flutter_local_notifications. -->
         <receiver

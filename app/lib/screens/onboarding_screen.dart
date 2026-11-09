@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../core/gate_colors.dart';
 import '../core/settings.dart';
 import '../core/theme.dart';
 import '../l10n/app_localizations.dart';
@@ -11,12 +12,9 @@ import '../l10n/app_localizations.dart';
 /// for Philippine government document requirements (PSA, NBI, Passport, etc.).
 /// Features clean civil layout, responsive typography, bilingual language
 /// selection, and official disclaimer gate.
-const _bgDark = Color(0xFF101715);
-const _surfaceCard = Color(0xFF192522);
-const _cardBorder = Color(0xFF2C3E38);
-const _tealPrimary = AppTheme.primaryTeal; // #0E6B58
-const _tealAccent = Color(0xFF2EA78B);
-
+///
+/// Colours come from the app theme rather than fixed dark values, so the flow
+/// matches the welcome scene: light mode stays light, dark mode stays dark.
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key, required this.settings});
 
@@ -39,9 +37,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final isFil = _language == 'fil';
+    final c = GateColors.of(context);
 
     return Scaffold(
-      backgroundColor: _bgDark,
+      backgroundColor: c.bg,
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -59,13 +58,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     // Header & Intro
                     Column(
                       children: [
-                        _buildTopBadge(l10n),
+                        _buildTopBadge(l10n, c),
                         const SizedBox(height: 18),
-                        _buildHeroLogo(),
+                        _buildHeroLogo(c),
                         const SizedBox(height: 14),
-                        _buildHeadline(l10n, isFil),
+                        _buildHeadline(l10n, isFil, c),
                         const SizedBox(height: 18),
-                        _buildFeatureHighlights(isFil),
+                        _buildFeatureHighlights(isFil, c),
                       ],
                     ),
 
@@ -74,11 +73,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     // Controls & CTA
                     Column(
                       children: [
-                        _buildLanguageSelector(l10n),
+                        _buildLanguageSelector(l10n, c),
                         const SizedBox(height: 16),
                         _buildCtaButton(l10n),
                         const SizedBox(height: 6),
-                        _buildPrivacyButton(l10n),
+                        _buildPrivacyButton(l10n, c),
                       ],
                     ),
                   ],
@@ -91,14 +90,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  Widget _buildTopBadge(AppLocalizations l10n) {
+  Widget _buildTopBadge(AppLocalizations l10n, GateColors c) {
     return Container(
       constraints: const BoxConstraints(maxWidth: 320),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
       decoration: BoxDecoration(
-        color: _surfaceCard,
+        color: c.surface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: _cardBorder, width: 1.2),
+        border: Border.all(color: c.border, width: 1.2),
       ),
       child: FittedBox(
         fit: BoxFit.scaleDown,
@@ -108,19 +107,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             Container(
               width: 7,
               height: 7,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: _tealAccent,
+                color: c.accent,
               ),
             ),
             const SizedBox(width: 8),
             Text(
               l10n.unofficialBadge.toUpperCase(),
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 10,
                 fontWeight: FontWeight.w800,
                 letterSpacing: 1.4,
-                color: Color(0xFFD4ECE3),
+                color: c.accent,
               ),
             ),
             const SizedBox(width: 8),
@@ -130,7 +129,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 fontSize: 9.5,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 0.8,
-                color: Colors.white.withValues(alpha: 0.75),
+                color: c.muted,
               ),
             ),
           ],
@@ -139,17 +138,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  Widget _buildHeroLogo() {
+  Widget _buildHeroLogo(GateColors c) {
     return Container(
       width: 64,
       height: 64,
       decoration: BoxDecoration(
-        color: _surfaceCard,
+        color: c.surface,
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: _tealPrimary, width: 1.6),
+        border: Border.all(color: c.accent, width: 1.6),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.35),
+            color: Colors.black.withValues(alpha: 0.15),
             blurRadius: 14,
             offset: const Offset(0, 4),
           ),
@@ -162,9 +161,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             'assets/logo/app-icon.png',
             width: 42,
             height: 42,
-            errorBuilder: (_, _, _) => const Icon(
+            errorBuilder: (_, _, _) => Icon(
               Icons.assignment_turned_in_rounded,
-              color: _tealAccent,
+              color: c.accent,
               size: 32,
             ),
           ),
@@ -173,7 +172,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  Widget _buildHeadline(AppLocalizations l10n, bool isFil) {
+  Widget _buildHeadline(AppLocalizations l10n, bool isFil, GateColors c) {
     return Column(
       children: [
         FittedBox(
@@ -181,8 +180,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           child: Text(
             l10n.onboardingTitle,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: c.ink,
               fontSize: 22,
               fontWeight: FontWeight.w800,
               letterSpacing: -0.4,
@@ -198,7 +197,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 : 'Know what documents to bring before queuing.\nCheck requirements for PSA, NBI, Passport, and more.',
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Colors.white.withValues(alpha: 0.8),
+              color: c.muted,
               fontSize: 13,
               height: 1.35,
               fontWeight: FontWeight.w400,
@@ -209,21 +208,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  Widget _buildFeatureHighlights(bool isFil) {
+  Widget _buildFeatureHighlights(bool isFil, GateColors c) {
     return Wrap(
       alignment: WrapAlignment.center,
       spacing: 6,
       runSpacing: 6,
       children: [
         _FeaturePill(
+          colors: c,
           icon: Icons.checklist_rounded,
           label: isFil ? '12+ Dokumento' : '12+ Documents',
         ),
         _FeaturePill(
+          colors: c,
           icon: Icons.wifi_off_rounded,
           label: isFil ? '100% Offline' : '100% Offline',
         ),
         _FeaturePill(
+          colors: c,
           icon: Icons.lock_outline_rounded,
           label: isFil ? 'Walang Account / Ads' : 'No Account / Ads',
         ),
@@ -231,7 +233,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  Widget _buildLanguageSelector(AppLocalizations l10n) {
+  Widget _buildLanguageSelector(AppLocalizations l10n, GateColors c) {
     return Column(
       children: [
         FittedBox(
@@ -239,7 +241,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           child: Text(
             l10n.onboardingLanguageLabel,
             style: TextStyle(
-              color: Colors.white.withValues(alpha: 0.75),
+              color: c.muted,
               fontSize: 12,
               fontWeight: FontWeight.w600,
             ),
@@ -254,11 +256,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               segments: const [
                 ButtonSegment(
                   value: 'en',
-                  label: Text('English', style: TextStyle(fontWeight: FontWeight.w700)),
+                  label: Text(
+                    'English',
+                    style: TextStyle(fontWeight: FontWeight.w700),
+                  ),
                 ),
                 ButtonSegment(
                   value: 'fil',
-                  label: Text('Filipino', style: TextStyle(fontWeight: FontWeight.w700)),
+                  label: Text(
+                    'Filipino',
+                    style: TextStyle(fontWeight: FontWeight.w700),
+                  ),
                 ),
               ],
               selected: {_language},
@@ -271,21 +279,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               style: ButtonStyle(
                 backgroundColor: WidgetStateProperty.resolveWith((states) {
                   if (states.contains(WidgetState.selected)) {
-                    return _tealPrimary;
+                    return AppTheme.primaryTeal;
                   }
-                  return _surfaceCard;
+                  return c.surface;
                 }),
                 foregroundColor: WidgetStateProperty.resolveWith((states) {
                   if (states.contains(WidgetState.selected)) {
                     return Colors.white;
                   }
-                  return Colors.white.withValues(alpha: 0.75);
+                  return c.ink;
                 }),
                 side: WidgetStateProperty.all(
-                  const BorderSide(color: _cardBorder, width: 1.2),
+                  BorderSide(color: c.border, width: 1.2),
                 ),
                 shape: WidgetStateProperty.all(
-                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
                 ),
               ),
             ),
@@ -301,7 +311,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       height: 48,
       child: FilledButton(
         style: FilledButton.styleFrom(
-          backgroundColor: _tealPrimary,
+          backgroundColor: AppTheme.primaryTeal,
           foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
@@ -335,11 +345,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  Widget _buildPrivacyButton(AppLocalizations l10n) {
+  Widget _buildPrivacyButton(AppLocalizations l10n, GateColors c) {
     return TextButton(
       onPressed: () => context.push('/privacy'),
       style: TextButton.styleFrom(
-        foregroundColor: Colors.white.withValues(alpha: 0.6),
+        foregroundColor: c.muted,
         minimumSize: const Size(48, 48),
         padding: const EdgeInsets.symmetric(horizontal: 12),
       ),
@@ -358,8 +368,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 }
 
 class _FeaturePill extends StatelessWidget {
-  const _FeaturePill({required this.icon, required this.label});
+  const _FeaturePill({
+    required this.colors,
+    required this.icon,
+    required this.label,
+  });
 
+  final GateColors colors;
   final IconData icon;
   final String label;
 
@@ -369,26 +384,23 @@ class _FeaturePill extends StatelessWidget {
       constraints: const BoxConstraints(maxWidth: 160),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
-        color: _surfaceCard,
+        color: colors.surface,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: _cardBorder,
-          width: 1.0,
-        ),
+        border: Border.all(color: colors.border, width: 1.0),
       ),
       child: FittedBox(
         fit: BoxFit.scaleDown,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: 13, color: _tealAccent),
+            Icon(icon, size: 13, color: colors.accent),
             const SizedBox(width: 5),
             Text(
               label,
               style: TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.w600,
-                color: Colors.white.withValues(alpha: 0.85),
+                color: colors.ink,
               ),
             ),
           ],

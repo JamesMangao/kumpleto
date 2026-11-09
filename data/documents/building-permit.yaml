@@ -1,0 +1,190 @@
+# Building Permit
+# Facts sourced 2026-11-09 from P.D. 1096, the National Building Code, on the
+# Official Gazette (officialgazette.gov.ph/1977/02/19/presidential-decree-no-1096-s-1977)
+# — Sec. 301 (permit before construction, alteration, repair, moving,
+# conversion or demolition), Sec. 302 (application with a description of the
+# work, proof of lot title or lease, intended use, estimated cost and at least
+# five sets of plans), Sec. 304 (issue within fifteen days from payment of
+# fees) and Sec. 305 (permit expires if the work does not start within one year,
+# or is suspended or abandoned for 120 days) — and the Pasay City building
+# permit service page
+# (pasay.gov.ph/wp-content/uploads/2026/02/pasay-city-external-service-building-permit-application.pdf)
+# for the documentary checklist, the fee schedule (residential PHP 8.40 per
+# square metre; commercial/industrial PHP 23 per square metre up to 5,000 sqm,
+# plus separate electrical, plumbing and other fees) and its six-day service
+# time. The detailed checklist and the total cost are set by each LGU. Verified
+# on the maintainer's instruction, 2026-11-09.
+schema_version: 1
+id: building-permit
+name:
+  en: Building Permit
+  fil: Building Permit
+agency: lgu
+status: verified
+last_verified: '2026-11-09'
+verified_by: JamesMangao
+source_url: https://www.officialgazette.gov.ph/1977/02/19/presidential-decree-no-1096-s-1977/
+apply_online: null
+summary:
+  en: >-
+    Permit from the Office of the Building Official before you construct,
+    renovate, convert, move or demolish a building. P.D. 1096 makes it unlawful
+    to start the work without it, and the permit also gates the electrical,
+    plumbing and occupancy permits.
+  fil: >-
+    Permit mula sa Office of the Building Official bago magtayo, mag-renovate,
+    mag-convert, maglipat o mag-demolish ng gusali. Ipinagbabawal ng P.D. 1096
+    ang pagsisimula ng trabaho nang wala ito, at kailangan din ito bago ang
+    electrical, plumbing at occupancy permits.
+tags: [construction, permit, property, lgu]
+where_to_apply:
+  en: >-
+    The Office of the Building Official (OBO) at your city or municipal hall.
+    Many LGUs run a Building Regulation One-Stop Shop that also processes the
+    locational clearance and fire safety evaluation.
+  fil: >-
+    Office of the Building Official (OBO) sa city o municipal hall. Maraming LGU
+    ang may Building Regulation One-Stop Shop na nagpoproseso rin ng locational
+    clearance at fire safety evaluation.
+requirements:
+  - id: application-form
+    text:
+      en: >-
+        Notarized Unified Application Form for a building permit, as required by
+        the LGU.
+      fil: >-
+        Notarized Unified Application Form para sa building permit, ayon sa
+        requirement ng LGU.
+    original: true
+  - id: proof-of-ownership
+    text:
+      en: >-
+        Proof of right over the lot: a certified true copy of the title, or a
+        lease contract when you are not the registered owner.
+      fil: >-
+        Proof of right sa lote: certified true copy ng titulo, o lease contract
+        kung hindi ikaw ang registered owner.
+    original: true
+  - id: tax-declaration
+    text:
+      en: >-
+        Current real-property tax receipt and tax declaration.
+      fil: >-
+        Kasalukuyang real-property tax receipt at tax declaration.
+    original: true
+  - id: plans
+    text:
+      en: >-
+        At least five (5) sets of plans and specifications, signed and sealed by
+        the professionals who prepared them, as required by P.D. 1096 Sec. 302.
+      fil: >-
+        Hindi bababa sa limang (5) set ng plano at specifications, pipirma at
+        selyo ng mga propesyonal na gumawa, ayon sa P.D. 1096 Sec. 302.
+    original: true
+  - id: professional-licenses
+    text:
+      en: >-
+        Professional licences and tax receipts of the architect, engineer or
+        other professionals who signed the plans.
+      fil: >-
+        Professional licences at tax receipts ng arkitekto, engineer o ibang
+        propesyonal na pumirma sa plano.
+    original: true
+  - id: bill-of-materials
+    text:
+      en: >-
+        Bill of materials and cost estimate for the work.
+      fil: >-
+        Bill of materials at cost estimate ng trabaho.
+    original: true
+  - id: locational-clearance
+    text:
+      en: >-
+        Zoning or locational clearance, which the LGU issues before the building
+        permit.
+      fil: >-
+        Zoning o locational clearance, na inilalabas ng LGU bago ang building
+        permit.
+    original: true
+  - id: additional-requirements
+    text:
+      en: >-
+        Where applicable: structural calculations, soil testing, contractor's
+        risk insurance, construction safety and health program, fire safety
+        evaluation clearance.
+      fil: >-
+        Kung applicable: structural calculations, soil testing, contractor's
+        risk insurance, construction safety and health program, fire safety
+        evaluation clearance.
+    optional: true
+steps:
+  - en: >-
+      Complete the LGU's Unified Application Form and assemble the documentary
+      requirements.
+    fil: >-
+      Kumpletuhin ang Unified Application Form ng LGU at ihanda ang mga
+      documentary requirement.
+  - en: >-
+      Submit the application and documents to the Office of the Building
+      Official for evaluation.
+    fil: >-
+      Isumite ang aplikasyon at dokumento sa Office of the Building Official
+      para sa evaluation.
+  - en: >-
+      Wait for the evaluation, the fire safety evaluation and the locational
+      clearance, then get the Order of Payment.
+    fil: >-
+      Hintayin ang evaluation, fire safety evaluation at locational clearance,
+      pagkatapos kunin ang Order of Payment.
+  - en: >-
+      Pay the assessed fees at the cashier.
+    fil: >-
+      Bayaran ang assessed fees sa cashier.
+  - en: >-
+      Present the receipt and claim the building permit, then post it at the
+      project site.
+    fil: >-
+      Ipakita ang resibo at kunin ang building permit, pagkatapos ipaskil ito sa
+      project site.
+fee_note:
+  en: >-
+    Fees are set by the LGU and depend on floor area and type of building. The
+    Pasay City schedule, for example, charges PHP 8.40 per square metre for
+    residential buildings and PHP 23 per square metre for commercial or
+    industrial buildings up to 5,000 sqm, plus separate electrical, plumbing,
+    mechanical and other fees and a PHP 20 computerization fee.
+  fil: >-
+    Ang fees ay itinatakda ng LGU at depende sa floor area at uri ng gusali.
+    Halimbawa, sa schedule ng Pasay City, PHP 8.40 kada square metre para sa
+    residential at PHP 23 kada square metre para sa commercial o industrial na
+    hanggang 5,000 sqm, kasama ang hiwalay na electrical, plumbing, mechanical
+    at iba pang fees at PHP 20 computerization fee.
+processing_note:
+  en: >-
+    P.D. 1096 Sec. 304 says the Building Official shall issue the permit within
+    fifteen (15) days from payment of the required fees once the application and
+    plans comply. Pasay City's charter lists a six-day total, including waiting
+    time for the fire safety and locational clearances.
+  fil: >-
+    Sinasabi ng P.D. 1096 Sec. 304 na dapat ilabas ng Building Official ang
+    permit sa loob ng labinlimang (15) araw mula sa bayad sa required fees kapag
+    compliant ang aplikasyon at plano. Nakalista sa charter ng Pasay City ang
+    anim na araw na total, kasama ang waiting time para sa fire safety at
+    locational clearances.
+notes:
+  - en: >-
+      P.D. 1096 Sec. 305: the permit expires if the work does not start within
+      one year from its date, or if the work is suspended or abandoned for 120
+      days after it started.
+    fil: >-
+      P.D. 1096 Sec. 305: nag-expire ang permit kung hindi masimulan ang trabaho
+      sa loob ng isang taon mula sa petsa nito, o kung masuspinde o
+      maabandona ang trabaho nang 120 araw pagkatapos magsimula.
+  - en: >-
+      The documentary checklist and fees differ per LGU. Treat the list above as
+      the usual national baseline and confirm the rest with your own Office of
+      the Building Official.
+    fil: >-
+      Iba-iba ang checklist at fees kada LGU. Ituring na baseline ang listahan
+      sa itaas at kumpirmahin ang iba sa sariling Office of the Building
+      Official.

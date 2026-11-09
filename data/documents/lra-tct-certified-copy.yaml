@@ -1,0 +1,130 @@
+# Certified True Copy of a Transfer Certificate of Title (TCT)
+# Facts sourced 2026-11-09 from the LRA Frequently Asked Questions page
+# (lra.gov.ph/frequently-asked-questions) and the LRA Citizen's Charter 2024
+# (lra.gov.ph/wp-content/uploads/2024/04/LRA_CC_03302024-1st-Edition.pdf):
+# the Registry of Deeds requirements (letter of request or Transaction
+# Application Form, photocopy of the title and an ID), the in-person steps, the
+# fee schedule (PHP 196.97 for the first two pages at the local RD, PHP 644.97
+# outside the local RD or through eSerbisyo; PHP 38.19 per succeeding page),
+# the one-working-day claim for PHILARIS titles and three working days for
+# converted titles, and the eSerbisyo delivery window. LRA states no expiry for
+# the certified copy. Verified on the maintainer's instruction, 2026-11-09.
+schema_version: 1
+id: lra-tct-certified-copy
+name:
+  en: Certified True Copy of TCT
+  fil: Certified True Copy ng TCT
+agency: lra
+status: verified
+last_verified: '2026-11-09'
+verified_by: JamesMangao
+source_url: https://lra.gov.ph/frequently-asked-questions
+apply_online: true
+apply_online_url: https://eserbisyo.lra.gov.ph/
+summary:
+  en: >-
+    Certified true copy of a Transfer Certificate of Title, issued by the
+    Registry of Deeds that keeps the title. Banks, buyers, courts and notaries
+    ask for this copy rather than your own photocopy or the owner's duplicate.
+  fil: >-
+    Certified true copy ng Transfer Certificate of Title, inilalabas ng Registry
+    of Deeds na may hawak ng titulo. Hinihingi ito ng bangko, buyer, korte at
+    notaryo, hindi ang sarili mong photocopy o ang owner's duplicate.
+tags: [property, title, land, lra]
+where_to_apply:
+  en: >-
+    The Registry of Deeds that holds the title, or the LRA One-Stop-Shop/kiosk,
+    or the LRA eSerbisyo online service for door-to-door delivery.
+  fil: >-
+    Registry of Deeds na may hawak ng titulo, o ang LRA One-Stop-Shop/kiosk, o
+    ang LRA eSerbisyo online service para sa door-to-door delivery.
+requirements:
+  - id: request-letter
+    text:
+      en: >-
+        Letter of Request, or the Transaction Application Form (TAF) at the
+        Registry of Deeds.
+      fil: >-
+        Letter of Request, o ang Transaction Application Form (TAF) sa Registry
+        of Deeds.
+    original: true
+  - id: title-photocopy
+    text:
+      en: >-
+        Photocopy of the title you are requesting.
+      fil: >-
+        Photocopy ng titulong hinihingi mo.
+    original: true
+  - id: valid-id
+    text:
+      en: >-
+        Valid identification card of the requester.
+      fil: >-
+        Valid na identification card ng nag-request.
+    original: true
+steps:
+  - en: >-
+      Go to the Registration Information Officer to check the requirements and
+      accomplish the Transaction Application Form.
+    fil: >-
+      Pumunta sa Registration Information Officer para i-check ang requirements
+      at sagutan ang Transaction Application Form.
+  - en: >-
+      Submit the documents and the TAF to the Entry Clerk and wait for the Claim
+      Assessment Slip.
+    fil: >-
+      Isumite ang mga dokumento at TAF sa Entry Clerk at hintayin ang Claim
+      Assessment Slip.
+  - en: >-
+      Pay the fee shown on the slip at the cashier.
+    fil: >-
+      Bayaran sa cashier ang fee na nakasaad sa slip.
+  - en: >-
+      Claim the certified true copy from the Releasing Clerk on the date on
+      your claim stub.
+    fil: >-
+      Kunin ang certified true copy sa Releasing Clerk sa petsang nakasaad sa
+      claim stub.
+  - en: >-
+      For eSerbisyo, file the request online and wait for the delivered copy
+      (3-5 working days in Metro Manila, 5-7 working days outside).
+    fil: >-
+      Para sa eSerbisyo, i-file online ang request at hintayin ang delivered na
+      kopya (3-5 working day sa Metro Manila, 5-7 working day sa labas).
+fee_note:
+  en: >-
+    LRA's fee schedule: PHP 196.97 for the first two pages at the local Registry
+    of Deeds, PHP 644.97 outside the local RD or through eSerbisyo, and PHP
+    38.19 for each succeeding page.
+  fil: >-
+    Fee schedule ng LRA: PHP 196.97 para sa unang dalawang pahina sa local
+    Registry of Deeds, PHP 644.97 sa labas ng local RD o sa eSerbisyo, at PHP
+    38.19 para sa bawat sumunod na pahina.
+processing_note:
+  en: >-
+    LRA says a local RD copy of a PHILARIS title can be claimed after one (1)
+    working day, and a converted or manual title after three (3) working days
+    from the request. eSerbisyo delivery takes 3-5 working days in Metro Manila
+    and 5-7 working days outside, with another 5-7 working days for manual
+    titles that need validation.
+  fil: >-
+    Ayon sa LRA, ang kopya ng PHILARIS title sa local RD ay makukuha pagkalipas
+    ng isang (1) working day, at ang converted o manual title pagkalipas ng
+    tatlong (3) working day mula sa request. Ang eSerbisyo delivery ay 3-5
+    working day sa Metro Manila at 5-7 working day sa labas, na may dagdag pang
+    5-7 working day para sa manual title na kailangang i-validate.
+processing_days_min: 1
+processing_days_max: 3
+notes:
+  - en: >-
+      The LRA pages do not state an expiry for a certified true copy; a bank or
+      agency may still ask for a recently issued copy.
+    fil: >-
+      Walang nakasaad na expiry ang mga LRA page para sa certified true copy;
+      pero maaaring humingi ang bangko o ahensya ng bagong labas na kopya.
+  - en: >-
+      Request only from the Registry of Deeds or LRA. A "certified copy" offered
+      by a fixer outside the office is not proof of anything.
+    fil: >-
+      Sa Registry of Deeds o LRA lang humingi. Ang "certified copy" na inaalok
+      ng fixer sa labas ng opisina ay hindi patunay ng anuman.

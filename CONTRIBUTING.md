@@ -19,16 +19,15 @@ cd app; flutter pub get; flutter test # app tests
 
 ## The source-URL rule (most important)
 
-**Every factual field must come from an official source URL.**
+**Every factual field must come from an official `.gov.ph` source URL.**
 
 - Never invent requirements, fees, processing times, validity periods, or links.
 - If you are not sure, leave the field `null` and keep `status: draft`.
 - Entries may only become `status: verified` when they have an official
   `source_url`, a `last_verified` date, and non-empty `requirements` and
   `steps`.
-- Prefer official `.gov.ph` domains (the validator warns otherwise;
-  some official services use a non-`.gov.ph` domain, e.g. Pag-IBIG's own
-  Virtual Pag-IBIG portal at `pagibigfundservices.com`).
+- Use only official `.gov.ph` domains. The validator warns on any other
+  host, and `--strict` fails the run; do not add a non-`.gov.ph` source.
 - Prefer "see official site" over hard-copied fee numbers; include a number
   only with a `source_url` on the same entry.
 
@@ -53,6 +52,14 @@ demotion, drafts simply render with an "Unverified" badge until verified.
   validator + CI are the second pair of eyes.
 - **Future (once contributors exist):** data PRs require **two reviewer
   approvals**, at least one of whom is the maintainer, before merging.
+
+## Licence of contributions
+
+Kumpleto is proprietary — all rights reserved (see [LICENSE](LICENSE) and
+[LICENSE-DATA](LICENSE-DATA)). By submitting a pull request or patch you
+assign the copyright in your contribution to the project owner and confirm you
+have the right to do so. No contribution is accepted under an open-source
+licence.
 
 ## Code of conduct
 

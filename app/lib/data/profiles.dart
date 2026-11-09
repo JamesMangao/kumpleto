@@ -32,10 +32,7 @@ class Profile {
     final id = json['id'];
     if (id is! String || id.isEmpty || id == meId) return null;
     final name = json['name'];
-    return Profile(
-      id: id,
-      name: name is String ? name.trim() : '',
-    );
+    return Profile(id: id, name: name is String ? name.trim() : '');
   }
 
   @override

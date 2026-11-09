@@ -7,10 +7,11 @@ schema reference for contributors — the machine-readable definitions are
 rules in `tools/validate.dart`; this document explains how they fit
 together.
 
-> **Rule zero: every factual field must cite an official source URL.**
+> **Rule zero: every factual field must cite an official `.gov.ph` source URL.**
 > Never invent requirements, fees, processing times or validity periods.
-> If you cannot confirm it from an official page, leave it out and keep
-> `status: draft`. See [CONTRIBUTING.md](../CONTRIBUTING.md).
+> If you cannot confirm it from an official `.gov.ph` page, leave it out and
+> keep `status: draft`. The validator warns on any other host and `--strict`
+> fails the run. See [CONTRIBUTING.md](../CONTRIBUTING.md).
 
 ## Layout
 
@@ -51,12 +52,12 @@ Everything else is optional — draft entries are expected to be sparse.
 | `agency` | kebab-case string | Key into `agencies.yaml`; unknown ids are an error. |
 | `status` | `draft` \| `verified` \| `deprecated` | See [Status lifecycle](#status-lifecycle). |
 | `summary` | bilingual \| null | One- or two-sentence description. |
-| `source_url` | https URL \| null | The official page every factual field came from. |
+| `source_url` | https .gov.ph URL \| null | The official page every factual field came from. |
 | `last_verified` | `YYYY-MM-DD` \| null | **Maintainer-only.** |
 | `verified_by` | string \| null | **Maintainer-only** GitHub handle. |
 | `validity_months` | int ≥ 0 \| null | `0` means "no fixed expiry". |
 | `apply_online` | bool \| null | `null` = unknown, not "no". |
-| `apply_online_url` | https URL \| null | The agency's own portal. |
+| `apply_online_url` | https .gov.ph URL \| null | The agency's own portal. |
 | `where_to_apply` | bilingual \| null | Office/branch guidance. |
 | `depends_on` | list of document ids | Documents you need first; cycles are an error. |
 | `tags` | list of kebab-case strings | Free-form, e.g. `job-hunt`, `renewal`. |

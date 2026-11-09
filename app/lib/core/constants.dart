@@ -66,7 +66,4 @@ Uri repositoryUri() => Uri.https('github.com', '/$repoOwner/$repoName');
 /// platform: Android hands it to Google Maps, and the browser falls back to the
 /// web map. [query] is free text (an agency plus the saved place).
 Uri mapsSearchUri(String query) =>
-    Uri.https('www.google.com', '/maps/search/', {
-      'api': '1',
-      'query': query,
-    });
+    Uri.https('www.google.com', '/maps/search/', {'api': '1', 'query': query});

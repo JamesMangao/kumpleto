@@ -36,8 +36,8 @@ class BundleDetailScreen extends ConsumerWidget {
     }
 
     final isFirstTimeJobseeker = ref.watch(firstTimeJobseekerProvider);
-    final isJobHuntBundle = bundle.id == 'job-hunt-pack' ||
-        bundle.tags.contains('job-hunt');
+    final isJobHuntBundle =
+        bundle.id == 'job-hunt-pack' || bundle.tags.contains('job-hunt');
 
     final documents = data.documentsOf(bundle);
     final totals = bundleProgress(documents: documents, progress: progress);
@@ -138,11 +138,12 @@ class BundleDetailScreen extends ConsumerWidget {
                               children: [
                                 Text(
                                   bundle.name.localized(context),
-                                  style: theme.textTheme.headlineSmall?.copyWith(
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: 22,
-                                    letterSpacing: -0.3,
-                                  ),
+                                  style: theme.textTheme.headlineSmall
+                                      ?.copyWith(
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 22,
+                                        letterSpacing: -0.3,
+                                      ),
                                 ),
                                 if (bundle.status == DocStatus.draft)
                                   const StatusBadge(status: DocStatus.draft),
@@ -180,7 +181,9 @@ class BundleDetailScreen extends ConsumerWidget {
                         icon: Icons.account_balance_outlined,
                         label: agenciesCount > 1
                             ? 'Multiple agencies'
-                            : (documents.isNotEmpty ? documents.first.agencyId : 'Agency'),
+                            : (documents.isNotEmpty
+                                  ? documents.first.agencyId
+                                  : 'Agency'),
                       ),
                       for (final tag in bundle.tags)
                         _BadgeChip(
@@ -219,15 +222,22 @@ class BundleDetailScreen extends ConsumerWidget {
                         side: BorderSide(
                           color: isFirstTimeJobseeker
                               ? AppTheme.primaryTeal
-                              : (isDark ? AppTheme.borderDark : AppTheme.borderLight),
+                              : (isDark
+                                    ? AppTheme.borderDark
+                                    : AppTheme.borderLight),
                           width: isFirstTimeJobseeker ? 1.5 : 1.0,
                         ),
                       ),
                       color: isFirstTimeJobseeker
-                          ? (isDark ? const Color(0xFF132821) : const Color(0xFFE8F5F1))
+                          ? (isDark
+                                ? const Color(0xFF132821)
+                                : const Color(0xFFE8F5F1))
                           : null,
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 10,
+                        ),
                         child: Row(
                           children: [
                             Icon(
@@ -316,13 +326,18 @@ class BundleDetailScreen extends ConsumerWidget {
               ),
               for (final note in bundle.notes)
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 4,
+                  ),
                   child: Card(
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                       side: BorderSide(
-                        color: isDark ? AppTheme.borderDark : AppTheme.borderLight,
+                        color: isDark
+                            ? AppTheme.borderDark
+                            : AppTheme.borderLight,
                       ),
                     ),
                     child: Padding(
@@ -352,13 +367,18 @@ class BundleDetailScreen extends ConsumerWidget {
                 ),
             ] else ...[
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 6,
+                ),
                 child: Card(
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                     side: BorderSide(
-                      color: isDark ? AppTheme.borderDark : AppTheme.borderLight,
+                      color: isDark
+                          ? AppTheme.borderDark
+                          : AppTheme.borderLight,
                     ),
                   ),
                   child: const Padding(
@@ -420,9 +440,8 @@ ChecklistContent _content(
   DataBundle data,
 ) {
   final languageCode = Localizations.localeOf(context).languageCode;
-  final date = MaterialLocalizations.of(
-    context,
-  ).formatShortDate(DateTime.now());
+  final date = MaterialLocalizations.of(context)
+      .formatShortDate(DateTime.now());
   return ChecklistContent(
     l10n: l10n,
     languageCode: languageCode,
@@ -449,9 +468,8 @@ Future<void> _share(
     );
   } on Object {
     if (!context.mounted) return;
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(l10n.bundleExportFailed)));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(l10n.bundleExportFailed)));
   }
 }
 
@@ -468,9 +486,8 @@ Future<void> _print(
     );
   } on Object {
     if (!context.mounted) return;
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(l10n.bundleExportFailed)));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(l10n.bundleExportFailed)));
   }
 }
 
@@ -544,7 +561,10 @@ class _CompactProgressCard extends StatelessWidget {
                             ),
                             const Text(
                               'ready',
-                              style: TextStyle(fontSize: 10, color: Colors.grey),
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: Colors.grey,
+                              ),
                             ),
                           ],
                         ),
@@ -729,7 +749,10 @@ class _BundleDocumentModernTile extends ConsumerWidget {
         ),
         child: ListTile(
           onTap: () => context.push('/doc/${document.id}'),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 12,
+            vertical: 2,
+          ),
           leading: Stack(
             clipBehavior: Clip.none,
             children: [
@@ -795,7 +818,10 @@ class _BundleDocumentModernTile extends ConsumerWidget {
               if (acquired) ...[
                 const SizedBox(height: 4),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 6,
+                    vertical: 2,
+                  ),
                   decoration: BoxDecoration(
                     color: AppTheme.primaryTeal.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(4),
@@ -822,11 +848,7 @@ class _BundleDocumentModernTile extends ConsumerWidget {
                 ),
               ] else if (total > 0) ...[
                 const SizedBox(height: 4),
-                ProgressLine(
-                  checked: done,
-                  total: total,
-                  showBar: true,
-                ),
+                ProgressLine(checked: done, total: total, showBar: true),
               ] else
                 Text(
                   l10n.statusDraft,
@@ -838,7 +860,11 @@ class _BundleDocumentModernTile extends ConsumerWidget {
                 ),
             ],
           ),
-          trailing: const Icon(Icons.chevron_right, size: 20, color: Colors.grey),
+          trailing: const Icon(
+            Icons.chevron_right,
+            size: 20,
+            color: Colors.grey,
+          ),
         ),
       ),
     );

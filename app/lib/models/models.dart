@@ -234,7 +234,8 @@ class Document {
       dependsOn: _strings(map['depends_on']),
       tags: _strings(map['tags']),
       requirements: [
-        for (final raw in _list(map['requirements'])) ?Requirement.fromJson(raw),
+        for (final raw in _list(map['requirements']))
+          ?Requirement.fromJson(raw),
       ],
       steps: [
         for (final raw in _list(map['steps'])) ?LocalizedText.fromJson(raw),

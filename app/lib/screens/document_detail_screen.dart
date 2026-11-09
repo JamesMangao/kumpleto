@@ -5,12 +5,16 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../core/constants.dart';
+import '../core/deep_links.dart';
+import '../core/review_prompt.dart';
 import '../core/theme.dart';
+import '../data/calendar_export.dart';
 import '../data/location.dart';
 import '../data/place_tokens.dart';
 import '../data/providers.dart';
 import '../l10n/app_localizations.dart';
 import '../models/models.dart';
+import '../widgets/share_qr.dart';
 import '../widgets/shared.dart';
 import '../widgets/validity.dart';
 
@@ -84,6 +88,15 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
         ),
         actions: [
           IconButton(
+            tooltip: l10n.docShareQr,
+            icon: const Icon(Icons.qr_code_2_rounded),
+            onPressed: () => showChecklistQr(
+              context,
+              title: document.name.localized(context),
+              page: documentPageUri(document.id),
+            ),
+          ),
+          IconButton(
             tooltip: l10n.bundleExportShare,
             icon: const Icon(Icons.share_outlined),
             onPressed: () => _shareDoc(context, l10n, document, agency),
@@ -121,11 +134,12 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
                               children: [
                                 Text(
                                   document.name.localized(context),
-                                  style: theme.textTheme.headlineSmall?.copyWith(
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: 22,
-                                    letterSpacing: -0.4,
-                                  ),
+                                  style: theme.textTheme.headlineSmall
+                                      ?.copyWith(
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 22,
+                                        letterSpacing: -0.4,
+                                      ),
                                 ),
                                 StatusBadge(
                                   status: document.status,
@@ -178,9 +192,9 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
                           label: l10n.docApplyOnline,
                           onTap: document.applyOnlineUrl != null
                               ? () => openExternal(
-                                    context,
-                                    Uri.parse(document.applyOnlineUrl!),
-                                  )
+                                  context,
+                                  Uri.parse(document.applyOnlineUrl!),
+                                )
                               : null,
                         ),
                     ],
@@ -197,10 +211,7 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
                   const SizedBox(height: 16),
 
                   // Progress Bar & Label
-                  ProgressLine(
-                    checked: done,
-                    total: total,
-                  ),
+                  ProgressLine(checked: done, total: total),
                   if (document.requirements.isNotEmpty) ...[
                     const SizedBox(height: 2),
                     Align(
@@ -230,24 +241,32 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
                 margin: const EdgeInsets.symmetric(horizontal: 16),
                 padding: const EdgeInsets.all(14),
                 decoration: BoxDecoration(
-                  color: isDark ? const Color(0xFF3B1515) : AppTheme.statusRedBg,
+                  color: isDark
+                      ? const Color(0xFF3B1515)
+                      : AppTheme.statusRedBg,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
-                    color: isDark ? const Color(0xFF5A2020) : const Color(0xFFF7C8C8),
+                    color: isDark
+                        ? const Color(0xFF5A2020)
+                        : const Color(0xFFF7C8C8),
                   ),
                 ),
                 child: Row(
                   children: [
                     Icon(
                       Icons.warning_amber_rounded,
-                      color: isDark ? const Color(0xFFF78A8A) : AppTheme.statusRedText,
+                      color: isDark
+                          ? const Color(0xFFF78A8A)
+                          : AppTheme.statusRedText,
                     ),
                     const SizedBox(width: 12),
                     Expanded(
                       child: Text(
                         l10n.deprecatedBanner,
                         style: TextStyle(
-                          color: isDark ? const Color(0xFFF78A8A) : AppTheme.statusRedText,
+                          color: isDark
+                              ? const Color(0xFFF78A8A)
+                              : AppTheme.statusRedText,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -280,7 +299,10 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
             // Empty state notice if requirements and steps are empty
             if (document.requirements.isEmpty && document.steps.isEmpty)
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 6,
+                ),
                 child: Card(
                   child: Padding(
                     padding: const EdgeInsets.all(16),
@@ -651,7 +673,9 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
             color: isDark ? const Color(0xFF141F1A) : Colors.white,
             border: Border(
               top: BorderSide(
-                color: isDark ? const Color(0xFF24382F) : const Color(0xFFE2EDE7),
+                color: isDark
+                    ? const Color(0xFF24382F)
+                    : const Color(0xFFE2EDE7),
                 width: 1.0,
               ),
             ),
@@ -663,10 +687,7 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
               ),
             ],
           ),
-          child: _AcquiredStickyBar(
-            document: document,
-            isAcquired: acquired,
-          ),
+          child: _AcquiredStickyBar(document: document, isAcquired: acquired),
         ),
       ),
     );
@@ -681,8 +702,8 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
     required Agency? agency,
     required SavedLocation? place,
   }) {
-    final office = agency?.name.localized(context) ??
-        document.name.localized(context);
+    final office =
+        agency?.name.localized(context) ?? document.name.localized(context);
     if (place == null || place.isEmpty) return office;
     return '$office, ${place.label}';
   }
@@ -855,11 +876,7 @@ class _RequirementItem extends ConsumerWidget {
 }
 
 class _BadgePill extends StatelessWidget {
-  const _BadgePill({
-    required this.label,
-    required this.bg,
-    required this.fg,
-  });
+  const _BadgePill({required this.label, required this.bg, required this.fg});
 
   final String label;
   final Color bg;
@@ -875,22 +892,14 @@ class _BadgePill extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: TextStyle(
-          color: fg,
-          fontSize: 11,
-          fontWeight: FontWeight.w600,
-        ),
+        style: TextStyle(color: fg, fontSize: 11, fontWeight: FontWeight.w600),
       ),
     );
   }
 }
 
 class _MetaPill extends StatelessWidget {
-  const _MetaPill({
-    required this.icon,
-    required this.label,
-    this.onTap,
-  });
+  const _MetaPill({required this.icon, required this.label, this.onTap});
 
   final IconData icon;
   final String label;
@@ -923,7 +932,9 @@ class _MetaPill extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
-                  color: isDark ? const Color(0xFF8AE0C4) : AppTheme.primaryTeal,
+                  color: isDark
+                      ? const Color(0xFF8AE0C4)
+                      : AppTheme.primaryTeal,
                 ),
               ),
             ),
@@ -935,13 +946,34 @@ class _MetaPill extends StatelessWidget {
 }
 
 class _AcquiredStickyBar extends ConsumerWidget {
-  const _AcquiredStickyBar({
-    required this.document,
-    required this.isAcquired,
-  });
+  const _AcquiredStickyBar({required this.document, required this.isAcquired});
 
   final Document document;
   final bool isAcquired;
+
+  /// Hands the expiry date to the reader's own calendar app as an `.ics` file:
+  /// no account, no API, and it keeps working offline.
+  Future<void> _addExpiryToCalendar(
+    BuildContext context,
+    AppLocalizations l10n,
+    DateTime acquiredAt,
+  ) async {
+    final months = document.validityMonths ?? 0;
+    final expiry = DateTime(
+      acquiredAt.year,
+      acquiredAt.month + months,
+      acquiredAt.day,
+    );
+    final messenger = ScaffoldMessenger.of(context);
+    await shareExpiryIcs(
+      documentId: document.id,
+      title: document.name.localized(context),
+      expiry: expiry,
+      description:
+          '${document.name.localized(context)} — ${l10n.docValidUntil('${expiry.day}/${expiry.month}/${expiry.year}')}. Unofficial: confirm with the issuing agency.',
+    );
+    messenger.showSnackBar(SnackBar(content: Text(l10n.docCalendarReady)));
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -949,7 +981,9 @@ class _AcquiredStickyBar extends ConsumerWidget {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final acquiredAt = ref.watch(acquiredDatesProvider).value?[document.id];
-    final validity = isAcquired ? validityText(context, l10n, document, acquiredAt) : null;
+    final validity = isAcquired
+        ? validityText(context, l10n, document, acquiredAt)
+        : null;
 
     void toggle() {
       final repository = ref.read(progressRepositoryProvider);
@@ -971,6 +1005,9 @@ class _AcquiredStickyBar extends ConsumerWidget {
         document.id,
         document.requirements.map((requirement) => requirement.id),
       );
+      // Third finished checklist is the moment the reader has seen enough to
+      // judge the app; the prompt is local and appears at most once.
+      ReviewPrompt.maybeAsk(context, ref);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
@@ -1022,6 +1059,22 @@ class _AcquiredStickyBar extends ConsumerWidget {
         style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
       ),
     );
+
+    final calendarButton =
+        isAcquired &&
+            acquiredAt != null &&
+            document.validityMonths != null &&
+            document.validityMonths! > 0
+        ? IconButton(
+            tooltip: l10n.docCalendarAction,
+            icon: const Icon(
+              Icons.event_available_outlined,
+              size: 20,
+              color: AppTheme.primaryTeal,
+            ),
+            onPressed: () => _addExpiryToCalendar(context, l10n, acquiredAt),
+          )
+        : null;
 
     final editDateButton =
         document.validityMonths != null && document.validityMonths! > 0
@@ -1130,7 +1183,9 @@ class _AcquiredStickyBar extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     ?editDateButton,
-                    if (editDateButton != null) const SizedBox(width: 4),
+                    ?calendarButton,
+                    if (editDateButton != null || calendarButton != null)
+                      const SizedBox(width: 4),
                     Flexible(child: unmarkButton),
                   ],
                 ),
@@ -1142,6 +1197,7 @@ class _AcquiredStickyBar extends ConsumerWidget {
                 const SizedBox(width: 12),
                 Expanded(child: acquiredNotice),
                 ?editDateButton,
+                ?calendarButton,
                 const SizedBox(width: 4),
                 unmarkButton,
               ],
@@ -1151,11 +1207,7 @@ class _AcquiredStickyBar extends ConsumerWidget {
           ? Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                alreadyHave,
-                const SizedBox(height: 10),
-                markButton,
-              ],
+              children: [alreadyHave, const SizedBox(height: 10), markButton],
             )
           : Row(
               children: [
@@ -1326,8 +1378,9 @@ class _BagCheckItemState extends State<_BagCheckItem> {
                       widget.title,
                       style: theme.textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w700,
-                        decoration:
-                            _checked ? TextDecoration.lineThrough : null,
+                        decoration: _checked
+                            ? TextDecoration.lineThrough
+                            : null,
                         color: _checked
                             ? theme.colorScheme.onSurfaceVariant
                             : null,

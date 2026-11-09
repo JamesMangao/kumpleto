@@ -6,11 +6,11 @@
   "navDocuments": "Documents",
   "navSettings": "Settings",
   "onboardingTitle": "Welcome to Kumpleto",
-  "onboardingDisclaimer": "Kumpleto is NOT a government app. It is an unofficial, community-maintained checklist. Requirements and fees change — always confirm with the official agency website before you apply.",
+  "onboardingDisclaimer": "Kumpleto is NOT a government app. It is an unofficial checklist published independently by its author, not by any agency. Requirements and fees change — always confirm with the official agency website before you apply.",
   "onboardingLanguageLabel": "Choose your language",
   "onboardingAcknowledge": "I understand",
   "disclaimerScreenTitle": "Before you continue",
-  "disclaimerScreenBody": "Kumpleto is a community project. It is not affiliated with, endorsed by, or connected to any Philippine government agency, and it does not speak for any of them.",
+  "disclaimerScreenBody": "Kumpleto is an independent project by its author. It is not affiliated with, endorsed by, or connected to any Philippine government agency, and it does not speak for any of them.",
   "disclaimerScreenBody2": "This is not legal advice. Fees, requirements and processing times are set by agencies and by local ordinances, and they can change without notice. An entry can be out of date even if it was correct when it was written.",
   "disclaimerScreenBody3": "Always confirm with the agency, or with your barangay hall, before you pay a fee, book a trip, or file an application. You are responsible for the decisions you make with this information.",
   "disclaimerScreenAgree": "I agree and continue",
@@ -145,7 +145,6 @@
   "settingsDisclaimer": "Disclaimer",
   "settingsPrivacy": "Privacy",
   "settingsLicenses": "Open-source licenses",
-  "settingsSourceCode": "Source code on GitHub",
   "errorNotFound": "Not found",
   "back": "Back",
   "cancel": "Cancel",
@@ -333,5 +332,11 @@
     }
   },
   "settingsReplayOnboarding": "Replay introduction & disclaimer",
-  "settingsReplayOnboardingSubtitle": "Review the disclaimer and onboarding walk-through."
+  "settingsReplayOnboardingSubtitle": "Review the disclaimer and onboarding walk-through.",
+  "docShareQr": "Show QR code",
+  "docQrTitle": "Scan to open the checklist",
+  "docQrHint": "Works offline. Scan with any phone camera.",
+  "docCalendarAction": "Add expiry date to calendar",
+  "docCalendarReady": "Calendar file ready — open it to save the date.",
+  "docCalendarNeedsDate": "Set the acquired date first."
 }

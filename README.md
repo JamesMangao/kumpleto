@@ -1,7 +1,7 @@
 # Kumpleto
 
-**Unofficial.** Kumpleto is an offline-first Android app that keeps a
-community-maintained checklist of Philippine government document
+**Unofficial.** Kumpleto is an offline-first Android app that keeps an
+independently maintained checklist of Philippine government document
 requirements — NBI clearance, PSA certificates, passport, national ID, LTO
 licences and permits, DTI business names, PRC licences, and more — plus
 life-event bundles (Job Hunt Pack, First Passport, New Driver, Renew Expired
@@ -30,7 +30,9 @@ off — fully usable **offline**, with **no accounts, no analytics, and no ads**
 - 🔄 Silent data refresh from a public JSON feed — no app release needed
 - 🔍 Search runs through requirements, steps, fees and notes, not just titles
 - 🔗 Deep links per document and bundle (`kumpleto://doc/<id>`,
-  `kumpleto://bundle/<id>`) for sharing a single checklist
+  `kumpleto://bundle/<id>`) plus published `https` checklist pages for sharing
+- 🔳 QR sharing: show a checklist as a code a friend can scan offline
+- 📅 Expiry dates export to the phone's own calendar as an `.ics` file
 - 🔔 Expiry reminders a month, a week and a day before an acquired document
   lapses (off until you switch it on in Settings, which is when the OS
   notification permission is asked for)
@@ -41,16 +43,23 @@ off — fully usable **offline**, with **no accounts, no analytics, and no ads**
 
 **Version 1.0.0 (versionCode 1)** — first public release.
 
-- Artifacts from `flutter build apk --flavor prod --release` and
-  `flutter build appbundle --flavor prod --release`:
-  `app/build/app/outputs/flutter-apk/app-prod-release.apk` (universal, three
-  ABIs, 71.5 MB) and
+- Artifacts from `flutter build apk --flavor prod --release --split-per-abi`
+  and `flutter build appbundle --flavor prod --release`:
+  `app/build/app/outputs/flutter-apk/app-arm64-v8a-prod-release.apk` (25.1 MB),
+  `app-armeabi-v7a-prod-release.apk` (22.7 MB) and
+  `app-x86_64-prod-release.apk` (26.5 MB) for sideloading and QA, plus
   `app/build/app/outputs/bundle/prodRelease/app-prod-release.aab`
-  (the Play upload format, 65.8 MB on disk; Play delivers roughly the arm64
-  split, about 23 MB per device).
-- A release build carries the verified dataset only — 37 documents, 9 bundles,
-  19 agencies. Draft entries never ship, and the bundled `data.json` hash must
+  (the Play upload format, 63.0 MB on disk; Play delivers one ABI per device).
+- Release builds are obfuscated (`--obfuscate --split-debug-info=build/symbols`).
+  Keep `build/symbols/` for de-obfuscating a crash report; it is gitignored.
+- A release build carries the verified dataset only — 46 documents, 9 bundles,
+  26 agencies. Draft entries never ship, and the bundled `data.json` hash must
   equal `dist/data.json`.
+- Every artifact was rebuilt on 2026-11-09 with the current dataset, the new
+  welcome-scene logo and obfuscation on; their bundled `data.json` matches
+  `dist/data.json` byte for byte. They stay debug-signed until
+  `app/android/key.properties` exists, so sign with the upload key before any
+  Play upload — see §2 of [docs/PLAY_RELEASE.md](docs/PLAY_RELEASE.md).
 - Store signing: the AAB is signed with the upload key only when
   `app/android/key.properties` exists; otherwise it stays debug-signed for QA
   and cannot be uploaded. See [docs/PLAY_RELEASE.md](docs/PLAY_RELEASE.md) §2.
@@ -96,9 +105,9 @@ cd app && flutter test # app tests
 ## Data contribution flow
 
 1. All content lives in `data/**.yaml` — see [docs/DATA_GUIDE.md](docs/DATA_GUIDE.md).
-2. **Every factual field must cite an official source URL.** Never invent
-   requirements, fees, processing times, or validity periods. If unsure,
-   leave it `null` and keep `status: draft`.
+2. **Every factual field must cite an official `.gov.ph` source URL.** Never
+   invent requirements, fees, processing times, or validity periods. If
+   unsure, leave it `null` and keep `status: draft`.
 3. Only a maintainer may set `status: verified` and `last_verified`.
 4. CI validates every change (`tools/validate.dart --strict`); the app picks
    up new data through the public feed without a Play release.
@@ -129,5 +138,11 @@ data bundle. See [PRIVACY.md](PRIVACY.md).
 
 ## License
 
-- Source code: [MIT](LICENSE)
-- Content under `data/`: [CC BY 4.0](LICENSE-DATA)
+**Proprietary — all rights reserved.** The source code, the content under
+`data/`, and the compiled data are the exclusive property of James Mangao. No
+permission is granted to copy, redistribute, modify, or build derivative works
+from them without prior written permission. See [LICENSE](LICENSE) and
+[LICENSE-DATA](LICENSE-DATA).
+
+Third-party libraries keep their own licences; those are listed in the app
+under Settings → Open-source licenses.

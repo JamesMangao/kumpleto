@@ -65,7 +65,10 @@ class InfoPage extends StatelessWidget {
             const SizedBox(height: 6),
             Center(
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
                 decoration: BoxDecoration(
                   color: theme.brightness == Brightness.dark
                       ? const Color(0xFF23352C)
@@ -164,15 +167,17 @@ abstract final class InfoContent {
       ),
       InfoSection(
         'Licences',
-        'The app and its document data are open source. Library licences are '
-            'listed under Open-source licenses in Settings.',
+        'The app and its document data are proprietary; all rights are '
+            'reserved by the author. Licences for the third-party libraries '
+            'used by the app are listed under Open-source licenses in Settings.',
       ),
     ],
     disclaimer: [
       InfoSection(
         'Unofficial. Not a government app.',
-        'Kumpleto is a community project. It is not a government app, it is '
-            'not connected to any agency, and nothing in it is legal advice.',
+        'Kumpleto is an independent project published by its author. It is not '
+            'a government app, it is not connected to any agency, and nothing in '
+            'it is legal advice.',
       ),
       InfoSection(
         'Requirements change',
@@ -217,10 +222,18 @@ abstract final class InfoContent {
       ),
       InfoSection(
         'When the app uses the network',
-        'Only two things can touch the internet, and both are started by you: '
-            'the optional "Check for updates" in Settings, and a link you tap '
-            'yourself (for example a document\'s official source). The update '
-            'check sends nothing about you and is skipped if you never tap it.',
+        'Three things can touch the internet: the automatic data refresh that '
+            'runs at most once every 24 hours, the optional "Check for updates" '
+            'in Settings, and a link you tap yourself (for example a '
+            'document\'s official source). Both update paths fetch only the '
+            'public data file and send nothing about you; the automatic one is '
+            'skipped when you are offline.',
+      ),
+      InfoSection(
+        'Reminders',
+        'Expiry reminders are off by default. If you switch them on, the app '
+            'asks for the notification permission and schedules the reminders '
+            'locally on your device. No document name or date is sent anywhere.',
       ),
       InfoSection(
         'Removing your data',
@@ -278,16 +291,17 @@ abstract final class InfoContent {
       ),
       InfoSection(
         'Mga lisensya',
-        'Open source ang app at ang datos nito. Nasa Open-source licenses sa '
-            'Settings ang listahan ng lisensya ng mga library.',
+        'Proprietary ang app at ang datos nito; nakalaan ang lahat ng karapatan '
+            'sa may-akda. Ang lisensya ng mga third-party library na ginagamit '
+            'ng app ay nakalista sa Open-source licenses sa Settings.',
       ),
     ],
     disclaimer: [
       InfoSection(
         'Unofficial. Hindi app ng gobyerno.',
-        'Proyektong pangkomunidad ang Kumpleto. Hindi ito app ng gobyerno, '
-            'walang koneksyon sa kahit anong ahensya, at walang legal advice '
-            'dito.',
+        'Malayang proyekto ng may-akda nito ang Kumpleto. Hindi ito app ng '
+            'gobyerno, walang koneksyon sa kahit anong ahensya, at walang legal '
+            'advice dito.',
       ),
       InfoSection(
         'Nagbabago ang requirements',
@@ -333,11 +347,20 @@ abstract final class InfoContent {
       ),
       InfoSection(
         'Kailan gumagamit ng network',
-        'Dalawang bagay lang ang pwedeng gumamit ng internet, at ikaw ang '
-            'nagsisimula sa dalawa: ang opsyonal na "Check for updates" sa '
-            'Settings, at link na ikaw mismo ang tumap (halimbawa opisyal na '
-            'source ng dokumento). Walang ipinapadalang impormasyon tungkol sa '
-            'iyo ang update check.',
+        'Tatlong bagay ang pwedeng gumamit ng internet: ang automatic na '
+            'pag-refresh ng datos na tumatakbo nang hindi hihigit sa isang beses '
+            'kada 24 oras, ang opsyonal na "Check for updates" sa Settings, at '
+            'link na ikaw mismo ang tumap (halimbawa opisyal na source ng '
+            'dokumento). Ang dalawang update path ay opisyal na data file lang '
+            'ang kinukuha at walang ipinapadalang impormasyon tungkol sa iyo; '
+            'nilalaktawan ang automatic kapag offline ka.',
+      ),
+      InfoSection(
+        'Mga paalala',
+        'Naka-off bilang default ang mga paalala sa pag-expire. Kapag binuksan '
+            'mo ito, hihingin ng app ang notification permission at sa telepono '
+            'mo lang naka-iskedyul ang mga paalala. Walang ipinapadalang '
+            'pangalan ng dokumento o petsa kahit saan.',
       ),
       InfoSection(
         'Pag-alis ng datos',

@@ -156,14 +156,13 @@ class UpdateService {
       if (current.scheme != 'https') {
         return const UpdateFailed('redirected to a non-https URL');
       }
-      final request =
-          http.Request('GET', current)
-            ..followRedirects = false
-            ..persistentConnection = false
-            ..headers.addAll(const {
-              'Accept': 'application/json',
-              'User-Agent': appDisplayName,
-            });
+      final request = http.Request('GET', current)
+        ..followRedirects = false
+        ..persistentConnection = false
+        ..headers.addAll(const {
+          'Accept': 'application/json',
+          'User-Agent': appDisplayName,
+        });
       if (redirects == 0 && storedEtag != null && storedEtag.isNotEmpty) {
         request.headers['If-None-Match'] = storedEtag;
       }
@@ -176,9 +175,7 @@ class UpdateService {
           return const UpdateFailed('redirect without a Location header');
         }
         if (redirects >= dataFetchMaxRedirects) {
-          return UpdateFailed(
-            'more than $dataFetchMaxRedirects redirects',
-          );
+          return UpdateFailed('more than $dataFetchMaxRedirects redirects');
         }
         redirects += 1;
         current = current.resolve(location);

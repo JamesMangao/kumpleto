@@ -57,10 +57,11 @@ jobs:
       - name: Compile data
         run: dart run tools/build_data.dart --strict-release
 
-      - name: Stage the site
-        run: |
-          mkdir -p _site
-          cp dist/data.json _site/data.json
+      # The feed and the public checklist pages ship together: data.json keeps
+      # its root URL for the app, and every document also gets a static page
+      # that search engines and shared links can land on.
+      - name: Build the public site
+        run: dart run tools/build_site.dart
 
       - name: Configure Pages
         uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5.0.0
@@ -68,7 +69,7 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
         with:
-          path: _site
+          path: site
 
   deploy:
     name: Deploy to Pages

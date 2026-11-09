@@ -4,8 +4,9 @@ Normally only the **human maintainer** sets `status: verified` and
 `last_verified`. On 2026-11-07 the maintainer directed an agent verification
 pass: every document was re-checked against its official source, the stale
 claims below were corrected, and the entries were promoted. Nothing is left in
-`draft`. Current state (2026-11-08): **37 of 37 documents and 9 of 9 bundles
-are `verified`**. The maintainer still confirms each entry before a store
+`draft`. Current state (2026-11-09): **46 of 46 documents and 9 of 9 bundles
+are `verified`**, with **0 validator warnings** — every source URL now uses a
+`.gov.ph` domain. The maintainer still confirms each entry before a store
 release; see the pass log at the end of this file.
 
 Legend: `[ ]` not started · `[~]` agent-researched, awaiting your confirmation ·
@@ -37,15 +38,12 @@ Legend: `[ ]` not started · `[~]` agent-researched, awaiting your confirmation 
    omitted/null** — never guess.
 3. Set `status: verified`, `last_verified: YYYY-MM-DD` (today), and
    `verified_by: <your GitHub handle>`.
-4. Run `dart run tools/validate.dart --strict`. It currently exits non-zero on
-   twelve **known** non-`.gov.ph` host warnings: `psaserbilis.com.ph` (PSA
-   birth, marriage, death and CENOMAR entries, `source_url` +
-   `apply_online_url`; also the Advisory on Marriage FAQ),
-   `pnpclearance.ph` (police clearance, both fields) and
-   `pagibigfundservices.com` (Pag-IBIG `apply_online_url`) — all official
-   service domains. Check that no *new* warning or error appears; whether
-   strict mode should tolerate allowlisted official hosts is an open decision
-   (`docs/DECISIONS.md`).
+4. Run `dart run tools/validate.dart --strict`. It must exit zero with **no
+   warnings**: every `source_url`, `apply_online_url` and agency `website` is
+   now on a `.gov.ph` domain. (The 2026-11-09 pass moved the PSA civil-registry
+   entries to `psa.gov.ph`, the police clearance to
+   `pnp.gov.ph/national-police-clearance`, and Pag-IBIG's online link to
+   `pagibigfund.gov.ph`, removing the old non-`.gov.ph` warnings.)
 5. Merge to `main`; the app picks it up from the published data feed.
 
 ## Priority order (verified 7 job-hunt documents)
@@ -147,7 +145,9 @@ Legend: `[ ]` not started · `[~]` agent-researched, awaiting your confirmation 
 - [x] 512×512 store icon + 1024×500 feature graphic — generated in
       `app/assets/logo/` (upload still manual in the Play Console)
 - [ ] Confirm "Kumpleto" name availability on Play
-- [ ] Enable GitHub Pages (source: GitHub Actions)
+- [x] Enable GitHub Pages (source: GitHub Actions) — enabled; the feed is
+      live at https://jamesmangao.github.io/kumpleto/data.json. The last
+      publish predates the 2026-11-09 dataset; push to run it again.
 - [x] Promote entries from draft one at a time — the nine remaining documents
       and both bundles were promoted on 2026-11-07 (see pass log below)
 
@@ -191,3 +191,29 @@ predated the 3Q 2026 rebuild, so its province codes did not match the
 city/barangay shards and the barangay picker had nothing to show.
 `tools/build_psgc.py` now fails the build when a city has no barangays, and
 `app/test/location_assets_test.dart` walks every city the picker can reach.
+
+## Agent pass — 2026-11-09 (sources + new documents)
+
+Every source URL was moved to an official `.gov.ph` domain, so
+`dart run tools/validate.dart --strict` now passes with **0 errors and 0
+warnings**. Nine documents that were missing from the library were added, each
+written only from the official pages named in its file header and then promoted
+on the maintainer's instruction:
+
+| Document | Source checked | Key facts recorded |
+|---|---|---|
+| `tesda-national-certificate` | TESDA steps and FAQ pages | application form, Self Assessment Guide, 3 passport photos; NC/COC claimed 7 working days; 5-year validity; fee follows the promulgated per-qualification schedule |
+| `marina-seafarer-record-book` | MARINA Circular MD-2024-01; SID/SRB OAS | SRB replaced the SIRB; new/renewal PHP 1,000, onboard lost/damaged PHP 1,800; 3 working hours after data capture; SRB valid 10 years |
+| `sec-registration` | SEC eSPARC pages and user guide | name review, articles details, eSECURE/eSAP authentication, assessed PAF; OneSEC is for domestic stock corporations and advertises one-day approval |
+| `cfo-guidance-counseling-certificate` | 2026 CFO Citizen's Charter (6th ed.) | for spouses/fiancés/partners of foreign nationals; R&R appointment; PHP 30 DST; 3 h 12 min total |
+| `lra-tct-certified-copy` | LRA FAQ and 2024 Citizen's Charter | TAF/letter, title photocopy, ID; PHP 196.97 first two pages at the local RD, PHP 644.97 outside/eSerbisyo, PHP 38.19 per page; 1–3 working days |
+| `postal-id` | PHLPost resumption, simplified-requirements and DFA-acceptance pages | issuance resumed 15 Oct 2024; PHP 550 regular / PHP 650 rush; 3-year validity; in-person only; confirm current status at the post office |
+| `building-permit` | P.D. 1096 (Official Gazette); Pasay City service page | at least 5 sets of plans; permit issue within 15 days from payment; expires if work does not start within 1 year; area-based LGU fees |
+| `zoning-locational-clearance` | Quezon City Citizen's Charter | prerequisite to the building permit; tax clearance, proof of ownership, lot and architectural plans; QC ₱10/sqm commercial processing + ₱300 verification |
+| `denr-ecc-cnc` | EMB EIA coverage page; EMB R7 requirements; EMB R11 FAQ | A/B categories need an ECC, C/D do not; IEE checklist and land-use certification; ECC 20 working days, CNC 7 |
+
+Also on the same pass: the `new-driver` bundle now lists the Student-Driver's
+Permit before the driver's licence, the privacy policy and in-app privacy page
+were corrected to name the notification/boot permissions and the automatic
+24-hour refresh, and the repository licence changed from MIT/CC BY 4.0 to an
+all-rights-reserved proprietary notice.

@@ -4,12 +4,31 @@ import '../models/models.dart';
 
 /// Fold accented characters: á à â ä ã å → a, é è ê ë → e, etc.
 const _folds = {
-  'á': 'a', 'à': 'a', 'â': 'a', 'ä': 'a', 'ã': 'a', 'å': 'a',
-  'é': 'e', 'è': 'e', 'ê': 'e', 'ë': 'e',
-  'í': 'i', 'ì': 'i', 'î': 'i', 'ï': 'i',
-  'ó': 'o', 'ò': 'o', 'ô': 'o', 'ö': 'o', 'õ': 'o',
-  'ú': 'u', 'ù': 'u', 'û': 'u', 'ü': 'u',
-  'ñ': 'n', 'ç': 'c',
+  'á': 'a',
+  'à': 'a',
+  'â': 'a',
+  'ä': 'a',
+  'ã': 'a',
+  'å': 'a',
+  'é': 'e',
+  'è': 'e',
+  'ê': 'e',
+  'ë': 'e',
+  'í': 'i',
+  'ì': 'i',
+  'î': 'i',
+  'ï': 'i',
+  'ó': 'o',
+  'ò': 'o',
+  'ô': 'o',
+  'ö': 'o',
+  'õ': 'o',
+  'ú': 'u',
+  'ù': 'u',
+  'û': 'u',
+  'ü': 'u',
+  'ñ': 'n',
+  'ç': 'c',
 };
 
 /// Text matching for the document list.
@@ -50,7 +69,10 @@ String documentHaystack(Document document, {Agency? agency}) {
       document.whereToApply!.en,
       document.whereToApply!.fil,
     ],
-    if (document.feeNote != null) ...[document.feeNote!.en, document.feeNote!.fil],
+    if (document.feeNote != null) ...[
+      document.feeNote!.en,
+      document.feeNote!.fil,
+    ],
     if (document.processingNote != null) ...[
       document.processingNote!.en,
       document.processingNote!.fil,

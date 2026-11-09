@@ -13,10 +13,8 @@ class Place {
   final String code;
   final String name;
 
-  factory Place.fromJson(Map<String, Object?> json) => Place(
-    code: json['c'] as String? ?? '',
-    name: json['n'] as String? ?? '',
-  );
+  factory Place.fromJson(Map<String, Object?> json) =>
+      Place(code: json['c'] as String? ?? '', name: json['n'] as String? ?? '');
 
   Map<String, Object?> toJson() => {'c': code, 'n': name};
 
@@ -166,9 +164,8 @@ class SavedLocation {
     if (raw == null || raw.isEmpty) return null;
     try {
       final map = jsonDecode(raw) as Map<String, Object?>;
-      Place? place(Object? value) => value == null
-          ? null
-          : Place.fromJson(value as Map<String, Object?>);
+      Place? place(Object? value) =>
+          value == null ? null : Place.fromJson(value as Map<String, Object?>);
       return SavedLocation(
         region: place(map['region']),
         province: place(map['province']),
@@ -225,7 +222,8 @@ class BarangaySource {
     final parent = cityCode.substring(0, cityCode.length - 2);
     final merged = [
       for (final entry in groups.entries)
-        if (entry.key != cityCode && entry.key.startsWith(parent)) ...entry.value,
+        if (entry.key != cityCode && entry.key.startsWith(parent))
+          ...entry.value,
     ]..sort((a, b) => a.name.compareTo(b.name));
     return merged;
   }

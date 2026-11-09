@@ -35,6 +35,7 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
   Place? _barangay;
   Future<List<Place>>? _barangayFuture;
   bool _hydrated = false;
+
   /// A barangay saved before the shard was read; resolved once the list loads.
   Place? _restoreBarangay;
 
@@ -119,9 +120,8 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
     );
     ref.read(savedLocationProvider.notifier).set(location);
     if (!mounted) return;
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(l10n.locationSaved)));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(l10n.locationSaved)));
     Navigator.of(context).maybePop();
   }
 

@@ -6,13 +6,18 @@ name:
   fil: Bagong Driver
 description:
   en: >-
-    Start here if you are applying for a driver's license for the first time.
-    Community-curated — confirm with the Land Transportation Office.
+    The first-time licence path: a Student-Driver's Permit, then the
+    non-professional driver's licence. The Student to Driver pack adds the PSA
+    birth certificate. Community-curated — confirm with the Land Transportation
+    Office.
   fil: >-
-    Simulan dito kung unang beses kang nag-aapply ng lisensya sa pagmamaneho.
-    Kurado ng komunidad — kumpirmahin sa Land Transportation Office.
+    Ang landas para sa unang lisensya: Student-Driver's Permit, pagkatapos ang
+    non-professional driver's licence. May PSA birth certificate naman sa
+    Student to Driver pack. Kurado ng komunidad — kumpirmahin sa Land
+    Transportation Office.
 status: verified
 documents:
+  - lto-student-permit
   - lto-drivers-license
 tags: [driving, first-time]
 icon: directions_car

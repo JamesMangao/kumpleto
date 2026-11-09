@@ -3,7 +3,7 @@
 **Kumpleto collects no personal data. There is no analytics, no crash
 reporting, no advertising, no accounts, and no cloud sync.**
 
-_Last updated: 2026-11-04_
+_Last updated: 2026-11-09_
 
 ## What the app does on your device
 
@@ -30,8 +30,18 @@ transmit any of this information.
 
 ## Permissions
 
-Kumpleto requests exactly one Android permission: `INTERNET` — used solely
-for the data refresh described above.
+Kumpleto declares three Android permissions, each tied to a feature you
+control:
+
+- `INTERNET` — used solely for the data refresh described above.
+- `POST_NOTIFICATIONS` — only asked for when you switch on expiry reminders
+  in Settings. Reminders are off by default; the app never posts a
+  notification you did not opt into.
+- `RECEIVE_BOOT_COMPLETED` — lets the app re-arm the reminders you already
+  scheduled after the phone restarts. It does not run anything else at boot.
+
+Expiry reminders are scheduled locally on the device. No reminder, document
+name or date is sent anywhere.
 
 ## Children
 

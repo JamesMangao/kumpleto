@@ -40,3 +40,10 @@ build/
 # Local APK builds and their log (the installable artifact is not source)
 /Kumpleto.apk
 /build-apk.log
+
+# Generated public checklist pages (tools/build_site.dart, deployed by CI)
+site/
+
+# Golden-test diff output
+app/test/failures/
+*.log

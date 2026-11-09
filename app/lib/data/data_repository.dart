@@ -2,8 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart'
-    show AssetBundle, rootBundle;
+import 'package:flutter/services.dart' show AssetBundle, rootBundle;
 
 import '../core/canonical.dart';
 import '../core/constants.dart';
@@ -114,8 +113,13 @@ class DataRepository {
       }
       return null;
     }
-    final releaseCandidate = _verify(release, DataSource.bundledRelease, skipped);
-    if (releaseCandidate != null && releaseCandidate.data.documents.isNotEmpty) {
+    final releaseCandidate = _verify(
+      release,
+      DataSource.bundledRelease,
+      skipped,
+    );
+    if (releaseCandidate != null &&
+        releaseCandidate.data.documents.isNotEmpty) {
       return releaseCandidate;
     }
     if (drafts != null) {

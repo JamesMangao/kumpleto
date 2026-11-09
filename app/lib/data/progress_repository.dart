@@ -71,8 +71,7 @@ class ProgressRepository {
   Future<void> resetDocument(String profileId, String documentId) {
     final statement = _db.delete(_db.progressEntries)
       ..where(
-        (row) =>
-            row.documentId.equals(documentId) & _profile(row, profileId),
+        (row) => row.documentId.equals(documentId) & _profile(row, profileId),
       );
     return statement.go();
   }
@@ -88,7 +87,9 @@ class ProgressRepository {
     await _db.transaction(() async {
       final now = (acquiredDate ?? DateTime.now()).millisecondsSinceEpoch;
       for (final reqId in requirementIds) {
-        await _db.into(_db.progressEntries).insertOnConflictUpdate(
+        await _db
+            .into(_db.progressEntries)
+            .insertOnConflictUpdate(
               ProgressEntriesCompanion.insert(
                 profileId: Value(profileId),
                 documentId: documentId,
@@ -98,7 +99,9 @@ class ProgressRepository {
               ),
             );
       }
-      await _db.into(_db.progressEntries).insertOnConflictUpdate(
+      await _db
+          .into(_db.progressEntries)
+          .insertOnConflictUpdate(
             ProgressEntriesCompanion.insert(
               profileId: Value(profileId),
               documentId: documentId,
@@ -116,18 +119,17 @@ class ProgressRepository {
     String documentId,
     DateTime newDate,
   ) async {
-    await (_db.update(_db.progressEntries)
-          ..where(
-            (row) =>
-                row.profileId.equals(profileId) &
-                row.documentId.equals(documentId) &
-                row.requirementId.equals(acquiredRowId),
-          ))
+    await (_db.update(_db.progressEntries)..where(
+          (row) =>
+              row.profileId.equals(profileId) &
+              row.documentId.equals(documentId) &
+              row.requirementId.equals(acquiredRowId),
+        ))
         .write(
-      ProgressEntriesCompanion(
-        updatedAt: Value(newDate.millisecondsSinceEpoch),
-      ),
-    );
+          ProgressEntriesCompanion(
+            updatedAt: Value(newDate.millisecondsSinceEpoch),
+          ),
+        );
   }
 
   /// Clears the acquired status and unchecks all requirements for [documentId].
@@ -148,9 +150,9 @@ class ProgressRepository {
   /// data (a document can be renamed or withdrawn between data versions).
   /// Returns the number of rows removed.
   Future<int> pruneOrphans(String profileId, Set<String> validPairs) async {
-    final rows = await (_db.select(_db.progressEntries)
-          ..where((row) => _profile(row, profileId)))
-        .get();
+    final rows = await (_db.select(
+      _db.progressEntries,
+    )..where((row) => _profile(row, profileId))).get();
     final orphans = [
       for (final row in rows)
         if (row.requirementId != acquiredRowId &&
@@ -172,15 +174,15 @@ class ProgressRepository {
     return orphans.length;
   }
 
-  static Expression<bool> _profile(
-    ProgressEntries row,
-    String profileId,
-  ) => row.profileId.equals(profileId);
+  static Expression<bool> _profile(ProgressEntries row, String profileId) =>
+      row.profileId.equals(profileId);
 
   Map<String, Set<String>> _group(List<ProgressEntry> rows) {
     final grouped = <String, Set<String>>{};
     for (final row in rows) {
-      grouped.putIfAbsent(row.documentId, () => <String>{}).add(row.requirementId);
+      grouped
+          .putIfAbsent(row.documentId, () => <String>{})
+          .add(row.requirementId);
     }
     return grouped;
   }

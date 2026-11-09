@@ -1,0 +1,184 @@
+# DENR-EMB Environmental Compliance Certificate (ECC) / Certificate of Non-Coverage (CNC)
+# Facts sourced 2026-11-09 from the EMB EIA Division page "Projects Not Covered"
+# (eia.emb.gov.ph/?page_id=657), the EMB Region VII ECC online application
+# requirements PDF (r7.emb.gov.ph/wp-content/uploads/2026/01/ECC_Application_Requirements.pdf)
+# and the EMB Region XI Environmental Impact Assessment FAQ
+# (r11.emb.gov.ph/environmental-impact-assessment-faqs): the A/B vs C vs D
+# coverage rules under P.D. 1586, the documentary checklist for an IEE-checklist
+# ECC, the online ECC portal, the twenty-working-day ECC processing time, the
+# seven-working-day CNC time and the regional fee amounts. Fees and time can
+# differ by region and report type. Verified on the maintainer's instruction,
+# 2026-11-09.
+schema_version: 1
+id: denr-ecc-cnc
+name:
+  en: DENR-EMB ECC or Certificate of Non-Coverage
+  fil: DENR-EMB ECC o Certificate of Non-Coverage
+agency: emb
+status: verified
+last_verified: '2026-11-09'
+verified_by: JamesMangao
+source_url: https://eia.emb.gov.ph/?page_id=657
+apply_online: true
+apply_online_url: https://ecconline.emb.gov.ph/live/
+summary:
+  en: >-
+    Environmental permit from the DENR Environmental Management Bureau. Projects
+    in the EIS system's A and B categories need an Environmental Compliance
+    Certificate (ECC); projects outside coverage (C and D categories) may need a
+    Certificate of Non-Coverage (CNC) instead. Banks and LGUs often ask for one
+    of them before a large project starts.
+  fil: >-
+    Environmental permit mula sa DENR Environmental Management Bureau. Ang
+    proyektong nasa A at B category ng EIS system ay kailangan ng Environmental
+    Compliance Certificate (ECC); ang proyektong wala sa coverage (C at D
+    category) ay maaaring kailangan ng Certificate of Non-Coverage (CNC) sa
+    halip. Madalas hinihingi ito ng bangko at LGU bago magsimula ang malaking
+    proyekto.
+tags: [business, environment, permit, denr, construction]
+where_to_apply:
+  en: >-
+    The EMB Central Office or the EMB Regional Office with jurisdiction over the
+    project. ECC applications can be filed through the online ECC portal; a CNC
+    is requested through the CNC online service or the regional office.
+  fil: >-
+    EMB Central Office o EMB Regional Office na may hurisdiksyon sa proyekto.
+    Ang ECC application ay pwedeng i-file sa online ECC portal; ang CNC ay
+    hinihingi sa CNC online service o sa regional office.
+requirements:
+  - id: project-description
+    text:
+      en: >-
+        Project description or project fact sheet, including the project
+        components and operating information.
+      fil: >-
+        Project description o project fact sheet, kasama ang project components
+        at operating information.
+    original: true
+  - id: iee-checklist
+    text:
+      en: >-
+        Initial Environmental Examination (IEE) checklist, for the IEE-checklist
+        ECC route, with the environmental impact and management plan.
+      fil: >-
+        Initial Environmental Examination (IEE) checklist, para sa IEE-checklist
+        ECC route, kasama ang environmental impact and management plan.
+    original: true
+  - id: accountability-statement
+    text:
+      en: >-
+        Notarized accountability statement of the project proponent.
+      fil: >-
+        Notarized accountability statement ng project proponent.
+    original: true
+  - id: land-use-compatibility
+    text:
+      en: >-
+        LGU certification of land-use compatibility, and proof of authority over
+        the project site.
+      fil: >-
+        LGU certification of land-use compatibility, at proof of authority sa
+        project site.
+    original: true
+  - id: site-photos
+    text:
+      en: >-
+        Recent geotagged photos of the project site and the signed project/site
+        layout.
+      fil: >-
+        Recent geotagged na litrato ng project site at ang signed project/site
+        layout.
+    original: true
+  - id: business-registration
+    text:
+      en: >-
+        DTI or SEC registration and the authorization for the representative,
+        where applicable.
+      fil: >-
+        DTI o SEC registration at authorization ng representative, kung
+        applicable.
+    optional: true
+  - id: additional-requirements
+    text:
+      en: >-
+        Project-specific documents the EMB asks for — for example a protected
+        area clearance for projects inside a NIPAS area.
+      fil: >-
+        Project-specific na dokumentong hinihingi ng EMB — halimbawa protected
+        area clearance para sa proyektong nasa NIPAS area.
+    optional: true
+steps:
+  - en: >-
+      Determine the project's EIS category using the EMB coverage screening and
+      thresholds.
+    fil: >-
+      Tukuyin ang EIS category ng proyekto gamit ang coverage screening at
+      thresholds ng EMB.
+  - en: >-
+      Register at the EMB online portal and enter the project information and
+      the required forms.
+    fil: >-
+      Mag-register sa online portal ng EMB at ilagay ang project information at
+      ang required forms.
+  - en: >-
+      Submit the supporting documents, including the IEE checklist and the
+      land-use compatibility certification.
+    fil: >-
+      Isumite ang supporting documents, kasama ang IEE checklist at ang
+      land-use compatibility certification.
+  - en: >-
+      Pay the fee once the EMB issues the payment request.
+    fil: >-
+      Bayaran ang fee kapag naglabas ang EMB ng payment request.
+  - en: >-
+      Wait for the EMB review and decision, then download or claim the ECC or
+      CNC.
+    fil: >-
+      Hintayin ang review at desisyon ng EMB, pagkatapos i-download o kunin ang
+      ECC o CNC.
+fee_note:
+  en: >-
+    Fees depend on the region and the type of application. The EMB Region VII
+    checklist lists PHP 5,070.00 for a new ECC application and PHP 2,030.00 for
+    an amendment; the EMB Region XI FAQ lists PHP 5,070.00 for an ECC and PHP
+    1,040.00 for a CNC. Confirm the current regional schedule before paying.
+  fil: >-
+    Ang fees ay depende sa rehiyon at uri ng aplikasyon. Nakalista sa EMB Region
+    VII checklist ang PHP 5,070.00 para sa bagong ECC application at PHP
+    2,030.00 para sa amendment; nakalista sa EMB Region XI FAQ ang PHP 5,070.00
+    para sa ECC at PHP 1,040.00 para sa CNC. Kumpirmahin ang kasalukuyang
+    regional schedule bago magbayad.
+processing_note:
+  en: >-
+    The EMB Region VII checklist gives a maximum of twenty (20) working days
+    after complete requirements and proof of payment; the EMB Region XI FAQ
+    states twenty (20) working days for an ECC and seven (7) working days for a
+    CNC. The count starts only after the submission is verified complete.
+  fil: >-
+    Ang EMB Region VII checklist ay nagtatakda ng maximum na dalawampung (20)
+    working day pagkatapos ng kumpletong requirement at proof of payment;
+    sinasabi ng EMB Region XI FAQ ang dalawampung (20) working day para sa ECC
+    at pitong (7) working day para sa CNC. Nagsisimula ang bilang kapag
+    na-verify na kumpleto ang submission.
+processing_days_min: 7
+processing_days_max: 20
+notes:
+  - en: >-
+      Category D projects are not covered by the Philippine EIS System and do
+      not need an ECC, but may request a CNC by submitting a one-page project
+      description to the EMB Regional Office. Category C projects submit a
+      project description so the EMB can confirm the category.
+    fil: >-
+      Ang Category D na proyekto ay hindi saklaw ng Philippine EIS System at
+      hindi kailangan ng ECC, pero pwedeng humingi ng CNC sa pamamagitan ng
+      one-page project description sa EMB Regional Office. Ang Category C na
+      proyekto ay nagsusumite ng project description para makumpirma ng EMB ang
+      category.
+  - en: >-
+      The EMB Region XI FAQ says an ECC or CNC has no expiry, but an ECC for a
+      project that is not operated within five years without a Compliance
+      Monitoring Report is considered null and void.
+    fil: >-
+      Sinasabi ng EMB Region XI FAQ na walang expiry ang ECC o CNC, pero ang ECC
+      ng proyektong hindi pinatakbo sa loob ng limang taon nang walang
+      Compliance Monitoring Report ay itinuturing na null and void.

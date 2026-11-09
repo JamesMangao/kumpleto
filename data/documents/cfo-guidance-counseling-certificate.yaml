@@ -1,0 +1,147 @@
+# CFO Guidance and Counseling Certificate (GCP)
+# Facts sourced 2026-11-09 from the 2026 CFO Citizen's Charter, 6th Edition
+# (cms-cdn.e.gov.ph/CFO/pdf/02272026 Citizens Charter 6th Edition.pdf): the
+# covered clients ("Filipino spouses and other partners of foreign nationals,
+# former Filipino citizens, or Filipino dual citizens"), the Reserve and
+# Registration (R&R) appointment, the in-person counselling, the PHP 30.00
+# documentary stamp tax, the 3-hour-and-12-minute total processing time, and
+# the digital certificate. The Charter does not state a fixed certificate
+# validity; CFO guidance says a new immigrant visa from the same country needs
+# re-issuance or revalidation of the prior certificate. Verified on the
+# maintainer's instruction, 2026-11-09.
+schema_version: 1
+id: cfo-guidance-counseling-certificate
+name:
+  en: CFO Guidance and Counseling Certificate (GCP)
+  fil: CFO Guidance and Counseling Certificate (GCP)
+agency: cfo
+status: verified
+last_verified: '2026-11-09'
+verified_by: JamesMangao
+source_url: https://cms-cdn.e.gov.ph/CFO/pdf/02272026%20Citizens%20Charter%206th%20Edition.pdf
+apply_online: true
+apply_online_url: https://cfo.e.gov.ph/
+summary:
+  en: >-
+    Certificate issued by the Commission on Filipinos Overseas after its
+    Guidance and Counseling Program. Filipino spouses, fiancés and partners of
+    foreign nationals need it for a spouse or fiancé visa and for emigration
+    with that partner.
+  fil: >-
+    Sertipiko mula sa Commission on Filipinos Overseas pagkatapos ng Guidance
+    and Counseling Program nito. Kailangan ito ng Filipino spouse, fiancé at
+    partner ng dayuhan para sa spouse o fiancé visa at sa pag-emigrate kasama
+    ang partner.
+tags: [ofw, migration, visa, cfo, counseling]
+where_to_apply:
+  en: >-
+    CFO, by appointment through its Reserve and Registration (R&R) system. The
+    counselling is an in-person service; bring a valid ID and the barcoded
+    appointment confirmation.
+  fil: >-
+    CFO, sa pamamagitan ng appointment sa Reserve and Registration (R&R)
+    system. Personal na serbisyo ang counseling; dalhin ang valid ID at ang
+    barcoded appointment confirmation.
+requirements:
+  - id: appointment-confirmation
+    text:
+      en: >-
+        Barcoded appointment confirmation from the CFO Reserve and Registration
+        (R&R) system.
+      fil: >-
+        Barcoded appointment confirmation mula sa CFO Reserve and Registration
+        (R&R) system.
+    original: true
+  - id: valid-id
+    text:
+      en: >-
+        Valid government-issued ID of the applicant.
+      fil: >-
+        Valid na government-issued ID ng aplikante.
+    original: true
+  - id: petitioner-passport
+    text:
+      en: >-
+        Passport of the foreign petitioner (spouse, fiancé or partner).
+      fil: >-
+        Pasaporte ng dayuhang petitioner (spouse, fiancé o partner).
+    original: true
+  - id: documentary-stamp
+    text:
+      en: >-
+        Documentary stamp tax of PHP 30.00, paid as part of the registration.
+      fil: >-
+        Documentary stamp tax na PHP 30.00, bayad bilang bahagi ng
+        registration.
+    original: true
+  - id: additional-documents
+    text:
+      en: >-
+        Additional documents the counselor considers essential for your case.
+      fil: >-
+        Karagdagang dokumento na itinuturing na kailangan ng counselor para sa
+        kaso mo.
+    optional: true
+steps:
+  - en: >-
+      Book an appointment in the CFO Reserve and Registration (R&R) system and
+      keep the barcoded confirmation.
+    fil: >-
+      Mag-book ng appointment sa CFO Reserve and Registration (R&R) system at
+      itago ang barcoded confirmation.
+  - en: >-
+      Go to CFO on your appointment date with a valid ID and the confirmation,
+      and present your registration requirements.
+    fil: >-
+      Pumunta sa CFO sa appointment date dala ang valid ID at confirmation, at
+      ipakita ang mga registration requirement.
+  - en: >-
+      Pay the PHP 30.00 documentary stamp tax.
+    fil: >-
+      Bayaran ang PHP 30.00 documentary stamp tax.
+  - en: >-
+      Attend the guidance and counseling session.
+    fil: >-
+      Dumalo sa guidance and counseling session.
+  - en: >-
+      Complete the feedback form and receive your CFO digital certificate.
+    fil: >-
+      Kumpletuhin ang feedback form at tanggapin ang CFO digital certificate.
+fee_note:
+  en: >-
+    The 2026 CFO Citizen's Charter lists a PHP 30.00 documentary stamp tax,
+    which is also the stated total for the service.
+  fil: >-
+    Nakalista sa 2026 CFO Citizen's Charter ang PHP 30.00 documentary stamp tax,
+    na siya ring nakasaad na kabuuang bayad sa serbisyo.
+fee_min: 30
+fee_max: 30
+processing_note:
+  en: >-
+    The 2026 CFO Citizen's Charter gives a total processing time of three (3)
+    hours and twelve (12) minutes for the in-person GCP service.
+  fil: >-
+    Nakasaad sa 2026 CFO Citizen's Charter ang kabuuang processing time na
+    tatlong (3) oras at labindalawang (12) minuto para sa in-person na GCP
+    service.
+processing_days_min: 0
+processing_days_max: 0
+notes:
+  - en: >-
+      The Charter does not state a fixed validity period. CFO guidance says a
+      client who gets a new immigrant visa from the same country because the
+      previous visa expired or was revoked must apply for re-issuance or
+      revalidation of the prior certificate.
+    fil: >-
+      Walang nakasaad na fixed validity period ang Charter. Ayon sa CFO
+      guidance, ang client na nakakuha ng bagong immigrant visa mula sa parehong
+      bansa dahil nag-expire o na-revoke ang dating visa ay kailangang mag-apply
+      ng re-issuance o revalidation ng dating certificate.
+  - en: >-
+      This is the CFO certificate for spouses and partners of foreign
+      nationals. Emigrants with a permanent or immigrant visa go through the
+      CFO PDOS (ages 20-59) or Peer Counseling (ages 13-19) instead.
+    fil: >-
+      Ito ang CFO certificate para sa spouse at partner ng dayuhan. Ang mga
+      emigranteng may permanent o immigrant visa ay sa CFO PDOS (edad 20-59) o
+      Peer Counseling (edad 13-19) dadaan.

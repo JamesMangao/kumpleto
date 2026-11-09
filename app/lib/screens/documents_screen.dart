@@ -143,7 +143,10 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
             if (agencies.isNotEmpty || tags.isNotEmpty)
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 4,
+                ),
                 child: Row(
                   children: [
                     Padding(
@@ -159,7 +162,9 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
                         labelStyle: TextStyle(
                           color: (_tag == null && _agency == null)
                               ? Colors.white
-                              : (isDark ? Colors.white70 : const Color(0xFF1B2E26)),
+                              : (isDark
+                                    ? Colors.white70
+                                    : const Color(0xFF1B2E26)),
                           fontWeight: (_tag == null && _agency == null)
                               ? FontWeight.w700
                               : FontWeight.w500,
@@ -168,14 +173,13 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
                           color: (_tag == null && _agency == null)
                               ? AppTheme.primaryTeal
                               : (isDark
-                                  ? const Color(0xFF2B3D35)
-                                  : const Color(0xFFD6E3DD)),
+                                    ? const Color(0xFF2B3D35)
+                                    : const Color(0xFFD6E3DD)),
                         ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        onSelected: (_) =>
-                            _toggle(() => _tag = _agency = null),
+                        onSelected: (_) => _toggle(() => _tag = _agency = null),
                       ),
                     ),
                     for (final agencyId in agencies)
@@ -195,7 +199,9 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
                           labelStyle: TextStyle(
                             color: _agency == agencyId
                                 ? Colors.white
-                                : (isDark ? Colors.white70 : const Color(0xFF1B2E26)),
+                                : (isDark
+                                      ? Colors.white70
+                                      : const Color(0xFF1B2E26)),
                             fontWeight: _agency == agencyId
                                 ? FontWeight.w700
                                 : FontWeight.w500,
@@ -204,8 +210,8 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
                             color: _agency == agencyId
                                 ? AppTheme.primaryTeal
                                 : (isDark
-                                    ? const Color(0xFF2B3D35)
-                                    : const Color(0xFFD6E3DD)),
+                                      ? const Color(0xFF2B3D35)
+                                      : const Color(0xFFD6E3DD)),
                           ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
@@ -229,7 +235,9 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
                           labelStyle: TextStyle(
                             color: _tag == tag
                                 ? Colors.white
-                                : (isDark ? Colors.white70 : const Color(0xFF1B2E26)),
+                                : (isDark
+                                      ? Colors.white70
+                                      : const Color(0xFF1B2E26)),
                             fontWeight: _tag == tag
                                 ? FontWeight.w700
                                 : FontWeight.w500,
@@ -238,8 +246,8 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
                             color: _tag == tag
                                 ? AppTheme.primaryTeal
                                 : (isDark
-                                    ? const Color(0xFF2B3D35)
-                                    : const Color(0xFFD6E3DD)),
+                                      ? const Color(0xFF2B3D35)
+                                      : const Color(0xFFD6E3DD)),
                           ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
@@ -294,7 +302,10 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
                       ),
                     )
                   : ListView.separated(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
                       itemCount: filtered.length,
                       separatorBuilder: (_, _) => const SizedBox(height: 12),
                       itemBuilder: (context, index) => StaggeredEntrance(
@@ -326,7 +337,9 @@ class _DocumentModernCard extends ConsumerWidget {
     final total = document.requirements.length;
     final acquired = isDocumentAcquired(document, checked);
     final acquiredAt = ref.watch(acquiredDatesProvider).value?[document.id];
-    final fraction = total == 0 ? (acquired ? 1.0 : 0.0) : (done / total).clamp(0.0, 1.0);
+    final fraction = total == 0
+        ? (acquired ? 1.0 : 0.0)
+        : (done / total).clamp(0.0, 1.0);
 
     return Card(
       elevation: 0,
@@ -379,7 +392,10 @@ class _DocumentModernCard extends ConsumerWidget {
                         ),
                         const SizedBox(height: 3),
                         Text(
-                          data?.agency(document.agencyId)?.name.localized(context) ??
+                          data
+                                  ?.agency(document.agencyId)
+                                  ?.name
+                                  .localized(context) ??
                               document.agencyId,
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: theme.colorScheme.onSurfaceVariant,
@@ -393,7 +409,9 @@ class _DocumentModernCard extends ConsumerWidget {
                   Icon(
                     Icons.chevron_right,
                     size: 20,
-                    color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
+                    color: theme.colorScheme.onSurfaceVariant.withValues(
+                      alpha: 0.6,
+                    ),
                   ),
                 ],
               ),
@@ -402,7 +420,10 @@ class _DocumentModernCard extends ConsumerWidget {
                 Row(
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 3,
+                      ),
                       decoration: BoxDecoration(
                         color: AppTheme.primaryTeal.withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(6),

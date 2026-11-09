@@ -48,10 +48,9 @@ class FirstTimeJobseekerNotifier extends Notifier<bool> {
 }
 
 final NotifierProvider<FirstTimeJobseekerNotifier, bool>
-firstTimeJobseekerProvider =
-    NotifierProvider<FirstTimeJobseekerNotifier, bool>(
-      FirstTimeJobseekerNotifier.new,
-    );
+firstTimeJobseekerProvider = NotifierProvider<FirstTimeJobseekerNotifier, bool>(
+  FirstTimeJobseekerNotifier.new,
+);
 
 final Provider<UpdateService> updateServiceProvider = Provider<UpdateService>(
   (ref) => UpdateService(
@@ -96,9 +95,10 @@ final Provider<DataRepository> dataRepositoryProvider =
     );
 
 /// The loaded dataset (bundled asset, or a newer verified cache).
-final FutureProvider<LoadedData> loadedDataProvider = FutureProvider<LoadedData>(
-  (ref) => ref.watch(dataRepositoryProvider).load(),
-);
+final FutureProvider<LoadedData> loadedDataProvider =
+    FutureProvider<LoadedData>(
+      (ref) => ref.watch(dataRepositoryProvider).load(),
+    );
 
 /// The place chosen in Settings → My location, live for the session.
 ///
@@ -229,7 +229,9 @@ final StreamProvider<Map<String, Set<String>>> progressProvider =
 final StreamProvider<Map<String, DateTime>> acquiredDatesProvider =
     StreamProvider<Map<String, DateTime>>((ref) {
       final profileId = ref.watch(currentProfileProvider).id;
-      return ref.watch(progressRepositoryProvider).watchAcquiredDates(profileId);
+      return ref
+          .watch(progressRepositoryProvider)
+          .watchAcquiredDates(profileId);
     });
 
 /// All documents, name-sorted for the list screen.
@@ -238,8 +240,9 @@ final Provider<List<Document>> documentsProvider = Provider<List<Document>>((
 ) {
   final data = ref.watch(dataBundleProvider).value;
   if (data == null) return const <Document>[];
-  final documents = [...data.documents]
-    ..sort((a, b) => a.name.en.toLowerCase().compareTo(b.name.en.toLowerCase()));
+  final documents = [
+    ...data.documents,
+  ]..sort((a, b) => a.name.en.toLowerCase().compareTo(b.name.en.toLowerCase()));
   return documents;
 });
 
@@ -247,8 +250,9 @@ final Provider<List<Document>> documentsProvider = Provider<List<Document>>((
 final Provider<List<Bundle>> bundlesProvider = Provider<List<Bundle>>((ref) {
   final data = ref.watch(dataBundleProvider).value;
   if (data == null) return const <Bundle>[];
-  final bundles = [...data.bundles]
-    ..sort((a, b) => a.name.en.toLowerCase().compareTo(b.name.en.toLowerCase()));
+  final bundles = [
+    ...data.bundles,
+  ]..sort((a, b) => a.name.en.toLowerCase().compareTo(b.name.en.toLowerCase()));
   return bundles;
 });
 
@@ -287,7 +291,10 @@ int checkedCount(Document document, Set<String> checkedIds) =>
   var total = 0;
   for (final document in documents) {
     total += document.requirements.length;
-    checked += checkedCount(document, progress[document.id] ?? const <String>{});
+    checked += checkedCount(
+      document,
+      progress[document.id] ?? const <String>{},
+    );
   }
   return (checked: checked, total: total);
 }

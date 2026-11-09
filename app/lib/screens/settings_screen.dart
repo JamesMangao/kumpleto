@@ -64,8 +64,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       _updateMessage = switch (result) {
         UpdateAccepted() => l10n.settingsUpdateDone,
         UpdateNotModified() => l10n.settingsUpToDate,
-        UpdateInvalid(:final reason) || UpdateFailed(:final reason) =>
-          l10n.settingsUpdateFailed(reason),
+        UpdateInvalid(:final reason) ||
+        UpdateFailed(:final reason) => l10n.settingsUpdateFailed(reason),
       };
     });
     if (result is UpdateAccepted) ref.invalidate(loadedDataProvider);
@@ -80,12 +80,13 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       await widget.settings.setRemindersEnabled(false);
       return;
     }
-    final granted = await ref.read(reminderSchedulerProvider).requestPermission();
+    final granted = await ref
+        .read(reminderSchedulerProvider)
+        .requestPermission();
     if (!mounted) return;
     if (!granted) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(l10n.settingsRemindersDenied)));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(l10n.settingsRemindersDenied)));
     }
     await widget.settings.setRemindersEnabled(granted);
   }
@@ -112,9 +113,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     if (confirmed != true || !mounted) return;
     await ref.read(progressRepositoryProvider).resetEverything();
     if (!mounted) return;
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(l10n.settingsProgressReset)));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(l10n.settingsProgressReset)));
   }
 
   @override
@@ -403,9 +403,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                                       ),
                                     )
                                   : const Icon(Icons.sync, size: 18),
-                              label: Text(_checking
-                                  ? l10n.settingsChecking
-                                  : l10n.settingsCheckForUpdates),
+                              label: Text(
+                                _checking
+                                    ? l10n.settingsChecking
+                                    : l10n.settingsCheckForUpdates,
+                              ),
                               style: OutlinedButton.styleFrom(
                                 shape: const StadiumBorder(),
                               ),
@@ -448,7 +450,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                           color: AppTheme.statusRedText,
                         ),
                       ),
-                      subtitle: const Text('This will clear all your checklist progress.'),
+                      subtitle: const Text(
+                        'This will clear all your checklist progress.',
+                      ),
                       trailing: const Icon(Icons.chevron_right, size: 18),
                       onTap: _resetProgress,
                     ),
@@ -542,7 +546,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         l10n.settingsDisclaimer,
                         style: const TextStyle(fontWeight: FontWeight.w700),
                       ),
-                      subtitle: const Text('Important information and limitations.'),
+                      subtitle: const Text(
+                        'Important information and limitations.',
+                      ),
                       trailing: const Icon(Icons.chevron_right, size: 18),
                       onTap: () => context.push('/disclaimer'),
                     ),
@@ -613,7 +619,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         l10n.settingsLicenses,
                         style: const TextStyle(fontWeight: FontWeight.w700),
                       ),
-                      subtitle: const Text('View the licenses for used libraries.'),
+                      subtitle: const Text(
+                        'View the licenses for used libraries.',
+                      ),
                       trailing: const Icon(Icons.chevron_right, size: 18),
                       onTap: () => showLicensePage(
                         context: context,
@@ -646,10 +654,8 @@ class _SectionLabel extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 6),
       child: Text(
         label,
-        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-          fontWeight: FontWeight.w800,
-          fontSize: 14,
-        ),
+        style: Theme.of(context).textTheme.titleSmall
+            ?.copyWith(fontWeight: FontWeight.w800, fontSize: 14),
       ),
     );
   }

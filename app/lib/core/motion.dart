@@ -77,9 +77,7 @@ class _StaggeredEntranceState extends State<StaggeredEntrance>
       _controller.value = 1;
       return;
     }
-    Future<void>.delayed(
-      Motion.stagger(context, widget.index),
-    ).then((_) {
+    Future<void>.delayed(Motion.stagger(context, widget.index)).then((_) {
       if (mounted) _controller.forward();
     });
   }

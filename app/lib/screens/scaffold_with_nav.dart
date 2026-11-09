@@ -33,7 +33,9 @@ class ScaffoldWithNav extends StatelessWidget {
           selectedIndex: shell.currentIndex,
           height: 68,
           backgroundColor: Colors.transparent,
-          indicatorColor: isDark ? const Color(0xFF1E352B) : const Color(0xFFD4ECE3),
+          indicatorColor: isDark
+              ? const Color(0xFF1E352B)
+              : const Color(0xFFD4ECE3),
           onDestinationSelected: (index) => shell.goBranch(
             index,
             initialLocation: index == shell.currentIndex,

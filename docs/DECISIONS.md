@@ -71,6 +71,11 @@ connected desktop/web devices, network).
   "No longer valid" banner; user progress rows are kept (maintainer change #5).
 - **P5 — Release output is an AAB** (`flutter build appbundle --flavor prod
   --release`), versionName/versionCode from `pubspec.yaml` version.
+- **P6 — Proprietary licence and `.gov.ph`-only sources** (maintainer
+  direction, 2026-11-09). The repository is **all rights reserved** (no MIT, no
+  CC BY); contributions are assigned to the owner. Every `source_url`,
+  `apply_online_url` and agency `website` must be on an official `.gov.ph`
+  domain, and `tools/validate.dart --strict` must exit zero with no warnings.
 
 ### Tooling & CI
 
@@ -144,7 +149,7 @@ connected desktop/web devices, network).
 | R2 | AGP/Gradle vs compileSdk 36 | Verify generated template in P1 with a real `assembleDebug`/`bundle` run |
 | R3 | drift/sqlite3 in `flutter test` on Windows host | Test bootstrap resolves `sqlite3.dll` (CI Linux has system libsqlite3); interface + fake store for pure unit tests |
 | R4 | No device → no real screenshots | Human TODO: physical device via USB debugging |
-| R5 | Pag-IBIG official site is `.com`, not `.gov.ph` | `.gov.ph` check is warn-only by design |
+| R5 | Pag-IBIG official site was `.com`, not `.gov.ph` | Resolved 2026-11-09: entries now cite `pagibigfund.gov.ph`; the validator is strict (0 warnings) |
 
 ### Living Human TODO list
 
@@ -156,5 +161,5 @@ connected desktop/web devices, network).
 - [ ] Take 2+ phone screenshots on a **physical device (USB debugging)**
 - [ ] Prepare 512×512 store icon and 1024×500 feature graphic
 - [ ] Confirm "Kumpleto" name availability on Play
-- [ ] Enable **GitHub Pages with source "GitHub Actions"** (maintainer change #8)
+- [x] Enable **GitHub Pages with source "GitHub Actions"** (maintainer change #8) — done; last publish predates the 2026-11-09 dataset
 - [ ] Promote seed documents from `draft` to `verified` one by one, setting `last_verified` only via human review

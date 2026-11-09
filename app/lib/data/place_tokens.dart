@@ -21,10 +21,7 @@ class PlaceTokens {
   final Map<String, LocalizedText> values;
 
   static const Map<String, LocalizedText> _fallback = {
-    'barangay': LocalizedText(
-      en: 'your barangay',
-      fil: 'barangay ninyo',
-    ),
+    'barangay': LocalizedText(en: 'your barangay', fil: 'barangay ninyo'),
     'city': LocalizedText(
       en: 'your city or municipality',
       fil: 'lungsod o munisipalidad ninyo',

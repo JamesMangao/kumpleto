@@ -3,8 +3,8 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../core/gate_colors.dart';
 import '../core/motion.dart';
-import '../core/theme.dart';
 import '../data/providers.dart';
 import '../l10n/app_localizations.dart';
 
@@ -139,53 +139,6 @@ class _WelcomeGateState extends ConsumerState<WelcomeGate>
   }
 }
 
-// ---------------------------------------------------------------------------
-// Palette (light + dark)
-// ---------------------------------------------------------------------------
-
-class _Palette {
-  const _Palette({
-    required this.bg,
-    required this.card,
-    required this.cardBorder,
-    required this.ink,
-    required this.muted,
-    required this.accent,
-    required this.stamp,
-  });
-
-  final Color bg;
-  final Color card;
-  final Color cardBorder;
-  final Color ink;
-  final Color muted;
-  final Color accent;
-  final Color stamp;
-
-  static _Palette of(BuildContext context) {
-    final dark = Theme.of(context).brightness == Brightness.dark;
-    return dark
-        ? const _Palette(
-            bg: Color(0xFF101715),
-            card: Color(0xFF192522),
-            cardBorder: Color(0xFF2C3E38),
-            ink: Color(0xFFF1F5F3),
-            muted: Color(0xFF9DB3AB),
-            accent: Color(0xFF2FA88C),
-            stamp: Color(0xFF4CC2A6),
-          )
-        : const _Palette(
-            bg: Color(0xFFF6F1E7), // warm paper
-            card: Color(0xFFFFFFFF),
-            cardBorder: Color(0xFFE2D9C6),
-            ink: Color(0xFF14211D),
-            muted: Color(0xFF5E6F69),
-            accent: AppTheme.primaryTeal, // #0E6B58
-            stamp: AppTheme.primaryTeal,
-          );
-  }
-}
-
 bool _isFil(BuildContext context) {
   final code = Localizations.localeOf(context).languageCode;
   return code == 'fil' || code == 'tl';
@@ -222,7 +175,7 @@ class _WelcomeScene extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final p = _Palette.of(context);
+    final p = GateColors.of(context);
     final fil = _isFil(context);
 
     // The scene holds its last frame until the user skips, so only the
@@ -246,11 +199,31 @@ class _WelcomeScene extends StatelessWidget {
             children: [
               Center(
                 child: SingleChildScrollView(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 24, vertical: 56),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 56,
+                  ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      // App logo
+                      Opacity(
+                        opacity: wordmark,
+                        child: Transform.translate(
+                          offset: Offset(0, 8 * (1 - wordmark)),
+                          child: Image.asset(
+                            'assets/logo/app-icon.png',
+                            width: 76,
+                            height: 76,
+                            errorBuilder: (_, _, _) => Icon(
+                              Icons.assignment_turned_in_rounded,
+                              size: 64,
+                              color: p.accent,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
                       // Wordmark
                       Opacity(
                         opacity: wordmark,
@@ -402,7 +375,7 @@ class _ChecklistCard extends StatelessWidget {
     required this.stampProgress,
   });
 
-  final _Palette palette;
+  final GateColors palette;
   final List<String> docs;
   final String title;
   final List<double> tickProgress;
@@ -411,7 +384,8 @@ class _ChecklistCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final p = palette;
-    final stampScale = 1.0 + 0.8 * (1 - Curves.easeOutBack.transform(stampProgress));
+    final stampScale =
+        1.0 + 0.8 * (1 - Curves.easeOutBack.transform(stampProgress));
 
     return Stack(
       clipBehavior: Clip.none,
@@ -488,15 +462,19 @@ class _ChecklistCard extends StatelessWidget {
               child: Transform.scale(
                 scale: stampScale,
                 child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
                   decoration: BoxDecoration(
                     border: Border.all(color: p.stamp, width: 3),
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 6,
+                      vertical: 2,
+                    ),
                     decoration: BoxDecoration(
                       border: Border.all(color: p.stamp, width: 1),
                       borderRadius: BorderRadius.circular(3),
@@ -528,7 +506,7 @@ class _PromiseChip extends StatelessWidget {
     required this.label,
   });
 
-  final _Palette palette;
+  final GateColors palette;
   final IconData icon;
   final String label;
 

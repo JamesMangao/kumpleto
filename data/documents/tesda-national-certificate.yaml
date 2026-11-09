@@ -1,0 +1,142 @@
+# TESDA National Certificate (NC)
+# Facts sourced 2026-11-09 from the TESDA pages "Steps in Applying for
+# Assessment and Certification – Regular Qualifications"
+# (tesda.gov.ph/about/tesda/46) and "FAQs on Assessment and Certification"
+# (tesda.gov.ph/about/tesda/127): the application form, the Self Assessment
+# Guide, three passport-size photos with the name written at the back, payment
+# of the assessment fee at the assessment center, the Competency Assessment
+# Result Summary, application for NC/COC issuance at the District/Provincial
+# Office, the seven-working-day claim period, and the five-year validity.
+# TESDA does not publish one national fee amount: the assessment fee follows
+# the schedule promulgated by the TESDA Board and varies per qualification.
+# Verified on the maintainer's instruction, 2026-11-09.
+schema_version: 1
+id: tesda-national-certificate
+name:
+  en: TESDA National Certificate (NC)
+  fil: TESDA National Certificate (NC)
+agency: tesda
+status: verified
+last_verified: '2026-11-09'
+verified_by: JamesMangao
+source_url: https://tesda.gov.ph/about/tesda/46
+apply_online: false
+validity_months: 60
+summary:
+  en: >-
+    Certificate issued by TESDA after you pass a competency assessment for a
+    skilled trade or qualification — for example welding, carpentry, caregiving
+    or cookery. Employers and job orders abroad often ask for the NC, not just
+    a training certificate.
+  fil: >-
+    Sertipiko mula sa TESDA pagkatapos mong makapasa sa competency assessment
+    para sa isang kasanayan o qualification — halimbawa welding, carpentry,
+    caregiving o cookery. Madalas hinihingi ng employer at job order abroad ang
+    NC, hindi lang certificate ng training.
+tags: [job-hunt, skills, certification, tesda]
+where_to_apply:
+  en: >-
+    A TESDA-accredited assessment center, or the TESDA District or Provincial
+    Office for the assessment and for the issuance of the certificate.
+  fil: >-
+    TESDA-accredited assessment center, o TESDA District o Provincial Office
+    para sa assessment at sa paglabas ng sertipiko.
+requirements:
+  - id: application-form
+    text:
+      en: >-
+        Duly accomplished assessment application form.
+      fil: >-
+        Wastong nasagutang assessment application form.
+    original: true
+  - id: self-assessment-guide
+    text:
+      en: >-
+        Properly and completely filled-out Self Assessment Guide for the
+        qualification you are applying for.
+      fil: >-
+        Wastong napunan na Self Assessment Guide para sa qualification na
+        inaaplayan mo.
+    original: true
+  - id: photos
+    text:
+      en: >-
+        Three (3) passport-size pictures with a white background, collar, and
+        your name written at the back of each picture.
+      fil: >-
+        Tatlong (3) passport-size na litrato na puti ang background, may collar,
+        at nakasulat ang pangalan mo sa likod ng bawat litrato.
+    original: true
+steps:
+  - en: >-
+      Choose the qualification and find a TESDA-accredited assessment center
+      for it (the TESDA site lists accredited centers per qualification).
+    fil: >-
+      Piliin ang qualification at hanapin ang TESDA-accredited assessment
+      center para dito (nasa TESDA site ang listahan ng accredited center per
+      qualification).
+  - en: >-
+      Submit the application form, the Self Assessment Guide and the three
+      pictures at the assessment center or TESDA District/Provincial Office.
+    fil: >-
+      Isumite ang application form, Self Assessment Guide at tatlong litrato sa
+      assessment center o TESDA District/Provincial Office.
+  - en: >-
+      Pay the assessment fee at the assessment center cashier and keep the
+      official receipt and admission slip.
+    fil: >-
+      Bayaran ang assessment fee sa cashier ng assessment center at itago ang
+      official receipt at admission slip.
+  - en: >-
+      Attend the assessment at the scheduled time and venue, then get your
+      Competency Assessment Result Summary (CARS).
+    fil: >-
+      Dumalo sa assessment sa nakatakdang oras at lugar, pagkatapos kunin ang
+      Competency Assessment Result Summary (CARS).
+  - en: >-
+      If you pass, apply for the National Certificate (or Certificate of
+      Competency) at the TESDA District/Provincial Office with jurisdiction
+      over the assessment venue.
+    fil: >-
+      Kung pasado ka, mag-apply ng National Certificate (o Certificate of
+      Competency) sa TESDA District/Provincial Office na may hurisdiksyon sa
+      assessment venue.
+  - en: >-
+      Claim the NC/COC seven (7) working days after applying for its issuance.
+    fil: >-
+      Kunin ang NC/COC pitong (7) working day pagkatapos mag-apply para sa
+      paglabas nito.
+fee_note:
+  en: >-
+    There is no single national rate: TESDA says the assessment fee is based on
+    the list of fees promulgated by the TESDA Board and endorsed by NEDA, so the
+    amount depends on the qualification. Pay at the assessment center and keep
+    the receipt.
+  fil: >-
+    Walang isang pambansang rate: sinasabi ng TESDA na ang assessment fee ay
+    batay sa listahan ng bayad na ipinapahayag ng TESDA Board at ineendorso ng
+    NEDA, kaya depende sa qualification ang halaga. Bayaran ito sa assessment
+    center at itago ang resibo.
+processing_note:
+  en: >-
+    TESDA releases the NC or COC seven (7) working days after you apply for its
+    issuance. The assessment schedule itself depends on the center.
+  fil: >-
+    Inilalabas ng TESDA ang NC o COC pitong (7) working day pagkatapos mong
+    mag-apply para sa paglabas nito. Ang schedule ng assessment ay depende sa
+    center.
+processing_days_min: 7
+processing_days_max: 7
+notes:
+  - en: >-
+      The NC or COC is valid for five (5) years. Renewal means taking the
+      assessment again; there is no written exam-only renewal.
+    fil: >-
+      Ang NC o COC ay may bisa ng limang (5) taon. Ang renewal ay nangangahulugang
+      muling pagpapasuri; walang renewal na written exam lang.
+  - en: >-
+      Apply only at a TESDA-accredited assessment center. A training certificate
+      from a non-accredited school is not the same as an NC.
+    fil: >-
+      Mag-apply lang sa TESDA-accredited assessment center. Ang training
+      certificate mula sa hindi accredited na eskwelahan ay hindi kapareho ng NC.

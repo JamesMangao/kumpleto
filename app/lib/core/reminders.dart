@@ -147,8 +147,7 @@ class ReminderScheduler {
               android: AndroidNotificationDetails(
                 channelId,
                 'Document expiry',
-                channelDescription:
-                    'Reminders before a document you marked as acquired expires.',
+                channelDescription: 'Reminders before a document you marked as acquired expires.',
                 importance: Importance.defaultImportance,
                 priority: Priority.defaultPriority,
               ),

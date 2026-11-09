@@ -1,7 +1,10 @@
 # PSA Advisory on Marriage
 # Facts re-checked 2026-11-07 against the PSA Serbilis terms and FAQ
-# (psaserbilis.com.ph/TermandCondition, /GetFaQs) and the PSA advisories on
-# Viewable Online (PhP 130.00 / PhP 185.00) and the E-Certificate service.
+# and the PSA advisories on Viewable Online (PhP 130.00 / PhP 185.00) and the
+# E-Certificate service. Source moved to the PSA's own .gov.ph pages on
+# 2026-11-09 (Memorandum Circular 2024-18 records the CENOMAR/Advisory on
+# Marriages service and its PhP 210.00 standard fee; psa.gov.ph/cenomar is the
+# civil-registry request page).
 # An Advisory on Marriage is NOT a renamed CENOMAR: PSA issues it in place of
 # the CENOMAR when its database holds one or more marriage records under the
 # requester's name, and it lists those marriages. Fees: PhP 210.00 per copy for
@@ -18,9 +21,9 @@ name:
   fil: PSA Advisory on Marriage
 agency: psa
 status: verified
-source_url: https://www.psaserbilis.com.ph/GetFaQs
+source_url: https://psa.gov.ph/system/files/nccrvs/MC%20NO.%202024-18.pdf
 apply_online: true
-apply_online_url: https://psaserbilis.com.ph/
+apply_online_url: https://psa.gov.ph/cenomar
 last_verified: '2026-11-07'
 verified_by: JamesMangao
 fee_min: 210

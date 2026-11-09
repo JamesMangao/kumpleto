@@ -4,9 +4,10 @@
 #   - name: {en, fil} — official agency name is the same in both languages
 #   - website: official https URL, or null when no single national site exists
 #
-# All URLs verified reachable at authoring time (2026-10-15); several agency
-# sites block automated requests (403) but are the canonical official domains.
-# See TODO.md — the human maintainer confirms each URL during verification.
+# All URLs verified reachable at authoring time and re-checked 2026-11-09;
+# several agency sites block automated requests (403) but are the canonical
+# official .gov.ph domains. See TODO.md — the human maintainer confirms each
+# URL during verification.
 
 - id: nbi
   name:
@@ -43,9 +44,10 @@
     en: Pag-IBIG Fund (Home Development Mutual Fund)
     fil: Pag-IBIG Fund (Home Development Mutual Fund)
   website: https://www.pagibigfund.gov.ph/
-  # Note: pagibigfund.com was used here before, but it answers 204 No Content
-  # (empty body) — it is not the Fund's site. The Fund's online services portal
-  # is pagibigfundservices.com (not .gov.ph → validator warning expected there).
+  # Note: pagibigfund.com answers 204 No Content (empty body) — it is not the
+  # Fund's site. Membership registration and the Virtual Pag-IBIG entry point
+  # are documented on the Fund's own .gov.ph domain; non-.gov.ph services are
+  # no longer cited.
 
 - id: bir
   name:
@@ -125,3 +127,45 @@
     en: Department of Migrant Workers
     fil: Kagawaran ng Manggagawang Mandarayuhan (DMW)
   website: https://dmw.gov.ph/
+
+- id: tesda
+  name:
+    en: Technical Education and Skills Development Authority
+    fil: Technical Education and Skills Development Authority
+  website: https://tesda.gov.ph/
+
+- id: sec
+  name:
+    en: Securities and Exchange Commission
+    fil: Securities and Exchange Commission
+  website: https://www.sec.gov.ph/
+
+- id: marina
+  name:
+    en: Maritime Industry Authority
+    fil: Maritime Industry Authority
+  website: https://marina.gov.ph/
+
+- id: cfo
+  name:
+    en: Commission on Filipinos Overseas
+    fil: Commission on Filipinos Overseas
+  website: https://cfo.e.gov.ph/
+
+- id: lra
+  name:
+    en: Land Registration Authority
+    fil: Land Registration Authority
+  website: https://lra.gov.ph/
+
+- id: phlpost
+  name:
+    en: Philippine Postal Corporation (PHLPost)
+    fil: Philippine Postal Corporation (PHLPost)
+  website: https://phlpost.gov.ph/
+
+- id: emb
+  name:
+    en: Environmental Management Bureau (DENR)
+    fil: Environmental Management Bureau (DENR)
+  website: https://emb.gov.ph/

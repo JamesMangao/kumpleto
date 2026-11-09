@@ -1,0 +1,163 @@
+# MARINA Seafarer's Record Book (SRB) — formerly the SIRB
+# Facts sourced 2026-11-09 from MARINA Circular No. MD-2024-01
+# (marina.gov.ph/wp-content/uploads/2024/03/MC-MD-2024-01.pdf) and the MARINA
+# SID/SRB Online Appointment System (sidsrb.marina.gov.ph): the new-application
+# and reissuance requirements, the appointment-and-personal-appearance rule,
+# the fee table (headed "Proposed Fee (Pesos)" — PHP 1,000 new/renewal and
+# PHP 1,800 for an onboard lost/damaged application), the three-working-hour
+# processing time after data capture, and the ten-year SRB validity (the SID is
+# five years). The circular states that previously issued SIRBs remain valid
+# until they expire. Verified on the maintainer's instruction, 2026-11-09.
+schema_version: 1
+id: marina-seafarer-record-book
+name:
+  en: MARINA Seafarer's Record Book (SRB/SIRB)
+  fil: MARINA Seafarer's Record Book (SRB/SIRB)
+agency: marina
+status: verified
+last_verified: '2026-11-09'
+verified_by: JamesMangao
+source_url: https://marina.gov.ph/wp-content/uploads/2024/03/MC-MD-2024-01.pdf
+apply_online: true
+apply_online_url: https://sidsrb.marina.gov.ph/
+validity_months: 120
+summary:
+  en: >-
+    The seafarer's identity book issued by MARINA — the document that carries
+    your sea-service record and identifies you as a Filipino seafarer. The
+    current book is the Seafarer's Record Book (SRB); the older SIRB keeps its
+    validity until it expires.
+  fil: >-
+    Ang identity book ng seafarer na inilalabas ng MARINA — ang dokumentong
+    naglalaman ng sea-service record mo at nagpapatunay na Filipino seafarer ka.
+    Ang kasalukuyang libro ay Seafarer's Record Book (SRB); ang lumang SIRB ay
+    may bisa pa hanggang mag-expire.
+tags: [ofw, seafarer, marina, id]
+where_to_apply:
+  en: >-
+    MARINA, through the SID/SRB Online Appointment System (OAS). File the
+    application online, then appear in person on your appointment date for data
+    capture.
+  fil: >-
+    MARINA, sa pamamagitan ng SID/SRB Online Appointment System (OAS). I-file
+    online ang aplikasyon, pagkatapos personal na pumunta sa appointment date
+    para sa data capture.
+requirements:
+  - id: birth-certificate
+    text:
+      en: >-
+        PSA Birth Certificate (SECPA), or a passport, or — for a dual citizen —
+        an Identification Certificate issued by the Bureau of Immigration.
+      fil: >-
+        PSA Birth Certificate (SECPA), o pasaporte, o — para sa dual citizen —
+        Identification Certificate mula sa Bureau of Immigration.
+    original: true
+  - id: marriage-contract
+    text:
+      en: >-
+        Marriage Contract, if the applicant is a married woman.
+      fil: >-
+        Marriage Contract, kung ang aplikante ay babaeng may asawa.
+    optional: true
+  - id: nbi-clearance
+    text:
+      en: >-
+        Valid NBI Clearance.
+      fil: >-
+        Valid na NBI Clearance.
+    original: true
+  - id: basic-training-certificate
+    text:
+      en: >-
+        Certificate of Completion for Basic Training (BT), or a Certificate of
+        Proficiency (COP) for BT.
+      fil: >-
+        Certificate of Completion para sa Basic Training (BT), o Certificate of
+        Proficiency (COP) para sa BT.
+    original: true
+  - id: documentary-stamp
+    text:
+      en: >-
+        One documentary stamp for the SRB (not required for the SID).
+      fil: >-
+        Isang documentary stamp para sa SRB (hindi kailangan para sa SID).
+    original: true
+  - id: old-book
+    text:
+      en: >-
+        For reissuance or renewal: the old SIRB/SRB or SID, sea-service
+        certificate or the entries in the previous book, and a notarized
+        affidavit of loss when the book was lost.
+      fil: >-
+        Para sa reissuance o renewal: ang lumang SIRB/SRB o SID, sea-service
+        certificate o ang entries sa dating libro, at notarized affidavit of loss
+        kung nawala ang libro.
+    optional: true
+steps:
+  - en: >-
+      Book an appointment through the MARINA SID/SRB Online Appointment System.
+    fil: >-
+      Mag-book ng appointment sa MARINA SID/SRB Online Appointment System.
+  - en: >-
+      Appear in person on the appointment date with all the required documents
+      and the documentary stamp for the SRB.
+    fil: >-
+      Personal na pumunta sa appointment date dala ang lahat ng requirement at
+      ang documentary stamp para sa SRB.
+  - en: >-
+      Complete the data capture (photo, fingerprints and signature) and pay the
+      applicable fee.
+    fil: >-
+      Kumpletuhin ang data capture (litrato, fingerprints at pirma) at bayaran
+      ang katumbas na fee.
+  - en: >-
+      Claim the SRB or SID from MARINA after processing.
+    fil: >-
+      Kunin ang SRB o SID sa MARINA pagkatapos ng processing.
+fee_note:
+  en: >-
+    MARINA Circular MD-2024-01 lists PHP 1,000.00 for a new or renewal/
+    reissuance SRB or SID, and PHP 1,800.00 for an onboard application for a
+    lost or damaged book. The circular's table is headed "Proposed Fee
+    (Pesos)"; the OAS also states that processing fees are non-refundable and
+    non-transferable.
+  fil: >-
+    Nakalista sa MARINA Circular MD-2024-01 ang PHP 1,000.00 para sa bagong o
+    renewal/reissuance na SRB o SID, at PHP 1,800.00 para sa onboard application
+    para sa nawala o nasirang libro. Ang table sa circular ay may pamagat na
+    "Proposed Fee (Pesos)"; sinasabi rin ng OAS na hindi refundable at hindi
+    transferable ang processing fees.
+fee_min: 1000
+fee_max: 1800
+processing_note:
+  en: >-
+    The OAS states that the standard processing time for SRB and SID issuance is
+    within three (3) working hours after data capture, under normal working
+    conditions.
+  fil: >-
+    Sinasabi ng OAS na ang standard processing time para sa paglabas ng SRB at
+    SID ay loob ng tatlong (3) working hour pagkatapos ng data capture, sa
+    normal na kondisyon.
+processing_days_min: 0
+processing_days_max: 0
+notes:
+  - en: >-
+      The SRB is valid for ten (10) years; the SID for five (5) years. A
+      previously issued SIRB remains a valid seafarer identity document until
+      its own expiry.
+    fil: >-
+      Ang SRB ay may bisa ng sampung (10) taon; ang SID ay lima (5) taon. Ang
+      dating inilabas na SIRB ay nananatiling valid na seafarer identity
+      document hanggang sa sarili nitong expiry.
+  - en: >-
+      The appointment is required and personal appearance is mandatory; a
+      representative cannot take your biometrics.
+    fil: >-
+      Kailangan ang appointment at mandatory ang personal na pagpunta; hindi
+      pwedeng ipa-representative ang biometrics mo.
+  - en: >-
+      The OAS may show a system-maintenance notice. Try again later rather than
+      transacting with a fixer outside MARINA.
+    fil: >-
+      Maaaring may system-maintenance notice ang OAS. Subukan ulit mamaya sa
+      halip na makipagtransaksyon sa fixer sa labas ng MARINA.

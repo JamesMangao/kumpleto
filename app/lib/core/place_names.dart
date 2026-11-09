@@ -33,8 +33,10 @@ String filipinoPlaceName(String name) {
   const municipalitySuffix = ' Municipality';
   if (trimmed.endsWith(municipalitySuffix) &&
       trimmed.length > municipalitySuffix.length) {
-    final stem =
-        trimmed.substring(0, trimmed.length - municipalitySuffix.length);
+    final stem = trimmed.substring(
+      0,
+      trimmed.length - municipalitySuffix.length,
+    );
     return 'Bayan ng $stem';
   }
 

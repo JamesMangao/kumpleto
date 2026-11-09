@@ -42,7 +42,10 @@ class LocalizedText {
             null => match[0]!,
           },
         );
-    return LocalizedText(en: apply(en, (value) => value.en), fil: apply(fil, (value) => value.fil));
+    return LocalizedText(
+      en: apply(en, (value) => value.en),
+      fil: apply(fil, (value) => value.fil),
+    );
   }
 
   @override

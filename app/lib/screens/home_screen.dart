@@ -139,7 +139,10 @@ class _HomeBody extends ConsumerWidget {
                 ),
               ),
               const SizedBox(width: 8),
-              const Padding(padding: EdgeInsets.only(top: 4), child: _ProfileChip()),
+              const Padding(
+                padding: EdgeInsets.only(top: 4),
+                child: _ProfileChip(),
+              ),
             ],
           ),
         ),
@@ -159,7 +162,10 @@ class _HomeBody extends ConsumerWidget {
               fillColor: isDark
                   ? const Color(0xFF1B2822)
                   : const Color(0xFFEFF5F2),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 14,
+              ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(24),
                 borderSide: BorderSide.none,
@@ -170,7 +176,10 @@ class _HomeBody extends ConsumerWidget {
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(24),
-                borderSide: const BorderSide(color: AppTheme.primaryTeal, width: 1.5),
+                borderSide: const BorderSide(
+                  color: AppTheme.primaryTeal,
+                  width: 1.5,
+                ),
               ),
             ),
             onSubmitted: (query) =>
@@ -182,51 +191,54 @@ class _HomeBody extends ConsumerWidget {
         // only rendered once a place has been picked.
         if (savedLocation != null && !savedLocation.isEmpty)
           Padding(
-          padding: const EdgeInsets.fromLTRB(16, 10, 16, 0),
-          child: InkWell(
-            borderRadius: BorderRadius.circular(14),
-            onTap: () => context.push('/location'),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-              decoration: BoxDecoration(
-                color: isDark
-                    ? const Color(0xFF192721)
-                    : const Color(0xFFEBF5F1),
-                borderRadius: BorderRadius.circular(14),
-                border: Border.all(
-                  color: isDark
-                      ? const Color(0xFF293F34)
-                      : const Color(0xFFD4E8E0),
+            padding: const EdgeInsets.fromLTRB(16, 10, 16, 0),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(14),
+              onTap: () => context.push('/location'),
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 10,
                 ),
-              ),
-              child: Row(
-                children: [
-                  const Icon(
-                    Icons.location_on_outlined,
-                    size: 18,
-                    color: AppTheme.primaryTeal,
+                decoration: BoxDecoration(
+                  color: isDark
+                      ? const Color(0xFF192721)
+                      : const Color(0xFFEBF5F1),
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(
+                    color: isDark
+                        ? const Color(0xFF293F34)
+                        : const Color(0xFFD4E8E0),
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      savedLocation.label,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 12.5,
-                        fontWeight: FontWeight.w600,
-                        color: isDark
-                            ? const Color(0xFFB9E8D8)
-                            : AppTheme.primaryDarkTeal,
+                ),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.location_on_outlined,
+                      size: 18,
+                      color: AppTheme.primaryTeal,
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        savedLocation.label,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 12.5,
+                          fontWeight: FontWeight.w600,
+                          color: isDark
+                              ? const Color(0xFFB9E8D8)
+                              : AppTheme.primaryDarkTeal,
+                        ),
                       ),
                     ),
-                  ),
-                  const Icon(Icons.chevron_right, size: 18),
-                ],
+                    const Icon(Icons.chevron_right, size: 18),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
 
         const SizedBox(height: 12),
 
@@ -253,9 +265,15 @@ class _HomeBody extends ConsumerWidget {
                         width: cardWidth,
                         child: _ContinueDocCard(
                           document: doc,
-                          checked: checkedCount(doc, progress[doc.id] ?? const {}),
+                          checked: checkedCount(
+                            doc,
+                            progress[doc.id] ?? const {},
+                          ),
                           total: doc.requirements.length,
-                          isAcquired: isDocumentAcquired(doc, progress[doc.id] ?? const {}),
+                          isAcquired: isDocumentAcquired(
+                            doc,
+                            progress[doc.id] ?? const {},
+                          ),
                         ),
                       ),
                   ],
@@ -444,8 +462,12 @@ Future<void> _showProfileSheet(BuildContext context, WidgetRef ref) {
                       : IconButton(
                           tooltip: l10n.profileRemove,
                           icon: const Icon(Icons.delete_outline),
-                          onPressed: () =>
-                              _confirmRemoveProfile(sheetContext, sheetRef, l10n, profile),
+                          onPressed: () => _confirmRemoveProfile(
+                            sheetContext,
+                            sheetRef,
+                            l10n,
+                            profile,
+                          ),
                         ),
                   onTap: () async {
                     await sheetRef
@@ -557,11 +579,7 @@ Future<void> _confirmRemoveProfile(
 }
 
 class _SectionHeader extends StatelessWidget {
-  const _SectionHeader({
-    required this.title,
-    this.actionLabel,
-    this.onAction,
-  });
+  const _SectionHeader({required this.title, this.actionLabel, this.onAction});
 
   final String title;
   final String? actionLabel;
@@ -627,7 +645,9 @@ class _ContinueDocCard extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    final fraction = total == 0 ? (isAcquired ? 1.0 : 0.0) : (checked / total).clamp(0.0, 1.0);
+    final fraction = total == 0
+        ? (isAcquired ? 1.0 : 0.0)
+        : (checked / total).clamp(0.0, 1.0);
 
     return Card(
       elevation: 0,
@@ -793,17 +813,25 @@ class _TagChipButton extends StatelessWidget {
 
   IconData _iconForTag(String tag) {
     final lower = tag.toLowerCase();
-    if (lower.contains('first') || lower.contains('bago')) return Icons.person_outline;
-    if (lower.contains('renew') || lower.contains('bago') || lower.contains('palit')) {
+    if (lower.contains('first') || lower.contains('bago')) {
+      return Icons.person_outline;
+    }
+    if (lower.contains('renew') ||
+        lower.contains('bago') ||
+        lower.contains('palit')) {
       return Icons.autorenew;
     }
-    if (lower.contains('job') || lower.contains('trabaho') || lower.contains('hunt')) {
+    if (lower.contains('job') ||
+        lower.contains('trabaho') ||
+        lower.contains('hunt')) {
       return Icons.work_outline;
     }
     if (lower.contains('passport') || lower.contains('travel')) {
       return Icons.flight_takeoff;
     }
-    if (lower.contains('driv') || lower.contains('car') || lower.contains('license')) {
+    if (lower.contains('driv') ||
+        lower.contains('car') ||
+        lower.contains('license')) {
       return Icons.directions_car_outlined;
     }
     return Icons.sell_outlined;
@@ -819,7 +847,9 @@ class _TagChipButton extends StatelessWidget {
         color: isDark ? const Color(0xFF8AE0C4) : AppTheme.primaryTeal,
       ),
       label: Text(tag),
-      backgroundColor: isDark ? const Color(0xFF192721) : const Color(0xFFEBF5F1),
+      backgroundColor: isDark
+          ? const Color(0xFF192721)
+          : const Color(0xFFEBF5F1),
       side: BorderSide(
         color: isDark ? const Color(0xFF293F34) : const Color(0xFFD4E8E0),
       ),

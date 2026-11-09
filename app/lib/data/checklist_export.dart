@@ -54,8 +54,10 @@ String checklistText(ChecklistContent content) {
     ..writeln();
 
   for (final block in _blocks(content)) {
-    out.writeln('${block.index}. ${block.document.name.pick(content.languageCode)}'
-        ' — ${content.agencyOf(block.document)}');
+    out.writeln(
+      '${block.index}. ${block.document.name.pick(content.languageCode)}'
+      ' — ${content.agencyOf(block.document)}',
+    );
     for (final line in block.requirements) {
       out.writeln('   [ ] $line');
     }
@@ -89,10 +91,7 @@ Future<Uint8List> checklistPdf(ChecklistContent content) async {
       build: (context) => [
         pw.Text(
           content.bundle.name.pick(content.languageCode),
-          style: pw.TextStyle(
-            fontSize: 20,
-            fontWeight: pw.FontWeight.bold,
-          ),
+          style: pw.TextStyle(fontSize: 20, fontWeight: pw.FontWeight.bold),
         ),
         pw.SizedBox(height: 4),
         pw.Text(
@@ -106,10 +105,7 @@ Future<Uint8List> checklistPdf(ChecklistContent content) async {
             child: pw.Text(
               '${block.index}. ${_pdfSafe(content.name(block.document))}'
               ' - ${_pdfSafe(content.agencyOf(block.document))}',
-              style: pw.TextStyle(
-                fontSize: 12,
-                fontWeight: pw.FontWeight.bold,
-              ),
+              style: pw.TextStyle(fontSize: 12, fontWeight: pw.FontWeight.bold),
             ),
           ),
           for (final line in block.requirements)
