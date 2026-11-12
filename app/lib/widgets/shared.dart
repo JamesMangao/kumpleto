@@ -35,6 +35,8 @@ class KumpletoLogo extends StatelessWidget {
           width: size,
           height: size,
           decoration: BoxDecoration(
+            // A filled square with a white glyph, so it keeps the brand fill
+            // rather than the lifted accent.
             color: AppTheme.primaryTeal,
             borderRadius: BorderRadius.circular(effectiveRadius),
           ),
@@ -127,7 +129,7 @@ class SquircleIcon extends StatelessWidget {
         backgroundColor ??
         (isDark ? const Color(0xFF1E332B) : AppTheme.mintContainer);
     final fg =
-        iconColor ?? (isDark ? const Color(0xFF8AE0C4) : AppTheme.primaryTeal);
+        iconColor ?? (isDark ? AppTheme.accentDark : AppTheme.primaryTeal);
 
     return Container(
       width: size,
@@ -195,9 +197,9 @@ class ProgressLine extends StatelessWidget {
                     value: value,
                     backgroundColor:
                         Theme.of(context).brightness == Brightness.dark
-                        ? const Color(0xFF24362E)
+                        ? const Color(0xFF1F2C46)
                         : const Color(0xFFE2ECE7),
-                    color: AppTheme.primaryTeal,
+                    color: accentColorOf(context),
                     semanticsLabel: semanticLabel ?? text,
                   ),
                 ),
@@ -398,9 +400,9 @@ class CircularProgressCard extends StatelessWidget {
                       strokeWidth: 9,
                       strokeCap: StrokeCap.round,
                       backgroundColor: isDark
-                          ? const Color(0xFF24362E)
+                          ? const Color(0xFF1F2C46)
                           : const Color(0xFFE2ECE7),
-                      color: AppTheme.primaryTeal,
+                      color: accentColorOf(context),
                     ),
                   ),
                   Column(
@@ -528,7 +530,7 @@ class PillChip extends StatelessWidget {
         : (isDark ? const Color(0xFF1B2721) : Colors.white);
     final border = isSelected
         ? AppTheme.primaryTeal
-        : (isDark ? const Color(0xFF2C3E35) : const Color(0xFFE2EBE5));
+        : (isDark ? const Color(0xFF243352) : const Color(0xFFE2EBE5));
     final fg = isSelected
         ? Colors.white
         : (isDark ? const Color(0xFFE2EBE6) : const Color(0xFF1F332A));
@@ -656,6 +658,9 @@ Icon bundleIcon(String? name, {double size = 28}) {
     'family_restroom': Icons.family_restroom_outlined,
     'how_to_reg': Icons.how_to_reg_outlined,
     'description': Icons.description_outlined,
+    'storefront': Icons.storefront_outlined,
+    'public': Icons.public,
+    'school': Icons.school_outlined,
   };
   return Icon(known[name] ?? Icons.folder_open_outlined, size: size);
 }

@@ -40,6 +40,17 @@ class BundleDetailScreen extends ConsumerWidget {
         bundle.id == 'job-hunt-pack' || bundle.tags.contains('job-hunt');
 
     final documents = data.documentsOf(bundle);
+
+    // The newest verification among the bundle's documents — a date a reader
+    // can point at when a requirement looks out of date.
+    DateTime? lastChecked;
+    for (final document in documents) {
+      final verified = document.lastVerified;
+      if (verified != null &&
+          (lastChecked == null || verified.isAfter(lastChecked))) {
+        lastChecked = verified;
+      }
+    }
     final totals = bundleProgress(documents: documents, progress: progress);
     final rawEstimate = bundleEstimate(documents);
 
@@ -160,6 +171,20 @@ class BundleDetailScreen extends ConsumerWidget {
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
+                            if (lastChecked != null) ...[
+                              const SizedBox(height: 4),
+                              Text(
+                                l10n.bundleLastChecked(
+                                  MaterialLocalizations.of(
+                                    context,
+                                  ).formatMediumDate(lastChecked),
+                                ),
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  fontSize: 11.5,
+                                  color: theme.colorScheme.onSurfaceVariant,
+                                ),
+                              ),
+                            ],
                           ],
                         ),
                       ),
@@ -540,9 +565,9 @@ class _CompactProgressCard extends StatelessWidget {
                         strokeWidth: 6,
                         strokeCap: StrokeCap.round,
                         backgroundColor: isDark
-                            ? const Color(0xFF24362E)
+                            ? const Color(0xFF1F2C46)
                             : const Color(0xFFE2ECE7),
-                        color: AppTheme.primaryTeal,
+                        color: accentColorOf(context),
                       ),
                     ),
                     FittedBox(
@@ -658,10 +683,10 @@ class _EstimateCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.payments_outlined,
                   size: 16,
-                  color: AppTheme.primaryTeal,
+                  color: accentColorOf(context),
                 ),
                 const SizedBox(width: 6),
                 Flexible(
@@ -769,6 +794,7 @@ class _BundleDocumentModernTile extends ConsumerWidget {
                   width: 18,
                   height: 18,
                   decoration: const BoxDecoration(
+                    // Filled step badge: white numeral needs the brand fill.
                     color: AppTheme.primaryTeal,
                     shape: BoxShape.circle,
                   ),
@@ -829,18 +855,18 @@ class _BundleDocumentModernTile extends ConsumerWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.check_circle_rounded,
                         size: 11,
-                        color: AppTheme.primaryTeal,
+                        color: accentColorOf(context),
                       ),
                       const SizedBox(width: 4),
                       Text(
                         l10n.docAcquiredBadge,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w700,
-                          color: AppTheme.primaryTeal,
+                          color: accentColorOf(context),
                         ),
                       ),
                     ],
@@ -883,16 +909,16 @@ class _BadgeChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1B2A23) : const Color(0xFFEAF5F1),
+        color: isDark ? const Color(0xFF17223A) : const Color(0xFFEAF5F1),
         borderRadius: BorderRadius.circular(14),
         border: Border.all(
-          color: isDark ? const Color(0xFF2E453A) : const Color(0xFFD4E8E0),
+          color: isDark ? const Color(0xFF243352) : const Color(0xFFD4E8E0),
         ),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 12, color: AppTheme.primaryTeal),
+          Icon(icon, size: 12, color: accentColorOf(context)),
           const SizedBox(width: 4),
           Flexible(
             child: Text(
@@ -901,7 +927,7 @@ class _BadgeChip extends StatelessWidget {
               style: TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.w600,
-                color: isDark ? const Color(0xFF8AE0C4) : AppTheme.primaryTeal,
+                color: isDark ? AppTheme.accentDark : AppTheme.primaryTeal,
               ),
             ),
           ),

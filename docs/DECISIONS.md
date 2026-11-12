@@ -163,3 +163,100 @@ connected desktop/web devices, network).
 - [ ] Confirm "Kumpleto" name availability on Play
 - [x] Enable **GitHub Pages with source "GitHub Actions"** (maintainer change #8) — done; last publish predates the 2026-11-09 dataset
 - [ ] Promote seed documents from `draft` to `verified` one by one, setting `last_verified` only via human review
+
+---
+
+## 2026-11-11 — Sharing, the widget, the public pages and a non-fatal data path
+
+- **S1 — Social and crawl metadata on the static pages.** Every generated page
+  carries Open Graph and Twitter tags, and one shared `og.png` (the store
+  feature graphic) sits next to the pages so the absolute URL always resolves.
+  `og:type` is `website` for the index and `article` for a document or bundle.
+- **S2 — `<lastmod>` is the payload's `data_version`.** "Now" would claim every
+  page changed on every deploy; the payload timestamp is the honest date.
+- **S3 — `404.html`.** GitHub Pages serves it for any unknown path, so a
+  retired `/doc/<id>` — or a QR printed for one — lands on a page that says so.
+- **Q1 — QR has two targets, the offline one first.** `kumpleto://doc/<id>` is
+  the default: a code shown in a barangay hall queue has to open the checklist
+  with no data, and a page-shaped code only fails there. A chip switches to the
+  public `https` page for a phone without the app, and the hint under the code
+  says that variant needs a connection.
+- **C1 — Calendar exports are timed events, not all-day.** `VALUE=DATE` hides
+  the event at the top of the day and its alarm fires at local midnight, which
+  nobody sees. Documents expire at 09:00 `Asia/Manila`, with an explicit
+  `VTIMEZONE` so a phone in another region still fires at the right moment;
+  alarms at 30, 7 and 1 days.
+- **W1 — The widget renders only what Dart pushes.** `updatePeriodMillis=0`:
+  no periodic wake-up, because the app already knows when the checklist
+  changed. The three preference keys exist twice (Dart writer, Kotlin reader),
+  each with a comment pointing at the other side.
+- **W2 — `previewLayout` on Android 12+, `previewImage` below it.** Pickers on
+  8–11 cannot inflate a `RemoteViews` preview, so they show the launcher icon
+  rather than a blank square.
+- **W3 — The widget's tap target opens `kumpleto://home`**, which the router
+  deliberately does not map: a cold start from the widget lands on the normal
+  first screen instead of a "page not found" error.
+- **U4 — The welcome scene auto-dismisses on returning launches.** The first
+  launch keeps the full ~3 s sequence and its Skip; afterwards `welcome_seen`
+  (written but previously unused) also ends the compact scene by itself, and
+  reduced motion never waits for a tap at all.
+- **R1 — Nothing in the home data path may throw.** `SavedLocation.read` now
+  catches every error (a stored value in an unknown shape means "no location
+  saved") and `DataRepository._verify` guards verification and parsing as well
+  as `jsonDecode` (an unreadable payload is a skipped candidate). Both feed the
+  home screen's data provider, and a throw there stranded the UI on an error
+  card whose Retry read the same bad value again.
+- **D5 — The dark theme is slate-navy, not black, and not green-black.**
+  `#0C1424` keeps the page distinct from the cards (`#151E31`), which is
+  exactly what pure black erased; the same four steps the light theme has
+  (page < card < raised < highest) survive in the new hue.
+- **D6 — Body text is 87% white, not 100%.** `#DEFFFFFF` still clears WCAG AA
+  by a wide margin while removing the halo that full white gives on a dark
+  page. It is a single token, so the light theme is untouched.
+- **D7 — The accent is mint on the dark page.** Brand teal `#0E6B58` is a fill
+  colour that needs white text on it; as an icon or label on navy it is nearly
+  unreadable. `accentColorOf(context)` returns `#5FD3B6` in dark and the brand
+  teal in light, so foregrounds lighten while buttons and chips keep their
+  dark fill and white labels.
+- **F1 — Acquired / not-yet is a segmented filter on Documents, not a chip.**
+  The tag and agency chips already reset through their own "All", so the
+  acquired state gets its own three-way control above them; both read
+  `isDocumentAcquired` from the checklist, so marking a document acquired
+  moves it between the segments without a refresh. The empty message changes
+  with the filter ("No documents in this filter.") instead of blaming a search
+  that was never typed.
+- **S1 — Updates are silent only.** The manual "Check for updates" button is
+  gone: `scheduledUpdateProvider` already runs once a day at launch, writes the
+  ETag, and the Home notice reports an accepted payload. A second, hand-run path
+  only added a spinner, a result string and two failure modes to maintain. The
+  update service itself is untouched.
+- **S2 — The replay entry is gone too.** "Replay introduction & disclaimer"
+  duplicated the disclaimer row that sits two lines above it, and re-entering
+  first-run would re-ask for a language the reader already chose. The row and
+  `AppSettings.resetFirstRun()` are removed; the disclaimer, privacy note and
+  about page keep their own rows.
+- **H1 — Ten curated categories replace "Browse by tag".** The feed's 81 tag
+  slugs (`cfo`, `denr`, `board-exam`, `civil-registry`) are precise for data and
+  useless as a front door. `lib/core/categories.dart` maps each friendly
+  category to the tags that feed it, and the chip opens Documents with
+  `?tags=a,b,c`; the full tag list stays on the Documents chip bar.
+- **H2 — Four popular documents sit under the search field.** NBI, PSA birth,
+  TIN and SSS are what readers arrive for one at a time, so they are chips that
+  open the document directly instead of cards that need the bundle path.
+- **H3 — A bundle's bar appears only after it is started, and every card
+  reserves two title lines.** Eight identical "0 of N requirements" bars read as
+  "nothing here"; the reserved height keeps a long title from shrinking its
+  neighbour. Home shows six bundles (`homeBundleLimit`) so no card is stranded
+  alone, and "See all >" opens the new `/bundles` list.
+- **H4 — Every bundle icon is distinct.** `new-business` had `work` like
+  `job-hunt-pack`, `overseas-travel` had `flight_takeoff` like
+  `first-passport`, and `student-to-driver` had `directions_car` like
+  `new-driver`; they are now `storefront`, `public` and `school`.
+- **H5 — Freshness is visible.** Home prints "Updated <date> • Offline" from
+  the feed's `generated_at` (new `DataBundle.generatedAt`), and a bundle header
+  prints "Last checked <date>" from the newest `last_verified` among its
+  documents. Feedback about stale requirements is only fair if the reader can
+  see how old the copy is.
+- **H6 — The "Me" chip explains itself.** Long-press shows the profile-switcher
+  hint as a tooltip, and the sheet opens with the same sentence so the first
+  tap does not leave the reader guessing what a name chip does.

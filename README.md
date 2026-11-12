@@ -31,11 +31,16 @@ off — fully usable **offline**, with **no accounts, no analytics, and no ads**
 - 🔍 Search runs through requirements, steps, fees and notes, not just titles
 - 🔗 Deep links per document and bundle (`kumpleto://doc/<id>`,
   `kumpleto://bundle/<id>`) plus published `https` checklist pages for sharing
-- 🔳 QR sharing: show a checklist as a code a friend can scan offline
-- 📅 Expiry dates export to the phone's own calendar as an `.ics` file
+- 🔳 QR sharing: one code, two targets — the offline `kumpleto://` link by
+  default, or the public page for a phone without the app
+- 📅 Expiry dates export to the phone's own calendar as an `.ics` file, written
+  in `Asia/Manila` at 09:00 with 30- and 7-day alarms (an all-day event would
+  fire at local midnight and never be seen)
 - 🔔 Expiry reminders a month, a week and a day before an acquired document
   lapses (off until you switch it on in Settings, which is when the OS
   notification permission is asked for)
+- 🏠 Home-screen widget showing the document that expires next and how many you
+  have marked; tapping it opens the app
 - 🔒 No accounts, no analytics, no crash reporting, no data leaves your device
 - ♿ TalkBack labels, 48dp touch targets, works at 200% font size
 
@@ -64,6 +69,12 @@ off — fully usable **offline**, with **no accounts, no analytics, and no ads**
   `app/android/key.properties` exists; otherwise it stays debug-signed for QA
   and cannot be uploaded. See [docs/PLAY_RELEASE.md](docs/PLAY_RELEASE.md) §2.
 
+- The 2026-11-11 work adds the home-screen widget, the QR web/app toggle,
+  calendar exports at 09:00 `Asia/Manila`, Open Graph tags on the public pages
+  and a fix for the home-screen error card. The v1.0.0 artifacts above predate
+  them: bump `version` and rebuild `--split-per-abi` plus the AAB before the
+  next upload.
+
 ## Build (development)
 
 Prerequisites: Flutter (see `.fvmrc` for the pinned version), Android SDK
@@ -74,6 +85,7 @@ with platform 36, JDK 17+.
 dart pub get
 dart run tools/validate.dart          # schema + semantic validation
 dart run tools/build_data.dart        # writes dist/ + app/assets/data/data.json
+dart run tools/build_site.dart        # writes site/ (pages, sitemap, robots, 404)
 
 # 2. Run the app (app/)
 cd app
@@ -124,7 +136,7 @@ to drop the system navigation bar). The same four are the Play listing shots.
 | Home | Life-event bundle |
 |---|---|
 | <img src="docs/screenshots/home.webp" width="300" alt="Home screen with search and life-event bundle cards showing progress"> | <img src="docs/screenshots/bundle.webp" width="300" alt="Job Hunt Pack bundle with progress ring, estimated cost and RA 11261 toggle"> |
-| Search over documents and bundles, life-event bundles with per-bundle progress, and the three tabs (Home, Documents, Settings). | One bundle: documents in order, overall progress, estimated cost range, and the first-time jobseeker fee-waiver toggle. |
+| Search, ten curated categories, one-tap chips for the most-looked-up documents, and the date the offline data was compiled. Documents filters by tag, agency and whether you already have it. | One bundle: documents in order, overall progress, estimated cost range, and the first-time jobseeker fee-waiver toggle. |
 
 | Document checklist | Welcome |
 |---|---|

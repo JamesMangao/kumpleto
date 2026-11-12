@@ -20,14 +20,26 @@
   "homeSearchHint": "Search documents",
   "homeContinue": "Continue",
   "homeBundles": "Life-event bundles",
-  "homeTags": "Browse by tag",
+  "homeCategories": "Categories",
+  "homeDataUpdated": "Updated {date} • Offline",
+  "@homeDataUpdated": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "homeAllDocuments": "All documents",
   "homeEmptyTitle": "Loading your checklist…",
   "homeEmptyBody": "Requirements, steps and official sources for every document appear here.",
   "documentsTitle": "Documents",
   "documentsFilterAll": "All",
+  "documentsFilterAny": "Any",
   "documentsFilterAgency": "Agency",
   "documentsFilterTag": "Tag",
+  "documentsFilterAcquired": "Acquired",
+  "documentsFilterPending": "Not yet",
+  "documentsFilterEmpty": "No documents in this filter.",
   "documentsNoResults": "No documents match your search.",
   "documentsRequirementsCount": "{count} requirements",
   "@documentsRequirementsCount": {
@@ -108,18 +120,6 @@
   "settingsData": "Data",
   "settingsDataVersion": "Data version",
   "settingsDataSource": "Source",
-  "settingsCheckForUpdates": "Check for updates",
-  "settingsChecking": "Checking…",
-  "settingsUpdateDone": "Data updated",
-  "settingsUpToDate": "Already up to date",
-  "settingsUpdateFailed": "Update failed: {reason}",
-  "@settingsUpdateFailed": {
-    "placeholders": {
-      "reason": {
-        "type": "String"
-      }
-    }
-  },
   "settingsLastChecked": "Last checked {when}",
   "@settingsLastChecked": {
     "placeholders": {
@@ -256,6 +256,15 @@
     }
   },
   "bundleExportFailed": "Could not create the checklist.",
+  "profileSwitcherHint": "Choose whose checklist you are viewing. Each person keeps their own progress.",
+  "bundleLastChecked": "Last checked {date}",
+  "@bundleLastChecked": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "profileMe": "Me",
   "profileSwitcher": "Progress for {name}",
   "@profileSwitcher": {
@@ -331,12 +340,33 @@
       }
     }
   },
-  "settingsReplayOnboarding": "Replay introduction & disclaimer",
-  "settingsReplayOnboardingSubtitle": "Review the disclaimer and onboarding walk-through.",
   "docShareQr": "Show QR code",
   "docQrTitle": "Scan to open the checklist",
   "docQrHint": "Works offline. Scan with any phone camera.",
+  "docQrHintWeb": "Opens the web page — this needs a connection.",
   "docCalendarAction": "Add expiry date to calendar",
   "docCalendarReady": "Calendar file ready — open it to save the date.",
-  "docCalendarNeedsDate": "Set the acquired date first."
+  "docCalendarNeedsDate": "Set the acquired date first.",
+  "docQrModeWeb": "Any phone · web page",
+  "docQrModeApp": "App installed · deep link",
+  "widgetNext": "Next: {document}",
+  "@widgetNext": {
+    "placeholders": {
+      "document": {"type": "String"}
+    }
+  },
+  "widgetDaysLeft": "{days, plural, =1{1 day left} other{{days} days left}}",
+  "@widgetDaysLeft": {
+    "placeholders": {
+      "days": {"type": "int"}
+    }
+  },
+  "widgetSummary": "{marked} of {total} documents marked",
+  "@widgetSummary": {
+    "placeholders": {
+      "marked": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "widgetEmpty": "Nothing marked yet — tap to start"
 }

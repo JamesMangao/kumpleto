@@ -117,9 +117,10 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done
       steps, fee/processing notes, official source link (`url_launcher`),
       "Report outdated info" link, progress bar, reset
 - [x] **Bundle detail** — ordered documents, per-doc + overall progress
-- [x] **Settings** — language (system/en/fil) + theme pickers, data
-      version + manual "check for update", reset progress (confirm
-      dialog), about/disclaimer/privacy/licenses, link to GitHub repo
+- [x] **Settings** — language (system/en/fil) and theme pickers, expiry
+      reminders, reset progress (confirm dialog), my location, app version,
+      about/disclaimer/privacy/licenses. Updates are silent and scheduled, so
+      there is no manual "check for updates" button and no replay entry.
 - [x] **Onboarding** — final copy polish (disclaimer + language, once)
 - [x] **l10n** — every new string in **both** `app_en.arb` and
       `app_fil.arb`; regenerate with `flutter gen-l10n`
@@ -195,4 +196,68 @@ Legend: `[ ]` not started · `[~]` in progress · `[x]` done
 - [x] Take 2+ phone screenshots on a physical device — four captures in
       `docs/screenshots/`, used in the README and ready for the Play listing
 - [ ] Recruit 12+ testers for 14 continuous days of closed testing
-- [ ] Enable GitHub Pages (source: GitHub Actions)
+- [x] Enable GitHub Pages (source: GitHub Actions) — live at
+      https://jamesmangao.github.io/kumpleto/data.json (+ per-document pages);
+      the last publish predates the 2026-11-11 build, so push to re-run it
+
+---
+
+## P7 — Sharing, widget and the public pages [~] code done, device checks open
+
+- [x] Open Graph + Twitter tags on every generated page (`og:type` `website`
+      for the index, `article` for a document or bundle) and one shared
+      `site/og.png` copied from the store feature graphic
+- [x] `sitemap.xml` `<lastmod>` from the payload's `data_version`, not "now"
+      (which would claim a change on every deploy)
+- [x] `robots.txt` with the `Sitemap:` line
+- [x] `404.html`, so a mistyped or retired `/doc/<id>` lands on a real page
+- [x] QR dialog with two targets: `kumpleto://doc/<id>` by default (it opens
+      the checklist with no connection — the reason a code gets scanned at a
+      counter) and the public page behind a chip, with a hint that it needs one
+- [x] Calendar `.ics` exports as a timed 09:00 `Asia/Manila` event with an
+      explicit `VTIMEZONE` (all-day events alarm at local midnight) plus 30-,
+      7- and 1-day alarms
+- [x] Home-screen widget: `home_widget` pushes three values, a native
+      `RemoteViews` provider renders them, tapping opens the app;
+      `previewLayout` on Android 12+, the launcher icon below it
+- [x] Tests: calendar export, widget values, update-service ETag round-trip,
+      WCAG AA contrast group
+- [x] Welcome scene auto-dismisses on returning launches (`welcome_seen` was
+      written but never used); the first launch still waits for Skip
+- [ ] Pin the widget once on a physical phone and capture a screenshot — adb
+      cannot add a widget to the launcher, so this needs a human tap
+- [ ] Finish the real-device accessibility pass: reach the QR/share
+      content-desc labels on document detail at 200% text, and hear TalkBack
+      speech (its own tutorial kept stealing the taps in the automated run)
+- [ ] At 200% text the welcome scene's promise chips sit below the fold; it
+      scrolls, so nothing is unreachable — decide whether to shrink it there
+
+### Settings cleanup — 2026-11-12
+
+- [x] Dropped the manual "Check for updates" control. The silent, once-a-day
+      `scheduledUpdateProvider` in `main()` is now the only update path, and the
+      result notice on Home still reports an accepted payload.
+- [x] Dropped "Replay introduction & disclaimer" and the now-unused
+      `AppSettings.resetFirstRun()`; the disclaimer, privacy note and about page
+      stay reachable from their own Settings rows.
+- [x] Removed the six strings the two controls used from both ARBs, and the
+      Settings goldens at 200% were regenerated for the shorter card.
+- [x] Added the acquired / not-yet segmented filter to Documents, with the
+      empty-state message following the filter instead of blaming a search.
+
+### Home restructure — 2026-11-12
+
+- [x] `lib/core/categories.dart`: ten curated categories (IDs, civil registry,
+      work, driving, business, benefits, senior/PWD/solo parent, travel, land,
+      taxes) with their own icons and tag sets; the tag dump moved to Documents.
+- [x] Documents accepts `?tags=a,b,c` (categories) as well as `?tag=a` (chip),
+      and its empty state follows the filter.
+- [x] Popular-document chips under Home's search field: NBI, PSA birth, TIN, SSS.
+- [x] `BundleCard` shared by Home and the new `/bundles` list: bar hidden until
+      started, two lines reserved for the title, six bundles on Home.
+- [x] Distinct bundle icons for business, overseas travel and student-driver.
+- [x] "Updated <date> • Offline" on Home and "Last checked <date>" on bundles,
+      read from `generated_at` and `last_verified`.
+- [x] Profile chip: tooltip plus a sheet header explaining the switcher.
+- [x] Goldens at 200% regenerated; the accessibility and golden walkers now
+      scroll the lazily built home list instead of assuming the card exists.

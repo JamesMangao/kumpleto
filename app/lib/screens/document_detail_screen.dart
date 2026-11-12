@@ -94,6 +94,7 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
               context,
               title: document.name.localized(context),
               page: documentPageUri(document.id),
+              deepLink: documentDeepLink(document.id),
             ),
           ),
           IconButton(
@@ -220,10 +221,10 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
                         onPressed: () => _confirmReset(document),
                         child: Text(
                           l10n.docReset,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
-                            color: AppTheme.primaryTeal,
+                            color: accentColorOf(context),
                           ),
                         ),
                       ),
@@ -338,6 +339,8 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
                               width: 24,
                               height: 24,
                               decoration: const BoxDecoration(
+                                // Filled step badge: white numeral needs the
+                                // brand fill, not the lifted accent.
                                 color: AppTheme.primaryTeal,
                                 shape: BoxShape.circle,
                               ),
@@ -404,12 +407,12 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
                         ),
                         decoration: BoxDecoration(
                           color: isDark
-                              ? const Color(0xFF19332A)
+                              ? const Color(0xFF16283F)
                               : const Color(0xFFE8F4F0),
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
                             color: isDark
-                                ? const Color(0xFF2C5546)
+                                ? const Color(0xFF2A4A6B)
                                 : const Color(0xFFC7E2D8),
                             width: 1.0,
                           ),
@@ -421,7 +424,7 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
                               Icons.map_outlined,
                               size: 18,
                               color: isDark
-                                  ? const Color(0xFF5ED6B3)
+                                  ? AppTheme.accentDark
                                   : AppTheme.primaryTeal,
                             ),
                             const SizedBox(width: 8),
@@ -431,7 +434,7 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
                                 fontSize: 13,
                                 fontWeight: FontWeight.w700,
                                 color: isDark
-                                    ? const Color(0xFF8CEFD0)
+                                    ? AppTheme.accentDark
                                     : AppTheme.primaryTeal,
                               ),
                             ),
@@ -440,7 +443,7 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
                               Icons.arrow_outward_rounded,
                               size: 14,
                               color: isDark
-                                  ? const Color(0xFF8CEFD0)
+                                  ? AppTheme.accentDark
                                   : AppTheme.primaryTeal,
                             ),
                           ],
@@ -484,19 +487,19 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
                         ),
                         child: Row(
                           children: [
-                            const Icon(
+                            Icon(
                               Icons.verified_rounded,
                               size: 16,
-                              color: AppTheme.primaryTeal,
+                              color: accentColorOf(context),
                             ),
                             const SizedBox(width: 8),
                             Expanded(
                               child: Text(
                                 l10n.docFirstTimeFree,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w700,
-                                  color: AppTheme.primaryTeal,
+                                  color: accentColorOf(context),
                                 ),
                               ),
                             ),
@@ -534,20 +537,20 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
                   children: [
                     for (final id in document.dependsOn)
                       ActionChip(
-                        avatar: const Icon(
+                        avatar: Icon(
                           Icons.description_outlined,
                           size: 16,
-                          color: AppTheme.primaryTeal,
+                          color: accentColorOf(context),
                         ),
                         label: Text(
                           data?.document(id)?.name.localized(context) ?? id,
                         ),
                         backgroundColor: isDark
-                            ? const Color(0xFF1B2A23)
+                            ? const Color(0xFF17223A)
                             : const Color(0xFFEAF5F1),
                         side: BorderSide(
                           color: isDark
-                              ? const Color(0xFF2E453A)
+                              ? const Color(0xFF243352)
                               : const Color(0xFFD4E8E0),
                         ),
                         onPressed: () => context.push('/doc/$id'),
@@ -651,8 +654,8 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
                         : () => _confirmReset(document),
                     child: Text(
                       l10n.docReset,
-                      style: const TextStyle(
-                        color: AppTheme.primaryTeal,
+                      style: TextStyle(
+                        color: accentColorOf(context),
                         fontWeight: FontWeight.w600,
                         fontSize: 14,
                         decoration: TextDecoration.underline,
@@ -674,7 +677,7 @@ class _DocumentDetailScreenState extends ConsumerState<DocumentDetailScreen> {
             border: Border(
               top: BorderSide(
                 color: isDark
-                    ? const Color(0xFF24382F)
+                    ? const Color(0xFF1F2C46)
                     : const Color(0xFFE2EDE7),
                 width: 1.0,
               ),
@@ -800,13 +803,13 @@ class _RequirementItem extends ConsumerWidget {
         _BadgePill(
           label: l10n.docOriginal,
           bg: isDark ? const Color(0xFF1E332A) : const Color(0xFFE2F0EB),
-          fg: isDark ? const Color(0xFF8AE0C4) : AppTheme.primaryTeal,
+          fg: isDark ? AppTheme.accentDark : AppTheme.primaryTeal,
         ),
       if (requirement.photocopies > 0)
         _BadgePill(
           label: l10n.docPhotocopies(requirement.photocopies),
           bg: isDark ? const Color(0xFF1E332A) : const Color(0xFFE2F0EB),
-          fg: isDark ? const Color(0xFF8AE0C4) : AppTheme.primaryTeal,
+          fg: isDark ? AppTheme.accentDark : AppTheme.primaryTeal,
         ),
       if (requirement.optional)
         _BadgePill(
@@ -917,13 +920,13 @@ class _MetaPill extends StatelessWidget {
           color: isDark ? const Color(0xFF1D2E27) : const Color(0xFFEAF5F1),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isDark ? const Color(0xFF2C4439) : const Color(0xFFD4E8E0),
+            color: isDark ? const Color(0xFF243352) : const Color(0xFFD4E8E0),
           ),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: 14, color: AppTheme.primaryTeal),
+            Icon(icon, size: 14, color: accentColorOf(context)),
             const SizedBox(width: 6),
             Flexible(
               child: Text(
@@ -933,7 +936,7 @@ class _MetaPill extends StatelessWidget {
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
                   color: isDark
-                      ? const Color(0xFF8AE0C4)
+                      ? AppTheme.accentDark
                       : AppTheme.primaryTeal,
                 ),
               ),
@@ -1067,10 +1070,10 @@ class _AcquiredStickyBar extends ConsumerWidget {
             document.validityMonths! > 0
         ? IconButton(
             tooltip: l10n.docCalendarAction,
-            icon: const Icon(
+            icon: Icon(
               Icons.event_available_outlined,
               size: 20,
-              color: AppTheme.primaryTeal,
+              color: accentColorOf(context),
             ),
             onPressed: () => _addExpiryToCalendar(context, l10n, acquiredAt),
           )
@@ -1080,10 +1083,10 @@ class _AcquiredStickyBar extends ConsumerWidget {
         document.validityMonths != null && document.validityMonths! > 0
         ? IconButton(
             tooltip: l10n.docSetDate,
-            icon: const Icon(
+            icon: Icon(
               Icons.edit_calendar_outlined,
               size: 20,
-              color: AppTheme.primaryTeal,
+              color: accentColorOf(context),
             ),
             onPressed: () async {
               final picked = await showDatePicker(
@@ -1108,9 +1111,9 @@ class _AcquiredStickyBar extends ConsumerWidget {
         color: AppTheme.primaryTeal.withValues(alpha: 0.15),
         shape: BoxShape.circle,
       ),
-      child: const Icon(
+      child: Icon(
         Icons.check_circle_rounded,
-        color: AppTheme.primaryTeal,
+        color: accentColorOf(context),
         size: 22,
       ),
     );
@@ -1131,10 +1134,10 @@ class _AcquiredStickyBar extends ConsumerWidget {
           validity == null
               ? l10n.docAcquiredBadge
               : '${l10n.docAcquiredBadge} · $validity',
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 11.5,
             fontWeight: FontWeight.w700,
-            color: AppTheme.primaryTeal,
+            color: accentColorOf(context),
           ),
         ),
       ],
@@ -1213,7 +1216,9 @@ class _AcquiredStickyBar extends ConsumerWidget {
               children: [
                 Expanded(child: alreadyHave),
                 const SizedBox(width: 12),
-                markButton,
+                // Flexible so a long label wraps instead of pushing the row
+                // past the sticky bar on a narrow phone.
+                Flexible(child: markButton),
               ],
             );
     }
@@ -1253,18 +1258,18 @@ class _PlaceStrip extends ConsumerWidget {
         color: isDark ? const Color(0xFF1D2E27) : AppTheme.mintContainerLight,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: isDark ? const Color(0xFF2C4439) : const Color(0xFFD4E8E0),
+          color: isDark ? const Color(0xFF243352) : const Color(0xFFD4E8E0),
         ),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
+          Padding(
             padding: EdgeInsets.only(top: 3),
             child: Icon(
               Icons.place_outlined,
               size: 18,
-              color: AppTheme.primaryTeal,
+              color: accentColorOf(context),
             ),
           ),
           const SizedBox(width: 10),
@@ -1366,7 +1371,7 @@ class _BagCheckItemState extends State<_BagCheckItem> {
                 widget.icon,
                 size: 20,
                 color: _checked
-                    ? AppTheme.primaryTeal
+                    ? accentColorOf(context)
                     : (isDark ? Colors.white60 : Colors.black54),
               ),
               const SizedBox(width: 10),
