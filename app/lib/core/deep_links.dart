@@ -79,6 +79,15 @@ String? initialDeepLinkPath() {
 Uri documentPageUri(String documentId) =>
     Uri.parse('${_siteBase()}/doc/$documentId');
 
+/// In-app link for a document (`kumpleto://doc/<id>`), for a reader who
+/// already has Kumpleto installed.
+Uri documentDeepLink(String documentId) =>
+    Uri.parse('$kumpletoDeepLinkScheme://doc/$documentId');
+
+/// In-app link for a bundle (`kumpleto://bundle/<id>`).
+Uri bundleDeepLink(String bundleId) =>
+    Uri.parse('$kumpletoDeepLinkScheme://bundle/$bundleId');
+
 /// Public page for a bundle.
 Uri bundlePageUri(String bundleId) =>
     Uri.parse('${_siteBase()}/bundle/$bundleId');

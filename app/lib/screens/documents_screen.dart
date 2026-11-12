@@ -12,6 +12,12 @@ import '../widgets/shared.dart';
 import '../widgets/validity.dart';
 import 'scaffold_with_nav.dart';
 
+/// Which documents to show, based on whether the reader already has them.
+///
+/// Derived from the same checklist the cards read, so marking a document
+/// acquired on its own screen moves it between these filters immediately.
+enum _AcquiredFilter { all, acquired, pending }
+
 /// Documents screen matching mockup 57dbaf1b-61d1-4044-8f0e-1d4b292a8522.jpg.
 class DocumentsScreen extends ConsumerStatefulWidget {
   const DocumentsScreen({super.key});
@@ -23,8 +29,9 @@ class DocumentsScreen extends ConsumerStatefulWidget {
 class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
   final TextEditingController _searchController = TextEditingController();
   String _query = '';
-  String? _tag;
+  Set<String> _tags = const {};
   String? _agency;
+  var _acquired = _AcquiredFilter.all;
   var _seeded = false;
 
   @override
@@ -32,14 +39,22 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
     super.didChangeDependencies();
     final params = GoRouterState.of(context).uri.queryParameters;
     final query = params['q'];
-    final tag = params['tag'];
-    if (!_seeded || query != null || tag != null) {
+    // A home category sends several tags at once (`tags=a,b,c`); a single tag
+    // chip sends `tag=a`. Both end up as the same set.
+    final rawTags = params['tags'] ?? params['tag'];
+    if (!_seeded || query != null || rawTags != null) {
       _seeded = true;
       if (query != null && query != _query) {
         _query = query;
         _searchController.text = query;
       }
-      if (tag != null && tag != _tag) _tag = tag;
+      if (rawTags != null) {
+        final tags = {
+          for (final tag in rawTags.split(','))
+            if (tag.trim().isNotEmpty) tag.trim(),
+        };
+        if (tags.isNotEmpty) _tags = tags;
+      }
     }
   }
 
@@ -51,6 +66,15 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
 
   void _toggle(void Function() change) {
     setState(change);
+  }
+
+  bool _matchesAcquired(Document document) {
+    if (_acquired == _AcquiredFilter.all) return true;
+    final acquired = isDocumentAcquired(
+      document,
+      checkedFor(ref, document.id),
+    );
+    return _acquired == _AcquiredFilter.acquired ? acquired : !acquired;
   }
 
   @override
@@ -72,8 +96,9 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
     // tags and the agency in both languages all count (see data/search.dart).
     final filtered = [
       for (final document in documents)
-        if ((_tag == null || document.tags.contains(_tag)) &&
+        if ((_tags.isEmpty || document.tags.any(_tags.contains)) &&
             (_agency == null || document.agencyId == _agency) &&
+            _matchesAcquired(document) &&
             documentMatches(
               document,
               query: _query,
@@ -114,7 +139,7 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
                         ),
                   filled: true,
                   fillColor: isDark
-                      ? const Color(0xFF1B2822)
+                      ? const Color(0xFF17223A)
                       : const Color(0xFFEFF5F2),
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 20,
@@ -130,11 +155,41 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(24),
-                    borderSide: const BorderSide(
-                      color: AppTheme.primaryTeal,
+                    borderSide: BorderSide(
+                      color: accentColorOf(context),
                       width: 1.5,
                     ),
                   ),
+                ),
+              ),
+            ),
+
+            // Acquired / not-yet filter: the checklist's own state, kept
+            // apart from the tag and agency chips below so the two never
+            // argue about what "All" means.
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 6),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: SegmentedButton<_AcquiredFilter>(
+                  showSelectedIcon: false,
+                  segments: [
+                    ButtonSegment(
+                      value: _AcquiredFilter.all,
+                      label: Text(l10n.documentsFilterAll),
+                    ),
+                    ButtonSegment(
+                      value: _AcquiredFilter.acquired,
+                      label: Text(l10n.documentsFilterAcquired),
+                    ),
+                    ButtonSegment(
+                      value: _AcquiredFilter.pending,
+                      label: Text(l10n.documentsFilterPending),
+                    ),
+                  ],
+                  selected: {_acquired},
+                  onSelectionChanged: (selection) =>
+                      _toggle(() => _acquired = selection.first),
                 ),
               ),
             ),
@@ -152,34 +207,39 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
                     Padding(
                       padding: const EdgeInsets.only(right: 8),
                       child: FilterChip(
-                        label: Text(l10n.documentsFilterAll),
-                        selected: _tag == null && _agency == null,
+                        // "All" already means "any status" in the segmented
+                        // control above, so this chip says what it actually
+                        // clears: any tag and any agency.
+                        label: Text(l10n.documentsFilterAny),
+                        selected: _tags.isEmpty && _agency == null,
                         showCheckmark: false,
                         selectedColor: AppTheme.primaryTeal,
                         backgroundColor: isDark
-                            ? const Color(0xFF1A2722)
+                            ? const Color(0xFF17223A)
                             : Colors.white,
                         labelStyle: TextStyle(
-                          color: (_tag == null && _agency == null)
+                          color: (_tags.isEmpty && _agency == null)
                               ? Colors.white
                               : (isDark
                                     ? Colors.white70
                                     : const Color(0xFF1B2E26)),
-                          fontWeight: (_tag == null && _agency == null)
+                          fontWeight: (_tags.isEmpty && _agency == null)
                               ? FontWeight.w700
                               : FontWeight.w500,
                         ),
                         side: BorderSide(
-                          color: (_tag == null && _agency == null)
+                          color: (_tags.isEmpty && _agency == null)
                               ? AppTheme.primaryTeal
                               : (isDark
-                                    ? const Color(0xFF2B3D35)
+                                    ? const Color(0xFF243352)
                                     : const Color(0xFFD6E3DD)),
                         ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        onSelected: (_) => _toggle(() => _tag = _agency = null),
+                        onSelected: (_) => _toggle(
+                          () => _tags = const {},
+                        ),
                       ),
                     ),
                     for (final agencyId in agencies)
@@ -194,7 +254,7 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
                           showCheckmark: false,
                           selectedColor: AppTheme.primaryTeal,
                           backgroundColor: isDark
-                              ? const Color(0xFF1A2722)
+                              ? const Color(0xFF17223A)
                               : Colors.white,
                           labelStyle: TextStyle(
                             color: _agency == agencyId
@@ -210,7 +270,7 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
                             color: _agency == agencyId
                                 ? AppTheme.primaryTeal
                                 : (isDark
-                                      ? const Color(0xFF2B3D35)
+                                      ? const Color(0xFF243352)
                                       : const Color(0xFFD6E3DD)),
                           ),
                           shape: RoundedRectangleBorder(
@@ -226,34 +286,35 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
                         padding: const EdgeInsets.only(right: 8),
                         child: FilterChip(
                           label: Text(tag),
-                          selected: _tag == tag,
+                          selected: _tags.contains(tag),
                           showCheckmark: false,
                           selectedColor: AppTheme.primaryTeal,
                           backgroundColor: isDark
-                              ? const Color(0xFF1A2722)
+                              ? const Color(0xFF17223A)
                               : Colors.white,
                           labelStyle: TextStyle(
-                            color: _tag == tag
+                            color: _tags.contains(tag)
                                 ? Colors.white
                                 : (isDark
                                       ? Colors.white70
                                       : const Color(0xFF1B2E26)),
-                            fontWeight: _tag == tag
+                            fontWeight: _tags.contains(tag)
                                 ? FontWeight.w700
                                 : FontWeight.w500,
                           ),
                           side: BorderSide(
-                            color: _tag == tag
+                            color: _tags.contains(tag)
                                 ? AppTheme.primaryTeal
                                 : (isDark
-                                      ? const Color(0xFF2B3D35)
+                                      ? const Color(0xFF243352)
                                       : const Color(0xFFD6E3DD)),
                           ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          onSelected: (selected) =>
-                              _toggle(() => _tag = selected ? tag : null),
+                          onSelected: (selected) => _toggle(
+                            () => _tags = selected ? {tag} : const {},
+                          ),
                         ),
                       ),
                   ],
@@ -293,7 +354,9 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
                       child: Padding(
                         padding: const EdgeInsets.all(24),
                         child: Text(
-                          l10n.documentsNoResults,
+                          _acquired == _AcquiredFilter.all
+                              ? l10n.documentsNoResults
+                              : l10n.documentsFilterEmpty,
                           textAlign: TextAlign.center,
                           style: theme.textTheme.bodyMedium?.copyWith(
                             color: theme.colorScheme.onSurfaceVariant,
@@ -431,18 +494,18 @@ class _DocumentModernCard extends ConsumerWidget {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Icon(
+                          Icon(
                             Icons.check_circle_rounded,
                             size: 13,
-                            color: AppTheme.primaryTeal,
+                            color: accentColorOf(context),
                           ),
                           const SizedBox(width: 4),
                           Text(
                             l10n.docAcquiredBadge,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 11,
                               fontWeight: FontWeight.w700,
-                              color: AppTheme.primaryTeal,
+                              color: accentColorOf(context),
                             ),
                           ),
                         ],
@@ -478,9 +541,9 @@ class _DocumentModernCard extends ConsumerWidget {
                     child: LinearProgressIndicator(
                       value: fraction,
                       backgroundColor: isDark
-                          ? const Color(0xFF24362E)
+                          ? const Color(0xFF1F2C46)
                           : const Color(0xFFE2ECE7),
-                      color: AppTheme.primaryTeal,
+                      color: accentColorOf(context),
                     ),
                   ),
                 ),

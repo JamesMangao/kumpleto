@@ -308,6 +308,7 @@ class DataBundle {
   DataBundle({
     required this.schemaVersion,
     required this.dataVersion,
+    this.generatedAt,
     required this.agencies,
     required this.documents,
     required this.bundles,
@@ -315,6 +316,10 @@ class DataBundle {
 
   final int schemaVersion;
   final String dataVersion;
+
+  /// When the feed was compiled. Shown on Home so a reader can judge how fresh
+  /// the requirements are before trusting them.
+  final DateTime? generatedAt;
   final List<Agency> agencies;
   final List<Document> documents;
   final List<Bundle> bundles;
@@ -337,6 +342,7 @@ class DataBundle {
   DataBundle filled(Map<String, LocalizedText> values) => DataBundle(
     schemaVersion: schemaVersion,
     dataVersion: dataVersion,
+    generatedAt: generatedAt,
     agencies: agencies,
     documents: [for (final document in documents) document.filled(values)],
     bundles: bundles,
@@ -355,6 +361,7 @@ class DataBundle {
     return DataBundle(
       schemaVersion: _int(json['schema_version']) ?? 0,
       dataVersion: _str(json['data_version']) ?? 'unknown',
+      generatedAt: DateTime.tryParse(_str(json['generated_at']) ?? ''),
       agencies: parseAll(json['agencies'], Agency.fromJson),
       documents: parseAll(json['documents'], Document.fromJson),
       bundles: parseAll(json['bundles'], Bundle.fromJson),

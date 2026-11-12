@@ -72,6 +72,21 @@ void main() {
   });
 
   group('Welcome scene', () {
+    testWidgets('a returning launch dismisses itself', (tester) async {
+      // `welcome_seen` was written on the first launch but never read to end
+      // the scene, so every cold start needed a tap. A reader who has already
+      // met it should not have to.
+      await pumpKumpleto(
+        tester,
+        showWelcome: true,
+        settle: false,
+        prefs: const {'welcome_seen': true},
+      );
+
+      expect(find.text('Skip'), findsNothing);
+      expect(find.text('KUMPLETO'), findsNothing);
+    });
+
     testWidgets('plays on launch, welcome stays until dismissed', (tester) async {
       await pumpKumpleto(tester, showWelcome: true, settle: false);
 
@@ -79,7 +94,7 @@ void main() {
       expect(find.text('KUMPLETO'), findsOneWidget);
       expect(find.text('Skip'), findsOneWidget);
 
-      // Welcome stays until user taps Skip (no auto-alis)
+      // First launch: the scene holds its last frame until Skip.
       await tester.tap(find.text('Skip'));
       await tester.pumpAndSettle();
       expect(find.text('KUMPLETO'), findsNothing);

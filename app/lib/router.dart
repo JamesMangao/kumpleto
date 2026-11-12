@@ -5,6 +5,7 @@ import 'core/deep_links.dart';
 import 'core/motion.dart';
 import 'core/settings.dart';
 import 'screens/bundle_detail_screen.dart';
+import 'screens/bundles_screen.dart';
 import 'screens/disclaimer_screen.dart';
 import 'screens/document_detail_screen.dart';
 import 'screens/documents_screen.dart';
@@ -92,6 +93,11 @@ GoRouter buildRouter(AppSettings settings, {String? initialLocation}) {
           state.pageKey,
           BundleDetailScreen(bundleId: state.pathParameters['id'] ?? ''),
         ),
+      ),
+      GoRoute(
+        path: '/bundles',
+        pageBuilder: (context, state) =>
+            _fadeThrough(state.pageKey, const BundlesScreen()),
       ),
       GoRoute(
         path: '/location',

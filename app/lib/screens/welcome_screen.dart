@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -11,13 +12,13 @@ import '../l10n/app_localizations.dart';
 /// Shows the welcome scene on top of the app.
 ///
 /// - First launch: full ~3s sequence (checklist ticks off, then a
-///   "KUMPLETO" rubber stamp lands).
-/// - Later launches / reduced motion: ~0.7s compact brand fade. The
-///   first-launch flag lives in SharedPreferences, read here, so main.dart
-///   needs no changes.
+///   "KUMPLETO" rubber stamp lands), which holds its last frame until the
+///   reader skips it. The first-launch flag lives in SharedPreferences, read
+///   here, so main.dart needs no changes.
+/// - Later launches / reduced motion: ~0.7s compact brand fade that ends by
+///   itself, so a reader who has already met the scene never has to tap
+///   through it again.
 /// - Skip button is available immediately; tapping anywhere also skips.
-/// - The scene never leaves on its own: it holds its last frame until the
-///   reader skips it.
 class WelcomeGate extends ConsumerStatefulWidget {
   const WelcomeGate({
     super.key,
@@ -44,6 +45,7 @@ class _WelcomeGateState extends ConsumerState<WelcomeGate>
   static const _seenKey = 'welcome_seen';
 
   late final AnimationController _controller = AnimationController(vsync: this);
+  Timer? _autoDismiss;
   bool _started = false;
   bool _finished = false;
   bool _dismissing = false;
@@ -66,6 +68,18 @@ class _WelcomeGateState extends ConsumerState<WelcomeGate>
         ? const Duration(milliseconds: 700)
         : const Duration(milliseconds: 3000);
     _controller.forward();
+
+    if (_compact) {
+      // Returning readers — and anyone whose system asks for reduced motion —
+      // get the short brand fade and no tap: waiting for one was friction on
+      // every single launch. The first launch keeps its full sequence and its
+      // Skip, because that moment is the point of the scene.
+      _autoDismiss = Timer(
+        (_controller.duration ?? Duration.zero) +
+            Motion.of(context, Motion.fast),
+        _skip,
+      );
+    }
   }
 
   /// The scene never hands over on its own: the sequence settles and waits
@@ -82,6 +96,7 @@ class _WelcomeGateState extends ConsumerState<WelcomeGate>
 
   @override
   void dispose() {
+    _autoDismiss?.cancel();
     _controller.dispose();
     super.dispose();
   }
@@ -188,7 +203,13 @@ class _WelcomeScene extends StatelessWidget {
     final chips = _ease(0.62, 0.78);
     final stampT = compact ? 1.0 : _segment(0.58, 0.72);
 
-    final cardWidth = math.min(320.0, MediaQuery.sizeOf(context).width - 48);
+    // The very first frame can arrive before the view has reported its size
+    // (width 0), and `width - 48` then falls negative — a negative card width
+    // trips a BoxConstraints assertion and paints the red error box over the
+    // whole scene. Keeping a floor makes the frame harmless; the real size
+    // arrives on the next frame and rebuilds this widget.
+    final viewWidth = MediaQuery.maybeSizeOf(context)?.width ?? 0;
+    final cardWidth = math.min(320.0, math.max(200.0, viewWidth - 48));
 
     return Opacity(
       opacity: fadeIn,

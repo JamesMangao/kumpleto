@@ -56,8 +56,14 @@ void main() {
   testWidgets('bundle detail at 200% text scale', (tester) async {
     phoneAt200(tester);
     await pumpKumpleto(tester);
+    // The home list builds lazily, so at 200% the card does not exist until
+    // the list is scrolled to it.
     final bundle = find.text('Job Hunt Pack');
-    await tester.ensureVisible(bundle);
+    await tester.scrollUntilVisible(
+      bundle,
+      250,
+      scrollable: find.byType(Scrollable).first,
+    );
     await tester.pumpAndSettle();
     await tester.tap(bundle);
     await tester.pumpAndSettle();

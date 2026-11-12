@@ -107,7 +107,7 @@ AppBar unofficialAppBar(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
               decoration: BoxDecoration(
                 color: isDark
-                    ? const Color(0xFF23352C)
+                    ? const Color(0xFF1F2C46)
                     : const Color(0xFFE2EFE9),
                 borderRadius: BorderRadius.circular(12),
               ),
@@ -117,7 +117,7 @@ AppBar unofficialAppBar(
                   fontSize: 11,
                   fontWeight: FontWeight.w600,
                   color: isDark
-                      ? const Color(0xFF8CE0C4)
+                      ? AppTheme.accentDark
                       : AppTheme.primaryTeal,
                 ),
               ),

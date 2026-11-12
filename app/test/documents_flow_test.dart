@@ -52,6 +52,31 @@ void main() {
     expect(find.text(l10n.docAcquiredNotice), findsOneWidget);
   });
 
+  testWidgets('the acquired filter follows what the checklist says', (
+    tester,
+  ) async {
+    await pumpKumpleto(tester);
+    await openNbi(tester);
+    final l10n = l10nOf(tester);
+
+    await tester.tap(find.text(l10n.docMarkAcquired));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip(l10n.back));
+    await tester.pumpAndSettle();
+
+    // The card badge also says "Acquired"; the segment is the first match.
+    await tester.tap(find.text(l10n.documentsFilterAcquired).first);
+    await tester.pumpAndSettle();
+    expect(find.text('NBI Clearance'), findsOneWidget);
+    expect(find.text('Barangay Clearance'), findsNothing);
+
+    await tester.tap(find.text(l10n.documentsFilterPending));
+    await tester.pumpAndSettle();
+    expect(find.text('NBI Clearance'), findsNothing);
+    // Others remain, so the list is filtered rather than emptied.
+    expect(find.text(l10n.documentsFilterEmpty), findsNothing);
+  });
+
   testWidgets('the search box matches tags, not only titles', (tester) async {
     await pumpKumpleto(tester);
     final l10n = l10nOf(tester);

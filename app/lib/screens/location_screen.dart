@@ -185,7 +185,7 @@ class _LocationScreenState extends ConsumerState<LocationScreen> {
                     profile.isMe ? l10n.profileMe : profile.name,
                   ),
                   style: theme.textTheme.bodySmall?.copyWith(
-                    color: AppTheme.primaryTeal,
+                    color: accentColorOf(context),
                     fontWeight: FontWeight.w700,
                   ),
                 ),

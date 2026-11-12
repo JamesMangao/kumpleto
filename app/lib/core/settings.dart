@@ -61,13 +61,6 @@ class AppSettings extends ChangeNotifier {
     await prefs.setBool(PrefsKeys.firstRunDone, true);
   }
 
-  Future<void> resetFirstRun() async {
-    firstRunDone = false;
-    notifyListeners();
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(PrefsKeys.firstRunDone, false);
-  }
-
   Future<void> setLanguage(String value) async {
     language = value;
     notifyListeners();

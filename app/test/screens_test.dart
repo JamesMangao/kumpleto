@@ -18,17 +18,25 @@ void main() {
       AppLocalizations.of(tester.element(find.byType(Scaffold).first))!;
 
   group('Home', () {
-    testWidgets('shows the bundle with aggregate progress and tag chips',
-        (tester) async {
+    testWidgets('shows bundles, categories and no empty progress bars', (
+      tester,
+    ) async {
       await pumpKumpleto(tester);
       final l10n = l10nOf(tester);
 
       expect(find.text('Job Hunt Pack'), findsOneWidget);
-      // 3 requirements in nbi-clearance, none elsewhere → "0 of 3".
-      expect(find.text(l10n.progressOf(0, 3)), findsWidgets);
+      // Nothing started yet, so no "0 of 3" bar is drawn at all.
+      expect(find.text(l10n.progressOf(0, 3)), findsNothing);
       expect(find.text(l10n.homeBundles), findsOneWidget);
-      expect(find.text('job-hunt'), findsWidgets);
-      // The section title and the "All documents" tile share the string.
+      // Curated categories replaced the raw tag dump.
+      expect(find.text(l10n.homeCategories), findsOneWidget);
+      expect(find.text('job-hunt'), findsNothing);
+      // The footer tile is below the fold now that categories come first.
+      await tester.scrollUntilVisible(
+        find.text(l10n.homeAllDocuments),
+        300,
+        scrollable: find.byType(Scrollable).first,
+      );
       expect(find.text(l10n.homeAllDocuments), findsWidgets);
     });
 
@@ -241,7 +249,7 @@ void main() {
   });
 
   group('Settings', () {
-    testWidgets('keeps the update button and hides the internal data details', (
+    testWidgets('shows the app version and hides the update bookkeeping', (
       tester,
     ) async {
       await pumpKumpleto(tester);
@@ -249,10 +257,10 @@ void main() {
       await tester.pumpAndSettle();
       final l10n = l10nOf(tester);
 
-      // The reminders section sits above the data card, so the card starts
-      // below the fold.
-      await scrollIntoView(tester, find.text(l10n.settingsCheckForUpdates));
-      expect(find.text(l10n.settingsCheckForUpdates), findsOneWidget);
+      // Updates run silently in the background now, so nothing on this screen
+      // asks the reader to press anything for them.
+      expect(find.text('Check for updates'), findsNothing);
+      expect(find.text('Replay introduction & disclaimer'), findsNothing);
 
       // Data version, source and last-check are bookkeeping for the
       // maintainer — a normal user never needs them on this screen.
@@ -383,13 +391,6 @@ void main() {
       await tester.pumpAndSettle();
       final l10n = l10nOf(tester);
 
-      final updateButton = find.widgetWithText(
-        OutlinedButton,
-        l10n.settingsCheckForUpdates,
-      );
-      await scrollIntoView(tester, updateButton);
-      expect(updateButton, findsOneWidget);
-
       // Expiry reminders live above the data card as a switch, not a row.
       final reminderSwitch = find.widgetWithText(
         SwitchListTile,
@@ -507,45 +508,6 @@ void main() {
       expect(find.byType(InfoPage), findsOneWidget);
     });
 
-    testWidgets('checking for updates finishes and reports a result', (
-      tester,
-    ) async {
-      await pumpKumpleto(tester);
-      await tester.tap(find.text(l10nOf(tester).navSettings));
-      await tester.pumpAndSettle();
-      final l10n = l10nOf(tester);
-
-      final button = find.widgetWithText(
-        OutlinedButton,
-        l10n.settingsCheckForUpdates,
-      );
-      await scrollIntoView(tester, button);
-      await tester.tap(button);
-      // The mocked http client answers inside the first pump, so the
-      // "Checking…" label is already gone — assert the outcome instead.
-      await tester.pumpAndSettle();
-      expect(
-        find.widgetWithText(OutlinedButton, l10n.settingsCheckForUpdates),
-        findsOneWidget,
-        reason: 'the button never came back from the check',
-      );
-
-      final messages = tester
-          .widgetList<Text>(find.byType(Text))
-          .map((text) => text.data ?? '')
-          .toList();
-      final failurePrefix = l10n.settingsUpdateFailed('');
-      expect(
-        messages.any(
-          (message) =>
-              message == l10n.settingsUpdateDone ||
-              message == l10n.settingsUpToDate ||
-              message.startsWith(failurePrefix),
-        ),
-        isTrue,
-        reason: 'no update result message in: $messages',
-      );
-    });
   });
 
   group('Barangay clearance', () {

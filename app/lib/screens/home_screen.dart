@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../core/categories.dart';
 import '../core/theme.dart';
 import '../data/profiles.dart';
 import '../data/providers.dart';
 import '../data/update_service.dart';
 import '../l10n/app_localizations.dart';
 import '../models/models.dart';
+import '../widgets/bundle_card.dart';
 import '../widgets/shared.dart';
 import 'scaffold_with_nav.dart';
 
@@ -78,6 +80,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 }
 
+/// How many bundles Home shows before "See all >". Six fills three rows and
+/// leaves no card stranded on its own.
+const homeBundleLimit = 6;
+
 class _HomeBody extends ConsumerWidget {
   const _HomeBody({
     required this.bundle,
@@ -96,10 +102,17 @@ class _HomeBody extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final savedLocation = ref.watch(savedLocationProvider);
+    final data = ref.watch(currentDataProvider);
     final documents = ref.watch(documentsProvider);
     final bundles = ref.watch(bundlesProvider);
     final isDark = theme.brightness == Brightness.dark;
     final isFilipino = Localizations.localeOf(context).languageCode == 'fil';
+
+    // The popular-document chips are ids in the code and names in the feed, so
+    // they follow the language of the data.
+    final popularDocuments = [
+      for (final id in popularDocumentIds) ?data?.document(id),
+    ];
 
     // Documents with at least one tick but not finished → "Continue".
     final started = [
@@ -109,12 +122,6 @@ class _HomeBody extends ConsumerWidget {
                 document.requirements.length)
           document,
     ];
-
-    // Collect sorted unique tags.
-    final tags = <String>{
-      for (final document in documents) ...document.tags,
-      for (final b in bundles) ...b.tags,
-    }.toList()..sort();
 
     return ListView(
       padding: const EdgeInsets.only(bottom: 32),
@@ -160,7 +167,7 @@ class _HomeBody extends ConsumerWidget {
               prefixIcon: const Icon(Icons.search, size: 22),
               filled: true,
               fillColor: isDark
-                  ? const Color(0xFF1B2822)
+                  ? const Color(0xFF17223A)
                   : const Color(0xFFEFF5F2),
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 20,
@@ -176,14 +183,84 @@ class _HomeBody extends ConsumerWidget {
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(24),
-                borderSide: const BorderSide(
-                  color: AppTheme.primaryTeal,
+                borderSide: BorderSide(
+                  color: accentColorOf(context),
                   width: 1.5,
                 ),
               ),
             ),
             onSubmitted: (query) =>
                 context.go('/documents?q=${Uri.encodeComponent(query)}'),
+          ),
+        ),
+
+        // The four documents people most often open one at a time. Chips, not
+        // cards: one tap from the search field to the checklist.
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 10, 0, 0),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                for (final doc in popularDocuments)
+                  Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: ActionChip(
+                        avatar: Icon(
+                          popularDocumentIcons[doc.id] ??
+                              Icons.description_outlined,
+                          size: 16,
+                          color: accentColorOf(context),
+                        ),
+                        label: Text(doc.name.localized(context)),
+                        backgroundColor: isDark
+                            ? const Color(0xFF17223A)
+                            : const Color(0xFFEBF5F1),
+                        side: BorderSide(
+                          color: isDark
+                              ? const Color(0xFF243352)
+                              : const Color(0xFFD4E8E0),
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        onPressed: () => context.push('/doc/${doc.id}'),
+                      ),
+                    ),
+              ],
+            ),
+          ),
+        ),
+
+        // How fresh this copy of the requirements is. The app is offline-first,
+        // so the date the feed was compiled is the reader's only way to judge
+        // whether what they are reading still holds.
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
+          child: Row(
+            children: [
+              Icon(
+                Icons.cloud_off_outlined,
+                size: 13,
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+              const SizedBox(width: 6),
+              Expanded(
+                child: Text(
+                  l10n.homeDataUpdated(
+                    bundle.generatedAt == null
+                        ? '—'
+                        : MaterialLocalizations.of(
+                            context,
+                          ).formatMediumDate(bundle.generatedAt!),
+                  ),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    fontSize: 11.5,
+                    color: theme.colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
 
@@ -202,21 +279,21 @@ class _HomeBody extends ConsumerWidget {
                 ),
                 decoration: BoxDecoration(
                   color: isDark
-                      ? const Color(0xFF192721)
+                      ? const Color(0xFF17223A)
                       : const Color(0xFFEBF5F1),
                   borderRadius: BorderRadius.circular(14),
                   border: Border.all(
                     color: isDark
-                        ? const Color(0xFF293F34)
+                        ? const Color(0xFF243352)
                         : const Color(0xFFD4E8E0),
                   ),
                 ),
                 child: Row(
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.location_on_outlined,
                       size: 18,
-                      color: AppTheme.primaryTeal,
+                      color: accentColorOf(context),
                     ),
                     const SizedBox(width: 8),
                     Expanded(
@@ -287,7 +364,7 @@ class _HomeBody extends ConsumerWidget {
         _SectionHeader(
           title: l10n.homeBundles,
           actionLabel: 'See all >',
-          onAction: () => context.go('/documents'),
+          onAction: () => context.push('/bundles'),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -300,10 +377,10 @@ class _HomeBody extends ConsumerWidget {
                 spacing: 12,
                 runSpacing: 12,
                 children: [
-                  for (final b in bundles)
+                  for (final b in bundles.take(homeBundleLimit))
                     SizedBox(
                       width: cardWidth,
-                      child: _BundleGridCard(bundle: b, progress: progress),
+                      child: BundleCard(bundle: b, progress: progress),
                     ),
                 ],
               );
@@ -313,26 +390,28 @@ class _HomeBody extends ConsumerWidget {
 
         const SizedBox(height: 10),
 
-        // Browse by tag section
-        if (tags.isNotEmpty) ...[
-          _SectionHeader(title: l10n.homeTags),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Wrap(
-              spacing: 8,
-              runSpacing: 10,
-              children: [
-                for (final tag in tags)
-                  _TagChipButton(
-                    tag: tag,
-                    onTap: () => context.go(
-                      '/documents?tag=${Uri.encodeComponent(tag)}',
-                    ),
+        // Curated categories
+        _SectionHeader(
+          title: l10n.homeCategories,
+          actionLabel: 'See all >',
+          onAction: () => context.go('/documents'),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Wrap(
+            spacing: 8,
+            runSpacing: 10,
+            children: [
+              for (final category in docCategories)
+                _CategoryChip(
+                  category: category,
+                  onTap: () => context.go(
+                    '/documents?tags=${Uri.encodeComponent(category.tags.join(','))}',
                   ),
-              ],
-            ),
+                ),
+            ],
           ),
-        ],
+        ),
 
         const SizedBox(height: 16),
 
@@ -386,25 +465,27 @@ class _ProfileChip extends ConsumerWidget {
     return Semantics(
       button: true,
       label: l10n.profileSwitcher(label),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(20),
-        onTap: () => _showProfileSheet(context, ref),
+      child: Tooltip(
+        message: l10n.profileSwitcher(label),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(20),
+          onTap: () => _showProfileSheet(context, ref),
         child: Container(
           padding: const EdgeInsets.fromLTRB(10, 6, 8, 6),
           decoration: BoxDecoration(
             color: isDark ? const Color(0xFF1D2E27) : const Color(0xFFEAF5F1),
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-              color: isDark ? const Color(0xFF2C4439) : const Color(0xFFD4E8E0),
+              color: isDark ? const Color(0xFF243352) : const Color(0xFFD4E8E0),
             ),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(
+              Icon(
                 Icons.person_outline,
                 size: 15,
-                color: AppTheme.primaryTeal,
+                color: accentColorOf(context),
               ),
               const SizedBox(width: 5),
               ConstrainedBox(
@@ -417,7 +498,7 @@ class _ProfileChip extends ConsumerWidget {
                     fontSize: 12,
                     fontWeight: FontWeight.w700,
                     color: isDark
-                        ? const Color(0xFF8AE0C4)
+                        ? AppTheme.accentDark
                         : AppTheme.primaryTeal,
                   ),
                 ),
@@ -425,10 +506,11 @@ class _ProfileChip extends ConsumerWidget {
               Icon(
                 Icons.expand_more,
                 size: 15,
-                color: isDark ? const Color(0xFF8AE0C4) : AppTheme.primaryTeal,
+                color: isDark ? AppTheme.accentDark : AppTheme.primaryTeal,
               ),
             ],
           ),
+        ),
         ),
       ),
     );
@@ -448,13 +530,22 @@ Future<void> _showProfileSheet(BuildContext context, WidgetRef ref) {
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 8),
+                child: Text(
+                  l10n.profileSwitcherHint,
+                  style: Theme.of(sheetContext).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(sheetContext).colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              ),
               for (final profile in profiles)
                 ListTile(
                   leading: Icon(
                     profile == active
                         ? Icons.radio_button_checked
                         : Icons.radio_button_unchecked,
-                    color: profile == active ? AppTheme.primaryTeal : null,
+                    color: profile == active ? accentColorOf(context) : null,
                   ),
                   title: Text(profile.isMe ? l10n.profileMe : profile.name),
                   trailing: profile.isMe
@@ -612,10 +703,10 @@ class _SectionHeader extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                 child: Text(
                   actionLabel!,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
-                    color: AppTheme.primaryTeal,
+                    color: accentColorOf(context),
                   ),
                 ),
               ),
@@ -691,18 +782,18 @@ class _ContinueDocCard extends StatelessWidget {
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.check_circle_rounded,
                       size: 13,
-                      color: AppTheme.primaryTeal,
+                      color: accentColorOf(context),
                     ),
                     const SizedBox(width: 4),
                     Text(
                       l10n.docAcquiredBadge,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.w700,
-                        color: AppTheme.primaryTeal,
+                        color: accentColorOf(context),
                       ),
                     ),
                   ],
@@ -724,9 +815,9 @@ class _ContinueDocCard extends StatelessWidget {
                   child: LinearProgressIndicator(
                     value: isAcquired ? 1.0 : fraction,
                     backgroundColor: isDark
-                        ? const Color(0xFF24362E)
+                        ? const Color(0xFF1F2C46)
                         : const Color(0xFFE2ECE7),
-                    color: AppTheme.primaryTeal,
+                    color: accentColorOf(context),
                   ),
                 ),
               ),
@@ -738,120 +829,29 @@ class _ContinueDocCard extends StatelessWidget {
   }
 }
 
-class _BundleGridCard extends ConsumerWidget {
-  const _BundleGridCard({required this.bundle, required this.progress});
+class _CategoryChip extends StatelessWidget {
+  const _CategoryChip({required this.category, required this.onTap});
 
-  final Bundle bundle;
-  final Map<String, Set<String>> progress;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context)!;
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
-    final data = ref.watch(currentDataProvider);
-    final documents = data?.documentsOf(bundle) ?? const [];
-    final totals = bundleProgress(documents: documents, progress: progress);
-
-    return Card(
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-        side: BorderSide(
-          color: isDark ? AppTheme.borderDark : AppTheme.borderLight,
-        ),
-      ),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(16),
-        onTap: () => context.push('/bundle/${bundle.id}'),
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SquircleIcon(
-                    icon: bundleIconData(bundle.icon),
-                    size: 34,
-                    iconSize: 18,
-                  ),
-                  const Icon(Icons.chevron_right, size: 18, color: Colors.grey),
-                ],
-              ),
-              const SizedBox(height: 10),
-              Text(
-                bundle.name.localized(context),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: theme.textTheme.titleSmall?.copyWith(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 13,
-                ),
-              ),
-              const SizedBox(height: 8),
-              ProgressLine(
-                checked: totals.checked,
-                total: totals.total,
-                semanticLabel:
-                    '${bundle.name.localized(context)}, ${l10n.progressOf(totals.checked, totals.total)}',
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _TagChipButton extends StatelessWidget {
-  const _TagChipButton({required this.tag, required this.onTap});
-
-  final String tag;
+  final DocCategory category;
   final VoidCallback onTap;
-
-  IconData _iconForTag(String tag) {
-    final lower = tag.toLowerCase();
-    if (lower.contains('first') || lower.contains('bago')) {
-      return Icons.person_outline;
-    }
-    if (lower.contains('renew') ||
-        lower.contains('bago') ||
-        lower.contains('palit')) {
-      return Icons.autorenew;
-    }
-    if (lower.contains('job') ||
-        lower.contains('trabaho') ||
-        lower.contains('hunt')) {
-      return Icons.work_outline;
-    }
-    if (lower.contains('passport') || lower.contains('travel')) {
-      return Icons.flight_takeoff;
-    }
-    if (lower.contains('driv') ||
-        lower.contains('car') ||
-        lower.contains('license')) {
-      return Icons.directions_car_outlined;
-    }
-    return Icons.sell_outlined;
-  }
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final accent = accentColorOf(context);
     return ActionChip(
-      avatar: Icon(
-        _iconForTag(tag),
-        size: 16,
-        color: isDark ? const Color(0xFF8AE0C4) : AppTheme.primaryTeal,
+      avatar: Icon(category.icon, size: 17, color: accent),
+      label: Text(category.label(Localizations.localeOf(context).languageCode)),
+      labelStyle: TextStyle(
+        fontSize: 12.5,
+        fontWeight: FontWeight.w600,
+        color: isDark ? const Color(0xFFC9ECE0) : AppTheme.primaryDarkTeal,
       ),
-      label: Text(tag),
       backgroundColor: isDark
-          ? const Color(0xFF192721)
+          ? const Color(0xFF17223A)
           : const Color(0xFFEBF5F1),
       side: BorderSide(
-        color: isDark ? const Color(0xFF293F34) : const Color(0xFFD4E8E0),
+        color: isDark ? const Color(0xFF243352) : const Color(0xFFD4E8E0),
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       onPressed: onTap,

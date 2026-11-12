@@ -71,16 +71,16 @@ class InfoPage extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   color: theme.brightness == Brightness.dark
-                      ? const Color(0xFF23352C)
+                      ? const Color(0xFF1F2C46)
                       : const Color(0xFFE2EFE9),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
                   l10n.unofficialBadge,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w700,
-                    color: AppTheme.primaryTeal,
+                    color: accentColorOf(context),
                   ),
                 ),
               ),

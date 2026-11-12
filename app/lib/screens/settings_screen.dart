@@ -7,7 +7,6 @@ import '../core/constants.dart';
 import '../core/settings.dart';
 import '../core/theme.dart';
 import '../data/providers.dart';
-import '../data/update_service.dart';
 import '../l10n/app_localizations.dart';
 import '../widgets/shared.dart';
 import 'scaffold_with_nav.dart';
@@ -23,8 +22,6 @@ class SettingsScreen extends ConsumerStatefulWidget {
 }
 
 class _SettingsScreenState extends ConsumerState<SettingsScreen> {
-  var _checking = false;
-  String? _updateMessage;
   String _appVersion = '';
 
   @override
@@ -49,26 +46,6 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   Future<void> _loadVersion() async {
     final info = await PackageInfo.fromPlatform();
     if (mounted) setState(() => _appVersion = info.version);
-  }
-
-  Future<void> _checkForUpdates() async {
-    final l10n = AppLocalizations.of(context)!;
-    setState(() {
-      _checking = true;
-      _updateMessage = null;
-    });
-    final result = await ref.read(updateServiceProvider).checkNow();
-    if (!mounted) return;
-    setState(() {
-      _checking = false;
-      _updateMessage = switch (result) {
-        UpdateAccepted() => l10n.settingsUpdateDone,
-        UpdateNotModified() => l10n.settingsUpToDate,
-        UpdateInvalid(:final reason) ||
-        UpdateFailed(:final reason) => l10n.settingsUpdateFailed(reason),
-      };
-    });
-    if (result is UpdateAccepted) ref.invalidate(loadedDataProvider);
   }
 
   /// Turning reminders on is the moment to ask the OS: without the permission
@@ -230,7 +207,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                             shape: const StadiumBorder(),
                             side: BorderSide(
                               color: isDark
-                                  ? const Color(0xFF2C3E35)
+                                  ? const Color(0xFF243352)
                                   : const Color(0xFFD4E3DC),
                             ),
                           ),
@@ -318,7 +295,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                             shape: const StadiumBorder(),
                             side: BorderSide(
                               color: isDark
-                                  ? const Color(0xFF2C3E35)
+                                  ? const Color(0xFF243352)
                                   : const Color(0xFFD4E3DC),
                             ),
                           ),
@@ -383,53 +360,6 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 ),
                 child: Column(
                   children: [
-                    // Update check — the data version, source and last-check
-                    // stamp are internal bookkeeping, so they stay out of the
-                    // screen a normal user reads.
-                    Padding(
-                      padding: const EdgeInsets.all(14),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          SizedBox(
-                            width: double.infinity,
-                            child: OutlinedButton.icon(
-                              icon: _checking
-                                  ? const SizedBox(
-                                      width: 16,
-                                      height: 16,
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 2,
-                                      ),
-                                    )
-                                  : const Icon(Icons.sync, size: 18),
-                              label: Text(
-                                _checking
-                                    ? l10n.settingsChecking
-                                    : l10n.settingsCheckForUpdates,
-                              ),
-                              style: OutlinedButton.styleFrom(
-                                shape: const StadiumBorder(),
-                              ),
-                              onPressed: _checking ? null : _checkForUpdates,
-                            ),
-                          ),
-                          if (_updateMessage != null) ...[
-                            const SizedBox(height: 8),
-                            Text(
-                              _updateMessage!,
-                              style: theme.textTheme.bodySmall?.copyWith(
-                                color: AppTheme.primaryTeal,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ],
-                      ),
-                    ),
-
-                    const Divider(height: 1),
-
                     // Reset Progress Item
                     ListTile(
                       contentPadding: const EdgeInsets.symmetric(
@@ -551,33 +481,6 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       ),
                       trailing: const Icon(Icons.chevron_right, size: 18),
                       onTap: () => context.push('/disclaimer'),
-                    ),
-
-                    const Divider(height: 1),
-
-                    // Replay Onboarding & Disclaimer Item
-                    ListTile(
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 14,
-                        vertical: 2,
-                      ),
-                      leading: const SquircleIcon(
-                        icon: Icons.replay_rounded,
-                        size: 36,
-                        iconSize: 20,
-                      ),
-                      title: Text(
-                        l10n.settingsReplayOnboarding,
-                        style: const TextStyle(fontWeight: FontWeight.w700),
-                      ),
-                      subtitle: Text(l10n.settingsReplayOnboardingSubtitle),
-                      trailing: const Icon(Icons.chevron_right, size: 18),
-                      onTap: () async {
-                        await widget.settings.resetFirstRun();
-                        if (context.mounted) {
-                          context.go('/first-run');
-                        }
-                      },
                     ),
 
                     const Divider(height: 1),

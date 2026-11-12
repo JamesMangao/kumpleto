@@ -14,11 +14,24 @@ abstract final class AppTheme {
   static const Color textPrimaryLight = Color(0xFF14241E);
   static const Color textSecondaryLight = Color(0xFF60736C);
 
-  static const Color backgroundDark = Color(0xFF101915);
-  static const Color surfaceCardDark = Color(0xFF18241F);
-  static const Color borderDark = Color(0xFF283A31);
-  static const Color textPrimaryDark = Color(0xFFE4EDE8);
-  static const Color textSecondaryDark = Color(0xFF8CA397);
+  // Dark mode is a deep slate-navy rather than black: pure black made the
+  // cards and the page read as one flat sheet, and the green-black tint left
+  // the whole app looking murky. The steps below keep the same hierarchy the
+  // light theme has (page < card < raised < highest) in the new hue.
+  static const Color backgroundDark = Color(0xFF0C1424);
+  static const Color surfaceCardDark = Color(0xFF151E31);
+  static const Color borderDark = Color(0xFF2A3A59);
+
+  /// 87% white. Full-strength white vibrates against a dark page, so body and
+  /// heading text is held just under it.
+  static const Color textPrimaryDark = Color(0xDEFFFFFF);
+  static const Color textSecondaryDark = Color(0xFF9AA6BF);
+
+  /// The brand teal is too heavy as text or an icon on the dark page, so dark
+  /// mode lifts it to mint. [primaryTeal] stays the fill colour of buttons and
+  /// chips, where white text carries the contrast.
+  static const Color accentDark = Color(0xFF5FD3B6);
+  static const Color onAccentDark = Color(0xFF04241C);
 
   // Status badge colors
   static const Color statusGreenBg = Color(0xFFE6F5ED);
@@ -30,6 +43,11 @@ abstract final class AppTheme {
   static const Color statusGrayBg = Color(0xFFF0F4F2);
   static const Color statusGrayText = Color(0xFF5A6E66);
 
+  /// Accent for icons and text: brand teal on paper, lifted mint on the dark
+  /// page. Fills keep [primaryTeal] in both modes.
+  static Color accentOn(Brightness brightness) =>
+      brightness == Brightness.dark ? accentDark : primaryTeal;
+
   static ThemeData light() => _base(Brightness.light);
   static ThemeData dark() => _base(Brightness.dark);
 
@@ -40,26 +58,27 @@ abstract final class AppTheme {
     final border = isDark ? borderDark : borderLight;
     final textPrimary = isDark ? textPrimaryDark : textPrimaryLight;
     final textSecondary = isDark ? textSecondaryDark : textSecondaryLight;
+    final accent = accentOn(brightness);
 
     final scheme = ColorScheme(
       brightness: brightness,
-      primary: primaryTeal,
-      onPrimary: Colors.white,
-      primaryContainer: isDark ? const Color(0xFF1D352B) : mintContainer,
-      onPrimaryContainer: isDark ? const Color(0xFF9EE5CE) : onMintContainer,
-      secondary: const Color(0xFF2E7D68),
-      onSecondary: Colors.white,
+      primary: accent,
+      onPrimary: isDark ? onAccentDark : Colors.white,
+      primaryContainer: isDark ? const Color(0xFF16283F) : mintContainer,
+      onPrimaryContainer: isDark ? const Color(0xFFB9EEDD) : onMintContainer,
+      secondary: isDark ? const Color(0xFF7FD8C1) : const Color(0xFF2E7D68),
+      onSecondary: isDark ? onAccentDark : Colors.white,
       secondaryContainer: isDark
-          ? const Color(0xFF233830)
+          ? const Color(0xFF1D2A42)
           : const Color(0xFFD4ECE3),
-      onSecondaryContainer: isDark ? const Color(0xFFB0E8D6) : primaryDarkTeal,
-      tertiary: const Color(0xFF38655A),
-      onTertiary: Colors.white,
+      onSecondaryContainer: isDark ? const Color(0xFFBEEEDF) : primaryDarkTeal,
+      tertiary: isDark ? const Color(0xFF8FC7B8) : const Color(0xFF38655A),
+      onTertiary: isDark ? onAccentDark : Colors.white,
       tertiaryContainer: isDark
-          ? const Color(0xFF233B34)
+          ? const Color(0xFF1F3049)
           : const Color(0xFFDBEFE9),
       onTertiaryContainer: isDark
-          ? const Color(0xFFB5E2D4)
+          ? const Color(0xFFC4E7DC)
           : const Color(0xFF1E4D42),
       error: const Color(0xFFBA1A1A),
       onError: Colors.white,
@@ -73,13 +92,13 @@ abstract final class AppTheme {
       onSurface: textPrimary,
       surfaceContainer: cardBg,
       surfaceContainerHighest: isDark
-          ? const Color(0xFF21302A)
+          ? const Color(0xFF212F4B)
           : const Color(0xFFF0F5F2),
       surfaceContainerLow: bg,
       onSurfaceVariant: textSecondary,
       outline: border,
       outlineVariant: isDark
-          ? const Color(0xFF2A3C33)
+          ? const Color(0xFF223150)
           : const Color(0xFFEDF2EF),
     );
 
@@ -110,30 +129,62 @@ abstract final class AppTheme {
         ),
       ),
       dividerTheme: DividerThemeData(
-        color: isDark ? const Color(0xFF25332C) : const Color(0xFFEEF3F0),
+        color: isDark ? const Color(0xFF223150) : const Color(0xFFEEF3F0),
         thickness: 1,
         space: 1,
+      ),
+      // On a dark page the default selected segment sits barely a shade above
+      // the card, so "All / Acquired / Not yet" read as three equal options.
+      // Dark mode fills the chosen segment with the mint accent and its dark
+      // ink, plus a mint hairline; light mode keeps the soft mint container.
+      segmentedButtonTheme: SegmentedButtonThemeData(
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.resolveWith((states) {
+            if (!states.contains(WidgetState.selected)) {
+              return Colors.transparent;
+            }
+            return isDark ? accentDark : const Color(0xFFD4ECE3);
+          }),
+          foregroundColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.selected)) {
+              return isDark ? onAccentDark : primaryDarkTeal;
+            }
+            return textPrimary;
+          }),
+          side: WidgetStateProperty.resolveWith((states) {
+            final selected = states.contains(WidgetState.selected);
+            return BorderSide(
+              color: selected
+                  ? (isDark ? accentDark : const Color(0xFFB7DED2))
+                  : border,
+              width: selected ? 1.6 : 1,
+            );
+          }),
+          textStyle: const WidgetStatePropertyAll(
+            TextStyle(fontWeight: FontWeight.w700),
+          ),
+        ),
       ),
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: cardBg,
         elevation: 0,
         height: 68,
         indicatorColor: isDark
-            ? const Color(0xFF233B32)
+            ? const Color(0xFF1F3049)
             : const Color(0xFFD4ECE3),
         labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
         iconTheme: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
-            return const IconThemeData(color: primaryTeal, size: 24);
+            return IconThemeData(color: accent, size: 24);
           }
           return IconThemeData(color: textSecondary, size: 24);
         }),
         labelTextStyle: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
-            return const TextStyle(
+            return TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
-              color: primaryTeal,
+              color: accent,
             );
           }
           return TextStyle(
@@ -160,8 +211,8 @@ abstract final class AppTheme {
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          foregroundColor: primaryTeal,
-          side: const BorderSide(color: primaryTeal, width: 1.5),
+          foregroundColor: accent,
+          side: BorderSide(color: accent, width: 1.5),
           shape: const StadiumBorder(),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
@@ -170,7 +221,7 @@ abstract final class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: isDark ? const Color(0xFF1B2722) : const Color(0xFFEEF4F1),
+        fillColor: isDark ? const Color(0xFF17223A) : const Color(0xFFEEF4F1),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 14,
@@ -192,13 +243,13 @@ abstract final class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: const BorderSide(color: primaryTeal, width: 1.5),
+          borderSide: BorderSide(color: accent, width: 1.5),
         ),
       ),
       progressIndicatorTheme: ProgressIndicatorThemeData(
-        color: primaryTeal,
+        color: accent,
         linearTrackColor: isDark
-            ? const Color(0xFF24362E)
+            ? const Color(0xFF1F2C46)
             : const Color(0xFFDFEDE8),
       ),
       materialTapTargetSize: MaterialTapTargetSize.padded,
@@ -206,3 +257,9 @@ abstract final class AppTheme {
     );
   }
 }
+
+
+/// Accent for icons, text and hairlines in the brightness of [context]: the
+/// brand teal on paper, the lifted mint on the dark page.
+Color accentColorOf(BuildContext context) =>
+    AppTheme.accentOn(Theme.of(context).brightness);

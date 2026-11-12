@@ -1,5 +1,9 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:kumpleto/core/gate_colors.dart';
+import 'package:kumpleto/core/theme.dart';
 import 'package:kumpleto/l10n/app_localizations.dart';
 
 import 'support/pump_app.dart';
@@ -34,10 +38,14 @@ void main() {
 
     await tester.tap(find.text(l10nOf(tester).navHome));
     await tester.pumpAndSettle();
-    // At 200% text the bundles sit below the fold, so scroll like a reader
-    // would before tapping.
+    // At 200% text the bundles sit well below the fold — the home list builds
+    // lazily, so the card has to be scrolled into existence first.
     final bundleCard = find.text('Job Hunt Pack');
-    await tester.ensureVisible(bundleCard);
+    await tester.scrollUntilVisible(
+      bundleCard,
+      250,
+      scrollable: find.byType(Scrollable).first,
+    );
     await tester.pumpAndSettle();
     await tester.tap(bundleCard);
     await tester.pumpAndSettle();
@@ -112,6 +120,84 @@ void main() {
       expect(find.text(l10n.navHome), findsOneWidget);
       expect(find.text(l10n.navDocuments), findsOneWidget);
       expect(find.text(l10n.navSettings), findsOneWidget);
+    });
+  });
+
+  // The device pass covers TalkBack and rendering; contrast is arithmetic, so
+  // it belongs here where a palette change cannot slip through by eye.
+  group('Colour contrast (WCAG 2.1 AA)', () {
+    double luminance(Color colour) {
+      double channel(double value) => value <= 0.03928
+          ? value / 12.92
+          : math.pow((value + 0.055) / 1.055, 2.4).toDouble();
+      return 0.2126 * channel(colour.r) +
+          0.7152 * channel(colour.g) +
+          0.0722 * channel(colour.b);
+    }
+
+    double contrast(Color a, Color b) {
+      final la = luminance(a);
+      final lb = luminance(b);
+      final lighter = math.max(la, lb);
+      final darker = math.min(la, lb);
+      return (lighter + 0.05) / (darker + 0.05);
+    }
+
+    Future<GateColors> gateColors(WidgetTester tester, Brightness mode) async {
+      late GateColors colors;
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: mode == Brightness.dark ? AppTheme.dark() : AppTheme.light(),
+          home: Builder(
+            builder: (context) {
+              colors = GateColors.of(context);
+              return const SizedBox.shrink();
+            },
+          ),
+        ),
+      );
+      return colors;
+    }
+
+    testWidgets('the first-run palette stays readable in both modes',
+        (tester) async {
+      for (final mode in Brightness.values) {
+        final colors = await gateColors(tester, mode);
+        final label = mode == Brightness.dark ? 'dark' : 'light';
+
+        // 4.5:1 for body and caption text.
+        expect(
+          contrast(colors.ink, colors.bg),
+          greaterThanOrEqualTo(4.5),
+          reason: '$label: body text on the page background',
+        );
+        expect(
+          contrast(colors.muted, colors.bg),
+          greaterThanOrEqualTo(4.5),
+          reason: '$label: captions on the page background',
+        );
+        expect(
+          contrast(colors.ink, colors.card),
+          greaterThanOrEqualTo(4.5),
+          reason: '$label: body text on a card',
+        );
+        expect(
+          contrast(colors.muted, colors.card),
+          greaterThanOrEqualTo(4.5),
+          reason: '$label: captions on a card',
+        );
+        // 3:1 is the AA floor for icons and other non-text indicators.
+        expect(
+          contrast(colors.accent, colors.card),
+          greaterThanOrEqualTo(3.0),
+          reason: '$label: accent icons on a card',
+        );
+        expect(
+          contrast(colors.accent, colors.bg),
+          greaterThanOrEqualTo(3.0),
+          reason: '$label: accent icons on the page background',
+        );
+      }
     });
   });
 

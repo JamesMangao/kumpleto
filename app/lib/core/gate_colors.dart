@@ -43,13 +43,13 @@ class GateColors {
     final dark = Theme.of(context).brightness == Brightness.dark;
     return dark
         ? const GateColors(
-            bg: Color(0xFF101715),
-            card: Color(0xFF192522),
-            cardBorder: Color(0xFF2C3E38),
-            ink: Color(0xFFF1F5F3),
-            muted: Color(0xFF9DB3AB),
-            accent: Color(0xFF2FA88C),
-            stamp: Color(0xFF4CC2A6),
+            bg: Color(0xFF0C1424),
+            card: Color(0xFF151E31),
+            cardBorder: Color(0xFF2A3A59),
+            ink: Color(0xDEFFFFFF),
+            muted: Color(0xFF9AA6BF),
+            accent: Color(0xFF5FD3B6),
+            stamp: Color(0xFF5FD3B6),
           )
         : const GateColors(
             bg: Color(0xFFF6F1E7), // warm paper
