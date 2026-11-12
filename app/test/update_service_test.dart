@@ -358,6 +358,79 @@ void main() {
       expect(log, hasLength(1));
     });
   });
+
+  // A stateful fake feed: it honours If-None-Match the way GitHub Pages does
+  // and rotates its ETag when the payload changes. A MockClient that merely
+  // echoes a header cannot catch a regression where the stored ETag is never
+  // sent, or where a 304 overwrites the cache.
+  group('ETag revalidation, end to end', () {
+    test('stores the ETag, revalidates with 304, then replaces both on change',
+        () async {
+      var etag = '"v1"';
+      var body = jsonEncode(
+        sampleDataJson(dataVersion: '2026-01-01T00:00:00.000Z'),
+      );
+      final sent = <String?>[];
+
+      final client = MockClient((request) async {
+        final conditional = request.headers['if-none-match'];
+        sent.add(conditional);
+        if (conditional == etag) {
+          return http.Response('', 304, headers: {'etag': etag});
+        }
+        return http.Response(body, 200, headers: {'etag': etag});
+      });
+
+      final repository = DataRepository(
+        assetBundle: FakeAssetBundle({
+          DataRepository.releaseAsset: jsonEncode(
+            sampleDataJson(dataVersion: '2025-01-01T00:00:00.000Z'),
+          ),
+        }),
+        paths: AppPaths(tempDir),
+      );
+      final service = serviceWith(client, repository: repository);
+
+      // 1. Cold check: nothing stored, so no conditional request is sent and
+      //    both the payload and its ETag are kept.
+      expect(await service.checkNow(), isA<UpdateAccepted>());
+      expect(sent, [null]);
+      expect(prefs.getString(PrefsKeys.lastDataETag), '"v1"');
+      final cached = await tempDirFile(tempDir).readAsString();
+      expect(cached, body);
+
+      // 2. Second check: the stored ETag goes out and the 304 leaves the cache
+      //    and the ETag alone.
+      expect(await service.checkNow(), isA<UpdateNotModified>());
+      expect(sent.last, '"v1"');
+      expect(await tempDirFile(tempDir).readAsString(), cached);
+      expect(prefs.getString(PrefsKeys.lastDataETag), '"v1"');
+
+      // 3. The feed changes: the old ETag is sent, the new payload wins, and
+      //    the ETag is rotated so the next check revalidates against v2.
+      etag = '"v2"';
+      body = jsonEncode(
+        sampleDataJson(dataVersion: '2026-02-02T00:00:00.000Z'),
+      );
+      expect(await service.checkNow(), isA<UpdateAccepted>());
+      expect(sent.last, '"v1"');
+      expect(prefs.getString(PrefsKeys.lastDataETag), '"v2"');
+      expect(await tempDirFile(tempDir).readAsString(), body);
+
+      expect(await service.checkNow(), isA<UpdateNotModified>());
+      expect(sent.last, '"v2"');
+
+      // 4. A check that fails must not throw away either half of the pair.
+      final offline = serviceWith(
+        MockClient((_) async => http.Response('boom', 503)),
+        repository: repository,
+      );
+      expect(await offline.checkNow(), isA<UpdateFailed>());
+      expect(prefs.getString(PrefsKeys.lastDataETag), '"v2"');
+      expect(await tempDirFile(tempDir).readAsString(), body);
+      expect((await repository.load()).source, DataSource.cache);
+    });
+  });
 }
 
 File tempDirFile(Directory dir) =>

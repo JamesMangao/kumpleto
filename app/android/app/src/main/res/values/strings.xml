@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Home-screen widget: the label the launcher shows in the widget picker,
+         and the line used before the app has pushed any data. -->
+    <string name="widget_name">Kumpleto checklist</string>
+    <string name="widget_brand">KUMPLETO</string>
+    <string name="widget_fallback_title">Open Kumpleto to start</string>
+    <string name="widget_description">Shows which document expires next and how many you have marked.</string>
+</resources>

@@ -23,7 +23,7 @@ documents:
   - lto-student-permit
   - lto-drivers-license
 tags: [driver, transport]
-icon: directions_car
+icon: school
 notes:
   - en: >-
       Do it in order. The student permit needs the 15-hour theoretical course

@@ -167,21 +167,30 @@ class DataRepository {
     final json = <String, Object?>{
       for (final entry in decoded.entries) entry.key.toString(): entry.value,
     };
-    final reason = verifyDataJson(
-      json,
-      maxSchemaVersion: supportedSchemaVersion,
-    );
-    if (reason != null) {
-      skipped.add('${source.label}: $reason');
+    // Verification and parsing are inside the guard too: a payload the
+    // contract throws on is a skipped candidate, exactly like a bad hash. If
+    // they escaped, `load()` would reject and the home screen would show its
+    // error card for a cache that a "Retry" could never fix.
+    try {
+      final reason = verifyDataJson(
+        json,
+        maxSchemaVersion: supportedSchemaVersion,
+      );
+      if (reason != null) {
+        skipped.add('${source.label}: $reason');
+        return null;
+      }
+      return _Candidate(
+        data: DataBundle.fromJson(json),
+        source: source,
+        dataVersion: json['data_version'] is String
+            ? json['data_version']! as String
+            : '',
+      );
+    } on Object catch (error) {
+      skipped.add('${source.label}: unreadable payload ($error)');
       return null;
     }
-    return _Candidate(
-      data: DataBundle.fromJson(json),
-      source: source,
-      dataVersion: json['data_version'] is String
-          ? json['data_version']! as String
-          : '',
-    );
   }
 }
 

@@ -232,6 +232,12 @@ artifacts on disk carry `data.json` hashing `3112cecf…`, matching
 `dist/data.json` byte for byte (§6 audit run 2026-11-09); no draft asset leaked
 into either of them.
 
+> **2026-11-11 — the numbers above are 1.0.0.** A debug build of the current
+> tree (236,770,372 bytes) also carries the home-screen widget, the QR web/app
+> toggle, the 09:00 `Asia/Manila` calendar export, the Open Graph tags on the
+> public pages and the home-screen error fix. Re-run §5 and §6 with a bumped
+> `version` before uploading; do not publish the 1.0.0 artifacts.
+
 ## 10. Release checklist
 
 1. `dart run tools/validate.dart --strict-on=errors` passes.
@@ -249,7 +255,8 @@ into either of them.
 `tools/build_site.dart` turns `dist/data.json` into the public site the Pages
 workflow deploys: `data.json` stays at the root for the app's update feed, and
 every document and bundle also gets a static page (`/doc/<id>`, `/bundle/<id>`)
-plus `sitemap.xml` and `robots.txt`. Run it after `tools/build_data.dart`.
+plus `sitemap.xml`, `robots.txt` and a `404.html`. Run it after
+`tools/build_data.dart`.
 
 The app answers to those `https` links through the second intent-filter in
 `AndroidManifest.xml`, but **without `autoVerify`**: Android will offer Kumpleto

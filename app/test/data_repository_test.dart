@@ -148,6 +148,36 @@ void main() {
       expect(loaded.skipped.join(' '), contains('schema_version 2'));
     });
 
+    test('a cache with hostile field types is skipped, never fatal', () async {
+      final repository = repositoryWith({
+        DataRepository.releaseAsset: jsonOf(sampleDataJson()),
+      }, withPaths: paths());
+      // Shaped like a payload, but every level is the wrong type: the verifier
+      // or the parser must not be able to take the load down with it.
+      await paths().dataCacheFile.writeAsString(
+        jsonEncode({
+          'schema_version': 'one',
+          'data_version': 7,
+          'agencies': 'nbi',
+          'documents': [
+            <String, Object?>{
+              'id': 'nbi-clearance',
+              'name': 42,
+              'agency': ['nbi'],
+              'requirements': 'photo',
+              'steps': <String, Object?>{'en': 'go'},
+            },
+          ],
+          'bundles': 3,
+        }),
+      );
+
+      final loaded = await repository.load();
+      expect(loaded.source, DataSource.bundledRelease);
+      expect(loaded.data.documents, hasLength(1));
+      expect(loaded.skipped, isNotEmpty);
+    });
+
     test('an unreadable cache does not crash the load', () async {
       final repository = repositoryWith({
         DataRepository.releaseAsset: jsonOf(sampleDataJson()),

@@ -40,6 +40,7 @@ dependencies:
   qr_flutter: ^4.1.0
   # Native review prompt, shown once after the reader finishes a few lists.
   in_app_review: ^2.0.10
+  home_widget: ^0.10.0
 
 dev_dependencies:
   flutter_test:

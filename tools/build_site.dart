@@ -52,14 +52,40 @@ Future<void> main(List<String> args) async {
   Directory('${out.path}/bundle').createSync(recursive: true);
 
   File('${out.path}/data.json').writeAsStringSync(dataFile.readAsStringSync());
+  // One shared social card: the same 1024×500 feature graphic the store
+  // listing uses, copied into the site so the absolute og:image URL always
+  // resolves next to the pages that point at it.
+  final ogSource = File(
+    '${root.path}/app/assets/logo/feature-graphic-1024x500.png',
+  );
+  if (ogSource.existsSync()) {
+    ogSource.copySync('${out.path}/og.png');
+  } else {
+    stderr.writeln('warning: ${ogSource.path} missing — pages will link a 404 '
+        'og:image');
+  }
   File('${out.path}/robots.txt').writeAsStringSync(
     'User-agent: *\nAllow: /\nSitemap: $_siteBase/sitemap.xml\n',
   );
+  // GitHub Pages serves this for any unknown path, so a mistyped /doc/<id> —
+  // or a QR code printed for an entry that was later renamed — lands on a page
+  // that explains itself instead of the host's bare default. Pages uses
+  // 404.html by name, so the filename is the whole wiring.
+  File('${out.path}/404.html').writeAsStringSync(_notFoundPage());
+
+  // <lastmod> tells a crawler which pages actually changed. Every page is
+  // rendered from the same payload, so the payload's own timestamp is an
+  // honest date for the whole site — better than "now", which would claim a
+  // change on every deploy.
+  final lastmod = _isoDate(payload['data_version']);
+  String urlEntry(String loc) => lastmod == null
+      ? '  <url><loc>$loc</loc></url>'
+      : '  <url><loc>$loc</loc><lastmod>$lastmod</lastmod></url>';
 
   final sitemap = StringBuffer()
     ..writeln('<?xml version="1.0" encoding="UTF-8"?>')
     ..writeln('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
-    ..writeln('  <url><loc>$_siteBase/</loc></url>');
+    ..writeln(urlEntry('$_siteBase/'));
 
   File('${out.path}/index.html').writeAsStringSync(
     _indexPage(documents: documents, bundles: bundles, agencyNames: agencyNames),
@@ -73,7 +99,7 @@ Future<void> main(List<String> args) async {
         agencyName: agencyNames[doc['agency']] ?? '',
       ),
     );
-    sitemap.writeln('  <url><loc>$_siteBase/doc/$id</loc></url>');
+    sitemap.writeln(urlEntry('$_siteBase/doc/$id'));
   }
 
   for (final bundle in bundles) {
@@ -81,7 +107,7 @@ Future<void> main(List<String> args) async {
     File('${out.path}/bundle/$id.html').writeAsStringSync(
       _bundlePage(bundle: bundle, docNames: docNames),
     );
-    sitemap.writeln('  <url><loc>$_siteBase/bundle/$id</loc></url>');
+    sitemap.writeln(urlEntry('$_siteBase/bundle/$id'));
   }
 
   sitemap.writeln('</urlset>');
@@ -89,7 +115,8 @@ Future<void> main(List<String> args) async {
 
   stdout.writeln(
     'Built site/: index, ${documents.length} document pages, '
-    '${bundles.length} bundle pages, sitemap.xml, robots.txt, data.json',
+    '${bundles.length} bundle pages, sitemap.xml, robots.txt, 404.html, '
+    'data.json',
   );
 }
 
@@ -221,6 +248,7 @@ String _documentPage({
         ? 'Requirements, steps and fees for $name, with the official government source.'
         : summary,
     canonical: '$_siteBase/doc/$id',
+    ogType: 'article',
     body: buffer.toString(),
   );
 }
@@ -254,9 +282,27 @@ String _bundlePage({
     title: '$name — $_appName',
     description: description,
     canonical: '$_siteBase/bundle/$id',
+    ogType: 'article',
     body: buffer.toString(),
   );
 }
+
+/// The page GitHub Pages serves for any path it does not have.
+String _notFoundPage() => _shell(
+  title: 'Page not found — $_appName',
+  description:
+      'This checklist page does not exist. Every document and bundle in '
+      '$_appName is listed on the index.',
+  canonical: '$_siteBase/404.html',
+  body: '''
+<h1>That page is not here.</h1>
+<p class="lede">A link may be mistyped, or the checklist it pointed at may
+have been renamed since the link was shared.</p>
+<p><a class="cta" href="$_siteBase/">See every document and bundle</a></p>
+<p class="note">If a QR code sent you here, search the index for the document
+name — the codes always point at a page that exists.</p>
+''',
+);
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -267,7 +313,12 @@ String _shell({
   required String description,
   required String canonical,
   required String body,
+  String ogType = 'website',
 }) {
+  // Facebook, Messenger, WhatsApp, Telegram, Slack, X and Discord all read
+  // these four Open Graph tags; Twitter/X and a few others read the twitter:
+  // mirror. Without them a shared checklist link previews as a bare URL.
+  final image = '$_siteBase/og.png';
   return '''<!doctype html>
 <html lang="en">
 <head>
@@ -276,6 +327,22 @@ String _shell({
 <title>${_esc(title)}</title>
 <meta name="description" content="${_esc(description)}">
 <link rel="canonical" href="${_esc(canonical)}">
+<meta property="og:type" content="$ogType">
+<meta property="og:site_name" content="$_appName">
+<meta property="og:title" content="${_esc(title)}">
+<meta property="og:description" content="${_esc(description)}">
+<meta property="og:url" content="${_esc(canonical)}">
+<meta property="og:image" content="$image">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="500">
+<meta property="og:image:alt" content="$_appName — a checkmark over a document folder">
+<meta property="og:locale" content="en_PH">
+<meta property="og:locale:alternate" content="fil_PH">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${_esc(title)}">
+<meta name="twitter:description" content="${_esc(description)}">
+<meta name="twitter:image" content="$image">
+<meta name="theme-color" content="#0E6B58">
 <style>
   :root { color-scheme: light dark; }
   body { margin: 0 auto; max-width: 44rem; padding: 2rem 1.25rem 4rem;
@@ -320,6 +387,19 @@ String _verifiedLine(Map<String, dynamic> doc) {
   final verified = doc['last_verified'] as String?;
   if (verified == null || verified.isEmpty) return '';
   return ' · checked $verified';
+}
+
+/// `YYYY-MM-DD` from a `data_version` timestamp, or null when the payload has
+/// no usable date. A sitemap may omit `<lastmod>`; a malformed one is worse
+/// than none, so anything unexpected is dropped.
+String? _isoDate(Object? value) {
+  if (value is! String) return null;
+  final match = RegExp(r'^(\d{4})-(\d{2})-(\d{2})').firstMatch(value);
+  if (match == null) return null;
+  final month = int.tryParse(match.group(2)!) ?? 0;
+  final day = int.tryParse(match.group(3)!) ?? 0;
+  if (month < 1 || month > 12 || day < 1 || day > 31) return null;
+  return '${match.group(1)}-${match.group(2)}-${match.group(3)}';
 }
 
 String _text(Object? value, String locale) {

@@ -22,7 +22,7 @@ documents:
   - passport-dfa
   - nbi-clearance
 tags: [travel, migration, passport]
-icon: flight_takeoff
+icon: public
 notes:
   - en: >-
       Book the passport appointment first — slots fill up and the DFA does not

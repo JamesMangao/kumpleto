@@ -63,7 +63,10 @@ Legend: `[ ]` not started · `[~]` agent-researched, awaiting your confirmation 
 - [x] **First-Time Jobseeker (RA 11261) Mode** — toggle on Job Hunt / First-Time bundles that auto-applies fee waivers (₱0.00) and displays clear guidance on waived clearances.
 - [x] **Document Expiration & Acquired Date Tracker** — date picker on acquired documents to track validity periods accurately.
 - [x] **Share Single Document Checklist** — share button on document detail screen generating clean formatted text for chat or notes.
-- [x] **Replay Onboarding & Disclaimer in Settings** — quick action in Settings to re-run the disclaimer and onboarding walk-through anytime.
+- [x] **Dark Mode Rework** — slate-navy `#0C1424` page with distinct card steps (never black), 87% white body text, and a mint accent (`#5FD3B6`) for icons and labels; the light theme is unchanged.
+- [x] **Acquired / Not-yet Filter** — segmented control on Documents that filters by whether the checklist already has the document, alongside the existing tag and agency chips.
+- [x] **Settings Cleanup** — the manual "Check for updates" button and the replay-introduction entry are gone; updates stay silent and scheduled, and the disclaimer stays reachable from About.
+- [x] **Home Restructure** — ten curated categories with their own icons replace the raw tag list (the tags stay on Documents), popular-document chips under search, six bundles per home page with a full `/bundles` list, distinct bundle icons, and a data-freshness line.
 - [x] **Search Inside Steps & Requirements** — the search field matches requirement text, notes, steps, fees and processing notes, not just titles.
 - [x] **Deep Links per Document & Bundle** — `kumpleto://doc/<id>` and `kumpleto://bundle/<id>` open straight into the checklist, including a cold start.
 - [x] **Expiry Reminders** — local notifications a month, a week and a day before an acquired document lapses; opt-in switch in Settings asks for the OS permission.
@@ -145,6 +148,12 @@ Legend: `[ ]` not started · `[~]` agent-researched, awaiting your confirmation 
 - [x] 512×512 store icon + 1024×500 feature graphic — generated in
       `app/assets/logo/` (upload still manual in the Play Console)
 - [ ] Confirm "Kumpleto" name availability on Play
+- [ ] Pin the home-screen widget once and capture it for the README/store — adb
+      cannot add a widget to the launcher, so this needs one human tap
+- [ ] Finish the device accessibility pass: QR/share labels on document detail
+      at 200% text, and TalkBack speech actually heard
+- [ ] Bump `version` to 1.0.1+2 and rebuild the split APKs + AAB (the 1.0.0
+      artifacts predate the widget, QR toggle, calendar and home fix)
 - [x] Enable GitHub Pages (source: GitHub Actions) — enabled; the feed is
       live at https://jamesmangao.github.io/kumpleto/data.json. The last
       publish predates the 2026-11-09 dataset; push to run it again.

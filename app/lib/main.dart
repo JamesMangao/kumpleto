@@ -14,6 +14,7 @@ import 'data/update_service.dart';
 import 'l10n/app_localizations.dart';
 import 'router.dart';
 import 'screens/welcome_screen.dart';
+import 'widgets/home_widget_sync.dart';
 import 'widgets/reminder_sync.dart';
 
 Future<void> main() async {
@@ -96,9 +97,12 @@ class _KumpletoAppState extends State<KumpletoApp> {
         debugShowCheckedModeBanner: false,
         builder: (context, child) => ReminderSync(
           settings: widget.settings,
-          child: WelcomeGate(
-            show: widget.showWelcome,
-            child: child ?? const SizedBox.shrink(),
+          child: HomeWidgetSync(
+            settings: widget.settings,
+            child: WelcomeGate(
+              show: widget.showWelcome,
+              child: child ?? const SizedBox.shrink(),
+            ),
           ),
         ),
       ),

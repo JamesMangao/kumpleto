@@ -44,6 +44,24 @@ void main() {
     expect(SavedLocation.read(store)!.city!.name, 'City of San Pedro');
   });
 
+  test('a stored value in an unreadable shape reads as no location', () async {
+    // Valid JSON, but not the object this version writes. Reading it used to
+    // throw a TypeError, which the data provider re-threw as an error state on
+    // the home screen — with a Retry that read the same bad value again.
+    final store = await prefs({
+      SavedLocation.prefsKey: '["City of San Pedro"]',
+    });
+    expect(SavedLocation.read(store), isNull);
+  });
+
+  test('a place stored as a bare string also reads as no location', () async {
+    final store = await prefs({
+      SavedLocation.prefsKey:
+          '{"city":"City of San Pedro","zip":"4023"}',
+    });
+    expect(SavedLocation.read(store), isNull);
+  });
+
   test('a location saved before profiles existed still belongs to me', () async {
     final store = await prefs({
       SavedLocation.prefsKey:

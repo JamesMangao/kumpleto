@@ -173,7 +173,11 @@ class SavedLocation {
         barangay: place(map['barangay']),
         zip: map['zip'] as String? ?? '',
       );
-    } on FormatException {
+    } on Object {
+      // Anything unreadable means "no location saved": invalid JSON, or a
+      // stored shape this version no longer understands (a TypeError, which
+      // [FormatException] does not cover). Letting it escape takes the home
+      // screen down with it, because the data provider watches this one.
       return null;
     }
   }
